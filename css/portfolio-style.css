@@ -9,6 +9,15 @@ h1, h2, h3, h4, h5, h6, .heading, .title, .main_heading {
 	font-weight: bold;
 }
 
+.bg-light {
+	background: #F1FAEE !important;
+}
+
+.common-section-ui {
+	padding-top: 100px;
+	padding-bottom: 100px;
+}
+
 .site_logo.with_image a img {
 	max-width: unset;
 	height: 53px;
@@ -32,25 +41,25 @@ header .full-menu .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link {
 
 .text_secondary,
 .text-secondary {
-	color: #009EFA !important;
+	color: #1D3557 !important;
 }
 
 .btn-secondary:hover,
 .btn-secondary,
 .bg_secondary,
 .bg-secondary {
-	background-color:  #009EFA;
+	background-color:  #1D3557;
 }
 
 .bg_secondary,
 .bg-secondary {
-	background-color:  #009EFA !important;
+	background-color:  #1D3557 !important;
 }
 
 .border-secondary,
 .btn-secondary:hover,
 .btn-secondary {
-	border-color:  #009EFA !important; 
+	border-color:  #1D3557 !important; 
 }
 
 .link,
@@ -59,7 +68,7 @@ header .full-menu .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link {
 .btn-outline-primary,
 .ourtutorials .card .ciconrc,
 .text_primary {
-	color: #FA6C39 !important;
+	color: #E63946 !important;
 }
 
 .socialicons.bg_dark, .socialicons.bg-dark,
@@ -67,13 +76,13 @@ header .full-menu .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link {
 .badge-primary,
 .bg_primary,
 .bg-primary {
-	background-color: #FA6C39 !important;
+	background-color: #E63946 !important;
 }
 
 .border-primary,
 .btn-primary,
 .heading_style.type2:before {
-	border-color:  #FA6C39 !important;
+	border-color:  #E63946 !important;
 }
 
 .btn-outline-primary {
@@ -98,7 +107,10 @@ header .navbar.navbar-expand-lg .navbar-nav .nav-item a.nav-link.btn {
 }
 
 header .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link {
-	margin: 7px 0 !important;
+	margin: 9px 0 !important;
+    font-weight: bold;
+    font-family: 'Lato', sans-serif;
+    font-size: 12px;
 }
  
 .go_top_arrow {
@@ -106,7 +118,7 @@ header .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link {
 }
 
 .slick-prev:before, .slick-next:before {
-	color: #FA6C39 !important;
+	color: #E63946 !important;
 	font-size: 30px;
 }
 
