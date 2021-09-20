@@ -1,0 +1,152 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+	line-height: 20px;
+}
+
+h1, h2, h3, h4, h5, h6, .heading, .title, .main_heading {
+	font-family: 'Lato', sans-serif;
+	font-weight: bold;
+}
+
+.site_logo.with_image a img {
+	max-width: unset;
+	height: 53px;
+	margin: 3px 0;
+}
+
+header .full-menu .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link {
+	padding: 10px 15px !important;
+	font-size: 14px;
+}
+
+.hamburger {
+	left: 16px;
+	top: 24px;
+}
+
+.text-black,
+.heading_style {
+	color: #290001;
+}
+
+.text_secondary,
+.text-secondary {
+	color: #009EFA !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary,
+.bg_secondary,
+.bg-secondary {
+	background-color:  #009EFA;
+}
+
+.bg_secondary,
+.bg-secondary {
+	background-color:  #009EFA !important;
+}
+
+.border-secondary,
+.btn-secondary:hover,
+.btn-secondary {
+	border-color:  #009EFA !important; 
+}
+
+.link,
+.gotoparrow,
+.text-primary,
+.btn-outline-primary,
+.ourtutorials .card .ciconrc,
+.text_primary {
+	color: #FA6C39 !important;
+}
+
+.socialicons.bg_dark, .socialicons.bg-dark,
+.btn-primary,
+.badge-primary,
+.bg_primary,
+.bg-primary {
+	background-color: #FA6C39 !important;
+}
+
+.border-primary,
+.btn-primary,
+.heading_style.type2:before {
+	border-color:  #FA6C39 !important;
+}
+
+.btn-outline-primary {
+	background-color: #ffffff !important;
+	border-color:  #ffffff !important;
+}
+ 
+.hamburger div {
+	background-color:#fff;
+}
+
+.blur {
+	-webkit-filter: blur(2px);
+	filter: blur(2px);
+}
+
+header .navbar.navbar-expand-lg .navbar-nav .nav-item a.nav-link.btn {
+	padding: 11px 0 !important;
+	color: #fff !important;
+	margin: 14px 0 14px 8px !important;
+	text-transform: uppercase;
+}
+
+header .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link {
+	margin: 7px 0 !important;
+}
+ 
+.go_top_arrow {
+	display: none;
+}
+
+.slick-prev:before, .slick-next:before {
+	color: #FA6C39 !important;
+	font-size: 30px;
+}
+
+/*Responsive*/
+@media all and (max-width: 786px) {
+	.container {
+		max-width: 100%;
+	}
+
+	.line_right:after {
+		height: 26px;
+		top: 2px;
+	}
+
+	img.bg_image_full {
+		height: 100%;
+		width: auto;
+		max-width: initial;
+	}
+
+	.section-about img.position-absolute {
+		width: 100%;
+		position: static !important;
+		max-width: 500px;
+	}
+
+	.section-services .card {
+		max-width: 300px;
+		margin: 0 auto;
+	}
+}
+
+/*Mobile Devices*/
+@media all and (max-width: 580px) {
+	.section-about img.position-absolute {
+			width: 100%;
+			position: static !important;
+	}
+
+	.section-about.ptb_140_130 {
+			padding: 0 0px 30px 0;
+	}
+}
