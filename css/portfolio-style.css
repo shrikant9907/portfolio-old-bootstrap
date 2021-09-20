@@ -110,7 +110,12 @@ header .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link {
 	margin: 9px 0 !important;
     font-weight: bold;
     font-family: 'Lato', sans-serif;
-    font-size: 12px;
+	font-size: 14px; 
+	text-transform: uppercase;
+}
+
+header .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link:hover {
+	color: #E63946 !important;
 }
  
 .go_top_arrow {
@@ -120,6 +125,41 @@ header .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link {
 .slick-prev:before, .slick-next:before {
 	color: #E63946 !important;
 	font-size: 30px;
+}
+
+.grid-item { width: 25%; }
+.grid-item--width2 { width: 50%; } 
+
+
+.filter-items {
+  float: left;
+  max-width: 25%;
+}
+
+.filter-items .card {
+  border:none;
+  border-radius: 0;
+}
+
+.filter-items .card .card-img {
+  border-radius: 0;
+}
+
+.filter-items .card .card-img-overlay,
+.filter-items .card .overlay {
+  display: none;
+}
+
+.filter-items .card:hover .overlay {
+  z-index: 0;
+  display: block;
+  background-color: rgba(230, 57, 70, 0.5);
+}
+.filter-items .card:hover .card-img-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 /*Responsive*/
