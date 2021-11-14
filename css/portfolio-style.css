@@ -10,9 +10,9 @@ h1, h2, h3, h4, h5, h6, .heading, .title, .main_heading {
 }
 
 .bg-light {
-	background: #F1FAEE !important;
+	background: #d8ecff !important;
 }
-
+ 
 .common-section-ui {
 	padding-top: 100px;
 	padding-bottom: 100px;
@@ -35,7 +35,6 @@ h1, h2, h3, h4, h5, h6, .heading, .title, .main_heading {
 }
 
 header {
-  background-color: #1D3557;
   position: relative;
   z-index: 999;
 }
@@ -43,10 +42,6 @@ header {
 header .full-menu .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link {
 	padding: 10px 15px !important;
 	font-size: 14px;
-}
-
-header .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link {
-  color: #ffffff;
 }
 
 .scrolled header {
@@ -60,7 +55,9 @@ header .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link {
 }
 
 .banner-section {
-  margin-top: -60px !important;
+  padding-top: 100px !important;
+  background-image: url('../images/banner-bg.png');
+  /* background-size: auto 100%; */
 }
 
 .hamburger {
@@ -144,7 +141,6 @@ header .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link {
 	font-size: 14px; 
 	text-transform: uppercase;
   font-weight: 400;
-  color: #ffffff;
 }
 
 header .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link:hover {
@@ -166,7 +162,7 @@ header .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link:hover {
 
 .filter-items {
   float: left;
-  max-width: 25%;
+  max-width: 33.33333333%;
 }
 
 .filter-items .card {
@@ -186,13 +182,17 @@ header .navbar.navbar-expand-lg .navbar-nav .nav-item .nav-link:hover {
 .filter-items .card:hover .overlay {
   z-index: 0;
   display: block;
-  background-color: rgba(230, 57, 70, 0.5);
+  background-color: rgba(230, 57, 70, 0.8);
 }
 .filter-items .card:hover .card-img-overlay {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+#my-services .cicon i {
+  font-size: 60px;
 }
 
 /*Responsive*/
