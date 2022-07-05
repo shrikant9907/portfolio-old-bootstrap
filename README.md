@@ -30,11 +30,11 @@
 <h2>Connect with me on social networks!</h2>
 <div>
 
-  <a href="https://www.linkedin.com/in/shrikant9907/"><img
+  <a target="_blank" href="https://www.linkedin.com/in/shrikant9907/"><img
   src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" /><a />
-  <a href="https://www.instagram.com/shrikant99070/"><img
+  <a target="_blank" href="https://www.instagram.com/shrikant99070/"><img
   src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" /><a />
-  <a href="mailto:shrikant9907@gmail.com"><img
+  <a target="_blank" href="mailto:shrikant9907@gmail.com"><img
   src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" /><a />
  
 </div>
