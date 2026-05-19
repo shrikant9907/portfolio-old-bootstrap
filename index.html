@@ -142,13 +142,21 @@
         <span id="zoomValue" class="zoom-value">100%</span>
       </div>
 
-      <div class="mobile-zone-dots" id="mobileZoneDots" aria-label="Universe zones">
-        <button type="button" data-zone="0" class="is-active" aria-label="Arrival Core"></button>
-        <button type="button" data-zone="1" aria-label="Technology Orbit"></button>
-        <button type="button" data-zone="2" aria-label="Product Gallery"></button>
-        <button type="button" data-zone="3" aria-label="Proof Ring"></button>
-        <button type="button" data-zone="4" aria-label="Client Signals"></button>
-        <button type="button" data-zone="5" aria-label="Launch Dock"></button>
+      <div class="zone-nav" id="zoneNav" aria-label="Universe zones and steps">
+        <button type="button" class="zone-arrow zone-prev" id="zonePrev" aria-label="Previous step" data-tip="Previous step">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5l-7 7 7 7"/></svg>
+        </button>
+        <div class="mobile-zone-dots" id="mobileZoneDots" aria-label="Universe zones">
+          <button type="button" data-zone="0" data-tip="Arrival Core" class="is-active" aria-label="Arrival Core"></button>
+          <button type="button" data-zone="1" data-tip="Technology Orbit" aria-label="Technology Orbit"></button>
+          <button type="button" data-zone="2" data-tip="Product Gallery" aria-label="Product Gallery"></button>
+          <button type="button" data-zone="3" data-tip="Proof Ring" aria-label="Proof Ring"></button>
+          <button type="button" data-zone="4" data-tip="Client Signals" aria-label="Client Signals"></button>
+          <button type="button" data-zone="5" data-tip="Launch Dock" aria-label="Launch Dock"></button>
+        </div>
+        <button type="button" class="zone-arrow zone-next" id="zoneNext" aria-label="Next step" data-tip="Next step">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5l7 7-7 7"/></svg>
+        </button>
       </div>
 
       <div class="universe-plane" id="universePlane">

@@ -16,34 +16,41 @@
   ];
 
   const ORBIT_PARTICLES = [
-    n('html','HTML5','Technology','The semantic base of readable, accessible, search-friendly websites.','Used for clean structure and long-term maintainability.',0,225,'technology','core'),
-    n('css','CSS3','Technology','The visual layer for responsive layout, spacing, motion, and visual polish.','Used for professional interfaces on desktop and mobile.',28,235,'technology','core'),
-    n('javascript','JavaScript','Technology','The interaction layer that powers controls, tooltips, zoom, and guided behavior.','Used for app-like experiences and interactive product UI.',56,245,'technology','core'),
-    n('typescript','TypeScript','Technology','Typed JavaScript for safer large-scale frontend and product codebases.','Useful for scalable systems and maintainable architecture.',84,250,'technology','core'),
-    n('react','React','Technology','Component-based frontend library for dynamic product interfaces.','Best for dashboards, SaaS screens, and modular UI systems.',112,246,'technology','core'),
-    n('next','Next.js','Technology','Production React framework for fast, SEO-ready web applications.','Useful for websites, products, routing, rendering, and performance.',140,238,'technology','core'),
-    n('node','Node.js','Technology','JavaScript runtime for backend systems and API services.','Used for scalable backend logic and product systems.',168,228,'technology','core'),
-    n('express','Express.js','Technology','Node framework for REST APIs and server routes.','Useful for auth flows, dashboards, and modular backend systems.',196,235,'technology','core'),
-    n('php','PHP','Technology','Server-side language used in WordPress and custom systems.','Useful for CMS work, plugins, and practical web tools.',224,246,'technology','core'),
-    n('wordpress','WordPress','Technology','CMS platform for editable business websites and custom themes.','Best when clients need content control and fast publishing workflows.',252,250,'technology','core'),
-    n('mongodb','MongoDB','Technology','Document database for flexible application data and dashboards.','Useful for product data, profiles, and dynamic applications.',280,246,'technology','core'),
-    n('mysql','MySQL','Technology','Relational database for structured business and CMS data.','Useful for directories, ecommerce, and custom business systems.',308,238,'technology','core'),
-    n('tailwind','Tailwind','Technology','Utility-first CSS system for fast, consistent interface building.','Useful for design tokens and responsive component systems.',336,228,'technology','core'),
-    n('bootstrap','Bootstrap','Technology','Responsive frontend framework for practical website layouts.','Useful for reliable business websites and admin interfaces.',14,315,'technology','deep'),
-    n('sass','SCSS','Technology','CSS preprocessor for structured, maintainable visual systems.','Useful for larger theme and component styling.',48,330,'technology','deep'),
-    n('jquery','jQuery','Technology','Classic JavaScript library still useful in legacy and WordPress projects.','Useful for maintaining older business sites and plugins.',82,340,'technology','deep'),
-    n('redux','Redux','Technology','Predictable frontend state management for complex interfaces.','Useful when larger applications need stable data flow.',116,332,'technology','deep'),
-    n('jwt','JWT Auth','Technology','Token-based authentication for secure logged-in web products.','Useful for role-based dashboards and protected APIs.',150,318,'technology','deep'),
-    n('woocommerce','WooCommerce','Technology','WordPress ecommerce system for catalogs, orders, and payments.','Useful for online stores and business commerce workflows.',184,340,'technology','deep'),
-    n('git','Git','Tool','Version control for professional development and deployment workflows.','Keeps work trackable, reversible, and collaborative.',218,333,'tool','deep'),
-    n('figma','Figma','Tool','Design and interface planning tool for UI structure and handoff.','Useful for shaping layouts before development starts.',252,318,'tool','deep'),
-    n('gsap','GSAP','Tool','Animation platform for premium web motion and scroll-based storytelling.','Used when motion needs to feel controlled and production-quality.',286,334,'tool','deep'),
-    n('three','Three.js','Tool','WebGL library for 3D and immersive web visuals.','Useful for universe-like experiences and depth-driven interfaces.',320,340,'tool','deep'),
-    n('apis','APIs','Tool','Connected systems and integrations for product functionality.','Useful for business automation and dynamic data flows.',354,318,'tool','deep'),
-    n('performance','Performance','Tool','Speed, loading, and UX optimization.','Important for conversions, usability, and search quality.',196,395,'tool','hidden'),
-    n('hosting','Hosting','Tool','Deployment and server setup for production websites.','Used for making websites stable and accessible online.',238,408,'tool','hidden'),
-    n('analytics','Analytics','Tool','Measurement system for traffic and user behavior.','Helps understand what users do after launch.',282,400,'tool','hidden'),
-    n('search-console','Search Console','Tool','Google search monitoring and technical SEO insight.','Used to track indexing, issues, and search performance.',326,392,'tool','hidden')
+    // Inner orbit: foundation
+    n('html','HTML5','Technology','The semantic base of readable, accessible, search-friendly websites.','Used for clean structure and long-term maintainability.',-90,148,'technology','core'),
+    n('css','CSS3','Technology','The visual layer for responsive layout, spacing, motion, and visual polish.','Used for professional interfaces on desktop and mobile.',-18,148,'technology','core'),
+    n('javascript','JavaScript','Technology','The interaction layer that powers controls, tooltips, zoom, and guided behavior.','Used for app-like experiences and interactive product UI.',54,148,'technology','core'),
+    n('typescript','TypeScript','Technology','Typed JavaScript for safer large-scale frontend and product codebases.','Useful for scalable systems and maintainable architecture.',126,148,'technology','core'),
+
+    // Middle orbit: frameworks / runtime / CMS
+    n('react','React','Technology','Component-based frontend library for dynamic product interfaces.','Best for dashboards, SaaS screens, and modular UI systems.',-96,228,'technology','core'),
+    n('next','Next.js','Technology','Production React framework for fast, SEO-ready web applications.','Useful for websites, products, routing, rendering, and performance.',-42,228,'technology','core'),
+    n('node','Node.js','Technology','JavaScript runtime for backend systems and API services.','Used for scalable backend logic and product systems.',12,228,'technology','core'),
+    n('express','Express.js','Technology','Node framework for REST APIs and server routes.','Useful for auth flows, dashboards, and modular backend systems.',66,228,'technology','core'),
+    n('php','PHP','Technology','Server-side language used in WordPress and custom systems.','Useful for CMS work, plugins, and practical web tools.',120,228,'technology','core'),
+    n('wordpress','WordPress','Technology','CMS platform for editable business websites and custom themes.','Best when clients need content control and fast publishing workflows.',174,228,'technology','core'),
+
+    // Outer orbit: database / styling / libraries
+    n('mongodb','MongoDB','Technology','Document database for flexible application data and dashboards.','Useful for product data, profiles, and dynamic applications.',-100,306,'technology','deep'),
+    n('mysql','MySQL','Technology','Relational database for structured business and CMS data.','Useful for directories, ecommerce, and custom business systems.',-55,306,'technology','deep'),
+    n('tailwind','Tailwind CSS','Technology','Utility-first CSS system for fast, consistent interface building.','Useful for design tokens and responsive component systems.',-10,306,'technology','deep'),
+    n('bootstrap','Bootstrap','Technology','Responsive frontend framework for practical website layouts.','Useful for reliable business websites and admin interfaces.',35,306,'technology','deep'),
+    n('sass','Sass / SCSS','Technology','CSS preprocessor for structured, maintainable visual systems.','Useful for larger theme and component styling.',80,306,'technology','deep'),
+    n('jquery','jQuery','Technology','Classic JavaScript library still useful in legacy and WordPress projects.','Useful for maintaining older business sites and plugins.',125,306,'technology','deep'),
+    n('redux','Redux','Technology','Predictable frontend state management for complex interfaces.','Useful when larger applications need stable data flow.',170,306,'technology','deep'),
+    n('jwt','JWT Auth','Technology','Token-based authentication for secure logged-in web products.','Useful for role-based dashboards and protected APIs.',215,306,'technology','deep'),
+
+    // Reveal on deeper zoom
+    n('woocommerce','WooCommerce','Technology','WordPress ecommerce system for catalogs, orders, and payments.','Useful for online stores and business commerce workflows.',-82,382,'technology','hidden'),
+    n('git','Git','Tool','Version control for professional development and deployment workflows.','Keeps work trackable, reversible, and collaborative.',-34,382,'tool','hidden'),
+    n('figma','Figma','Tool','Design and interface planning tool for UI structure and handoff.','Useful for shaping layouts before development starts.',14,382,'tool','hidden'),
+    n('gsap','GSAP','Tool','Animation platform for premium web motion and scroll-based storytelling.','Used when motion needs to feel controlled and production-quality.',62,382,'tool','hidden'),
+    n('three','Three.js','Tool','WebGL library for 3D and immersive web visuals.','Useful for universe-like experiences and depth-driven interfaces.',110,382,'tool','hidden'),
+    n('apis','APIs','Tool','Connected systems and integrations for product functionality.','Useful for business automation and dynamic data flows.',158,382,'tool','hidden'),
+    n('performance','Performance','Tool','Speed, loading, and UX optimization.','Important for conversions, usability, and search quality.',206,382,'tool','hidden'),
+    n('hosting','Hosting','Tool','Deployment and server setup for production websites.','Used for making websites stable and accessible online.',254,382,'tool','hidden'),
+    n('analytics','Analytics','Tool','Measurement system for traffic and user behavior.','Helps understand what users do after launch.',302,382,'tool','hidden'),
+    n('search-console','Search Console','Tool','Google search monitoring and technical SEO insight.','Used to track indexing, issues, and search performance.',350,382,'tool','hidden')
   ];
 
   const PRODUCTS = [
@@ -115,7 +122,10 @@
     guideProgress: $('#guideProgress'),
     guideBack: $('#guideBack'),
     guideNext: $('#guideNext'),
-    mobileDots: $('#mobileZoneDots')
+    mobileDots: $('#mobileZoneDots'),
+    zonePrev: $('#zonePrev'),
+    zoneNext: $('#zoneNext'),
+    zoneNav: $('#zoneNav')
   };
 
   let currentZone = 0;
@@ -356,6 +366,8 @@
       });
     });
     $$('[data-zone]', els.mobileDots).forEach(btn => btn.addEventListener('click', () => setZone(Number(btn.dataset.zone))));
+    els.zonePrev?.addEventListener('click', () => setZone(currentZone - 1));
+    els.zoneNext?.addEventListener('click', () => setZone(currentZone + 1));
   }
 
   function setControlActive(control) {
@@ -387,19 +399,28 @@
     autoActive = true;
     setControlActive(els.autoFlight);
     let index = currentZone;
+    const lastZone = ZONES.length - 1;
     const run = () => {
       if (!autoActive) return;
-      setZone(index % ZONES.length);
-      if (index % ZONES.length === 2) { activeProduct = (activeProduct + 1) % PRODUCTS.length; updateProductLayer(); }
-      if (index % ZONES.length === 3) { activeProof = (activeProof + 1) % PROOFS.length; updateProofLayer(); }
-      if (index % ZONES.length === 4) { activeReview = (activeReview + 1) % REVIEWS.length; updateReviewLayer(); }
-      const focus = activeParticleForZone(index % ZONES.length);
+      const zone = Math.max(0, Math.min(lastZone, index));
+      setZone(zone);
+      if (zone === 2) { activeProduct = Math.min(activeProduct + 1, PRODUCTS.length - 1); updateProductLayer(); }
+      if (zone === 3) { activeProof = Math.min(activeProof + 1, PROOFS.length - 1); updateProofLayer(); }
+      if (zone === 4) { activeReview = Math.min(activeReview + 1, REVIEWS.length - 1); updateReviewLayer(); }
+      const focus = activeParticleForZone(zone);
       if (focus?.el) {
         $$('.verse-node').forEach(node => node.classList.remove('is-selected'));
         focus.el.classList.add('is-selected');
       }
+      if (zone >= lastZone) {
+        autoTimer = setTimeout(() => {
+          stopAutoFlight();
+          setControlActive(els.guidedMode);
+        }, 4200);
+        return;
+      }
       index += 1;
-      autoTimer = setTimeout(run, 5600);
+      autoTimer = setTimeout(run, 5200);
     };
     run();
   }
@@ -425,7 +446,13 @@
     els.stateHint.textContent = z.hint;
     els.launchDock.classList.toggle('is-visible', currentZone === 5);
     els.stage.dataset.zone = String(currentZone);
-    $$('.mobile-zone-dots button').forEach(btn => btn.classList.toggle('is-active', Number(btn.dataset.zone) === currentZone));
+    $$('.mobile-zone-dots button').forEach(btn => {
+      const isActive = Number(btn.dataset.zone) === currentZone;
+      btn.classList.toggle('is-active', isActive);
+      btn.setAttribute('aria-current', isActive ? 'step' : 'false');
+    });
+    if (els.zonePrev) els.zonePrev.disabled = currentZone === 0;
+    if (els.zoneNext) els.zoneNext.disabled = currentZone === ZONES.length - 1;
     updateLayerStates();
     if (!options.immediate && !prefersReducedMotion) pulseZone();
   }
