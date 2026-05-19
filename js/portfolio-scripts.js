@@ -105,6 +105,7 @@
     tooltipClose: $('#tooltipClose'),
     tooltipType: $('#tooltipType'),
     tooltipTitle: $('#tooltipTitle'),
+    tooltipMock: $('#tooltipMock'),
     tooltipDesc: $('#tooltipDesc'),
     tooltipUse: $('#tooltipUse'),
     tooltipLink: $('#tooltipLink'),
@@ -145,6 +146,7 @@
   let activeProduct = 0;
   let activeReview = 0;
   let activeProof = 0;
+  let moveIdleTimer = null;
 
   const GUIDE = isTouch ? [
     { title:'Travel by touch', text:'Swipe left or right to move between Shrimo Verse zones.', target:'.mobile-control-dock' },
@@ -517,6 +519,7 @@
     target?.classList.add(target === els.core ? 'is-focused' : 'is-selected');
     els.tooltipType.textContent = obj.category || 'Object';
     els.tooltipTitle.textContent = obj.label || obj.title || obj.name;
+    updateTooltipMock(obj, target);
     els.tooltipDesc.textContent = obj.desc || obj.text || '';
     els.tooltipUse.textContent = obj.use || obj.company || '';
     if (obj.link) {
@@ -528,6 +531,18 @@
     }
     els.tooltip.classList.add('is-open');
     els.tooltip.setAttribute('aria-hidden', 'false');
+  }
+
+  function updateTooltipMock(obj, target) {
+    if (!els.tooltipMock) return;
+    const mockType =
+      target === els.core ? 'core' :
+      target?.classList?.contains('proof-dot') ? 'proof' :
+      target?.classList?.contains('review-dot') ? 'review' :
+      obj.category === 'Tool' ? 'tool' :
+      obj.category === 'Contact' ? 'contact' :
+      'technology';
+    els.tooltipMock.className = `tooltip-mock ${mockType}`;
   }
 
   function closeObject() {
@@ -576,14 +591,32 @@
   function bindCursor() {
     if (isTouch || prefersReducedMotion) return;
     positionShip(lastMouse.x, lastMouse.y);
+    els.ship.classList.remove('is-hidden');
+    els.ship.classList.add('is-idle');
+    window.addEventListener('mouseenter', () => {
+      els.ship.classList.remove('is-hidden');
+    });
+    window.addEventListener('mouseleave', () => {
+      els.ship.classList.add('is-hidden');
+      els.ship.classList.remove('is-moving', 'is-boosting');
+    });
     window.addEventListener('mousemove', (event) => {
       prevMouse = { ...lastMouse };
       lastMouse = { x: event.clientX, y: event.clientY };
       const dx = lastMouse.x - prevMouse.x;
       const dy = lastMouse.y - prevMouse.y;
-      if (Math.abs(dx) + Math.abs(dy) > 1) {
+      const velocity = Math.hypot(dx, dy);
+      if (velocity > 1) {
         shipAngle = Math.atan2(dy, dx) * 180 / Math.PI + 90;
         createTrail(lastMouse.x, lastMouse.y);
+        els.ship.classList.remove('is-idle', 'is-hidden');
+        els.ship.classList.add('is-moving');
+        els.ship.classList.toggle('is-boosting', velocity > 18);
+        clearTimeout(moveIdleTimer);
+        moveIdleTimer = setTimeout(() => {
+          els.ship.classList.remove('is-moving', 'is-boosting');
+          els.ship.classList.add('is-idle');
+        }, 90);
       }
       positionShip(lastMouse.x, lastMouse.y);
     }, { passive: true });
