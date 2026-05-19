@@ -91,3 +91,19 @@ There is no separate footer. The final visible world state is the Shrimo Base St
 - No fake reviews are used.
 - All visible particles are meaningful.
 - Black + Cyan color direction is maintained.
+
+## Real Signal Update Plan
+
+### Added trust state
+The Shrimo Verse route now includes a dedicated **Client Signal Stream** state after the Proof Belt. This keeps trust inside the universe flow instead of placing testimonials in a normal page section.
+
+### Real reviews added
+- Ram Dubey, Khyati Overseas Private Limited
+- Rajeev T., International client
+- Sergio W., International client
+
+### Base Station update
+The footer remains part of the world as **Shrimo Base Station**. It now includes visible contact beacons, location signal, core stack signal, and profile/company paths.
+
+### Loader update
+The loader now clearly shows that the user is entering Shrimo Verse and that real client signals are being synced before the world opens.

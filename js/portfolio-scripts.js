@@ -38,13 +38,14 @@
     canvas: $('#verseCanvas')
   };
 
-  const zones = ['arrival', 'orbit', 'products', 'proof', 'dock'];
+  const zones = ['arrival', 'orbit', 'products', 'proof', 'trust', 'dock'];
   const viewTargets = [
     { x: 0, y: 0, zoom: 1.0 },
     { x: -80, y: 10, zoom: 1.18 },
     { x: 140, y: -20, zoom: 1.05 },
     { x: -30, y: 90, zoom: 1.26 },
-    { x: 0, y: -110, zoom: 1.05 }
+    { x: 120, y: 70, zoom: 1.16 },
+    { x: 0, y: -115, zoom: 1.05 }
   ];
 
   let activeZone = 0;
@@ -58,7 +59,7 @@
 
   const universeObjects = [
     { id:'core', zone:0, category:'Identity', label:'Shrimo Verse Core', type:'identity', x:800, y:500, desc:'The central identity object of this interactive portfolio universe.', use:'It keeps the experience connected: identity, products, tools, proof, and contact flow.', link:'' },
-    { id:'shrikant', zone:0, category:'Identity', label:'Shrikant Yadav', type:'identity', x:640, y:332, desc:'Designer, developer, and product builder behind Shrimo Verse and Shrimo Innovations.', use:'Creates digital systems for business websites, tools, products, and launch-ready web experiences.', link:'https://shrikant.shrimo.com/' },
+    { id:'shrikant', zone:0, category:'Identity', label:'Shrikant Yadav', type:'identity', x:640, y:332, desc:'Full-stack engineer building SaaS products, APIs, and scalable web systems with MERN and Next.js.', use:'Creates digital systems for business websites, product interfaces, APIs, dashboards, and launch-ready web experiences.', link:'https://shrikant.shrimo.com/' },
     { id:'shrimo', zone:0, category:'Identity', label:'Shrimo Innovations', type:'product', x:985, y:332, desc:'Software and web development company connected to the Shrimo ecosystem.', use:'Represents professional web, product, and digital solution work.', link:'https://shrimo.com/' },
 
     { id:'html', zone:1, category:'Technology', label:'HTML', type:'technology', x:386, y:265, desc:'The structural layer of the web.', use:'Used to keep content readable, semantic, accessible, and search-friendly.', link:'' },
@@ -66,6 +67,8 @@
     { id:'javascript', zone:1, category:'Technology', label:'JavaScript', type:'technology', x:1105, y:196, desc:'The interaction layer of Shrimo Verse.', use:'Used for controls, zoom, tooltips, guided mode, explore mode, and cursor behavior.', link:'' },
     { id:'react', zone:1, category:'Technology', label:'React', type:'technology', x:1222, y:334, desc:'A component-based frontend library for modern interfaces.', use:'Best for dashboards, products, interactive apps, and scalable UI systems.', link:'' },
     { id:'next', zone:1, category:'Technology', label:'Next.js', type:'technology', x:1252, y:520, desc:'A React framework for production-grade web applications.', use:'Useful for SEO-ready websites, fast routing, server rendering, and modern business platforms.', link:'' },
+    { id:'typescript', zone:1, category:'Technology', label:'TypeScript', type:'technology', x:1268, y:640, desc:'Typed JavaScript used to make larger frontend and product codebases safer.', use:'Helps reduce bugs, improve maintainability, and support scalable application architecture.', link:'' },
+    { id:'mern', zone:1, category:'Technology', label:'MERN Stack', type:'technology', x:1115, y:830, desc:'MongoDB, Express, React, and Node.js used together for full-stack products.', use:'Useful for SaaS platforms, admin dashboards, API-driven systems, and scalable web products.', link:'' },
     { id:'wordpress', zone:1, category:'Technology', label:'WordPress', type:'technology', x:1040, y:755, desc:'CMS platform for editable business websites.', use:'Best when clients need content control, fast site delivery, and easy publishing workflows.', link:'' },
     { id:'node', zone:1, category:'Technology', label:'Node.js', type:'technology', x:475, y:720, desc:'JavaScript runtime used for backend services and APIs.', use:'Helpful for building APIs, product backends, and connected web applications.', link:'' },
     { id:'php', zone:1, category:'Technology', label:'PHP', type:'technology', x:315, y:548, desc:'Server-side language commonly used in WordPress and custom web systems.', use:'Useful for CMS websites, plugins, server logic, and practical business tools.', link:'' },
@@ -94,10 +97,18 @@
     { id:'trained', zone:3, category:'Proof', label:'100+ Developers', type:'proof', x:1000, y:430, desc:'Developers trained through practical teaching and development guidance.', use:'Shows ability to explain, structure, and mentor development thinking.', link:'' },
     { id:'products-proof', zone:3, category:'Proof', label:'Products Built', type:'proof', x:800, y:650, desc:'Multiple product ideas and platforms built inside the Shrimo ecosystem.', use:'Shows product thinking beyond ordinary service websites.', link:'' },
 
-    { id:'start-project', zone:4, category:'Conversion', label:'Start Project', type:'conversion', x:670, y:424, desc:'The main launch action inside Shrimo Verse.', use:'Use this when you want to discuss a new website, redesign, or web application.', link:'https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20start%20a%20project.' },
-    { id:'whatsapp', zone:4, category:'Conversion', label:'WhatsApp', type:'conversion', x:880, y:360, desc:'Fastest way to start a practical project discussion.', use:'Send your requirement, current website, or idea and get the next step.', link:'https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20start%20a%20project.' },
-    { id:'email', zone:4, category:'Conversion', label:'Email', type:'conversion', x:955, y:540, desc:'Best for structured requirements or project briefs.', use:'Send project details, reference links, and timeline expectations.', link:'mailto:shrikant9907@gmail.com' },
-    { id:'linkedin', zone:4, category:'Conversion', label:'LinkedIn', type:'conversion', x:722, y:625, desc:'Professional contact and profile connection.', use:'Useful for business networking, work history, and professional communication.', link:'https://www.linkedin.com/in/shrikant9907/' }
+    { id:'review-khyati', zone:4, category:'Client Signal', label:'Khyati Overseas', type:'review', x:515, y:375, desc:'Shrimo supported us in website design, social setup, and digital growth work that helped us strengthen our export business presence.', use:'Ram Dubey · Khyati Overseas Private Limited', link:'' },
+    { id:'review-rajeev', zone:4, category:'Client Signal', label:'Fast Execution', type:'review', x:800, y:300, desc:'A project many people said could not be done was handled quickly, with practical suggestions and fast execution.', use:'Rajeev T. · International client', link:'' },
+    { id:'review-sergio', zone:4, category:'Client Signal', label:'On-time Delivery', type:'review', x:1085, y:375, desc:'The work was delivered on time, communication stayed professional, and the final result matched expectations.', use:'Sergio W. · International client', link:'' },
+    { id:'trust-communication', zone:4, category:'Trust Signal', label:'Clear Communication', type:'trust', x:600, y:610, desc:'Professional communication is treated as part of delivery, not an extra.', use:'Keeps projects easier to understand, approve, and move forward.', link:'' },
+    { id:'trust-practical', zone:4, category:'Trust Signal', label:'Practical Suggestions', type:'trust', x:1000, y:610, desc:'Suggestions are focused on what can be built, launched, and maintained.', use:'Useful for business owners who need clear next steps, not confusing technical options.', link:'' },
+
+    { id:'start-project', zone:5, category:'Conversion', label:'Start Project', type:'conversion', x:670, y:424, desc:'The main launch action inside Shrimo Verse.', use:'Use this when you want to discuss a new website, redesign, or web application.', link:'https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20start%20a%20project.' },
+    { id:'whatsapp', zone:5, category:'Conversion', label:'WhatsApp', type:'conversion', x:880, y:360, desc:'Fastest way to start a practical project discussion.', use:'Send your requirement, current website, or idea and get the next step.', link:'https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20start%20a%20project.' },
+    { id:'email', zone:5, category:'Conversion', label:'Email', type:'conversion', x:955, y:540, desc:'Best for structured requirements or project briefs.', use:'Send project details, reference links, and timeline expectations.', link:'mailto:shrikant9907@gmail.com' },
+    { id:'linkedin', zone:5, category:'Conversion', label:'LinkedIn', type:'conversion', x:722, y:625, desc:'Professional contact and profile connection.', use:'Useful for business networking, work history, and professional communication.', link:'https://www.linkedin.com/in/shrikant9907/' },
+    { id:'call', zone:5, category:'Conversion', label:'Call', type:'conversion', x:1040, y:640, desc:'Direct phone path for quick discussion.', use:'Use this when the project needs a fast first conversation.', link:'tel:+919907472038' },
+    { id:'profile-link', zone:5, category:'Conversion', label:'Digital Profile', type:'conversion', x:560, y:560, desc:'Public Digiting Card profile path for quick identity and contact access.', use:'A compact profile link connected to the Shrimo ecosystem.', link:'https://digitingcard.com/p/shrikant-yadav' }
   ];
 
   function init() {
@@ -115,7 +126,8 @@
     } else if (window.gsap) {
       gsap.from('.entry-core', { scale: 0.8, opacity: 0, duration: 1.1, ease: 'expo.out' });
       gsap.from('.entry-kicker, .entry-gate h1, .entry-copy, .entry-actions, .entry-line', { y: 24, opacity: 0, duration: 0.8, stagger: 0.12, delay: 0.25, ease: 'power3.out' });
-      gsap.to(els.entryStatus, { textContent: 'You are going to enter Shrimo Verse', duration: 0.2, delay: 1.1 });
+      setTimeout(() => { els.entryStatus.textContent = 'Syncing real client signals'; }, 750);
+      setTimeout(() => { els.entryStatus.textContent = 'You are going to enter Shrimo Verse'; }, 1450);
     }
   }
 

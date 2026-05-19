@@ -45,3 +45,19 @@
 - Added prefers-reduced-motion handling.
 - Added skip link and keyboard controls.
 - Avoided fake reviews and meaningless particles.
+
+## Real Signal Update
+
+### Client trust
+- Added three real client reviews supplied by the user.
+- Added a new **Client Signal Stream** world state between Proof Belt and Conversion Dock.
+- Added clickable trust particles for Khyati Overseas, Rajeev T., Sergio W., Clear Communication, and Practical Suggestions.
+- Removed the earlier placeholder-only trust approach.
+
+### Profile and contact grounding
+- Updated Shrimo Verse objects and Base Station copy using uploaded profile details: Narmadapuram/Hoshangabad location, mobile, email, LinkedIn, Digiting Card profile, MERN + Next.js focus, React, Next.js, and TypeScript skills.
+- Added Call and Digital Profile contact beacons inside the Conversion Dock.
+
+### Loader and footer visibility
+- Strengthened the loader sequence with visible status steps: Preparing Shrimo Verse → Syncing real client signals → You are going to enter Shrimo Verse.
+- Expanded the footer into a visible **Shrimo Base Station** panel inside the same universe instead of a separate footer section.
