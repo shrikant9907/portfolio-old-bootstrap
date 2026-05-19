@@ -147,6 +147,8 @@
   let activeReview = 0;
   let activeProof = 0;
   let moveIdleTimer = null;
+  let shipVelocity = 0;
+  let lockTimer = null;
 
   const GUIDE = isTouch ? [
     { title:'Travel by touch', text:'Swipe left or right to move between Shrimo Verse zones.', target:'.mobile-control-dock' },
@@ -606,20 +608,25 @@
       const dx = lastMouse.x - prevMouse.x;
       const dy = lastMouse.y - prevMouse.y;
       const velocity = Math.hypot(dx, dy);
+      shipVelocity = velocity;
       if (velocity > 1) {
         shipAngle = Math.atan2(dy, dx) * 180 / Math.PI + 90;
-        createTrail(lastMouse.x, lastMouse.y);
+        createTrail(lastMouse.x, lastMouse.y, velocity);
         els.ship.classList.remove('is-idle', 'is-hidden');
         els.ship.classList.add('is-moving');
         els.ship.classList.toggle('is-boosting', velocity > 18);
         clearTimeout(moveIdleTimer);
         moveIdleTimer = setTimeout(() => {
+          shipVelocity = 0;
           els.ship.classList.remove('is-moving', 'is-boosting');
           els.ship.classList.add('is-idle');
         }, 90);
       }
       positionShip(lastMouse.x, lastMouse.y);
     }, { passive: true });
+    window.addEventListener('dblclick', (event) => {
+      triggerCursorLock(event.clientX, event.clientY);
+    });
   }
 
   function positionShip(x, y) {
@@ -627,16 +634,72 @@
   }
 
   let lastTrailTime = 0;
-  function createTrail(x, y) {
+  function createTrail(x, y, velocity = shipVelocity) {
     const now = performance.now();
-    if (now - lastTrailTime < 28) return;
+    if (now - lastTrailTime < (velocity > 18 ? 14 : velocity > 8 ? 20 : 28)) return;
     lastTrailTime = now;
-    const dot = document.createElement('span');
-    dot.className = 'trail-dot';
-    dot.style.left = `${x - 3}px`;
-    dot.style.top = `${y - 3}px`;
-    els.trail.appendChild(dot);
-    setTimeout(() => dot.remove(), 650);
+    createTrailPlume(x, y, velocity);
+    const count = velocity > 18 ? 3 : velocity > 8 ? 2 : 1;
+    for (let i = 0; i < count; i += 1) {
+      const dot = document.createElement('span');
+      const trailClass = velocity > 18 ? 'trail-boost' : velocity > 8 ? 'trail-hot' : 'trail-smoke';
+      dot.className = `trail-dot ${trailClass}`;
+      const spread = velocity > 18 ? 10 : velocity > 8 ? 6 : 3;
+      const offsetX = (Math.random() - 0.5) * spread;
+      const offsetY = (Math.random() - 0.5) * spread + (i * 2);
+      dot.style.left = `${x - 3 + offsetX}px`;
+      dot.style.top = `${y - 3 + offsetY}px`;
+      els.trail.appendChild(dot);
+      setTimeout(() => dot.remove(), velocity > 18 ? 760 : 650);
+    }
+
+    if (velocity > 6) {
+      const smoke = document.createElement('span');
+      smoke.className = 'trail-dot trail-smoke-long';
+      smoke.style.left = `${x - 6 + ((Math.random() - 0.5) * 10)}px`;
+      smoke.style.top = `${y - 6 + ((Math.random() - 0.5) * 10)}px`;
+      els.trail.appendChild(smoke);
+      setTimeout(() => smoke.remove(), 1160);
+    }
+  }
+
+  function createTrailPlume(x, y, velocity) {
+    if (velocity < 5) return;
+    const plume = document.createElement('span');
+    plume.className = 'trail-plume';
+    const length = velocity > 18 ? 54 : velocity > 10 ? 38 : 26;
+    const thickness = velocity > 18 ? 16 : velocity > 10 ? 13 : 10;
+    plume.style.width = `${length}px`;
+    plume.style.height = `${thickness}px`;
+    plume.style.left = `${x}px`;
+    plume.style.top = `${y - (thickness / 2)}px`;
+    plume.style.transform = `translateX(-6px) rotate(${shipAngle - 90}deg)`;
+    els.trail.appendChild(plume);
+    setTimeout(() => plume.remove(), 740);
+  }
+
+  function triggerCursorLock(x, y) {
+    els.ship.classList.add('is-locked');
+    clearTimeout(lockTimer);
+    lockTimer = setTimeout(() => {
+      els.ship.classList.remove('is-locked');
+    }, 420);
+
+    const ring = document.createElement('span');
+    ring.className = 'cursor-target-ring';
+    ring.style.left = `${x}px`;
+    ring.style.top = `${y}px`;
+    els.trail.appendChild(ring);
+    setTimeout(() => ring.remove(), 700);
+
+    for (let i = 0; i < 3; i += 1) {
+      const dot = document.createElement('span');
+      dot.className = 'trail-dot trail-boost';
+      dot.style.left = `${x + ((Math.random() - 0.5) * 18)}px`;
+      dot.style.top = `${y + ((Math.random() - 0.5) * 18)}px`;
+      els.trail.appendChild(dot);
+      setTimeout(() => dot.remove(), 720);
+    }
   }
 
   function bindKeyboard() {

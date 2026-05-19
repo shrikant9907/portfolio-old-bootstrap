@@ -158,6 +158,29 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
 body.cursor-lock .ship-flame{height:20px!important}
 body.cursor-lock .ship-flame::after{width:24px!important;height:20px!important}
 .ship-reticle{width:54px!important;height:54px!important;margin:-27px 0 0 -27px!important;border-color:rgba(255,176,32,.74)!important;box-shadow:0 0 20px rgba(255,176,32,.34)!important}
+.ship-cursor.is-moving .ship-flame{height:30px!important;transform:translateX(-50%) scaleY(1.06)!important}
+.ship-cursor.is-moving .ship-flame::before{height:16px!important}
+.ship-cursor.is-moving .ship-flame::after{width:30px!important;height:26px!important;opacity:1!important}
+.ship-cursor.is-boosting .ship-flame{height:42px!important;filter:drop-shadow(0 0 22px var(--fire-glow)) drop-shadow(0 0 38px rgba(255,176,32,.48))!important;transform:translateX(-50%) scaleY(1.24)!important}
+.ship-cursor.is-boosting .ship-flame::before{height:20px!important;width:8px!important}
+.ship-cursor.is-boosting .ship-flame::after{width:36px!important;height:32px!important;background:radial-gradient(circle,rgba(255,176,32,.46) 0 22%,rgba(255,107,0,.24) 44%,transparent 76%)!important}
+.ship-cursor.is-locked .ship-reticle{opacity:1!important;transform:scale(1.16)!important;border-color:rgba(255,176,32,.92)!important;box-shadow:0 0 24px rgba(255,176,32,.52),0 0 42px rgba(255,107,0,.18)!important}
+.ship-cursor.is-locked .ship-flame{height:34px!important;transform:translateX(-50%) scaleY(1.12)!important}
+.ship-cursor.is-locked .ship-flame::after{width:34px!important;height:30px!important;opacity:1!important}
+
+.trail-dot.trail-smoke{background:radial-gradient(circle,rgba(255,245,220,.72) 0 8%,rgba(255,191,92,.72) 22%,rgba(255,107,0,.24) 50%,transparent 78%)!important;filter:blur(.9px) drop-shadow(0 0 14px rgba(255,176,32,.42))!important}
+.trail-dot.trail-hot{width:9px!important;height:9px!important;background:radial-gradient(circle,#fff 0 14%,#ffe8a0 22%,#ffbf3d 44%,var(--fire-edge) 72%,transparent 82%)!important;filter:blur(.25px) drop-shadow(0 0 15px rgba(255,176,32,.55))!important}
+.trail-dot.trail-boost{width:12px!important;height:12px!important;background:radial-gradient(circle,#fff 0 12%,#fff1b9 18%,#ffd15b 36%,#ff9a1f 58%,rgba(255,107,0,.94) 74%,transparent 84%)!important;filter:blur(.3px) drop-shadow(0 0 18px rgba(255,176,32,.7)) drop-shadow(0 0 28px rgba(255,107,0,.34))!important}
+.trail-dot.trail-smoke-long{width:18px!important;height:18px!important;background:radial-gradient(circle,rgba(255,243,213,.42) 0 10%,rgba(255,196,96,.34) 28%,rgba(255,107,0,.14) 54%,transparent 80%)!important;filter:blur(2.2px) drop-shadow(0 0 18px rgba(255,176,32,.22))!important;animation:trailSmokeFade 1.15s ease-out forwards!important}
+.trail-plume{position:absolute;height:14px;border-radius:999px;background:linear-gradient(90deg,rgba(255,247,206,.75) 0%,rgba(255,211,91,.62) 18%,rgba(255,154,31,.34) 48%,rgba(255,107,0,.12) 72%,transparent 100%);filter:blur(1.2px) drop-shadow(0 0 16px rgba(255,176,32,.34));transform-origin:left center;animation:trailPlumeFade .72s ease-out forwards}
+.cursor-target-ring{position:absolute;width:18px;height:18px;margin:-9px 0 0 -9px;border:2px solid rgba(255,176,32,.9);border-radius:50%;box-shadow:0 0 18px rgba(255,176,32,.45),0 0 38px rgba(255,107,0,.2);animation:targetLock 620ms ease-out forwards}
+.cursor-target-ring::before,.cursor-target-ring::after{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%}
+.cursor-target-ring::before{width:42px;height:42px;border:1px solid rgba(255,176,32,.48);animation:targetWave 620ms ease-out forwards}
+.cursor-target-ring::after{width:6px;height:6px;background:radial-gradient(circle,#fff 0 20%,#ffd978 45%,var(--fire-edge) 78%,transparent 90%);box-shadow:0 0 14px rgba(255,176,32,.55)}
+@keyframes targetLock{0%{opacity:0;transform:scale(.35)}20%{opacity:1;transform:scale(1)}70%{opacity:1;transform:scale(1.22)}100%{opacity:0;transform:scale(1.65)}}
+@keyframes targetWave{0%{opacity:.9;transform:translate(-50%,-50%) scale(.25)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.2)}}
+@keyframes trailPlumeFade{0%{opacity:.95}100%{opacity:0;transform:scaleX(.58)}}
+@keyframes trailSmokeFade{0%{opacity:.58;transform:scale(.75)}100%{opacity:0;transform:scale(1.65)}}
 
 .ship-cursor.is-moving .ship-flame::after{width:26px!important;height:24px!important;opacity:1!important}
 .ship-cursor.is-boosting .ship-flame::before{height:18px!important}
