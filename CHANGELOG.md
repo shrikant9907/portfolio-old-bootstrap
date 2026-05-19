@@ -36,3 +36,15 @@
 - JSON-LD kept valid.
 - One H1 retained.
 - No .git included.
+
+## Cluster Fix Update
+
+- Cleaned the central orbit so it now contains only skills, technologies, and selected tools.
+- Removed products, reviews, proof, and contact actions from the SV core orbit.
+- Added a separate Product Gallery layer with product dots and one focused gallery panel.
+- Added a separate Client Signal layer with review dots and one readable review panel.
+- Added a separate Proof Ring layer with proof dots and focused proof details.
+- Kept Launch Dock separate as the final conversion area.
+- Improved Auto Flight so it moves through clean layers instead of highlighting crowded orbit labels.
+- Added zoom visibility rules so deeper tools only appear when the user zooms in.
+- Added `SHRIMO_VERSE_CLUSTER_FIX_PLAN.md` to document the final cleanup decision.
