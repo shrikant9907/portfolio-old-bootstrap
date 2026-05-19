@@ -116,6 +116,7 @@
     bindEntry();
     bindControls();
     bindWheelAndKeys();
+    bindTouchGestures();
     initCursor();
     initThree();
     setZone(0, { immediate: true });
@@ -346,6 +347,109 @@
         el.textContent = finalValue;
       }
     });
+  }
+
+
+  function bindTouchGestures() {
+    if (!els.verseStage) return;
+
+    let startX = 0;
+    let startY = 0;
+    let lastX = 0;
+    let lastY = 0;
+    let startDistance = 0;
+    let startZoom = 1;
+    let isDragging = false;
+    let moved = false;
+
+    const interactiveSelector = 'a, button, .object-tooltip, input, textarea, select';
+    const getDistance = (touches) => {
+      const dx = touches[0].clientX - touches[1].clientX;
+      const dy = touches[0].clientY - touches[1].clientY;
+      return Math.hypot(dx, dy);
+    };
+
+    els.verseStage.addEventListener('touchstart', (event) => {
+      if (!document.body.classList.contains('verse-ready')) return;
+      if (event.target.closest(interactiveSelector)) return;
+      moved = false;
+      if (event.touches.length === 2) {
+        startDistance = getDistance(event.touches);
+        startZoom = worldZoom;
+        isDragging = false;
+        event.preventDefault();
+        return;
+      }
+      if (event.touches.length === 1) {
+        startX = lastX = event.touches[0].clientX;
+        startY = lastY = event.touches[0].clientY;
+        isDragging = mode === 'explore';
+      }
+    }, { passive: false });
+
+    els.verseStage.addEventListener('touchmove', (event) => {
+      if (!document.body.classList.contains('verse-ready')) return;
+      if (event.target.closest(interactiveSelector)) return;
+      if (event.touches.length === 2 && startDistance > 0) {
+        const distance = getDistance(event.touches);
+        const scale = distance / startDistance;
+        setZoom(startZoom * scale, { keepPan: true });
+        moved = true;
+        event.preventDefault();
+        return;
+      }
+      if (event.touches.length === 1) {
+        const touch = event.touches[0];
+        const dx = touch.clientX - lastX;
+        const dy = touch.clientY - lastY;
+        const totalDx = touch.clientX - startX;
+        const totalDy = touch.clientY - startY;
+        if (mode === 'explore' && isDragging) {
+          worldPan.x += dx;
+          worldPan.y += dy;
+          applyWorldTransform();
+          moved = true;
+          event.preventDefault();
+        } else if (Math.abs(totalYSafe(totalDy)) > 14 || Math.abs(totalDx) > 14) {
+          moved = true;
+        }
+        lastX = touch.clientX;
+        lastY = touch.clientY;
+      }
+    }, { passive: false });
+
+    els.verseStage.addEventListener('touchend', (event) => {
+      if (!document.body.classList.contains('verse-ready')) return;
+      if (event.target.closest(interactiveSelector)) return;
+      if (event.touches.length === 0 && event.changedTouches.length) {
+        const endX = event.changedTouches[0].clientX;
+        const endY = event.changedTouches[0].clientY;
+        const dx = endX - startX;
+        const dy = endY - startY;
+        if (mode === 'guided' && Math.abs(dy) > 46 && Math.abs(dy) > Math.abs(dx) * 1.15) {
+          setZone(activeZone + (dy < 0 ? 1 : -1));
+          event.preventDefault();
+        }
+      }
+      startDistance = 0;
+      isDragging = false;
+    }, { passive: false });
+
+    // Double tap quickly returns to the main universe view on touch devices.
+    let lastTap = 0;
+    els.verseStage.addEventListener('touchend', (event) => {
+      if (event.target.closest(interactiveSelector)) return;
+      const now = Date.now();
+      if (!moved && now - lastTap < 280) {
+        resetView();
+        event.preventDefault();
+      }
+      lastTap = now;
+    }, { passive: false });
+  }
+
+  function totalYSafe(value) {
+    return Number.isFinite(value) ? value : 0;
   }
 
   function initCursor() {

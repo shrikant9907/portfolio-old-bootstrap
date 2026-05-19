@@ -61,3 +61,22 @@
 ### Loader and footer visibility
 - Strengthened the loader sequence with visible status steps: Preparing Shrimo Verse → Syncing real client signals → You are going to enter Shrimo Verse.
 - Expanded the footer into a visible **Shrimo Base Station** panel inside the same universe instead of a separate footer section.
+
+## Final Polish Pass - Screen-First Shrimo Verse
+
+- Added `SHRIMO_VERSE_FINAL_CHECKLIST.md`.
+- Tuned the experience to work as a full-screen world instead of a container-based layout.
+- Reduced heading scale for 1366px laptop screens.
+- Made the fixed control bar full-screen aligned instead of max-width container aligned.
+- Added stronger responsive typography clamps.
+- Added touch gesture support:
+  - swipe navigation in Guided Mode,
+  - drag/pan in Explore Mode,
+  - pinch zoom,
+  - double-tap Reset View.
+- Improved mobile control drawer behavior.
+- Added mobile bottom-sheet tooltip behavior.
+- Enlarged touch targets for mobile and tablet.
+- Tuned review stream for horizontal mobile swiping.
+- Kept rocket cursor desktop-only.
+- Preserved real reviews and Shrimo Base Station footer-as-dock concept.

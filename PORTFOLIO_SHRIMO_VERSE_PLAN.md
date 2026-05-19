@@ -107,3 +107,15 @@ The footer remains part of the world as **Shrimo Base Station**. It now includes
 
 ### Loader update
 The loader now clearly shows that the user is entering Shrimo Verse and that real client signals are being synced before the world opens.
+
+## Final Polish Notes
+
+The final polish pass prioritizes the screen-first Shrimo Verse model. The experience should not read as a website container. It should feel like a viewport-native interface where the world, content panels, controls, tooltip, reviews, and base station all exist on one interactive screen.
+
+Primary polish decisions:
+- Full viewport stage behavior using `100dvh` and `100vw`.
+- More compact heading scale for 1366px screens.
+- Full-screen aligned control bar instead of centered max-width navbar behavior.
+- Stronger mobile interaction support with swipe, pan, pinch zoom, and double-tap reset.
+- Mobile reviews use swipeable cards; mobile tooltip behaves like a docked bottom panel.
+- All particles remain meaningful; no decorative-only objects are added.
