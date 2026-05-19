@@ -142,3 +142,17 @@ svg{display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:
   .zoom-dock{bottom:196px}
   .mobile-zone-dots button::after,.zone-arrow::after{display:none}
 }
+
+/* === Final requested patch: previous rocket fire, lower bullets, bottom-right guide === */
+.ship-cursor{width:34px!important;height:44px!important}
+.ship-ship{top:8px!important;width:16px!important;height:24px!important;clip-path:polygon(50% 0,88% 72%,50% 100%,12% 72%)!important;background:linear-gradient(180deg,var(--cyan-bright),var(--cyan))!important;box-shadow:0 0 18px rgba(34,211,238,.45)!important}
+.ship-ship::before,.ship-ship::after{display:none!important}
+.ship-flame{top:30px!important;width:10px!important;height:22px!important;background:radial-gradient(circle at 50% 18%,#fff 0 10%,var(--fire) 18% 42%,var(--fire-edge) 66%,transparent 78%)!important;border-radius:50% 50% 70% 70%!important;filter:drop-shadow(0 0 12px var(--fire-glow))!important;animation:flame .12s ease-in-out infinite alternate!important;transform-origin:top!important}
+body.cursor-lock .ship-flame{height:16px!important}
+.ship-reticle{width:44px!important;height:44px!important;margin:-22px 0 0 -22px!important;border-color:rgba(255,176,32,.72)!important;box-shadow:0 0 18px rgba(255,176,32,.35)!important}
+
+@media (min-width:781px){
+  .zone-nav{bottom:10px!important}
+  .state-readout{bottom:12px!important}
+  .guide-card{left:auto!important;right:24px!important;top:auto!important;bottom:78px!important;width:min(330px,calc(100vw - 48px))!important}
+}
