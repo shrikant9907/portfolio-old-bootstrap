@@ -1,0 +1,13 @@
+{
+  "name": "Shrimo Verse",
+  "short_name": "Shrimo Verse",
+  "description": "Interactive portfolio universe by Shrikant Yadav.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05070A",
+  "theme_color": "#05070A",
+  "icons": [
+    { "src": "images/favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "images/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

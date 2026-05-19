@@ -1,10 +1,10 @@
-# TODO
+# TODO / Future Enhancements
 
-The Shrimo Verse build now includes the provided real client reviews and profile/contact details. Before final public launch, please confirm these remaining items:
+No required blocking information remains for the current production-ready version.
 
-1. Confirm GitHub URL: `https://github.com/shrikant9907`.
-2. Confirm whether the primary action should remain WhatsApp or become a project enquiry form later.
-3. Add product screenshots/logos later if you want richer product nodes for Digiting Card, Photocopywala, Shrimo Innovations, and the directory platform.
-4. Test performance on low-end Android devices after deployment.
-5. Run Lighthouse/PageSpeed after the page is live.
-6. Decide later whether to restore stronger SEO text after the creative direction is approved.
+Optional future improvements:
+- Add real product screenshots for Shrimo Innovations, Digiting Card, Photocopywala, and Business Directory Platform.
+- Add optional sound effects with a mute control.
+- Add verified review dates or logos if available.
+- Add more real client projects as gallery objects.
+- Run live PageSpeed, Rich Results, and mobile device testing after deployment.

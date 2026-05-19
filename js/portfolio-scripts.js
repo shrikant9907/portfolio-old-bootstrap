@@ -1,734 +1,600 @@
-(function () {
+(() => {
   'use strict';
-
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || !window.matchMedia('(pointer: fine)').matches;
 
   const $ = (selector, scope = document) => scope.querySelector(selector);
   const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches;
+
+  const ZONES = [
+    { name: 'Arrival Core', hint: 'Everything orbits from the center.', title: 'Welcome to Shrimo Verse.', kicker: 'ARRIVAL CORE', copy: 'A living portfolio universe where products, tools, technologies, proof, and client signals orbit one meaningful center.' },
+    { name: 'Technology Orbit', hint: 'Core technologies and tools become visible.', title: 'Tools become orbit paths.', kicker: 'TECHNOLOGY ORBIT', copy: 'Inspect the technologies and tools used to build scalable websites, SaaS systems, APIs, and product interfaces.' },
+    { name: 'Product Gallery', hint: 'Products and platforms come forward.', title: 'Real products enter focus.', kicker: 'PRODUCT GALLERY', copy: 'Explore Shrimo Innovations, Digiting Card, Photocopywala, and the business directory platform as larger orbiting gallery objects.' },
+    { name: 'Proof Ring', hint: 'Experience becomes measurable signal.', title: 'Proof moves around the core.', kicker: 'PROOF RING', copy: '12+ years, 300+ projects, 100+ developers trained, and multiple products built into the Shrimo ecosystem.' },
+    { name: 'Client Signals', hint: 'Real feedback from real clients.', title: 'Client signals confirm the path.', kicker: 'CLIENT SIGNAL STREAM', copy: 'Real reviews from Khyati Overseas and international clients show delivery, communication, speed, and practical execution.' },
+    { name: 'Launch Dock', hint: 'Conversion dock and contact beacons.', title: 'Reach the Launch Dock.', kicker: 'LAUNCH DOCK', copy: 'Start a project, send a WhatsApp message, call, email, or open the professional network paths from the final dock.' }
+  ];
+
+  const PARTICLES = [
+    // Technology
+    p('html','HTML5','Technology','The semantic base of readable, accessible, search-friendly websites.','Used for clean structure and long-term maintainability.',1,0,250,'technology'),
+    p('css','CSS3','Technology','The visual system layer for layout, responsive design, and motion styling.','Used for polished interfaces and responsive screen behavior.',1,24,255,'technology'),
+    p('javascript','JavaScript','Technology','The interaction layer that powers controls, tooltips, zoom, and guided behavior.','Used for living interfaces and app-like experiences.',1,48,260,'technology'),
+    p('typescript','TypeScript','Technology','Typed JavaScript for safer large-scale frontend and product codebases.','Useful for scalable systems and maintainable architecture.',1,72,265,'technology'),
+    p('react','React','Technology','Component-based frontend library for dynamic product interfaces.','Best for dashboards, SaaS screens, and modular UI systems.',1,98,270,'technology'),
+    p('next','Next.js','Technology','Production React framework for fast, SEO-ready web applications.','Useful for websites, products, routing, rendering, and performance.',1,126,265,'technology'),
+    p('node','Node.js','Technology','JavaScript runtime for backend systems and API services.','Used for scalable backend logic and product systems.',1,154,260,'technology'),
+    p('express','Express.js','Technology','Node framework for REST APIs and server routes.','Useful for auth flows, dashboards, and modular backend systems.',1,182,255,'technology'),
+    p('php','PHP','Technology','Server-side language used in WordPress and custom systems.','Useful for CMS work, plugins, and practical web tools.',1,210,250,'technology'),
+    p('wordpress','WordPress','Technology','CMS platform for editable business websites and custom themes.','Best when clients need content control and fast publishing workflows.',1,236,245,'technology'),
+    p('mongodb','MongoDB','Technology','Document database for flexible application data and dashboards.','Useful for product data, profiles, and dynamic applications.',1,262,250,'technology'),
+    p('mysql','MySQL','Technology','Relational database for structured business and CMS data.','Useful for directories, ecommerce, and custom business systems.',1,288,255,'technology'),
+    p('tailwind','Tailwind CSS','Technology','Utility-first CSS system for fast, consistent interface building.','Useful for design tokens and responsive component systems.',1,314,260,'technology'),
+    p('bootstrap','Bootstrap','Technology','Responsive frontend framework for practical website layouts.','Useful for reliable business websites and admin interfaces.',1,338,255,'technology'),
+    p('sass','Sass / SCSS','Technology','CSS preprocessor for structured, maintainable visual systems.','Useful for larger theme and component styling.',1,16,335,'technology'),
+    p('jquery','jQuery','Technology','Classic JavaScript library still useful in legacy and WordPress projects.','Useful for maintaining older business sites and plugins.',1,66,346,'technology'),
+    p('redux','Redux','Technology','Predictable frontend state management for complex interfaces.','Useful when larger applications need stable data flow.',1,116,340,'technology'),
+    p('jwt','JWT Auth','Technology','Token-based authentication for secure logged-in web products.','Useful for role-based dashboards and protected APIs.',1,166,348,'technology'),
+    p('woocommerce','WooCommerce','Technology','WordPress ecommerce system for catalogs, orders, and payments.','Useful for online stores and business commerce workflows.',1,216,342,'technology'),
+
+    // Tools hidden until zoom
+    p('git','Git','Tool','Version control for professional development and deployment workflows.','Keeps work trackable, reversible, and collaborative.',1,26,430,'tool'),
+    p('figma','Figma','Tool','Design and interface planning tool for UI structure and handoff.','Useful for shaping layouts before development starts.',1,70,450,'tool'),
+    p('gsap','GSAP','Tool','Animation platform for premium web motion and scroll-based storytelling.','Used when motion needs to feel controlled and production-quality.',1,116,438,'tool'),
+    p('three','Three.js','Tool','WebGL library for 3D and immersive web visuals.','Useful for universe-like experiences and depth-driven interfaces.',1,160,452,'tool'),
+    p('apis','APIs','Tool','Connected systems and integrations for product functionality.','Useful for business automation and dynamic data flows.',1,206,440,'tool'),
+    p('search-console','Search Console','Tool','Google search monitoring and technical SEO insight.','Used to track visibility, issues, indexing, and search performance.',1,252,456,'tool'),
+    p('analytics','Analytics','Tool','Measurement system for traffic and user behavior.','Helps understand what users do after launch.',1,300,430,'tool'),
+    p('hosting','Hosting','Tool','Deployment and server setup for production websites.','Used for making websites stable and accessible online.',1,344,448,'tool'),
+    p('vercel','Vercel','Tool','Modern hosting platform for frontend and Next.js applications.','Useful for fast deployments and production previews.',1,20,505,'tool'),
+    p('performance','Performance','Tool','Speed, loading, and UX optimization.','Important for conversions, usability, and search quality.',1,330,512,'tool'),
+
+    // Services
+    p('websites','Websites','Service','Professional business websites designed to look credible and convert clearly.','Useful for service providers, companies, and local businesses.',1,42,560,'service'),
+    p('landing','Landing Pages','Service','Focused pages built to convert one campaign or offer.','Useful for ads, launches, and lead generation.',1,95,575,'service'),
+    p('redesign','Redesign','Service','Improving old websites without losing their business identity.','Useful when a site feels outdated, slow, or unclear.',1,148,565,'service'),
+    p('webapps','Web Apps','Service','Interactive systems with login, data, dashboards, and workflows.','Useful for SaaS, admin panels, and internal tools.',1,202,580,'service'),
+    p('product-ui','Product UI','Service','Interfaces that make digital products easier to use and scale.','Useful for dashboards, tools, platforms, and SaaS screens.',1,254,566,'service'),
+    p('seo-structure','SEO Structure','Service','Clean technical structure for better crawlability and content hierarchy.','Useful for ranking preparation and long-term growth.',1,308,580,'service'),
+    p('saas','SaaS Systems','Service','Scalable product architecture for web-based software.','Useful for businesses building recurring digital products.',1,356,558,'service'),
+
+    // Products / gallery
+    p('shrimo','Shrimo Innovations','Product','Software and web development company focused on websites, apps, and digital products.','The main business identity behind Shrimo Verse.',2,20,315,'product','https://shrimo.com/'),
+    p('digiting','Digiting Card','Product','Digital visiting card platform for professionals and businesses.','A product built around digital identity and contact sharing.',2,90,340,'product','https://digitingcard.com/'),
+    p('photocopywala','Photocopywala','Product','Online tools and document utilities for common print and digital tasks.','A practical platform for people who need quick document services/tools.',2,180,336,'product','https://photocopywala.in/'),
+    p('directory','Directory Platform','Product','Business listing and discovery platform concept for organized local business search.','A product direction for local discovery and business visibility.',2,270,330,'product'),
+
+    // Proof
+    p('years','12+ Years','Proof','More than a decade of web design, WordPress, PHP, frontend, React, and full-stack work.','Shows long-term practical delivery experience.',3,32,290,'proof'),
+    p('projects','300+ Projects','Proof','A strong delivery record across websites, products, and business systems.','Shows real execution beyond experiments.',3,122,300,'proof'),
+    p('trained','100+ Trained','Proof','Developers trained through practical guidance and development learning.','Shows communication, teaching, and system thinking.',3,212,300,'proof'),
+    p('products-proof','Products Built','Proof','Multiple product ideas and platforms built inside the Shrimo ecosystem.','Shows product-building ability, not only service delivery.',3,302,290,'proof'),
+
+    // Reviews
+    p('ram','Ram Dubey','Review','Shrimo supported us in website design, social setup, and digital growth work that helped us strengthen our export business presence.','Khyati Overseas Private Limited',4,30,330,'review'),
+    p('rajeev','Rajeev T.','Review','A project many people said could not be done was handled quickly, with practical suggestions and fast execution.','International client',4,150,345,'review'),
+    p('sergio','Sergio W.','Review','The work was delivered on time, communication stayed professional, and the final result matched expectations.','International client',4,270,330,'review'),
+
+    // Launch Dock / contacts
+    p('launch','Launch Project','Contact','Start a project discussion from Shrimo Verse.','Best for websites, redesigns, web apps, SaaS systems, and product work.',5,12,285,'conversion','https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20launch%20a%20project.'),
+    p('whatsapp','WhatsApp','Contact','Fastest way to send your requirement and get a practical next step.','Message directly with your project idea or website link.',5,60,360,'conversion','https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20launch%20a%20project.'),
+    p('call','Call','Contact','Direct phone path for quick discussion.','Useful when the project needs a fast first conversation.',5,120,400,'conversion','tel:+919907472038'),
+    p('email','Email','Contact','Best for structured requirements and project briefs.','Send requirements, links, screenshots, and timelines.',5,180,395,'conversion','mailto:shrikant9907@gmail.com'),
+    p('linkedin','LinkedIn','Contact','Professional profile and networking path.','Useful for work history and professional communication.',5,240,360,'conversion','https://www.linkedin.com/in/shrikant9907/'),
+    p('github','GitHub','Contact','Code and developer profile path.','Useful to check development identity and work signals.',5,300,340,'conversion','https://github.com/shrikant9907'),
+    p('profile','Digital Profile','Contact','Compact digital profile path connected to the Shrimo ecosystem.','Useful for quick identity and contact access.',5,350,300,'conversion','https://digitingcard.com/p/shrikant-yadav')
+  ];
+
+  function p(id,label,category,desc,use,zone,angle,radius,type,link='') {
+    return { id,label,category,desc,use,zone,angle,radius,type,link,phase: Math.random() * Math.PI * 2 };
+  }
 
   const els = {
+    body: document.body,
     entryGate: $('#entryGate'),
     enterVerse: $('#enterVerse'),
-    skipIntro: $('#skipIntro'),
-    autoPlayMode: $('#autoPlayMode'),
-    zoomRange: $('#zoomRange'),
-    entryStatus: $('#entryStatus'),
-    verseStage: $('#verseStage'),
-    worldPlane: $('#worldPlane'),
-    verseNodes: $('#verseNodes'),
-    verseViewport: $('#verseViewport'),
-    tooltip: $('#objectTooltip'),
-    tooltipClose: $('#tooltipClose'),
-    tooltipCategory: $('#tooltipCategory'),
-    tooltipTitle: $('#tooltipTitle'),
-    tooltipDescription: $('#tooltipDescription'),
-    tooltipUse: $('#tooltipUse'),
-    tooltipAction: $('#tooltipAction'),
-    zoomValue: $('#zoomValue'),
+    ship: $('#shipCursor'),
+    trail: $('#cursorTrailLayer'),
+    control: $('#verseControl'),
     guidedMode: $('#guidedMode'),
     exploreMode: $('#exploreMode'),
-    pauseMotion: $('#pauseMotion'),
-    resetView: $('#resetView'),
+    autoFlight: $('#autoFlight'),
+    pauseOrbit: $('#pauseOrbit'),
+    returnCore: $('#returnCore'),
+    replayGuide: $('#replayGuide'),
     brandReset: $('#brandReset'),
     zoomIn: $('#zoomIn'),
     zoomOut: $('#zoomOut'),
-    mobileCommand: $('#mobileCommand'),
-    verseControl: $('#verseControl'),
-    shipCursor: $('#shipCursor'),
-    cursorTrailLayer: $('#cursorTrailLayer'),
-    canvas: $('#verseCanvas'),
-    launchGuideButton: $('#launchGuideButton'),
-    launchGuide: $('#launchGuide'),
-    guideStart: $('#guideStart'),
-    guideSkip: $('#guideSkip'),
-    guidePrev: $('#guidePrev'),
-    guideNext: $('#guideNext'),
+    zoomRange: $('#zoomRange'),
+    zoomValue: $('#zoomValue'),
+    plane: $('#universePlane'),
+    layer: $('#particleLayer'),
+    core: $('#svCore'),
+    stage: $('#verseStage'),
+    tooltip: $('#objectTooltip'),
+    tooltipClose: $('#tooltipClose'),
+    tooltipType: $('#tooltipType'),
+    tooltipTitle: $('#tooltipTitle'),
+    tooltipDesc: $('#tooltipDesc'),
+    tooltipUse: $('#tooltipUse'),
+    tooltipLink: $('#tooltipLink'),
+    missionKicker: $('#missionKicker'),
+    missionTitle: $('#missionTitle'),
+    missionCopy: $('#missionCopy'),
+    stateName: $('#stateName'),
+    stateHint: $('#stateHint'),
+    missionPanel: $('#missionPanel'),
+    launchDock: $('#launchDock'),
+    guideOverlay: $('#guideOverlay'),
     guideTitle: $('#guideTitle'),
     guideText: $('#guideText'),
-    guideStepCount: $('#guideStepCount')
+    guideStep: $('#guideStep'),
+    guideProgress: $('#guideProgress'),
+    guideBack: $('#guideBack'),
+    guideNext: $('#guideNext'),
+    mobileDots: $('#mobileZoneDots')
   };
 
-  const zones = ['arrival', 'orbit', 'products', 'proof', 'trust', 'dock'];
-  const viewTargets = [
-    { x: 0, y: 0, zoom: 1.0 },
-    { x: -80, y: 10, zoom: 1.18 },
-    { x: 140, y: -20, zoom: 1.05 },
-    { x: -30, y: 90, zoom: 1.26 },
-    { x: 120, y: 70, zoom: 1.16 },
-    { x: 0, y: -115, zoom: 1.05 }
-  ];
-
-  let activeZone = 0;
-  let mode = 'guided';
-  let worldZoom = 1;
-  let worldPan = { x: 0, y: 0 };
+  let currentZone = 0;
+  let zoom = 1;
   let paused = false;
-  let wheelLocked = false;
-  let proofAnimated = false;
-  let threeRuntime = null;
-  let guideStep = 0;
-  let guideVisible = false;
-  let guideShown = false;
-  let autoPlayActive = false;
-  let autoPlayTimer = null;
+  let autoTimer = null;
+  let autoActive = false;
+  let guideIndex = 0;
+  let guideActive = false;
+  let lastMouse = { x: window.innerWidth * .72, y: window.innerHeight * .35 };
+  let prevMouse = { ...lastMouse };
+  let shipAngle = 0;
+  let entered = false;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let pinchStartDistance = null;
+  let pinchStartZoom = 1;
 
-  const universeObjects = [
-    { id:'core', zone:0, category:'Identity', label:'Shrimo Verse Core', type:'identity', x:800, y:500, desc:'The central identity object of this interactive portfolio universe.', use:'It keeps the experience connected: identity, products, tools, proof, and contact flow.', link:'' },
-    { id:'shrikant', zone:0, category:'Identity', label:'Shrikant Yadav', type:'identity', x:640, y:332, desc:'Full-stack engineer building SaaS products, APIs, and scalable web systems with MERN and Next.js.', use:'Creates digital systems for business websites, product interfaces, APIs, dashboards, and launch-ready web experiences.', link:'https://shrikant.shrimo.com/' },
-    { id:'shrimo', zone:0, category:'Identity', label:'Shrimo Innovations', type:'product', x:985, y:332, desc:'Software and web development company connected to the Shrimo ecosystem.', use:'Represents professional web, product, and digital solution work.', link:'https://shrimo.com/' },
-
-    { id:'html', zone:1, category:'Technology', label:'HTML', type:'technology', x:386, y:265, desc:'The structural layer of the web.', use:'Used to keep content readable, semantic, accessible, and search-friendly.', link:'' },
-    { id:'css', zone:1, category:'Technology', label:'CSS', type:'technology', x:520, y:192, desc:'The visual system layer for layout, responsive design, and motion styling.', use:'Used to create polished black-and-cyan interfaces, glass surfaces, and responsive systems.', link:'' },
-    { id:'javascript', zone:1, category:'Technology', label:'JavaScript', type:'technology', x:1105, y:196, desc:'The interaction layer of Shrimo Verse.', use:'Used for controls, zoom, tooltips, guided mode, explore mode, and cursor behavior.', link:'' },
-    { id:'react', zone:1, category:'Technology', label:'React', type:'technology', x:1222, y:334, desc:'A component-based frontend library for modern interfaces.', use:'Best for dashboards, products, interactive apps, and scalable UI systems.', link:'' },
-    { id:'next', zone:1, category:'Technology', label:'Next.js', type:'technology', x:1252, y:520, desc:'A React framework for production-grade web applications.', use:'Useful for SEO-ready websites, fast routing, server rendering, and modern business platforms.', link:'' },
-    { id:'typescript', zone:1, category:'Technology', label:'TypeScript', type:'technology', x:1268, y:640, desc:'Typed JavaScript used to make larger frontend and product codebases safer.', use:'Helps reduce bugs, improve maintainability, and support scalable application architecture.', link:'' },
-    { id:'mern', zone:1, category:'Technology', label:'MERN Stack', type:'technology', x:1115, y:830, desc:'MongoDB, Express, React, and Node.js used together for full-stack products.', use:'Useful for SaaS platforms, admin dashboards, API-driven systems, and scalable web products.', link:'' },
-    { id:'wordpress', zone:1, category:'Technology', label:'WordPress', type:'technology', x:1040, y:755, desc:'CMS platform for editable business websites.', use:'Best when clients need content control, fast site delivery, and easy publishing workflows.', link:'' },
-    { id:'node', zone:1, category:'Technology', label:'Node.js', type:'technology', x:475, y:720, desc:'JavaScript runtime used for backend services and APIs.', use:'Helpful for building APIs, product backends, and connected web applications.', link:'' },
-    { id:'php', zone:1, category:'Technology', label:'PHP', type:'technology', x:315, y:548, desc:'Server-side language commonly used in WordPress and custom web systems.', use:'Useful for CMS websites, plugins, server logic, and practical business tools.', link:'' },
-    { id:'mongo', zone:1, category:'Technology', label:'MongoDB', type:'technology', x:715, y:807, desc:'Document database used for flexible application data.', use:'Good for product data, user profiles, dynamic dashboards, and scalable app structures.', link:'' },
-    { id:'mysql', zone:1, category:'Technology', label:'MySQL', type:'technology', x:910, y:818, desc:'Relational database for structured business data.', use:'Useful for CMS, directories, listings, ecommerce, and custom data systems.', link:'' },
-    { id:'tailwind', zone:1, category:'Technology', label:'Tailwind CSS', type:'technology', x:750, y:188, desc:'Utility-first CSS system for fast, consistent interface building.', use:'Useful for responsive UI systems, design tokens, and production-ready component styling.', link:'' },
-    { id:'bootstrap', zone:1, category:'Technology', label:'Bootstrap', type:'technology', x:612, y:255, desc:'Responsive frontend framework used for quick, reliable business website layouts.', use:'Good for practical websites, dashboards, and layouts that need stable responsive behavior.', link:'' },
-    { id:'sass', zone:1, category:'Technology', label:'Sass / SCSS', type:'technology', x:332, y:410, desc:'CSS preprocessor used to structure larger visual systems.', use:'Helps organize reusable variables, components, and maintainable UI styling.', link:'' },
-    { id:'jquery', zone:1, category:'Technology', label:'jQuery', type:'technology', x:472, y:872, desc:'Classic JavaScript library still useful in many legacy and WordPress projects.', use:'Helpful for maintaining older websites, plugins, and interactive business pages.', link:'' },
-    { id:'express', zone:1, category:'Technology', label:'Express.js', type:'technology', x:632, y:735, desc:'Node.js backend framework for APIs and server-side routes.', use:'Used for REST APIs, authentication flows, dashboards, and scalable backend services.', link:'' },
-    { id:'redux', zone:1, category:'Technology', label:'Redux', type:'technology', x:1198, y:262, desc:'State management approach for complex frontend applications.', use:'Useful when larger interfaces need predictable data flow and maintainable app state.', link:'' },
-    { id:'auth', zone:1, category:'Technology', label:'JWT Auth', type:'technology', x:1190, y:770, desc:'Token-based authentication pattern for protected web applications.', use:'Useful for role-based dashboards, secure APIs, and logged-in product systems.', link:'' },
-    { id:'woocommerce', zone:1, category:'Technology', label:'WooCommerce', type:'technology', x:1008, y:880, desc:'WordPress ecommerce system for product and order workflows.', use:'Helpful for online stores, catalogs, and business websites with commerce features.', link:'' },
-    { id:'vercel', zone:1, category:'Tool', label:'Vercel / Hosting', type:'tool', x:1388, y:510, desc:'Deployment layer for fast web delivery.', use:'Used for launching, hosting, and maintaining modern websites and applications.', link:'' },
-    { id:'performance', zone:1, category:'Tool', label:'Performance', type:'tool', x:230, y:760, desc:'Speed, loading behavior, and frontend optimization work.', use:'Helps websites feel faster, reduce friction, and improve user experience.', link:'' },
-
-    { id:'figma', zone:1, category:'Tool', label:'Figma', type:'tool', x:192, y:336, desc:'Design tool used for planning interfaces before development.', use:'Helps shape layout, hierarchy, and responsive behavior before code.', link:'' },
-    { id:'gsap', zone:1, category:'Tool', label:'GSAP', type:'tool', x:1394, y:390, desc:'Professional animation library for smooth UI and motion storytelling.', use:'Used for cinematic transitions, timeline control, and premium motion behavior.', link:'' },
-    { id:'three', zone:1, category:'Tool', label:'Three.js', type:'tool', x:1366, y:610, desc:'3D JavaScript library for WebGL-powered visual worlds.', use:'Used here for atmospheric depth and the Shrimo Verse universe layer.', link:'' },
-    { id:'git', zone:1, category:'Tool', label:'Git', type:'tool', x:228, y:682, desc:'Version control system for reliable code changes.', use:'Keeps production projects organized, trackable, and safer to update.', link:'' },
-    { id:'search-console', zone:1, category:'Tool', label:'Search Console', type:'tool', x:1186, y:702, desc:'Google tool used to monitor search visibility and indexing.', use:'Helps verify technical SEO health after launch.', link:'' },
-    { id:'analytics', zone:1, category:'Tool', label:'Analytics', type:'tool', x:382, y:822, desc:'Measurement layer for traffic and user behavior.', use:'Helps understand which pages and CTAs are working.', link:'' },
-    { id:'apis', zone:1, category:'Tool', label:'APIs', type:'tool', x:200, y:506, desc:'Connectors that let systems talk to each other.', use:'Used for integrations, dashboards, automation, and product workflows.', link:'' },
-
-    { id:'service-websites', zone:1, category:'Service', label:'Business Websites', type:'service', x:764, y:130, desc:'Professional websites built for trust and conversion.', use:'Best for local businesses, service providers, startups, and companies that need a clean online presence.', link:'' },
-    { id:'service-apps', zone:1, category:'Service', label:'Web Applications', type:'service', x:1010, y:118, desc:'Custom web systems with user flows, data, and interaction.', use:'Useful for products, dashboards, portals, and internal business tools.', link:'' },
-    { id:'service-seo', zone:1, category:'Service', label:'SEO-ready Structure', type:'service', x:606, y:872, desc:'Technical structure that helps websites launch cleaner.', use:'Includes semantic HTML, metadata, schema, speed, and content hierarchy planning.', link:'' },
-
-    { id:'digiting', zone:2, category:'Product', label:'Digiting Card', type:'product', x:605, y:338, desc:'A digital visiting card platform for professionals and businesses.', use:'Helps people share business identity, links, and contact details digitally.', link:'https://digitingcard.com/' },
-    { id:'photocopywala', zone:2, category:'Product', label:'Photocopywala', type:'product', x:1015, y:366, desc:'A practical document and photo utility platform.', use:'Helps users complete common print, photo, and document preparation tasks online.', link:'https://photocopywala.in/' },
-    { id:'directory', zone:2, category:'Product', label:'Directory Platform', type:'product', x:515, y:642, desc:'A business listing and discovery platform concept.', use:'Designed to organize local businesses, profiles, categories, and search-driven discovery.', link:'' },
-    { id:'shrimo-site', zone:2, category:'Product', label:'Shrimo.com', type:'product', x:1065, y:642, desc:'Company website for Shrimo Innovations.', use:'Represents service positioning, trust building, and business enquiry flow.', link:'https://shrimo.com/' },
-
-    { id:'years', zone:3, category:'Proof', label:'12+ Years', type:'proof', x:610, y:430, desc:'Long-term experience in website design, development, training, and product building.', use:'Shows maturity and practical understanding across many real projects.', link:'' },
-    { id:'projects', zone:3, category:'Proof', label:'300+ Projects', type:'proof', x:800, y:300, desc:'A broad delivery history across websites, tools, and web systems.', use:'Gives confidence that the work is practical, not theoretical.', link:'' },
-    { id:'trained', zone:3, category:'Proof', label:'100+ Developers', type:'proof', x:1000, y:430, desc:'Developers trained through practical teaching and development guidance.', use:'Shows ability to explain, structure, and mentor development thinking.', link:'' },
-    { id:'products-proof', zone:3, category:'Proof', label:'Products Built', type:'proof', x:800, y:650, desc:'Multiple product ideas and platforms built inside the Shrimo ecosystem.', use:'Shows product thinking beyond ordinary service websites.', link:'' },
-
-    { id:'review-khyati', zone:4, category:'Client Signal', label:'Khyati Overseas', type:'review', x:515, y:375, desc:'Shrimo supported us in website design, social setup, and digital growth work that helped us strengthen our export business presence.', use:'Ram Dubey · Khyati Overseas Private Limited', link:'' },
-    { id:'review-rajeev', zone:4, category:'Client Signal', label:'Fast Execution', type:'review', x:800, y:300, desc:'A project many people said could not be done was handled quickly, with practical suggestions and fast execution.', use:'Rajeev T. · International client', link:'' },
-    { id:'review-sergio', zone:4, category:'Client Signal', label:'On-time Delivery', type:'review', x:1085, y:375, desc:'The work was delivered on time, communication stayed professional, and the final result matched expectations.', use:'Sergio W. · International client', link:'' },
-    { id:'trust-communication', zone:4, category:'Trust Signal', label:'Clear Communication', type:'trust', x:600, y:610, desc:'Professional communication is treated as part of delivery, not an extra.', use:'Keeps projects easier to understand, approve, and move forward.', link:'' },
-    { id:'trust-practical', zone:4, category:'Trust Signal', label:'Practical Suggestions', type:'trust', x:1000, y:610, desc:'Suggestions are focused on what can be built, launched, and maintained.', use:'Useful for business owners who need clear next steps, not confusing technical options.', link:'' },
-
-    { id:'start-project', zone:5, category:'Conversion', label:'Launch Project', type:'conversion', x:670, y:424, desc:'The main launch action inside Shrimo Verse.', use:'Use this when you want to discuss a new website, redesign, or web application.', link:'https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20start%20a%20project.' },
-    { id:'whatsapp', zone:5, category:'Conversion', label:'WhatsApp', type:'conversion', x:880, y:360, desc:'Fastest way to start a practical project discussion.', use:'Send your requirement, current website, or idea and get the next step.', link:'https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20start%20a%20project.' },
-    { id:'email', zone:5, category:'Conversion', label:'Email', type:'conversion', x:955, y:540, desc:'Best for structured requirements or project briefs.', use:'Send project details, reference links, and timeline expectations.', link:'mailto:shrikant9907@gmail.com' },
-    { id:'linkedin', zone:5, category:'Conversion', label:'LinkedIn', type:'conversion', x:722, y:625, desc:'Professional contact and profile connection.', use:'Useful for business networking, work history, and professional communication.', link:'https://www.linkedin.com/in/shrikant9907/' },
-    { id:'call', zone:5, category:'Conversion', label:'Call', type:'conversion', x:1040, y:640, desc:'Direct phone path for quick discussion.', use:'Use this when the project needs a fast first conversation.', link:'tel:+919907472038' },
-    { id:'profile-link', zone:5, category:'Conversion', label:'Digital Profile', type:'conversion', x:560, y:560, desc:'Public Digiting Card profile path for quick identity and contact access.', use:'A compact profile link connected to the Shrimo ecosystem.', link:'https://digitingcard.com/p/shrikant-yadav' }
+  const GUIDE = isTouch ? [
+    { title:'Travel by touch', text:'Swipe left or right to move between universe zones.', target:'.mobile-control-dock' },
+    { title:'Inspect particles', text:'Tap any glowing node to open its story.', target:'.verse-node[data-id="html"]' },
+    { title:'Zoom in Explore', text:'Use Orbit Zoom or pinch in Free Explore to reveal hidden tools.', target:'.zoom-dock' },
+    { title:'Return to Core', text:'Use Core anytime to come back to the center.', target:'[data-mobile="core"]' },
+    { title:'Auto Flight', text:'Tap Auto and Shrimo Verse will present itself automatically.', target:'[data-mobile="auto"]' },
+    { title:'Launch Project', text:'Use Launch when you are ready to start a project conversation.', target:'.mobile-control-dock a' }
+  ] : [
+    { title:'Pilot the ship', text:'Move your cursor to pilot the explorer ship.', target:'#shipCursor' },
+    { title:'Inspect particles', text:'Every particle has meaning. Hover to scan it.', target:'.verse-node[data-id="html"]' },
+    { title:'Open details', text:'Click a glowing node to open its story.', target:'.verse-node[data-id="html"]' },
+    { title:'Zoom deeper', text:'Use Orbit Zoom to reveal hidden tools and details.', target:'.zoom-dock' },
+    { title:'Return to Core', text:'Lost in the orbit? Return to Core anytime.', target:'#returnCore' },
+    { title:'Auto Flight', text:'Let Shrimo Verse guide you automatically.', target:'#autoFlight' },
+    { title:'Launch Project', text:'When ready, use Launch Project to start a conversation.', target:'#launchProject' }
   ];
+
+  init();
 
   function init() {
     document.body.classList.toggle('touch-device', isTouch);
-    if (!isTouch && !prefersReducedMotion) document.body.classList.add('has-ship-cursor');
-    renderNodes();
-    bindEntry();
+    if (!isTouch && !prefersReducedMotion) document.body.classList.add('has-ship');
+    renderParticles();
     bindControls();
-    bindWheelAndKeys();
-    bindTouchGestures();
-    initCursor();
-    initThree();
+    bindEntry();
+    bindCursor();
+    bindKeyboard();
+    bindTouch();
+    initStars();
     setZone(0, { immediate: true });
-
-    if (prefersReducedMotion) {
-      document.body.classList.add('reduced-motion');
-      skipEntry();
-    } else if (window.gsap) {
-      gsap.from('.entry-core', { scale: 0.8, opacity: 0, duration: 1.1, ease: 'expo.out' });
-      gsap.from('.entry-kicker, .entry-gate h1, .entry-copy, .entry-actions, .entry-line', { y: 24, opacity: 0, duration: 0.8, stagger: 0.12, delay: 0.25, ease: 'power3.out' });
-      setTimeout(() => { els.entryStatus.textContent = 'Calibrating rocket controls'; }, 700);
-      setTimeout(() => { els.entryStatus.textContent = 'Syncing meaningful particles'; }, 1350);
-      setTimeout(() => { els.entryStatus.textContent = 'You are going to enter Shrimo Verse'; }, 2050);
-    }
+    setZoom(1, { silent: true });
+    animate();
   }
 
-  function renderNodes() {
-    els.verseNodes.innerHTML = '';
-    universeObjects.filter(obj => obj.id !== 'core').forEach((obj, index) => {
+  function renderParticles() {
+    els.layer.innerHTML = '';
+    PARTICLES.forEach((obj) => {
       const node = document.createElement('button');
       node.type = 'button';
       node.className = `verse-node ${obj.type}`;
       node.dataset.id = obj.id;
       node.dataset.zone = String(obj.zone);
       node.dataset.type = obj.type;
-      node.style.left = `${obj.x}px`;
-      node.style.top = `${obj.y}px`;
-      node.style.animationDelay = `${(index % 8) * -0.55}s`;
-      node.innerHTML = `<span><small>${obj.category}</small><strong>${obj.label}</strong></span>`;
-      node.setAttribute('aria-label', `${obj.label}. ${obj.category}. Click for details.`);
+      node.innerHTML = `<strong>${obj.label}</strong>`;
+      node.setAttribute('aria-label', `${obj.label}. ${obj.category}. Click to inspect.`);
+      node.addEventListener('mouseenter', () => {
+        document.body.classList.add('cursor-lock');
+        node.classList.add('is-hovered');
+      });
+      node.addEventListener('mouseleave', () => {
+        document.body.classList.remove('cursor-lock');
+        node.classList.remove('is-hovered');
+      });
+      node.addEventListener('focus', () => node.classList.add('is-hovered'));
+      node.addEventListener('blur', () => node.classList.remove('is-hovered'));
       node.addEventListener('click', (event) => {
         event.stopPropagation();
-        showTooltip(obj, node);
+        if (autoActive) stopAutoFlight();
+        showObject(obj, node);
       });
-      node.addEventListener('mouseenter', () => document.body.classList.add('cursor-lock'));
-      node.addEventListener('mouseleave', () => document.body.classList.remove('cursor-lock'));
-      els.verseNodes.appendChild(node);
+      els.layer.appendChild(node);
+      obj.el = node;
     });
 
-    $('#shrimoCore').addEventListener('click', () => showTooltip(universeObjects[0], $('#shrimoCore')));
-    $('#shrimoCore').addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        showTooltip(universeObjects[0], $('#shrimoCore'));
-      }
-    });
+    els.core.addEventListener('click', () => showObject({
+      label: 'Shrimo Verse Core',
+      category: 'Core',
+      desc: 'The fixed center of this universe. Everything else orbits around this core.',
+      use: 'Return here whenever you want to reset the view or restart exploration.'
+    }, els.core));
   }
 
   function bindEntry() {
-    els.enterVerse.addEventListener('click', enterVerse);
-    if (els.skipIntro) els.skipIntro.addEventListener('click', skipEntry);
-  }
-
-  function enterVerse() {
-    closeLaunchGuide();
-    if (window.gsap && !prefersReducedMotion) {
-      els.entryStatus.textContent = 'Opening Shrimo Verse flight path';
-      gsap.timeline({ onComplete: skipEntry })
-        .to('.entry-core', { scale: 4.6, opacity: 0.16, duration: 0.9, ease: 'expo.inOut' })
-        .to('.entry-orbit', { scale: 2.2, opacity: 0.12, duration: 0.9, ease: 'expo.inOut' }, '<')
-        .to('.entry-gate h1, .entry-copy, .entry-hints, .entry-actions, .entry-line', { y: -28, opacity: 0, duration: 0.48, stagger: 0.035, ease: 'power3.in' }, '<.1')
-        .to('.entry-kicker', { letterSpacing: '0.38em', opacity: 0, duration: 0.38, ease: 'power2.out' }, '<')
-        .to(els.entryGate, { opacity: 0, duration: 0.52, ease: 'power2.out' }, '-=.1');
-    } else {
-      skipEntry();
-    }
-  }
-
-  function skipEntry() {
-    els.entryGate.classList.add('is-hidden');
-    els.entryGate.setAttribute('aria-hidden', 'true');
-    document.body.classList.add('verse-ready');
-    if (!isTouch) document.body.classList.add('has-ship-cursor');
-    animateInitialWorld();
-    if (!guideShown && !prefersReducedMotion) {
-      guideShown = true;
-      setTimeout(() => showLaunchGuide(false), 850);
-    }
-  }
-
-  function animateInitialWorld() {
-    if (!window.gsap || prefersReducedMotion) return;
-    gsap.from('.shrimo-core', { scale: 0.72, opacity: 0, duration: 1, ease: 'expo.out' });
-    gsap.from('.verse-node', { scale: 0.6, opacity: 0, duration: 0.8, stagger: 0.018, ease: 'power3.out', delay: 0.2 });
-    gsap.from('.verse-copy.is-active > *', { y: 22, opacity: 0, duration: 0.75, stagger: 0.08, ease: 'power3.out', delay: 0.25 });
+    els.enterVerse.addEventListener('click', () => {
+      entered = true;
+      els.entryGate.classList.add('is-launching');
+      setTimeout(() => {
+        els.entryGate.classList.add('is-hidden');
+        document.body.classList.add('verse-entered');
+        setZone(0);
+        setTimeout(() => startGuide(), 700);
+      }, prefersReducedMotion ? 120 : 1450);
+    });
   }
 
   function bindControls() {
-    els.guidedMode.addEventListener('click', () => setMode('guided'));
-    els.exploreMode.addEventListener('click', () => setMode('explore'));
-    if (els.autoPlayMode) els.autoPlayMode.addEventListener('click', toggleAutoPlay);
-    els.pauseMotion.addEventListener('click', togglePause);
-    els.resetView.addEventListener('click', resetView);
-    if (els.launchGuideButton) els.launchGuideButton.addEventListener('click', () => showLaunchGuide(true));
-    if (els.guideNext) els.guideNext.addEventListener('click', nextGuideStep);
-    if (els.guidePrev) els.guidePrev.addEventListener('click', prevGuideStep);
-    if (els.guideSkip) els.guideSkip.addEventListener('click', closeLaunchGuide);
-    els.brandReset.addEventListener('click', (event) => { event.preventDefault(); resetView(); });
-    els.zoomIn.addEventListener('click', () => setZoom(worldZoom + 0.12));
-    els.zoomOut.addEventListener('click', () => setZoom(worldZoom - 0.12));
-    if (els.zoomRange) els.zoomRange.addEventListener('input', () => setZoom(Number(els.zoomRange.value) / 100, { keepPan: true }));
-    els.tooltipClose.addEventListener('click', closeTooltip);
-    els.verseStage.addEventListener('click', (event) => {
-      if (!event.target.closest('.verse-node') && !event.target.closest('.shrimo-core') && !event.target.closest('.object-tooltip')) closeTooltip();
+    els.guidedMode.addEventListener('click', () => { stopAutoFlight(); startGuide(); setControlActive(els.guidedMode); });
+    els.exploreMode.addEventListener('click', () => { stopAutoFlight(); setControlActive(els.exploreMode); });
+    els.autoFlight.addEventListener('click', () => toggleAutoFlight());
+    els.pauseOrbit.addEventListener('click', () => togglePause());
+    els.returnCore.addEventListener('click', () => returnToCore());
+    els.replayGuide.addEventListener('click', () => startGuide());
+    els.brandReset.addEventListener('click', () => returnToCore());
+    els.zoomIn.addEventListener('click', () => setZoom(zoom + .15));
+    els.zoomOut.addEventListener('click', () => setZoom(zoom - .15));
+    els.zoomRange.addEventListener('input', () => setZoom(Number(els.zoomRange.value) / 100));
+    els.tooltipClose.addEventListener('click', closeObject);
+    els.stage.addEventListener('click', (event) => {
+      if (!event.target.closest('.verse-node') && !event.target.closest('.object-tooltip') && !event.target.closest('.sv-core')) closeObject();
     });
-    els.mobileCommand.addEventListener('click', () => {
-      const open = els.verseControl.classList.toggle('menu-open');
-      els.mobileCommand.setAttribute('aria-expanded', String(open));
+    els.guideBack.addEventListener('click', () => stepGuide(-1));
+    els.guideNext.addEventListener('click', () => stepGuide(1));
+    $$('[data-action="auto"]').forEach(btn => btn.addEventListener('click', startAutoFlight));
+    $$('[data-action="guide"]').forEach(btn => btn.addEventListener('click', startGuide));
+    $$('[data-mobile]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const action = btn.dataset.mobile;
+        if (action === 'guide') startGuide();
+        if (action === 'explore') { stopAutoFlight(); setControlActive(els.exploreMode); }
+        if (action === 'auto') startAutoFlight();
+        if (action === 'core') returnToCore();
+      });
     });
-    $$('[data-zone]').forEach(btn => btn.addEventListener('click', () => setZone(Number(btn.dataset.zone))));
-    $$('[data-jump-zone]').forEach(btn => btn.addEventListener('click', () => setZone(Number(btn.dataset.jumpZone))));
+    $$('[data-zone]', els.mobileDots).forEach(btn => btn.addEventListener('click', () => setZone(Number(btn.dataset.zone))));
   }
 
-
-  const desktopGuideSteps = [
-    { selector: null, title: 'First Launch Guide', text: 'This is not a normal portfolio page. It behaves like a small interactive universe. Learn the basics, then explore freely.' },
-    { selector: '#shipCursor', title: 'Pilot the explorer ship', text: 'Move your cursor to fly through Shrimo Verse. The yellow/orange flame reacts to motion.' },
-    { selector: '.verse-node[data-id="html"]', title: 'Scan meaningful particles', text: 'Every particle has meaning. Hover or click a glowing node to inspect a technology, tool, product, proof, or contact path.' },
-    { selector: '#zoomRange', title: 'Control the zoom level', text: 'Use the zoom bar or + / − buttons to move between universe view, cluster view, and object view.' },
-    { selector: '#exploreMode', title: 'Switch to Free Explore', text: 'Free Explore lets you zoom, inspect, click, and play with the universe instead of following the guided flight.' },
-    { selector: '#resetView', title: 'Return to Core anytime', text: 'If you feel lost, Return to Core resets zoom, closes tooltips, and brings you back to the starting orbit.' },
-    { selector: '#autoPlayMode', title: 'Let Auto Play guide you', text: 'Auto Play moves from the core to each information layer and opens the right signal one by one.' },
-    { selector: '.verse-cta', title: 'Launch when ready', text: 'When the signal feels right, use Launch Project to start a website, product, or web app discussion.' }
-  ];
-
-  const mobileGuideSteps = [
-    { selector: null, title: 'Touch Launch Guide', text: 'On mobile, Shrimo Verse works differently. Swipe to travel, tap nodes to inspect, and use the bottom controls to zoom or reset.' },
-    { selector: '.verse-node[data-id="html"]', title: 'Tap glowing nodes', text: 'Tap a particle to open its story in a mobile-friendly bottom sheet.' },
-    { selector: '#zoomRange', title: 'Use the zoom control', text: 'Pinch in Free Explore or use the zoom bar to control how deep you are inside the universe.' },
-    { selector: '#exploreMode', title: 'Free Explore mode', text: 'Use Free Explore when you want to play with the universe instead of moving zone by zone.' },
-    { selector: '#resetView', title: 'Return to Core', text: 'Double-tap the world or use Return to Core if the view becomes too deep.' },
-    { selector: '.mobile-command', title: 'Open controls', text: 'Use Menu to open Shrimo Verse controls on smaller screens.' }
-  ];
-
-  function getGuideSteps() {
-    return isTouch ? mobileGuideSteps : desktopGuideSteps;
-  }
-
-  function showLaunchGuide(replay) {
-    if (!els.launchGuide) return;
-    guideStep = 0;
-    guideVisible = true;
-    document.body.classList.add('guide-active');
-    els.launchGuide.classList.add('is-visible');
-    els.launchGuide.setAttribute('aria-hidden', 'false');
-    updateGuideStep();
-    if (replay) closeTooltip();
-  }
-
-  function closeLaunchGuide() {
-    guideVisible = false;
-    document.body.classList.remove('guide-active');
-    els.launchGuide?.classList.remove('is-visible');
-    els.launchGuide?.setAttribute('aria-hidden', 'true');
-    clearGuideFocus();
-  }
-
-  function clearGuideFocus() {
-    $$('.guide-focus').forEach(el => el.classList.remove('guide-focus'));
-  }
-
-  function updateGuideStep() {
-    const steps = getGuideSteps();
-    const step = steps[guideStep] || steps[0];
-    clearGuideFocus();
-    if (els.guideTitle) els.guideTitle.textContent = step.title;
-    if (els.guideText) els.guideText.textContent = step.text;
-    if (els.guideStepCount) els.guideStepCount.textContent = `${guideStep} / ${steps.length - 1}`;
-    if (els.guidePrev) els.guidePrev.hidden = guideStep === 0;
-    if (els.guideNext) els.guideNext.textContent = guideStep === 0 ? 'Start Guide' : guideStep === steps.length - 1 ? 'Start Exploring' : 'Next';
-    if (step.selector) {
-      const target = $(step.selector);
-      if (target) target.classList.add('guide-focus');
-    }
-  }
-
-  function nextGuideStep() {
-    const steps = getGuideSteps();
-    if (guideStep >= steps.length - 1) {
-      closeLaunchGuide();
-      return;
-    }
-    guideStep += 1;
-    if (guideStep === 2) setZone(1);
-    if (guideStep === 5 && !isTouch) setMode('guided');
-    updateGuideStep();
-  }
-
-  function prevGuideStep() {
-    if (guideStep <= 0) return;
-    guideStep -= 1;
-    updateGuideStep();
-  }
-
-  const autoFocusByZone = {
-    0: 'core',
-    1: 'next',
-    2: 'digiting',
-    3: 'projects',
-    4: 'review-khyati',
-    5: 'start-project'
-  };
-
-  function toggleAutoPlay() {
-    autoPlayActive = !autoPlayActive;
-    document.body.classList.toggle('autoplay-active', autoPlayActive);
-    if (els.autoPlayMode) {
-      els.autoPlayMode.classList.toggle('is-active', autoPlayActive);
-      els.autoPlayMode.textContent = autoPlayActive ? 'Stop Auto' : 'Auto Play';
-    }
-    if (autoPlayActive) startAutoPlay(); else stopAutoPlay();
-  }
-
-  function startAutoPlay() {
-    setMode('guided');
-    closeLaunchGuide();
-    runAutoStep(true);
-    autoPlayTimer = window.setInterval(() => runAutoStep(false), 4200);
-  }
-
-  function stopAutoPlay() {
-    autoPlayActive = false;
-    document.body.classList.remove('autoplay-active');
-    if (autoPlayTimer) window.clearInterval(autoPlayTimer);
-    autoPlayTimer = null;
-    if (els.autoPlayMode) {
-      els.autoPlayMode.classList.remove('is-active');
-      els.autoPlayMode.textContent = 'Auto Play';
-    }
-  }
-
-  function runAutoStep(initial) {
-    const targetZone = initial ? 0 : activeZone + 1;
-    setZone(targetZone);
-    window.setTimeout(() => {
-      const focusId = autoFocusByZone[activeZone];
-      const obj = universeObjects.find(item => item.id === focusId) || universeObjects.find(item => item.zone === activeZone);
-      const target = focusId === 'core' ? $('#shrimoCore') : $(`.verse-node[data-id="${focusId}"]`);
-      if (obj && target) showTooltip(obj, target);
-    }, 850);
-  }
-
-  function bindWheelAndKeys() {
-    window.addEventListener('wheel', (event) => {
-      if (!document.body.classList.contains('verse-ready')) return;
-      event.preventDefault();
-      if (autoPlayActive) stopAutoPlay();
-      if (mode === 'explore') {
-        setZoom(worldZoom + (event.deltaY > 0 ? -0.08 : 0.08));
-        return;
-      }
-      if (wheelLocked) return;
-      wheelLocked = true;
-      setTimeout(() => { wheelLocked = false; }, 650);
-      if (event.deltaY > 0) setZone(activeZone + 1); else setZone(activeZone - 1);
-    }, { passive: false });
-
-    window.addEventListener('keydown', (event) => {
-      if (!document.body.classList.contains('verse-ready')) return;
-      if (['ArrowDown', 'PageDown', ' '].includes(event.key)) { event.preventDefault(); setZone(activeZone + 1); }
-      if (['ArrowUp', 'PageUp'].includes(event.key)) { event.preventDefault(); setZone(activeZone - 1); }
-      if (event.key === 'Escape') closeTooltip();
-      if (event.key.toLowerCase() === 'r') resetView();
-      if (event.key === '+' || event.key === '=') setZoom(worldZoom + 0.16);
-      if (event.key === '-') setZoom(worldZoom - 0.16);
-    });
-  }
-
-  function setMode(nextMode) {
-    mode = nextMode;
-    document.body.classList.toggle('explore-mode', mode === 'explore');
-    els.guidedMode.classList.toggle('is-active', mode === 'guided');
-    els.exploreMode.classList.toggle('is-active', mode === 'explore');
-    if (mode === 'guided') setZone(activeZone);
+  function setControlActive(control) {
+    $$('.hud-btn').forEach(btn => btn.classList.remove('is-active'));
+    if (control) control.classList.add('is-active');
   }
 
   function togglePause() {
     paused = !paused;
-    document.body.classList.toggle('motion-paused', paused);
-    els.pauseMotion.textContent = paused ? 'Resume Orbit' : 'Pause Orbit';
-    if (threeRuntime) threeRuntime.paused = paused;
-    if (window.gsap) paused ? gsap.globalTimeline.pause() : gsap.globalTimeline.resume();
+    document.body.classList.toggle('orbit-paused', paused);
+    els.pauseOrbit.classList.toggle('is-active', paused);
   }
 
-  function resetView() {
-    stopAutoPlay();
-    closeTooltip();
-    setMode('guided');
-    setZone(0, { immediate: false });
+  function returnToCore() {
+    stopAutoFlight();
+    closeObject();
+    setZoom(1);
+    setZone(0);
+    setControlActive(els.guidedMode);
   }
 
-  function setZone(nextZone, options = {}) {
-    if (nextZone > zones.length - 1) nextZone = 0;
-    if (nextZone < 0) nextZone = zones.length - 1;
-    activeZone = nextZone;
-    const target = viewTargets[activeZone];
-    worldPan = { x: target.x, y: target.y };
-    setZoom(target.zoom, { keepPan: true });
-
-    $$('[data-zone-panel]').forEach(panel => panel.classList.toggle('is-active', Number(panel.dataset.zonePanel) === activeZone));
-    $$('.state-dot').forEach(dot => dot.classList.toggle('is-active', Number(dot.dataset.zone) === activeZone));
-
-    $$('.verse-node').forEach(node => {
-      const nodeZone = Number(node.dataset.zone);
-      const inZone = nodeZone === activeZone || (activeZone === 0 && nodeZone === 0);
-      node.classList.toggle('is-active-zone', inZone);
-      node.classList.toggle('is-dimmed', !inZone && activeZone !== 0);
-    });
-
-    if (activeZone === 3) animateProof();
-    if (window.gsap && !options.immediate && !prefersReducedMotion) {
-      gsap.fromTo(`[data-zone-panel="${activeZone}"] > *`, { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.58, stagger: 0.06, ease: 'power3.out' });
-    }
+  function toggleAutoFlight() {
+    autoActive ? stopAutoFlight() : startAutoFlight();
   }
 
-  function setZoom(nextZoom, options = {}) {
-    worldZoom = Math.max(0.72, Math.min(1.85, nextZoom));
-    if (!options.keepPan && mode === 'explore') {
-      worldPan.x *= 0.96;
-      worldPan.y *= 0.96;
-    }
-    els.worldPlane.classList.toggle('zoomed', worldZoom > 1.16);
-    els.worldPlane.classList.toggle('deep-zoom', worldZoom > 1.45);
-    els.zoomValue.textContent = `${worldZoom.toFixed(1)}x`;
-    if (els.zoomRange) els.zoomRange.value = String(Math.round(worldZoom * 100));
-    applyWorldTransform();
-  }
-
-  function applyWorldTransform() {
-    const x = `calc(-50% + ${worldPan.x}px)`;
-    const y = `calc(-50% + ${worldPan.y}px)`;
-    els.worldPlane.style.transform = `translate(${x}, ${y}) scale(${worldZoom})`;
-  }
-
-  function showTooltip(obj, target) {
-    $$('.verse-node, .shrimo-core').forEach(node => node.classList.remove('is-selected', 'is-focused'));
-    if (target) target.classList.add(target.classList.contains('shrimo-core') ? 'is-focused' : 'is-selected');
-    els.tooltipCategory.textContent = obj.category;
-    els.tooltipTitle.textContent = obj.label;
-    els.tooltipDescription.textContent = obj.desc;
-    els.tooltipUse.textContent = obj.use;
-    if (obj.link) {
-      els.tooltipAction.hidden = false;
-      els.tooltipAction.href = obj.link;
-      els.tooltipAction.textContent = obj.category === 'Conversion' ? 'Open Contact Path' : obj.category === 'Product' ? 'View Product' : 'Open Link';
-    } else {
-      els.tooltipAction.hidden = true;
-      els.tooltipAction.removeAttribute('href');
-    }
-    els.tooltip.setAttribute('aria-hidden', 'false');
-    els.tooltip.classList.add('is-visible');
-    if (worldZoom < 1.16 && obj.type === 'tool') setZoom(1.28);
-  }
-
-  function closeTooltip() {
-    els.tooltip.classList.remove('is-visible');
-    els.tooltip.setAttribute('aria-hidden', 'true');
-    $$('.verse-node, .shrimo-core').forEach(node => node.classList.remove('is-selected', 'is-focused'));
-  }
-
-  function animateProof() {
-    if (proofAnimated) return;
-    proofAnimated = true;
-    $$('[data-count]').forEach(el => {
-      const finalValue = Number(el.dataset.count);
-      if (window.gsap && !prefersReducedMotion) {
-        const counter = { value: 0 };
-        gsap.to(counter, {
-          value: finalValue,
-          duration: 1.4,
-          ease: 'power3.out',
-          onUpdate: () => { el.textContent = Math.round(counter.value); }
-        });
-      } else {
-        el.textContent = finalValue;
+  function startAutoFlight() {
+    closeGuide();
+    closeObject();
+    autoActive = true;
+    setControlActive(els.autoFlight);
+    let index = currentZone;
+    const run = () => {
+      if (!autoActive) return;
+      setZone(index % ZONES.length);
+      const focus = activeParticleForZone(index % ZONES.length);
+      if (focus?.el) {
+        $$('.verse-node').forEach(node => node.classList.remove('is-selected'));
+        focus.el.classList.add('is-selected');
       }
-    });
-  }
-
-
-  function bindTouchGestures() {
-    if (!els.verseStage) return;
-
-    let startX = 0;
-    let startY = 0;
-    let lastX = 0;
-    let lastY = 0;
-    let startDistance = 0;
-    let startZoom = 1;
-    let isDragging = false;
-    let moved = false;
-
-    const interactiveSelector = 'a, button, .object-tooltip, input, textarea, select';
-    const getDistance = (touches) => {
-      const dx = touches[0].clientX - touches[1].clientX;
-      const dy = touches[0].clientY - touches[1].clientY;
-      return Math.hypot(dx, dy);
+      index += 1;
+      autoTimer = setTimeout(run, index === 1 ? 5200 : 6200);
     };
-
-    els.verseStage.addEventListener('touchstart', (event) => {
-      if (!document.body.classList.contains('verse-ready')) return;
-      if (event.target.closest(interactiveSelector)) return;
-      moved = false;
-      if (event.touches.length === 2) {
-        startDistance = getDistance(event.touches);
-        startZoom = worldZoom;
-        isDragging = false;
-        event.preventDefault();
-        return;
-      }
-      if (event.touches.length === 1) {
-        startX = lastX = event.touches[0].clientX;
-        startY = lastY = event.touches[0].clientY;
-        isDragging = mode === 'explore';
-      }
-    }, { passive: false });
-
-    els.verseStage.addEventListener('touchmove', (event) => {
-      if (!document.body.classList.contains('verse-ready')) return;
-      if (event.target.closest(interactiveSelector)) return;
-      if (event.touches.length === 2 && startDistance > 0) {
-        const distance = getDistance(event.touches);
-        const scale = distance / startDistance;
-        setZoom(startZoom * scale, { keepPan: true });
-        moved = true;
-        event.preventDefault();
-        return;
-      }
-      if (event.touches.length === 1) {
-        const touch = event.touches[0];
-        const dx = touch.clientX - lastX;
-        const dy = touch.clientY - lastY;
-        const totalDx = touch.clientX - startX;
-        const totalDy = touch.clientY - startY;
-        if (mode === 'explore' && isDragging) {
-          worldPan.x += dx;
-          worldPan.y += dy;
-          applyWorldTransform();
-          moved = true;
-          event.preventDefault();
-        } else if (Math.abs(totalYSafe(totalDy)) > 14 || Math.abs(totalDx) > 14) {
-          moved = true;
-        }
-        lastX = touch.clientX;
-        lastY = touch.clientY;
-      }
-    }, { passive: false });
-
-    els.verseStage.addEventListener('touchend', (event) => {
-      if (!document.body.classList.contains('verse-ready')) return;
-      if (event.target.closest(interactiveSelector)) return;
-      if (event.touches.length === 0 && event.changedTouches.length) {
-        const endX = event.changedTouches[0].clientX;
-        const endY = event.changedTouches[0].clientY;
-        const dx = endX - startX;
-        const dy = endY - startY;
-        if (mode === 'guided' && Math.abs(dy) > 46 && Math.abs(dy) > Math.abs(dx) * 1.15) {
-          setZone(activeZone + (dy < 0 ? 1 : -1));
-          event.preventDefault();
-        }
-      }
-      startDistance = 0;
-      isDragging = false;
-    }, { passive: false });
-
-    // Double tap quickly returns to the main universe view on touch devices.
-    let lastTap = 0;
-    els.verseStage.addEventListener('touchend', (event) => {
-      if (event.target.closest(interactiveSelector)) return;
-      const now = Date.now();
-      if (!moved && now - lastTap < 280) {
-        resetView();
-        event.preventDefault();
-      }
-      lastTap = now;
-    }, { passive: false });
+    run();
   }
 
-  function totalYSafe(value) {
-    return Number.isFinite(value) ? value : 0;
+  function stopAutoFlight() {
+    autoActive = false;
+    clearTimeout(autoTimer);
+    els.autoFlight.classList.remove('is-active');
   }
 
-  function initCursor() {
-    if (isTouch || prefersReducedMotion) return;
-    let mouse = { x: -100, y: -100 };
-    let current = { x: -100, y: -100 };
-    let previous = { x: -100, y: -100 };
-    let lastTrail = 0;
+  function activeParticleForZone(zone) {
+    return PARTICLES.find(p => p.zone === zone && ['product','proof','review','conversion','technology'].includes(p.type));
+  }
 
-    window.addEventListener('pointermove', (event) => {
-      mouse.x = event.clientX;
-      mouse.y = event.clientY;
+  function setZone(zone, options = {}) {
+    currentZone = Math.max(0, Math.min(ZONES.length - 1, zone));
+    const z = ZONES[currentZone];
+    els.missionKicker.textContent = z.kicker;
+    els.missionTitle.textContent = z.title;
+    els.missionCopy.textContent = z.copy;
+    els.stateName.textContent = z.name;
+    els.stateHint.textContent = z.hint;
+    els.launchDock.classList.toggle('is-visible', currentZone === 5);
+    els.stage.dataset.zone = String(currentZone);
+    $$('.mobile-zone-dots button').forEach(btn => btn.classList.toggle('is-active', Number(btn.dataset.zone) === currentZone));
+    updateParticleStates();
+    if (!options.immediate && !prefersReducedMotion) pulseZone();
+  }
+
+  function pulseZone() {
+    els.missionPanel?.animate?.([{ opacity:.72, transform:'translateY(-46%)' },{ opacity:1, transform:'translateY(-50%)' }], { duration: 420, easing: 'ease-out' });
+  }
+
+  function updateParticleStates() {
+    PARTICLES.forEach(obj => {
+      if (!obj.el) return;
+      const active = obj.zone === currentZone || currentZone === 0 || obj.type === 'conversion';
+      obj.el.classList.toggle('is-active-zone', active);
+      obj.el.classList.toggle('is-inactive', !active);
     });
-
-    window.addEventListener('pointerdown', () => createTrail(current.x, current.y, true));
-
-    function cursorFrame(time) {
-      current.x += (mouse.x - current.x) * 0.2;
-      current.y += (mouse.y - current.y) * 0.2;
-      const angle = Math.atan2(current.y - previous.y, current.x - previous.x) * 180 / Math.PI + 90;
-      els.shipCursor.style.transform = `translate3d(${current.x - 14}px, ${current.y - 18}px, 0) rotate(${angle}deg)`;
-      const distance = Math.hypot(current.x - previous.x, current.y - previous.y);
-      if (distance > 3 && time - lastTrail > 28) {
-        createTrail(current.x, current.y, false);
-        lastTrail = time;
-      }
-      previous.x = current.x;
-      previous.y = current.y;
-      requestAnimationFrame(cursorFrame);
-    }
-    requestAnimationFrame(cursorFrame);
   }
 
-  function createTrail(x, y, burst) {
+  function setZoom(value, options = {}) {
+    zoom = Math.max(.7, Math.min(2.2, value));
+    document.documentElement.style.setProperty('--zoom', String(zoom));
+    els.plane?.classList.toggle('zoomed', zoom > 1.08);
+    els.plane?.classList.toggle('deep-zoom', zoom > 1.52);
+    if (!options.silent) {
+      els.zoomRange.value = String(Math.round(zoom * 100));
+    }
+    els.zoomValue.textContent = `${Math.round(zoom * 100)}%`;
+    updateNodePositions(performance.now());
+  }
+
+  function showObject(obj, target) {
+    stopAutoFlight();
+    $$('.verse-node,.sv-core').forEach(node => node.classList.remove('is-selected','is-focused'));
+    target?.classList.add(target === els.core ? 'is-focused' : 'is-selected');
+    els.tooltipType.textContent = obj.category || 'Object';
+    els.tooltipTitle.textContent = obj.label;
+    els.tooltipDesc.textContent = obj.desc || '';
+    els.tooltipUse.textContent = obj.use || '';
+    if (obj.link) {
+      els.tooltipLink.href = obj.link;
+      els.tooltipLink.classList.add('is-visible');
+      els.tooltipLink.textContent = obj.category === 'Contact' ? 'Open contact path' : 'Open path';
+    } else {
+      els.tooltipLink.classList.remove('is-visible');
+    }
+    els.tooltip.classList.add('is-open');
+    els.tooltip.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeObject() {
+    els.tooltip.classList.remove('is-open');
+    els.tooltip.setAttribute('aria-hidden', 'true');
+    $$('.verse-node,.sv-core').forEach(node => node.classList.remove('is-selected','is-focused'));
+    document.body.classList.remove('cursor-lock');
+  }
+
+  function startGuide() {
+    stopAutoFlight();
+    guideActive = true;
+    guideIndex = 0;
+    els.guideOverlay.classList.add('is-visible');
+    els.guideOverlay.setAttribute('aria-hidden', 'false');
+    showGuideStep();
+  }
+
+  function closeGuide() {
+    guideActive = false;
+    els.guideOverlay.classList.remove('is-visible');
+    els.guideOverlay.setAttribute('aria-hidden', 'true');
+    $$('.guide-target').forEach(el => el.classList.remove('guide-target'));
+  }
+
+  function stepGuide(direction) {
+    if (direction > 0 && guideIndex === GUIDE.length - 1) {
+      closeGuide();
+      return;
+    }
+    guideIndex = Math.max(0, Math.min(GUIDE.length - 1, guideIndex + direction));
+    showGuideStep();
+  }
+
+  function showGuideStep() {
+    const step = GUIDE[guideIndex];
+    els.guideStep.textContent = `Step ${guideIndex + 1} of ${GUIDE.length}`;
+    els.guideTitle.textContent = step.title;
+    els.guideText.textContent = step.text;
+    els.guideProgress.style.width = `${((guideIndex + 1) / GUIDE.length) * 100}%`;
+    els.guideBack.disabled = guideIndex === 0;
+    els.guideNext.textContent = guideIndex === GUIDE.length - 1 ? 'Finish' : 'Next';
+    $$('.guide-target').forEach(el => el.classList.remove('guide-target'));
+    const target = $(step.target);
+    if (target) target.classList.add('guide-target');
+  }
+
+  function bindCursor() {
+    if (isTouch || prefersReducedMotion) return;
+    positionShip(lastMouse.x, lastMouse.y);
+    window.addEventListener('mousemove', (event) => {
+      prevMouse = { ...lastMouse };
+      lastMouse = { x: event.clientX, y: event.clientY };
+      const dx = lastMouse.x - prevMouse.x;
+      const dy = lastMouse.y - prevMouse.y;
+      if (Math.abs(dx) + Math.abs(dy) > 1) {
+        shipAngle = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+        createTrail(lastMouse.x, lastMouse.y);
+      }
+      positionShip(lastMouse.x, lastMouse.y);
+    }, { passive: true });
+  }
+
+  function positionShip(x, y) {
+    els.ship.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%,-50%) rotate(${shipAngle}deg)`;
+  }
+
+  let lastTrailTime = 0;
+  function createTrail(x, y) {
+    const now = performance.now();
+    if (now - lastTrailTime < 28) return;
+    lastTrailTime = now;
     const dot = document.createElement('span');
-    dot.className = burst ? 'trail-dot is-burst' : 'trail-dot';
-    dot.style.left = `${x}px`;
-    dot.style.top = `${y}px`;
-    dot.style.width = burst ? '18px' : '7px';
-    dot.style.height = burst ? '18px' : '7px';
-    els.cursorTrailLayer.appendChild(dot);
+    dot.className = 'trail-dot';
+    dot.style.left = `${x - 3}px`;
+    dot.style.top = `${y - 3}px`;
+    els.trail.appendChild(dot);
     setTimeout(() => dot.remove(), 650);
   }
 
-  function initThree() {
-    if (!window.THREE || !els.canvas) return;
-    const canvas = els.canvas;
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 95;
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.8));
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-    const nodePositions = universeObjects.flatMap((obj) => {
-      const x = (obj.x - 800) / 18;
-      const y = -(obj.y - 500) / 18;
-      const z = obj.type === 'product' ? 8 : obj.type === 'tool' ? -10 : 0;
-      return [x, y, z];
-    });
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.Float32BufferAttribute(nodePositions, 3));
-    const material = new THREE.PointsMaterial({ color: 0x67e8f9, size: 1.45, transparent: true, opacity: 0.84, depthWrite: false });
-    const points = new THREE.Points(geometry, material);
-    scene.add(points);
-
-    const ambientGeometry = new THREE.BufferGeometry();
-    const ambient = [];
-    for (let i = 0; i < 140; i++) {
-      ambient.push((Math.random() - 0.5) * 130, (Math.random() - 0.5) * 80, (Math.random() - 0.5) * 60);
-    }
-    ambientGeometry.setAttribute('position', new THREE.Float32BufferAttribute(ambient, 3));
-    const ambientPoints = new THREE.Points(ambientGeometry, new THREE.PointsMaterial({ color: 0x22d3ee, size: 0.42, transparent: true, opacity: 0.32, depthWrite: false }));
-    scene.add(ambientPoints);
-
-    threeRuntime = { paused: false };
-    let start = performance.now();
-    function render() {
-      if (!threeRuntime.paused) {
-        const elapsed = (performance.now() - start) / 1000;
-        points.rotation.z = elapsed * 0.015;
-        points.rotation.y = Math.sin(elapsed * 0.28) * 0.08;
-        ambientPoints.rotation.z = -elapsed * 0.01;
-        ambientPoints.rotation.x = Math.sin(elapsed * 0.18) * 0.05;
-        renderer.render(scene, camera);
-      }
-      requestAnimationFrame(render);
-    }
-    render();
-
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    document.addEventListener('visibilitychange', () => {
-      threeRuntime.paused = document.hidden || paused;
+  function bindKeyboard() {
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') { closeObject(); closeGuide(); stopAutoFlight(); }
+      if (event.key.toLowerCase() === 'g') startGuide();
+      if (event.key.toLowerCase() === 'e') { stopAutoFlight(); setControlActive(els.exploreMode); }
+      if (event.key.toLowerCase() === 'a') toggleAutoFlight();
+      if (event.key === ' ' && entered) { event.preventDefault(); togglePause(); }
+      if (event.key === 'Home' || event.key.toLowerCase() === 'r') returnToCore();
+      if (event.key === '+' || event.key === '=') setZoom(zoom + .15);
+      if (event.key === '-' || event.key === '_') setZoom(zoom - .15);
+      if (event.key === '?' || event.key.toLowerCase() === 'h') startGuide();
+      if (event.key === 'ArrowRight') setZone(currentZone + 1);
+      if (event.key === 'ArrowLeft') setZone(currentZone - 1);
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
+  function bindTouch() {
+    els.stage.addEventListener('touchstart', (event) => {
+      if (event.touches.length === 1) {
+        touchStartX = event.touches[0].clientX;
+        touchStartY = event.touches[0].clientY;
+      }
+      if (event.touches.length === 2) {
+        pinchStartDistance = distance(event.touches[0], event.touches[1]);
+        pinchStartZoom = zoom;
+      }
+    }, { passive: true });
+
+    els.stage.addEventListener('touchmove', (event) => {
+      if (event.touches.length === 2 && pinchStartDistance) {
+        const next = distance(event.touches[0], event.touches[1]);
+        setZoom(pinchStartZoom * (next / pinchStartDistance));
+      }
+    }, { passive: true });
+
+    els.stage.addEventListener('touchend', (event) => {
+      if (pinchStartDistance) { pinchStartDistance = null; return; }
+      const touch = event.changedTouches[0];
+      if (!touch) return;
+      const dx = touch.clientX - touchStartX;
+      const dy = touch.clientY - touchStartY;
+      if (Math.abs(dx) > 54 && Math.abs(dx) > Math.abs(dy)) {
+        setZone(currentZone + (dx < 0 ? 1 : -1));
+      }
+    }, { passive: true });
+  }
+
+  function distance(a, b) {
+    return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
+  }
+
+  function animate(time = 0) {
+    if (!paused) updateNodePositions(time);
+    requestAnimationFrame(animate);
+  }
+
+  function updateNodePositions(time) {
+    const rect = els.stage.getBoundingClientRect();
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const mobile = rect.width <= 780;
+    const laptop = rect.height <= 760 && rect.width >= 781;
+    const scaleRadius = mobile ? .52 : laptop ? .78 : 1;
+    const timeScale = paused ? 0 : time / 1000;
+    const zoneBias = currentZone * 22;
+
+    PARTICLES.forEach((obj, i) => {
+      const node = obj.el;
+      if (!node) return;
+      const ring = obj.radius * scaleRadius * (0.78 + zoom * .22);
+      const speed = (obj.type === 'product' ? 0.018 : obj.type === 'review' ? 0.014 : obj.type === 'proof' ? 0.02 : 0.026);
+      const angle = ((obj.angle + zoneBias) * Math.PI / 180) + (timeScale * speed) + obj.phase * .08;
+      const wobble = prefersReducedMotion ? 0 : Math.sin(timeScale * 1.6 + i) * (mobile ? 2 : 5);
+      let x = cx + Math.cos(angle) * ring;
+      let y = cy + Math.sin(angle) * ring + wobble;
+
+      // Keep the core safe: push particles away from the exact center.
+      const dx = x - cx;
+      const dy = y - cy;
+      const dist = Math.hypot(dx, dy) || 1;
+      const minSafe = mobile ? 126 : 178;
+      if (dist < minSafe) {
+        x = cx + (dx / dist) * minSafe;
+        y = cy + (dy / dist) * minSafe;
+      }
+
+      // Entry/heading safe zones on laptop: keep particles out of top 120px and control right rail.
+      const pad = mobile ? 18 : 38;
+      x = Math.max(pad, Math.min(rect.width - pad, x));
+      y = Math.max(mobile ? 90 : 100, Math.min(rect.height - (mobile ? 150 : 70), y));
+
+      node.style.left = `${x}px`;
+      node.style.top = `${y}px`;
+      const active = obj.zone === currentZone || currentZone === 0 || obj.type === 'conversion';
+      const farDim = active ? 1 : 0.34;
+      node.style.opacity = obj.type === 'tool' && zoom < 1.08 ? 0 : farDim;
+      node.style.visibility = obj.type === 'tool' && zoom < 1.08 ? 'hidden' : 'visible';
+    });
+  }
+
+  function initStars() {
+    const canvas = $('#starCanvas');
+    const ctx = canvas.getContext('2d');
+    let stars = [];
+    function resize() {
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      canvas.width = Math.floor(window.innerWidth * dpr);
+      canvas.height = Math.floor(window.innerHeight * dpr);
+      canvas.style.width = `${window.innerWidth}px`;
+      canvas.style.height = `${window.innerHeight}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const count = Math.max(80, Math.min(170, Math.floor(window.innerWidth * window.innerHeight / 12000)));
+      stars = Array.from({ length: count }, () => ({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        r: Math.random() * 1.6 + .25,
+        a: Math.random() * .35 + .08,
+        s: Math.random() * .22 + .04
+      }));
+    }
+    function draw() {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      ctx.fillStyle = '#05070A';
+      ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+      stars.forEach(star => {
+        if (!paused && !prefersReducedMotion) {
+          star.y += star.s;
+          if (star.y > window.innerHeight + 4) star.y = -4;
+        }
+        ctx.beginPath();
+        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(165,243,252,${star.a})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(draw);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    draw();
   }
 })();
