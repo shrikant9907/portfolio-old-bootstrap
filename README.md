@@ -48,10 +48,9 @@ Mobile:
 - `index.html`
 - `css/portfolio-style.css`
 - `js/portfolio-scripts.js`
-- `SHRIMO_VERSE_FINAL_UNIVERSE_PLAN.md`
-- `SHRIMO_VERSE_FINAL_MASTER_PROMPT.md`
-- `SHRIMO_VERSE_EXPERT_UPGRADED_PROMPT.md`
-- `CHANGELOG.md`
+- `manifest.json`
+- `robots.txt`
+- `sitemap.xml`
 
 ## Deployment
 Upload the full folder contents to the hosting root for `shrikant.shrimo.com`.
