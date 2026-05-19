@@ -187,6 +187,7 @@
     bindCursor();
     bindKeyboard();
     bindTouch();
+    bindPageVisibility();
     initStars();
     setZone(0, { immediate: true });
     setZoom(1, { silent: true });
@@ -414,9 +415,9 @@
     els.returnCore.addEventListener('click', () => returnToCore());
     els.replayGuide.addEventListener('click', () => startGuide());
     els.brandReset.addEventListener('click', () => returnToCore());
-    els.zoomIn.addEventListener('click', () => setZoom(zoom + .15));
-    els.zoomOut.addEventListener('click', () => setZoom(zoom - .15));
-    els.zoomRange.addEventListener('input', () => setZoom(Number(els.zoomRange.value) / 100));
+    els.zoomIn.addEventListener('click', () => { stopAutoFlight(); setZoom(zoom + .15); });
+    els.zoomOut.addEventListener('click', () => { stopAutoFlight(); setZoom(zoom - .15); });
+    els.zoomRange.addEventListener('input', () => { stopAutoFlight(); setZoom(Number(els.zoomRange.value) / 100); });
     els.tooltipClose.addEventListener('click', closeObject);
     els.stage.addEventListener('click', (event) => {
       if (!event.target.closest('.verse-node') && !event.target.closest('.world-dot') && !event.target.closest('.object-tooltip') && !event.target.closest('.sv-core')) closeObject();
@@ -476,15 +477,18 @@
     closeObject();
     autoActive = true;
     setControlActive(els.autoFlight);
-    let index = currentZone;
+    let index = 0;
     const lastZone = ZONES.length - 1;
+    activeProduct = 0;
+    activeProof = 0;
+    activeReview = 0;
     const run = () => {
       if (!autoActive) return;
       const zone = Math.max(0, Math.min(lastZone, index));
       setZone(zone);
-      if (zone === 2) { activeProduct = Math.min(activeProduct + 1, PRODUCTS.length - 1); updateProductLayer(); }
-      if (zone === 3) { activeProof = Math.min(activeProof + 1, PROOFS.length - 1); updateProofLayer(); }
-      if (zone === 4) { activeReview = Math.min(activeReview + 1, REVIEWS.length - 1); updateReviewLayer(); }
+      if (zone === 2) updateProductLayer();
+      if (zone === 3) updateProofLayer();
+      if (zone === 4) updateReviewLayer();
       const focus = activeParticleForZone(zone);
       if (focus?.el) {
         $$('.verse-node').forEach(node => node.classList.remove('is-selected'));
@@ -559,8 +563,6 @@
     
     if (currentZone === 3) {
       setTimeout(() => animateProofNumbers(), 320);
-    } else {
-      proofAnimated = false;
     }
 
     updateLayerStates();
@@ -710,9 +712,21 @@
       triggerCursorLock(event.clientX, event.clientY);
     });
     document.addEventListener('visibilitychange', () => {
-      pageHidden = document.hidden;
       if (pageHidden) els.ship.classList.add('is-hidden');
       else els.ship.classList.remove('is-hidden');
+    });
+  }
+
+  function bindPageVisibility() {
+    document.addEventListener('visibilitychange', () => {
+      pageHidden = document.hidden;
+      if (pageHidden) {
+        stopAutoFlight();
+        els.ship?.classList.add('is-hidden');
+      } else {
+        lastShipFrame = performance.now();
+        if (!isTouch && !prefersReducedMotion) els.ship?.classList.remove('is-hidden');
+      }
     });
   }
 
@@ -761,8 +775,10 @@
   function positionShip(x, y) {
     els.ship.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%,-50%) rotate(${shipAngle}deg)`;
     const moving = shipVelocity > 0.4 && els.ship.classList.contains('is-moving');
-    const flameSize = moving ? Math.max(0.1, Math.min(1.0, shipVelocity * 0.08)) : 0;
+    const flameSize = moving ? Math.max(0.1, Math.min(1.0, shipVelocity / 20)) : 0;
+    const flameLength = moving ? Math.max(4, Math.min(20, shipVelocity)) : 0;
     els.ship.style.setProperty('--thrust', flameSize.toFixed(3));
+    els.ship.style.setProperty('--flame-length', `${flameLength.toFixed(1)}px`);
   }
 
   let lastTrailTime = 0;
@@ -817,11 +833,11 @@
       if (event.key.toLowerCase() === 'a') toggleAutoFlight();
       if (event.key === ' ' && entered) { event.preventDefault(); togglePause(); }
       if (event.key === 'Home' || event.key.toLowerCase() === 'r') returnToCore();
-      if (event.key === '+' || event.key === '=') setZoom(zoom + .15);
-      if (event.key === '-' || event.key === '_') setZoom(zoom - .15);
+      if (event.key === '+' || event.key === '=') { stopAutoFlight(); setZoom(zoom + .15); }
+      if (event.key === '-' || event.key === '_') { stopAutoFlight(); setZoom(zoom - .15); }
       if (event.key === '?' || event.key.toLowerCase() === 'h') startGuide();
-      if (event.key === 'ArrowRight') setZone(currentZone + 1);
-      if (event.key === 'ArrowLeft') setZone(currentZone - 1);
+      if (event.key === 'ArrowRight') { stopAutoFlight(); setZone(currentZone + 1); }
+      if (event.key === 'ArrowLeft') { stopAutoFlight(); setZone(currentZone - 1); }
     });
   }
 

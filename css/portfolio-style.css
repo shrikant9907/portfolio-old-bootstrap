@@ -512,3 +512,23 @@ body.verse-entered .universe-plane{animation:planeArrival 1100ms cubic-bezier(.1
   .gallery-card,.review-card,.proof-focus{border-radius:10px;bottom:154px;max-height:36vh}
   .launch-dock{border-radius:10px}
 }
+
+/* Final production tuning */
+.verse-node:hover,.verse-node:focus-visible,.verse-node.is-hovered,.verse-node.is-selected{
+  transform:translate(-50%,-50%) scale(calc(var(--depth-scale,1) * 1.08)) !important;
+}
+.ship-flame{
+  height:var(--flame-length,0px)!important;
+  min-height:0!important;
+}
+.ship-cursor.is-boosting .ship-flame{
+  height:min(var(--flame-length,20px),22px)!important;
+}
+.mobile-zone-dots button.is-active,
+.zone-nav .mobile-zone-dots button.is-active{
+  background:var(--fire)!important;
+  box-shadow:0 0 16px rgba(255,176,32,.76)!important;
+}
+body:not(.verse-entered) .verse-node{
+  opacity:0!important;
+}
