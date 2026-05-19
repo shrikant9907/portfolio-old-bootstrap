@@ -11,6 +11,8 @@
     entryGate: $('#entryGate'),
     enterVerse: $('#enterVerse'),
     skipIntro: $('#skipIntro'),
+    autoPlayMode: $('#autoPlayMode'),
+    zoomRange: $('#zoomRange'),
     entryStatus: $('#entryStatus'),
     verseStage: $('#verseStage'),
     worldPlane: $('#worldPlane'),
@@ -68,6 +70,8 @@
   let guideStep = 0;
   let guideVisible = false;
   let guideShown = false;
+  let autoPlayActive = false;
+  let autoPlayTimer = null;
 
   const universeObjects = [
     { id:'core', zone:0, category:'Identity', label:'Shrimo Verse Core', type:'identity', x:800, y:500, desc:'The central identity object of this interactive portfolio universe.', use:'It keeps the experience connected: identity, products, tools, proof, and contact flow.', link:'' },
@@ -86,6 +90,16 @@
     { id:'php', zone:1, category:'Technology', label:'PHP', type:'technology', x:315, y:548, desc:'Server-side language commonly used in WordPress and custom web systems.', use:'Useful for CMS websites, plugins, server logic, and practical business tools.', link:'' },
     { id:'mongo', zone:1, category:'Technology', label:'MongoDB', type:'technology', x:715, y:807, desc:'Document database used for flexible application data.', use:'Good for product data, user profiles, dynamic dashboards, and scalable app structures.', link:'' },
     { id:'mysql', zone:1, category:'Technology', label:'MySQL', type:'technology', x:910, y:818, desc:'Relational database for structured business data.', use:'Useful for CMS, directories, listings, ecommerce, and custom data systems.', link:'' },
+    { id:'tailwind', zone:1, category:'Technology', label:'Tailwind CSS', type:'technology', x:750, y:188, desc:'Utility-first CSS system for fast, consistent interface building.', use:'Useful for responsive UI systems, design tokens, and production-ready component styling.', link:'' },
+    { id:'bootstrap', zone:1, category:'Technology', label:'Bootstrap', type:'technology', x:612, y:255, desc:'Responsive frontend framework used for quick, reliable business website layouts.', use:'Good for practical websites, dashboards, and layouts that need stable responsive behavior.', link:'' },
+    { id:'sass', zone:1, category:'Technology', label:'Sass / SCSS', type:'technology', x:332, y:410, desc:'CSS preprocessor used to structure larger visual systems.', use:'Helps organize reusable variables, components, and maintainable UI styling.', link:'' },
+    { id:'jquery', zone:1, category:'Technology', label:'jQuery', type:'technology', x:472, y:872, desc:'Classic JavaScript library still useful in many legacy and WordPress projects.', use:'Helpful for maintaining older websites, plugins, and interactive business pages.', link:'' },
+    { id:'express', zone:1, category:'Technology', label:'Express.js', type:'technology', x:632, y:735, desc:'Node.js backend framework for APIs and server-side routes.', use:'Used for REST APIs, authentication flows, dashboards, and scalable backend services.', link:'' },
+    { id:'redux', zone:1, category:'Technology', label:'Redux', type:'technology', x:1198, y:262, desc:'State management approach for complex frontend applications.', use:'Useful when larger interfaces need predictable data flow and maintainable app state.', link:'' },
+    { id:'auth', zone:1, category:'Technology', label:'JWT Auth', type:'technology', x:1190, y:770, desc:'Token-based authentication pattern for protected web applications.', use:'Useful for role-based dashboards, secure APIs, and logged-in product systems.', link:'' },
+    { id:'woocommerce', zone:1, category:'Technology', label:'WooCommerce', type:'technology', x:1008, y:880, desc:'WordPress ecommerce system for product and order workflows.', use:'Helpful for online stores, catalogs, and business websites with commerce features.', link:'' },
+    { id:'vercel', zone:1, category:'Tool', label:'Vercel / Hosting', type:'tool', x:1388, y:510, desc:'Deployment layer for fast web delivery.', use:'Used for launching, hosting, and maintaining modern websites and applications.', link:'' },
+    { id:'performance', zone:1, category:'Tool', label:'Performance', type:'tool', x:230, y:760, desc:'Speed, loading behavior, and frontend optimization work.', use:'Helps websites feel faster, reduce friction, and improve user experience.', link:'' },
 
     { id:'figma', zone:1, category:'Tool', label:'Figma', type:'tool', x:192, y:336, desc:'Design tool used for planning interfaces before development.', use:'Helps shape layout, hierarchy, and responsive behavior before code.', link:'' },
     { id:'gsap', zone:1, category:'Tool', label:'GSAP', type:'tool', x:1394, y:390, desc:'Professional animation library for smooth UI and motion storytelling.', use:'Used for cinematic transitions, timeline control, and premium motion behavior.', link:'' },
@@ -125,6 +139,7 @@
 
   function init() {
     document.body.classList.toggle('touch-device', isTouch);
+    if (!isTouch && !prefersReducedMotion) document.body.classList.add('has-ship-cursor');
     renderNodes();
     bindEntry();
     bindControls();
@@ -140,8 +155,9 @@
     } else if (window.gsap) {
       gsap.from('.entry-core', { scale: 0.8, opacity: 0, duration: 1.1, ease: 'expo.out' });
       gsap.from('.entry-kicker, .entry-gate h1, .entry-copy, .entry-actions, .entry-line', { y: 24, opacity: 0, duration: 0.8, stagger: 0.12, delay: 0.25, ease: 'power3.out' });
-      setTimeout(() => { els.entryStatus.textContent = 'Syncing real client signals'; }, 750);
-      setTimeout(() => { els.entryStatus.textContent = 'You are going to enter Shrimo Verse'; }, 1450);
+      setTimeout(() => { els.entryStatus.textContent = 'Calibrating rocket controls'; }, 700);
+      setTimeout(() => { els.entryStatus.textContent = 'Syncing meaningful particles'; }, 1350);
+      setTimeout(() => { els.entryStatus.textContent = 'You are going to enter Shrimo Verse'; }, 2050);
     }
   }
 
@@ -179,15 +195,19 @@
 
   function bindEntry() {
     els.enterVerse.addEventListener('click', enterVerse);
-    els.skipIntro.addEventListener('click', skipEntry);
+    if (els.skipIntro) els.skipIntro.addEventListener('click', skipEntry);
   }
 
   function enterVerse() {
+    closeLaunchGuide();
     if (window.gsap && !prefersReducedMotion) {
+      els.entryStatus.textContent = 'Opening Shrimo Verse flight path';
       gsap.timeline({ onComplete: skipEntry })
-        .to('.entry-cosmos', { scale: 1.3, opacity: 0, duration: 0.7, ease: 'power3.inOut' })
-        .to('.entry-kicker, .entry-gate h1, .entry-copy, .entry-actions, .entry-line', { y: -22, opacity: 0, duration: 0.45, stagger: 0.04, ease: 'power3.in' }, '<')
-        .to(els.entryGate, { opacity: 0, duration: 0.45, ease: 'power2.out' }, '-=.1');
+        .to('.entry-core', { scale: 4.6, opacity: 0.16, duration: 0.9, ease: 'expo.inOut' })
+        .to('.entry-orbit', { scale: 2.2, opacity: 0.12, duration: 0.9, ease: 'expo.inOut' }, '<')
+        .to('.entry-gate h1, .entry-copy, .entry-hints, .entry-actions, .entry-line', { y: -28, opacity: 0, duration: 0.48, stagger: 0.035, ease: 'power3.in' }, '<.1')
+        .to('.entry-kicker', { letterSpacing: '0.38em', opacity: 0, duration: 0.38, ease: 'power2.out' }, '<')
+        .to(els.entryGate, { opacity: 0, duration: 0.52, ease: 'power2.out' }, '-=.1');
     } else {
       skipEntry();
     }
@@ -215,6 +235,7 @@
   function bindControls() {
     els.guidedMode.addEventListener('click', () => setMode('guided'));
     els.exploreMode.addEventListener('click', () => setMode('explore'));
+    if (els.autoPlayMode) els.autoPlayMode.addEventListener('click', toggleAutoPlay);
     els.pauseMotion.addEventListener('click', togglePause);
     els.resetView.addEventListener('click', resetView);
     if (els.launchGuideButton) els.launchGuideButton.addEventListener('click', () => showLaunchGuide(true));
@@ -222,8 +243,9 @@
     if (els.guidePrev) els.guidePrev.addEventListener('click', prevGuideStep);
     if (els.guideSkip) els.guideSkip.addEventListener('click', closeLaunchGuide);
     els.brandReset.addEventListener('click', (event) => { event.preventDefault(); resetView(); });
-    els.zoomIn.addEventListener('click', () => setZoom(worldZoom + 0.16));
-    els.zoomOut.addEventListener('click', () => setZoom(worldZoom - 0.16));
+    els.zoomIn.addEventListener('click', () => setZoom(worldZoom + 0.12));
+    els.zoomOut.addEventListener('click', () => setZoom(worldZoom - 0.12));
+    if (els.zoomRange) els.zoomRange.addEventListener('input', () => setZoom(Number(els.zoomRange.value) / 100, { keepPan: true }));
     els.tooltipClose.addEventListener('click', closeTooltip);
     els.verseStage.addEventListener('click', (event) => {
       if (!event.target.closest('.verse-node') && !event.target.closest('.shrimo-core') && !event.target.closest('.object-tooltip')) closeTooltip();
@@ -241,16 +263,17 @@
     { selector: null, title: 'First Launch Guide', text: 'This is not a normal portfolio page. It behaves like a small interactive universe. Learn the basics, then explore freely.' },
     { selector: '#shipCursor', title: 'Pilot the explorer ship', text: 'Move your cursor to fly through Shrimo Verse. The yellow/orange flame reacts to motion.' },
     { selector: '.verse-node[data-id="html"]', title: 'Scan meaningful particles', text: 'Every particle has meaning. Hover or click a glowing node to inspect a technology, tool, product, proof, or contact path.' },
-    { selector: '#zoomIn', title: 'Zoom into hidden depth', text: 'Use + / − or your mouse wheel in Free Explore to reveal smaller tools and deeper details.' },
+    { selector: '#zoomRange', title: 'Control the zoom level', text: 'Use the zoom bar or + / − buttons to move between universe view, cluster view, and object view.' },
     { selector: '#exploreMode', title: 'Switch to Free Explore', text: 'Free Explore lets you zoom, inspect, click, and play with the universe instead of following the guided flight.' },
     { selector: '#resetView', title: 'Return to Core anytime', text: 'If you feel lost, Return to Core resets zoom, closes tooltips, and brings you back to the starting orbit.' },
+    { selector: '#autoPlayMode', title: 'Let Auto Play guide you', text: 'Auto Play moves from the core to each information layer and opens the right signal one by one.' },
     { selector: '.verse-cta', title: 'Launch when ready', text: 'When the signal feels right, use Launch Project to start a website, product, or web app discussion.' }
   ];
 
   const mobileGuideSteps = [
     { selector: null, title: 'Touch Launch Guide', text: 'On mobile, Shrimo Verse works differently. Swipe to travel, tap nodes to inspect, and use the bottom controls to zoom or reset.' },
     { selector: '.verse-node[data-id="html"]', title: 'Tap glowing nodes', text: 'Tap a particle to open its story in a mobile-friendly bottom sheet.' },
-    { selector: '#zoomIn', title: 'Pinch or use zoom controls', text: 'In Free Explore, pinch to zoom. You can also use the + / − controls.' },
+    { selector: '#zoomRange', title: 'Use the zoom control', text: 'Pinch in Free Explore or use the zoom bar to control how deep you are inside the universe.' },
     { selector: '#exploreMode', title: 'Free Explore mode', text: 'Use Free Explore when you want to play with the universe instead of moving zone by zone.' },
     { selector: '#resetView', title: 'Return to Core', text: 'Double-tap the world or use Return to Core if the view becomes too deep.' },
     { selector: '.mobile-command', title: 'Open controls', text: 'Use Menu to open Shrimo Verse controls on smaller screens.' }
@@ -316,10 +339,59 @@
     updateGuideStep();
   }
 
+  const autoFocusByZone = {
+    0: 'core',
+    1: 'next',
+    2: 'digiting',
+    3: 'projects',
+    4: 'review-khyati',
+    5: 'start-project'
+  };
+
+  function toggleAutoPlay() {
+    autoPlayActive = !autoPlayActive;
+    document.body.classList.toggle('autoplay-active', autoPlayActive);
+    if (els.autoPlayMode) {
+      els.autoPlayMode.classList.toggle('is-active', autoPlayActive);
+      els.autoPlayMode.textContent = autoPlayActive ? 'Stop Auto' : 'Auto Play';
+    }
+    if (autoPlayActive) startAutoPlay(); else stopAutoPlay();
+  }
+
+  function startAutoPlay() {
+    setMode('guided');
+    closeLaunchGuide();
+    runAutoStep(true);
+    autoPlayTimer = window.setInterval(() => runAutoStep(false), 4200);
+  }
+
+  function stopAutoPlay() {
+    autoPlayActive = false;
+    document.body.classList.remove('autoplay-active');
+    if (autoPlayTimer) window.clearInterval(autoPlayTimer);
+    autoPlayTimer = null;
+    if (els.autoPlayMode) {
+      els.autoPlayMode.classList.remove('is-active');
+      els.autoPlayMode.textContent = 'Auto Play';
+    }
+  }
+
+  function runAutoStep(initial) {
+    const targetZone = initial ? 0 : activeZone + 1;
+    setZone(targetZone);
+    window.setTimeout(() => {
+      const focusId = autoFocusByZone[activeZone];
+      const obj = universeObjects.find(item => item.id === focusId) || universeObjects.find(item => item.zone === activeZone);
+      const target = focusId === 'core' ? $('#shrimoCore') : $(`.verse-node[data-id="${focusId}"]`);
+      if (obj && target) showTooltip(obj, target);
+    }, 850);
+  }
+
   function bindWheelAndKeys() {
     window.addEventListener('wheel', (event) => {
       if (!document.body.classList.contains('verse-ready')) return;
       event.preventDefault();
+      if (autoPlayActive) stopAutoPlay();
       if (mode === 'explore') {
         setZoom(worldZoom + (event.deltaY > 0 ? -0.08 : 0.08));
         return;
@@ -358,6 +430,7 @@
   }
 
   function resetView() {
+    stopAutoPlay();
     closeTooltip();
     setMode('guided');
     setZone(0, { immediate: false });
@@ -396,6 +469,7 @@
     els.worldPlane.classList.toggle('zoomed', worldZoom > 1.16);
     els.worldPlane.classList.toggle('deep-zoom', worldZoom > 1.45);
     els.zoomValue.textContent = `${worldZoom.toFixed(1)}x`;
+    if (els.zoomRange) els.zoomRange.value = String(Math.round(worldZoom * 100));
     applyWorldTransform();
   }
 

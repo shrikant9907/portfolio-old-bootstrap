@@ -91,3 +91,16 @@
 - Changed rocket/ship flame and trail to yellow/orange thrust while keeping the universe color system black + cyan.
 - Improved mobile guidance model with tap-node instructions, bottom-sheet tooltip behavior, pinch zoom guidance, and double-tap reset guidance.
 - Updated zone labels to feel less like website sections and more like universe states.
+
+## Final Control Upgrade
+- Improved entry screen copy and visual behavior.
+- Removed visible Skip Intro button from the entry screen.
+- Made rocket cursor active from the first desktop screen.
+- Changed rocket thrust/trail to yellow + orange while keeping the main theme black + cyan.
+- Reduced state heading sizes for 1366×768 and short-height screens.
+- Added orange/yellow hover scan shadow for particles.
+- Added more meaningful technology/tool particles: Tailwind CSS, Bootstrap, Sass/SCSS, jQuery, Express.js, Redux, JWT Auth, WooCommerce, Vercel/Hosting, and Performance.
+- Made the SV core smaller by default and larger during zoom/deep zoom.
+- Replaced simple zoom display with a top-right zoom control bar including range slider, plus, minus, and min/max clamp.
+- Added Auto Play mode that moves through each universe layer and opens key information automatically.
+- Added `SHRIMO_VERSE_FINAL_CONTROL_PLAN.md`.

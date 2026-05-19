@@ -70,11 +70,13 @@
       <span class="entry-core">SV</span>
     </div>
     <p class="entry-kicker" id="entryStatus">Preparing Shrimo Verse</p>
-    <h1 id="entryTitle">Enter Shrimo Verse</h1>
-    <p class="entry-copy">You are going to enter a living portfolio universe where products, tools, technologies, and ideas connect.</p>
+    <h1 id="entryTitle">You are going to enter Shrimo Verse</h1>
+    <p class="entry-copy">Pilot the rocket, zoom into meaningful particles, inspect technologies, products, proof signals, and reach the Launch Dock when you are ready.</p>
+    <div class="entry-hints" aria-label="Shrimo Verse entry hints">
+      <span>Move</span><span>Zoom</span><span>Inspect</span><span>Launch</span>
+    </div>
     <div class="entry-actions">
       <button class="enter-verse" id="enterVerse" type="button">Enter Shrimo Verse</button>
-      <button class="skip-intro" id="skipIntro" type="button">Skip intro</button>
     </div>
     <div class="entry-line" aria-hidden="true"><span></span></div>
   </div>
@@ -96,6 +98,7 @@
     <nav class="verse-modes" aria-label="Shrimo Verse controls">
       <button type="button" class="mode-btn is-active" id="guidedMode">Guided Flight</button>
       <button type="button" class="mode-btn" id="exploreMode">Free Explore</button>
+      <button type="button" class="mode-btn" id="autoPlayMode">Auto Play</button>
       <button type="button" class="mode-btn" id="pauseMotion">Pause Orbit</button>
       <button type="button" class="mode-btn" id="resetView">Return to Core</button>
       <button type="button" class="mode-btn" id="launchGuideButton">Flight Guide</button>
@@ -123,7 +126,9 @@
       </div>
 
       <div class="zoom-dock" aria-label="Zoom controls">
+        <span class="zoom-title">Zoom</span>
         <button type="button" id="zoomOut" aria-label="Zoom out">−</button>
+        <input class="zoom-range" id="zoomRange" type="range" min="72" max="185" value="100" step="1" aria-label="Shrimo Verse zoom level">
         <span id="zoomValue">1.0x</span>
         <button type="button" id="zoomIn" aria-label="Zoom in">+</button>
       </div>
@@ -137,7 +142,6 @@
           <div class="guide-actions">
             <button type="button" id="guidePrev">Back</button>
             <button type="button" id="guideNext">Start Guide</button>
-            <button type="button" id="guideSkip">Skip</button>
           </div>
         </div>
       </aside>
@@ -173,7 +177,7 @@
 
       <section class="verse-copy arrival-copy zone-panel is-active" data-zone-panel="0" aria-label="Arrival Core">
         <p class="verse-eyebrow">Welcome to Shrimo Verse</p>
-        <h2>A living portfolio universe where products, tools, and ideas connect.</h2>
+        <h2>Enter a universe of products, tools, and proof.</h2>
         <p>Built by Shrikant Yadav — designer, developer, and product builder creating digital systems for real business use.</p>
         <div class="hero-actions">
           <button type="button" class="btn-cyan" data-jump-zone="1">Explore the Orbit</button>
@@ -184,21 +188,21 @@
 
       <section class="verse-copy orbit-copy zone-panel" data-zone-panel="1" aria-label="Technology Orbit">
         <p class="verse-eyebrow">Technology Orbit</p>
-        <h2>Zoom in. The particles are not random.</h2>
+        <h2>Zoom closer. Every particle means something.</h2>
         <p>Each node is a real technology, tool, service, product, or proof signal connected to how I build digital systems.</p>
         <div class="hint-row"><span>Wheel / + to zoom</span><span>Click a particle</span><span>Reset anytime</span></div>
       </section>
 
       <section class="verse-copy products-copy zone-panel" data-zone-panel="2" aria-label="Product Constellation">
         <p class="verse-eyebrow">Product Constellation</p>
-        <h2>Projects become landmarks inside the universe.</h2>
+        <h2>Products move like landmarks.</h2>
         <p>Digiting Card, Photocopywala, Shrimo Innovations, and the business directory platform appear as larger product bodies.</p>
         <button type="button" class="btn-cyan small" data-jump-zone="3">Enter Signal Layer</button>
       </section>
 
       <section class="verse-copy proof-copy zone-panel" data-zone-panel="3" aria-label="Proof Belt">
         <p class="verse-eyebrow">Proof Belt</p>
-        <h2>Proof signals, not claims.</h2>
+        <h2>Experience becomes signal.</h2>
         <div class="proof-counts">
           <strong><span data-count="12">12</span>+</strong><em>Years</em>
           <strong><span data-count="300">300</span>+</strong><em>Projects</em>
@@ -209,7 +213,7 @@
 
       <section class="verse-copy trust-copy zone-panel" data-zone-panel="4" aria-label="Client Trust Stream">
         <p class="verse-eyebrow">Client Signal Stream</p>
-        <h2>Real feedback now lives inside the verse.</h2>
+        <h2>Real client signals orbit here.</h2>
         <p>Client voices are part of the universe, not a separate testimonial block. Click each trust particle to read the source signal.</p>
         <div class="review-stream" aria-label="Client reviews">
           <blockquote>
@@ -230,7 +234,7 @@
 
       <section class="verse-copy dock-copy zone-panel" data-zone-panel="5" aria-label="Conversion Dock">
         <p class="verse-eyebrow">Shrimo Base Station</p>
-        <h2>Ready to turn an idea into a working digital system?</h2>
+        <h2>Launch your next digital system.</h2>
         <p>This is the footer as a destination: contact beacons, company path, profile path, and launch action remain inside Shrimo Verse.</p>
         <div class="base-station-card" aria-label="Shrimo Base Station contact details">
           <span>Base: Narmadapuram / Hoshangabad, Madhya Pradesh</span>
