@@ -360,10 +360,9 @@
       isLaunching = true;
       launchStart = performance.now();
       els.enterVerse.disabled = true;
-      els.enterVerse.textContent = 'Entering Shrimo Verse...';
+      els.enterVerse.textContent = 'Entering...';
       els.entryGate.classList.add('is-launching');
       document.body.classList.add('is-entering-verse');
-      els.ship?.classList.add('is-boosting', 'is-locked');
       const statusSteps = [
         [250, 'ALIGNING ROCKET PATH'],
         [800, 'OPENING ORBIT FIELD'],
@@ -400,7 +399,6 @@
         document.body.classList.remove('is-entering-verse', 'verse-revealing');
         isLaunching = false;
         rocketCentering = false;
-        els.ship?.classList.remove('is-boosting', 'is-locked');
         setZone(0);
         window.setTimeout(() => startGuide(), prefersReducedMotion ? 120 : 200);
       }, prefersReducedMotion ? 180 : 2400);
@@ -690,8 +688,9 @@
 
   function bindCursor() {
     if (isTouch || prefersReducedMotion) return;
-    shipPos = { ...lastMouse };
-    shipTarget = { ...lastMouse };
+    shipTarget = { x: -100, y: -100 };
+    shipPos = { x: -100, y: -100 };
+    prevMouse = { x: -100, y: -100 };
     positionShip(shipPos.x, shipPos.y);
     els.ship.classList.remove('is-hidden');
     els.ship.classList.add('is-idle');
@@ -701,15 +700,13 @@
     });
     window.addEventListener('mouseleave', () => {
       els.ship.classList.add('is-hidden');
-      els.ship.classList.remove('is-moving', 'is-boosting', 'is-locked');
     });
-    window.addEventListener('mousemove', (event) => {
-      prevMouse = { ...lastMouse };
-      lastMouse = { x: event.clientX, y: event.clientY };
-      shipTarget = { ...lastMouse };
+    window.addEventListener('pointermove', (event) => {
+      shipTarget.x = event.clientX;
+      shipTarget.y = event.clientY;
     }, { passive: true });
-    window.addEventListener('dblclick', (event) => {
-      triggerCursorLock(event.clientX, event.clientY);
+    window.addEventListener('pointerdown', () => {
+      createTrail(shipPos.x, shipPos.y, true);
     });
     document.addEventListener('visibilitychange', () => {
       if (pageHidden) els.ship.classList.add('is-hidden');
@@ -732,97 +729,37 @@
 
   function updateShip(time = performance.now()) {
     if (isTouch || prefersReducedMotion || !els.ship || pageHidden) return;
-    const dt = Math.max(16, Math.min(48, time - lastShipFrame));
-    lastShipFrame = time;
-
-    const target = (isLaunching && rocketCentering)
-      ? { x: window.innerWidth * 0.5, y: window.innerHeight * 0.48 }
-      : shipTarget;
-
-    const ease = (isLaunching && rocketCentering) ? 0.08 : 0.16;
-    const dx = target.x - shipPos.x;
-    const dy = target.y - shipPos.y;
-    shipPos.x += dx * ease;
-    shipPos.y += dy * ease;
-
-    const frameVelocity = Math.hypot(dx, dy) * (dt / 16) * 0.08;
-    shipVelocity = frameVelocity;
-
-    if (Math.hypot(dx, dy) > 0.65) {
-      let nextAngle = Math.atan2(dy, dx) * 180 / Math.PI + 90;
-      if (isLaunching && rocketCentering) {
-        nextAngle = 0;
-      }
-      const angleDelta = ((((nextAngle - shipAngle) % 360) + 540) % 360) - 180;
-      shipAngle += angleDelta * 0.18;
-      els.ship.classList.remove('is-idle', 'is-hidden');
-      els.ship.classList.add('is-moving');
-      els.ship.classList.toggle('is-boosting', isLaunching || frameVelocity > 17);
-      createTrail(shipPos.x, shipPos.y, frameVelocity);
-      clearTimeout(moveIdleTimer);
-      moveIdleTimer = setTimeout(() => {
-        shipVelocity = 0;
-        if (!isLaunching) {
-          els.ship.classList.remove('is-moving', 'is-boosting');
-          els.ship.classList.add('is-idle');
-        }
-      }, 140);
-    }
+    shipPos.x += (shipTarget.x - shipPos.x) * 0.2;
+    shipPos.y += (shipTarget.y - shipPos.y) * 0.2;
+    shipAngle = Math.atan2(shipPos.y - prevMouse.y, shipPos.x - prevMouse.x) * 180 / Math.PI + 90;
+    const distance = Math.hypot(shipPos.x - prevMouse.x, shipPos.y - prevMouse.y);
+    if (distance > 3 && time - lastTrailTime > 28) createTrail(shipPos.x, shipPos.y, false);
     positionShip(shipPos.x, shipPos.y);
     prevMouse = { ...shipPos };
+    if (distance > 3) lastTrailTime = time;
   }
 
   function positionShip(x, y) {
-    els.ship.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%,-50%) rotate(${shipAngle}deg)`;
-    const moving = shipVelocity > 0.4 && els.ship.classList.contains('is-moving');
-    const flameSize = moving ? Math.max(0.1, Math.min(1.0, shipVelocity / 20)) : 0;
-    const flameLength = moving ? Math.max(4, Math.min(20, shipVelocity)) : 0;
-    els.ship.style.setProperty('--thrust', flameSize.toFixed(3));
-    els.ship.style.setProperty('--flame-length', `${flameLength.toFixed(1)}px`);
+    els.ship.style.transform = `translate3d(${x - 14}px, ${y - 18}px, 0) rotate(${shipAngle}deg)`;
   }
 
   let lastTrailTime = 0;
-  function createTrail(x, y, velocity = shipVelocity) {
-    if (pageHidden || velocity < 2.4) return;
-    const now = performance.now();
-    const interval = velocity > 18 ? 30 : velocity > 8 ? 46 : 68;
-    if (now - lastTrailTime < interval) return;
-    lastTrailTime = now;
-
+  function createTrail(x, y, burst) {
+    if (pageHidden) return;
     const activeDots = els.trail.querySelectorAll('.trail-dot').length;
-    if (activeDots > 28) return;
-
+    if (activeDots > 34) return;
     const dot = document.createElement('span');
-    dot.className = `trail-dot ${velocity > 18 || isLaunching ? 'trail-boost' : velocity > 8 ? 'trail-hot' : 'trail-smoke'}`;
-    const spread = velocity > 18 ? 5 : 3;
-    dot.style.left = `${x - 3 + ((Math.random() - 0.5) * spread)}px`;
-    dot.style.top = `${y - 3 + ((Math.random() - 0.5) * spread)}px`;
-    els.trail.appendChild(dot);
-    setTimeout(() => dot.remove(), velocity > 18 ? 760 : 620);
-  }
-
-  function triggerCursorLock(x, y) {
-    els.ship.classList.add('is-locked');
-    clearTimeout(lockTimer);
-    lockTimer = setTimeout(() => {
-      els.ship.classList.remove('is-locked');
-    }, 420);
-
-    const ring = document.createElement('span');
-    ring.className = 'cursor-target-ring';
-    ring.style.left = `${x}px`;
-    ring.style.top = `${y}px`;
-    els.trail.appendChild(ring);
-    setTimeout(() => ring.remove(), 700);
-
-    for (let i = 0; i < 3; i += 1) {
-      const dot = document.createElement('span');
-      dot.className = 'trail-dot trail-boost';
-      dot.style.left = `${x + ((Math.random() - 0.5) * 18)}px`;
-      dot.style.top = `${y + ((Math.random() - 0.5) * 18)}px`;
-      els.trail.appendChild(dot);
-      setTimeout(() => dot.remove(), 720);
+    dot.className = burst ? 'trail-dot is-burst' : 'trail-dot';
+    dot.style.left = `${x}px`;
+    dot.style.top = `${y}px`;
+    dot.style.width = burst ? '18px' : '7px';
+    dot.style.height = burst ? '18px' : '7px';
+    if (burst) {
+      dot.style.width = '18px';
+      dot.style.height = '18px';
     }
+    els.trail.appendChild(dot);
+    setTimeout(() => dot.remove(), 650);
   }
 
   function bindKeyboard() {
