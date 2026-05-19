@@ -1,310 +1,443 @@
 (function () {
   'use strict';
 
-  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var isDesktopStory = window.innerWidth > 900 && !prefersReducedMotion;
-  var currentState = 0;
-  var stateCount = 6;
-  var countersStarted = false;
-  var lenis = null;
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0 || !window.matchMedia('(pointer: fine)').matches;
 
-  var qs = function (selector, scope) { return (scope || document).querySelector(selector); };
-  var qsa = function (selector, scope) { return Array.prototype.slice.call((scope || document).querySelectorAll(selector)); };
+  const $ = (selector, scope = document) => scope.querySelector(selector);
+  const $$ = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
 
-  function setProgress() {
-    var doc = document.documentElement;
-    var max = doc.scrollHeight - window.innerHeight;
-    var progress = max > 0 ? (window.scrollY / max) * 100 : 0;
-    var bar = qs('.scroll-progress span');
-    if (bar) bar.style.width = Math.min(100, Math.max(0, progress)) + '%';
-  }
+  const els = {
+    entryGate: $('#entryGate'),
+    enterVerse: $('#enterVerse'),
+    skipIntro: $('#skipIntro'),
+    entryStatus: $('#entryStatus'),
+    verseStage: $('#verseStage'),
+    worldPlane: $('#worldPlane'),
+    verseNodes: $('#verseNodes'),
+    verseViewport: $('#verseViewport'),
+    tooltip: $('#objectTooltip'),
+    tooltipClose: $('#tooltipClose'),
+    tooltipCategory: $('#tooltipCategory'),
+    tooltipTitle: $('#tooltipTitle'),
+    tooltipDescription: $('#tooltipDescription'),
+    tooltipUse: $('#tooltipUse'),
+    tooltipAction: $('#tooltipAction'),
+    zoomValue: $('#zoomValue'),
+    guidedMode: $('#guidedMode'),
+    exploreMode: $('#exploreMode'),
+    pauseMotion: $('#pauseMotion'),
+    resetView: $('#resetView'),
+    brandReset: $('#brandReset'),
+    zoomIn: $('#zoomIn'),
+    zoomOut: $('#zoomOut'),
+    mobileCommand: $('#mobileCommand'),
+    verseControl: $('#verseControl'),
+    shipCursor: $('#shipCursor'),
+    cursorTrailLayer: $('#cursorTrailLayer'),
+    canvas: $('#verseCanvas')
+  };
 
-  function setActiveState(index) {
-    currentState = Math.max(0, Math.min(stateCount - 1, index));
-    qsa('[data-target-state]').forEach(function (item) {
-      var state = Number(item.getAttribute('data-target-state'));
-      item.classList.toggle('is-active', state === currentState);
-    });
-    document.body.setAttribute('data-current-state', String(currentState));
-    if (currentState === 3) runCounters();
-  }
+  const zones = ['arrival', 'orbit', 'products', 'proof', 'dock'];
+  const viewTargets = [
+    { x: 0, y: 0, zoom: 1.0 },
+    { x: -80, y: 10, zoom: 1.18 },
+    { x: 140, y: -20, zoom: 1.05 },
+    { x: -30, y: 90, zoom: 1.26 },
+    { x: 0, y: -110, zoom: 1.05 }
+  ];
 
-  function scrollToState(index) {
-    var story = qs('#studio-scroll-story');
-    if (!story) return;
-    var bounded = Math.max(0, Math.min(stateCount - 1, Number(index) || 0));
-    var target;
-    if (isDesktopStory) {
-      var scrollable = story.offsetHeight - window.innerHeight;
-      target = story.offsetTop + (scrollable * (bounded / (stateCount - 1)));
-    } else {
-      var panels = qsa('.story-panel');
-      target = panels[bounded] ? panels[bounded].getBoundingClientRect().top + window.scrollY - 90 : story.offsetTop;
-    }
-    if (lenis && typeof lenis.scrollTo === 'function') lenis.scrollTo(target, { duration: 1.15 });
-    else window.scrollTo({ top: target, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-  }
+  let activeZone = 0;
+  let mode = 'guided';
+  let worldZoom = 1;
+  let worldPan = { x: 0, y: 0 };
+  let paused = false;
+  let wheelLocked = false;
+  let proofAnimated = false;
+  let threeRuntime = null;
 
-  function bindNavigation() {
-    qsa('[data-target-state]').forEach(function (trigger) {
-      trigger.addEventListener('click', function (event) {
-        var state = trigger.getAttribute('data-target-state');
-        if (state !== null) {
-          event.preventDefault();
-          closeMobileMenu();
-          scrollToState(Number(state));
-        }
-      });
-    });
+  const universeObjects = [
+    { id:'core', zone:0, category:'Identity', label:'Shrimo Verse Core', type:'identity', x:800, y:500, desc:'The central identity object of this interactive portfolio universe.', use:'It keeps the experience connected: identity, products, tools, proof, and contact flow.', link:'' },
+    { id:'shrikant', zone:0, category:'Identity', label:'Shrikant Yadav', type:'identity', x:640, y:332, desc:'Designer, developer, and product builder behind Shrimo Verse and Shrimo Innovations.', use:'Creates digital systems for business websites, tools, products, and launch-ready web experiences.', link:'https://shrikant.shrimo.com/' },
+    { id:'shrimo', zone:0, category:'Identity', label:'Shrimo Innovations', type:'product', x:985, y:332, desc:'Software and web development company connected to the Shrimo ecosystem.', use:'Represents professional web, product, and digital solution work.', link:'https://shrimo.com/' },
 
-    var toggle = qs('.mobile-toggle');
-    var nav = qs('#studioNav');
-    if (toggle && nav) {
-      toggle.addEventListener('click', function () {
-        var isOpen = nav.classList.toggle('is-open');
-        toggle.setAttribute('aria-expanded', String(isOpen));
-        toggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
-        var use = toggle.querySelector('use');
-        if (use) use.setAttribute('href', isOpen ? '#icon-close' : '#icon-menu');
-      });
-    }
-  }
+    { id:'html', zone:1, category:'Technology', label:'HTML', type:'technology', x:386, y:265, desc:'The structural layer of the web.', use:'Used to keep content readable, semantic, accessible, and search-friendly.', link:'' },
+    { id:'css', zone:1, category:'Technology', label:'CSS', type:'technology', x:520, y:192, desc:'The visual system layer for layout, responsive design, and motion styling.', use:'Used to create polished black-and-cyan interfaces, glass surfaces, and responsive systems.', link:'' },
+    { id:'javascript', zone:1, category:'Technology', label:'JavaScript', type:'technology', x:1105, y:196, desc:'The interaction layer of Shrimo Verse.', use:'Used for controls, zoom, tooltips, guided mode, explore mode, and cursor behavior.', link:'' },
+    { id:'react', zone:1, category:'Technology', label:'React', type:'technology', x:1222, y:334, desc:'A component-based frontend library for modern interfaces.', use:'Best for dashboards, products, interactive apps, and scalable UI systems.', link:'' },
+    { id:'next', zone:1, category:'Technology', label:'Next.js', type:'technology', x:1252, y:520, desc:'A React framework for production-grade web applications.', use:'Useful for SEO-ready websites, fast routing, server rendering, and modern business platforms.', link:'' },
+    { id:'wordpress', zone:1, category:'Technology', label:'WordPress', type:'technology', x:1040, y:755, desc:'CMS platform for editable business websites.', use:'Best when clients need content control, fast site delivery, and easy publishing workflows.', link:'' },
+    { id:'node', zone:1, category:'Technology', label:'Node.js', type:'technology', x:475, y:720, desc:'JavaScript runtime used for backend services and APIs.', use:'Helpful for building APIs, product backends, and connected web applications.', link:'' },
+    { id:'php', zone:1, category:'Technology', label:'PHP', type:'technology', x:315, y:548, desc:'Server-side language commonly used in WordPress and custom web systems.', use:'Useful for CMS websites, plugins, server logic, and practical business tools.', link:'' },
+    { id:'mongo', zone:1, category:'Technology', label:'MongoDB', type:'technology', x:715, y:807, desc:'Document database used for flexible application data.', use:'Good for product data, user profiles, dynamic dashboards, and scalable app structures.', link:'' },
+    { id:'mysql', zone:1, category:'Technology', label:'MySQL', type:'technology', x:910, y:818, desc:'Relational database for structured business data.', use:'Useful for CMS, directories, listings, ecommerce, and custom data systems.', link:'' },
 
-  function closeMobileMenu() {
-    var nav = qs('#studioNav');
-    var toggle = qs('.mobile-toggle');
-    if (nav) nav.classList.remove('is-open');
-    if (toggle) {
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Open menu');
-      var use = toggle.querySelector('use');
-      if (use) use.setAttribute('href', '#icon-menu');
-    }
-  }
+    { id:'figma', zone:1, category:'Tool', label:'Figma', type:'tool', x:192, y:336, desc:'Design tool used for planning interfaces before development.', use:'Helps shape layout, hierarchy, and responsive behavior before code.', link:'' },
+    { id:'gsap', zone:1, category:'Tool', label:'GSAP', type:'tool', x:1394, y:390, desc:'Professional animation library for smooth UI and motion storytelling.', use:'Used for cinematic transitions, timeline control, and premium motion behavior.', link:'' },
+    { id:'three', zone:1, category:'Tool', label:'Three.js', type:'tool', x:1366, y:610, desc:'3D JavaScript library for WebGL-powered visual worlds.', use:'Used here for atmospheric depth and the Shrimo Verse universe layer.', link:'' },
+    { id:'git', zone:1, category:'Tool', label:'Git', type:'tool', x:228, y:682, desc:'Version control system for reliable code changes.', use:'Keeps production projects organized, trackable, and safer to update.', link:'' },
+    { id:'search-console', zone:1, category:'Tool', label:'Search Console', type:'tool', x:1186, y:702, desc:'Google tool used to monitor search visibility and indexing.', use:'Helps verify technical SEO health after launch.', link:'' },
+    { id:'analytics', zone:1, category:'Tool', label:'Analytics', type:'tool', x:382, y:822, desc:'Measurement layer for traffic and user behavior.', use:'Helps understand which pages and CTAs are working.', link:'' },
+    { id:'apis', zone:1, category:'Tool', label:'APIs', type:'tool', x:200, y:506, desc:'Connectors that let systems talk to each other.', use:'Used for integrations, dashboards, automation, and product workflows.', link:'' },
 
-  function initLenis() {
-    if (prefersReducedMotion || !window.Lenis) return;
-    lenis = new Lenis({
-      duration: 1.08,
-      smoothWheel: true,
-      wheelMultiplier: 0.82,
-      touchMultiplier: 1.2
-    });
+    { id:'service-websites', zone:1, category:'Service', label:'Business Websites', type:'service', x:764, y:130, desc:'Professional websites built for trust and conversion.', use:'Best for local businesses, service providers, startups, and companies that need a clean online presence.', link:'' },
+    { id:'service-apps', zone:1, category:'Service', label:'Web Applications', type:'service', x:1010, y:118, desc:'Custom web systems with user flows, data, and interaction.', use:'Useful for products, dashboards, portals, and internal business tools.', link:'' },
+    { id:'service-seo', zone:1, category:'Service', label:'SEO-ready Structure', type:'service', x:606, y:872, desc:'Technical structure that helps websites launch cleaner.', use:'Includes semantic HTML, metadata, schema, speed, and content hierarchy planning.', link:'' },
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
+    { id:'digiting', zone:2, category:'Product', label:'Digiting Card', type:'product', x:605, y:338, desc:'A digital visiting card platform for professionals and businesses.', use:'Helps people share business identity, links, and contact details digitally.', link:'https://digitingcard.com/' },
+    { id:'photocopywala', zone:2, category:'Product', label:'Photocopywala', type:'product', x:1015, y:366, desc:'A practical document and photo utility platform.', use:'Helps users complete common print, photo, and document preparation tasks online.', link:'https://photocopywala.in/' },
+    { id:'directory', zone:2, category:'Product', label:'Directory Platform', type:'product', x:515, y:642, desc:'A business listing and discovery platform concept.', use:'Designed to organize local businesses, profiles, categories, and search-driven discovery.', link:'' },
+    { id:'shrimo-site', zone:2, category:'Product', label:'Shrimo.com', type:'product', x:1065, y:642, desc:'Company website for Shrimo Innovations.', use:'Represents service positioning, trust building, and business enquiry flow.', link:'https://shrimo.com/' },
 
-    if (window.gsap && window.ScrollTrigger) {
-      lenis.on('scroll', ScrollTrigger.update);
-    }
-  }
+    { id:'years', zone:3, category:'Proof', label:'12+ Years', type:'proof', x:610, y:430, desc:'Long-term experience in website design, development, training, and product building.', use:'Shows maturity and practical understanding across many real projects.', link:'' },
+    { id:'projects', zone:3, category:'Proof', label:'300+ Projects', type:'proof', x:800, y:300, desc:'A broad delivery history across websites, tools, and web systems.', use:'Gives confidence that the work is practical, not theoretical.', link:'' },
+    { id:'trained', zone:3, category:'Proof', label:'100+ Developers', type:'proof', x:1000, y:430, desc:'Developers trained through practical teaching and development guidance.', use:'Shows ability to explain, structure, and mentor development thinking.', link:'' },
+    { id:'products-proof', zone:3, category:'Proof', label:'Products Built', type:'proof', x:800, y:650, desc:'Multiple product ideas and platforms built inside the Shrimo ecosystem.', use:'Shows product thinking beyond ordinary service websites.', link:'' },
 
-  function initStory() {
-    if (!window.gsap || !window.ScrollTrigger) {
-      document.body.classList.add('story-fallback');
-      qsa('.story-panel').forEach(function (panel) { panel.classList.add('is-visible'); });
-      setActiveState(0);
-      return;
-    }
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    if (!isDesktopStory) {
-      qsa('.story-panel').forEach(function (panel) { panel.classList.add('is-visible'); });
-      setActiveState(0);
-      window.addEventListener('scroll', updateMobileState, { passive: true });
-      updateMobileState();
-      return;
-    }
-
-    var panels = qsa('.story-panel');
-    var nodes = qsa('.capability-node');
-    var projects = qsa('.project-tile');
-    var proofItems = qsa('.proof-engine div');
-    var trustItems = qsa('.trust-stream span');
-    var contactItems = qsa('.contact-grid a');
-
-    if (window.SplitType) {
-      try { new SplitType('.story-headline', { types: 'words' }); } catch (error) { /* keep fallback */ }
-    }
-
-    gsap.set(panels, { autoAlpha: 0, y: 70, scale: .98 });
-    gsap.set('.identity-panel', { autoAlpha: 1, y: 0, scale: 1 });
-    gsap.set(nodes, { autoAlpha: .14, scale: .86, y: 14 });
-    gsap.set(projects, { autoAlpha: 0, y: 38, rotateX: -8, transformPerspective: 800 });
-    gsap.set(proofItems, { autoAlpha: 0, y: 34, scale: .92 });
-    gsap.set(trustItems, { autoAlpha: 0, x: -30 });
-    gsap.set(contactItems, { autoAlpha: 0, y: 24 });
-    gsap.set('.story-headline .word', { yPercent: 112, opacity: 0 });
-
-    gsap.to(nodes, {
-      y: function (i) { return i % 2 ? -12 : 12; },
-      duration: function (i) { return 4.2 + i * .28; },
-      repeat: -1,
-      yoyo: true,
-      ease: 'sine.inOut',
-      stagger: .08
-    });
-    gsap.to('.crystal-core', { y: -10, duration: 5.4, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-    gsap.to('.connection-map', { rotate: 1.4, scale: 1.015, duration: 8, repeat: -1, yoyo: true, ease: 'sine.inOut', transformOrigin: '50% 50%' });
-
-    var tl = gsap.timeline({
-      defaults: { ease: 'power3.out' },
-      scrollTrigger: {
-        trigger: '#studio-scroll-story',
-        start: 'top top',
-        end: 'bottom bottom',
-        pin: '.story-stage',
-        scrub: 1,
-        anticipatePin: 1,
-        onUpdate: function (self) {
-          var state = Math.round(self.progress * (stateCount - 1));
-          if (state !== currentState) setActiveState(state);
-        }
-      }
-    });
-
-    tl.addLabel('arrival')
-      .to('.story-headline .word', { yPercent: 0, opacity: 1, stagger: .035, duration: .62 }, 'arrival+=.05')
-      .from('.identity-panel .eyebrow, .identity-panel .story-copy, .identity-panel .story-actions, .identity-panel .proof-line', { y: 24, autoAlpha: 0, stagger: .08, duration: .55 }, 'arrival+=.18')
-      .from('.crystal-core', { scale: .72, autoAlpha: 0, duration: .9, ease: 'expo.out' }, 'arrival+=.08')
-      .fromTo('.map-line', { strokeDashoffset: 180 }, { strokeDashoffset: 0, duration: .8, stagger: .08 }, 'arrival+=.1');
-
-    tl.addLabel('capability', '+=.8')
-      .to('.identity-panel', { autoAlpha: 0, y: -70, scale: .96, duration: .55 }, 'capability')
-      .to('.capability-panel', { autoAlpha: 1, y: 0, scale: 1, duration: .65 }, 'capability+=.14')
-      .to(nodes, { autoAlpha: 1, scale: 1, y: 0, stagger: .05, duration: .55 }, 'capability+=.04')
-      .to('.crystal-core', { scale: .88, duration: .65 }, 'capability');
-
-    tl.addLabel('projects', '+=.9')
-      .to('.capability-panel', { autoAlpha: 0, y: -60, scale: .97, duration: .55 }, 'projects')
-      .to(nodes, { autoAlpha: .38, scale: .92, duration: .45 }, 'projects')
-      .to('.project-panel', { autoAlpha: 1, y: 0, scale: 1, duration: .65 }, 'projects+=.12')
-      .to(projects, { autoAlpha: 1, y: 0, rotateX: 0, stagger: .08, duration: .58 }, 'projects+=.18')
-      .to('.crystal-core', { scale: .76, x: 44, duration: .7 }, 'projects');
-
-    tl.addLabel('proof', '+=.9')
-      .to('.project-panel', { autoAlpha: 0, y: -60, scale: .98, duration: .55 }, 'proof')
-      .to(projects, { autoAlpha: 0, y: -30, stagger: .03, duration: .35 }, 'proof')
-      .to('.proof-panel', { autoAlpha: 1, y: 0, scale: 1, duration: .65 }, 'proof+=.12')
-      .to(proofItems, { autoAlpha: 1, y: 0, scale: 1, stagger: .07, duration: .58 }, 'proof+=.2')
-      .to('.crystal-core', { scale: 1.03, x: 0, duration: .7 }, 'proof');
-
-    tl.addLabel('trust', '+=.9')
-      .to('.proof-panel', { autoAlpha: 0, y: -60, scale: .97, duration: .55 }, 'trust')
-      .to('.trust-panel', { autoAlpha: 1, y: 0, scale: 1, duration: .65 }, 'trust+=.12')
-      .to(trustItems, { autoAlpha: 1, x: 0, stagger: .06, duration: .48 }, 'trust+=.2')
-      .to('.crystal-core', { scale: .82, x: -20, duration: .7 }, 'trust');
-
-    tl.addLabel('contact', '+=.9')
-      .to('.trust-panel', { autoAlpha: 0, y: -60, scale: .98, duration: .55 }, 'contact')
-      .to('.contact-panel', { autoAlpha: 1, y: 0, scale: 1, duration: .65 }, 'contact+=.12')
-      .to(contactItems, { autoAlpha: 1, y: 0, stagger: .07, duration: .45 }, 'contact+=.24')
-      .to(nodes, { autoAlpha: .18, duration: .5 }, 'contact')
-      .to('.crystal-core', { scale: 1.14, x: 66, duration: .8 }, 'contact');
-  }
-
-  function updateMobileState() {
-    var panels = qsa('.story-panel');
-    var closest = 0;
-    var minDistance = Infinity;
-    panels.forEach(function (panel, index) {
-      var distance = Math.abs(panel.getBoundingClientRect().top - 140);
-      if (distance < minDistance) { minDistance = distance; closest = index; }
-    });
-    setActiveState(closest);
-  }
-
-  function runCounters() {
-    if (countersStarted) return;
-    countersStarted = true;
-    qsa('.count').forEach(function (item) {
-      var end = Number(item.getAttribute('data-value') || 0);
-      var suffix = item.getAttribute('data-suffix') || '';
-      if (window.gsap && !prefersReducedMotion) {
-        var obj = { val: 0 };
-        gsap.to(obj, {
-          val: end,
-          duration: 1.4,
-          ease: 'power3.out',
-          onUpdate: function () { item.textContent = Math.round(obj.val) + suffix; }
-        });
-      } else {
-        item.textContent = end + suffix;
-      }
-    });
-  }
-
-  function initThreeField() {
-    if (!window.THREE || prefersReducedMotion) return;
-    var canvas = qs('#studioCanvas');
-    if (!canvas) return;
-
-    try {
-      var scene = new THREE.Scene();
-      var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
-      camera.position.z = 260;
-      var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.6));
-      renderer.setSize(window.innerWidth, window.innerHeight);
-
-      var count = window.innerWidth < 900 ? 160 : 320;
-      var positions = new Float32Array(count * 3);
-      var colors = new Float32Array(count * 3);
-      for (var i = 0; i < count; i++) {
-        positions[i * 3] = (Math.random() - .5) * 680;
-        positions[i * 3 + 1] = (Math.random() - .5) * 420;
-        positions[i * 3 + 2] = (Math.random() - .5) * 360;
-        colors[i * 3] = .13;
-        colors[i * 3 + 1] = .82 + Math.random() * .18;
-        colors[i * 3 + 2] = .93 + Math.random() * .07;
-      }
-      var geometry = new THREE.BufferGeometry();
-      geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-      var material = new THREE.PointsMaterial({ size: 1.65, vertexColors: true, transparent: true, opacity: .72, depthWrite: false });
-      var points = new THREE.Points(geometry, material);
-      scene.add(points);
-
-      function resize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      }
-      window.addEventListener('resize', resize);
-
-      function animate() {
-        points.rotation.y += .0008;
-        points.rotation.x += .00024;
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
-      }
-      animate();
-    } catch (error) {
-      canvas.style.display = 'none';
-    }
-  }
-
-  function handleHeaderScroll() {
-    var header = qs('#siteHeader');
-    if (!header) return;
-    header.classList.toggle('is-scrolled', window.scrollY > 18);
-  }
+    { id:'start-project', zone:4, category:'Conversion', label:'Start Project', type:'conversion', x:670, y:424, desc:'The main launch action inside Shrimo Verse.', use:'Use this when you want to discuss a new website, redesign, or web application.', link:'https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20start%20a%20project.' },
+    { id:'whatsapp', zone:4, category:'Conversion', label:'WhatsApp', type:'conversion', x:880, y:360, desc:'Fastest way to start a practical project discussion.', use:'Send your requirement, current website, or idea and get the next step.', link:'https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20start%20a%20project.' },
+    { id:'email', zone:4, category:'Conversion', label:'Email', type:'conversion', x:955, y:540, desc:'Best for structured requirements or project briefs.', use:'Send project details, reference links, and timeline expectations.', link:'mailto:shrikant9907@gmail.com' },
+    { id:'linkedin', zone:4, category:'Conversion', label:'LinkedIn', type:'conversion', x:722, y:625, desc:'Professional contact and profile connection.', use:'Useful for business networking, work history, and professional communication.', link:'https://www.linkedin.com/in/shrikant9907/' }
+  ];
 
   function init() {
-    bindNavigation();
-    initLenis();
-    initThreeField();
-    initStory();
-    setProgress();
-    handleHeaderScroll();
-    window.addEventListener('scroll', function () { setProgress(); handleHeaderScroll(); }, { passive: true });
-    window.addEventListener('resize', function () { setProgress(); });
+    renderNodes();
+    bindEntry();
+    bindControls();
+    bindWheelAndKeys();
+    initCursor();
+    initThree();
+    setZone(0, { immediate: true });
+
+    if (prefersReducedMotion) {
+      document.body.classList.add('reduced-motion');
+      skipEntry();
+    } else if (window.gsap) {
+      gsap.from('.entry-core', { scale: 0.8, opacity: 0, duration: 1.1, ease: 'expo.out' });
+      gsap.from('.entry-kicker, .entry-gate h1, .entry-copy, .entry-actions, .entry-line', { y: 24, opacity: 0, duration: 0.8, stagger: 0.12, delay: 0.25, ease: 'power3.out' });
+      gsap.to(els.entryStatus, { textContent: 'You are going to enter Shrimo Verse', duration: 0.2, delay: 1.1 });
+    }
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
-  else init();
+  function renderNodes() {
+    els.verseNodes.innerHTML = '';
+    universeObjects.filter(obj => obj.id !== 'core').forEach((obj, index) => {
+      const node = document.createElement('button');
+      node.type = 'button';
+      node.className = `verse-node ${obj.type}`;
+      node.dataset.id = obj.id;
+      node.dataset.zone = String(obj.zone);
+      node.dataset.type = obj.type;
+      node.style.left = `${obj.x}px`;
+      node.style.top = `${obj.y}px`;
+      node.style.animationDelay = `${(index % 8) * -0.55}s`;
+      node.innerHTML = `<span><small>${obj.category}</small><strong>${obj.label}</strong></span>`;
+      node.setAttribute('aria-label', `${obj.label}. ${obj.category}. Click for details.`);
+      node.addEventListener('click', (event) => {
+        event.stopPropagation();
+        showTooltip(obj, node);
+      });
+      node.addEventListener('mouseenter', () => document.body.classList.add('cursor-lock'));
+      node.addEventListener('mouseleave', () => document.body.classList.remove('cursor-lock'));
+      els.verseNodes.appendChild(node);
+    });
+
+    $('#shrimoCore').addEventListener('click', () => showTooltip(universeObjects[0], $('#shrimoCore')));
+    $('#shrimoCore').addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        showTooltip(universeObjects[0], $('#shrimoCore'));
+      }
+    });
+  }
+
+  function bindEntry() {
+    els.enterVerse.addEventListener('click', enterVerse);
+    els.skipIntro.addEventListener('click', skipEntry);
+  }
+
+  function enterVerse() {
+    if (window.gsap && !prefersReducedMotion) {
+      gsap.timeline({ onComplete: skipEntry })
+        .to('.entry-cosmos', { scale: 1.3, opacity: 0, duration: 0.7, ease: 'power3.inOut' })
+        .to('.entry-kicker, .entry-gate h1, .entry-copy, .entry-actions, .entry-line', { y: -22, opacity: 0, duration: 0.45, stagger: 0.04, ease: 'power3.in' }, '<')
+        .to(els.entryGate, { opacity: 0, duration: 0.45, ease: 'power2.out' }, '-=.1');
+    } else {
+      skipEntry();
+    }
+  }
+
+  function skipEntry() {
+    els.entryGate.classList.add('is-hidden');
+    els.entryGate.setAttribute('aria-hidden', 'true');
+    document.body.classList.add('verse-ready');
+    if (!isTouch) document.body.classList.add('has-ship-cursor');
+    animateInitialWorld();
+  }
+
+  function animateInitialWorld() {
+    if (!window.gsap || prefersReducedMotion) return;
+    gsap.from('.shrimo-core', { scale: 0.72, opacity: 0, duration: 1, ease: 'expo.out' });
+    gsap.from('.verse-node', { scale: 0.6, opacity: 0, duration: 0.8, stagger: 0.018, ease: 'power3.out', delay: 0.2 });
+    gsap.from('.verse-copy.is-active > *', { y: 22, opacity: 0, duration: 0.75, stagger: 0.08, ease: 'power3.out', delay: 0.25 });
+  }
+
+  function bindControls() {
+    els.guidedMode.addEventListener('click', () => setMode('guided'));
+    els.exploreMode.addEventListener('click', () => setMode('explore'));
+    els.pauseMotion.addEventListener('click', togglePause);
+    els.resetView.addEventListener('click', resetView);
+    els.brandReset.addEventListener('click', (event) => { event.preventDefault(); resetView(); });
+    els.zoomIn.addEventListener('click', () => setZoom(worldZoom + 0.16));
+    els.zoomOut.addEventListener('click', () => setZoom(worldZoom - 0.16));
+    els.tooltipClose.addEventListener('click', closeTooltip);
+    els.verseStage.addEventListener('click', (event) => {
+      if (!event.target.closest('.verse-node') && !event.target.closest('.shrimo-core') && !event.target.closest('.object-tooltip')) closeTooltip();
+    });
+    els.mobileCommand.addEventListener('click', () => {
+      const open = els.verseControl.classList.toggle('menu-open');
+      els.mobileCommand.setAttribute('aria-expanded', String(open));
+    });
+    $$('[data-zone]').forEach(btn => btn.addEventListener('click', () => setZone(Number(btn.dataset.zone))));
+    $$('[data-jump-zone]').forEach(btn => btn.addEventListener('click', () => setZone(Number(btn.dataset.jumpZone))));
+  }
+
+  function bindWheelAndKeys() {
+    window.addEventListener('wheel', (event) => {
+      if (!document.body.classList.contains('verse-ready')) return;
+      event.preventDefault();
+      if (mode === 'explore') {
+        setZoom(worldZoom + (event.deltaY > 0 ? -0.08 : 0.08));
+        return;
+      }
+      if (wheelLocked) return;
+      wheelLocked = true;
+      setTimeout(() => { wheelLocked = false; }, 650);
+      if (event.deltaY > 0) setZone(activeZone + 1); else setZone(activeZone - 1);
+    }, { passive: false });
+
+    window.addEventListener('keydown', (event) => {
+      if (!document.body.classList.contains('verse-ready')) return;
+      if (['ArrowDown', 'PageDown', ' '].includes(event.key)) { event.preventDefault(); setZone(activeZone + 1); }
+      if (['ArrowUp', 'PageUp'].includes(event.key)) { event.preventDefault(); setZone(activeZone - 1); }
+      if (event.key === 'Escape') closeTooltip();
+      if (event.key.toLowerCase() === 'r') resetView();
+      if (event.key === '+' || event.key === '=') setZoom(worldZoom + 0.16);
+      if (event.key === '-') setZoom(worldZoom - 0.16);
+    });
+  }
+
+  function setMode(nextMode) {
+    mode = nextMode;
+    document.body.classList.toggle('explore-mode', mode === 'explore');
+    els.guidedMode.classList.toggle('is-active', mode === 'guided');
+    els.exploreMode.classList.toggle('is-active', mode === 'explore');
+    if (mode === 'guided') setZone(activeZone);
+  }
+
+  function togglePause() {
+    paused = !paused;
+    document.body.classList.toggle('motion-paused', paused);
+    els.pauseMotion.textContent = paused ? 'Play Motion' : 'Pause Motion';
+    if (threeRuntime) threeRuntime.paused = paused;
+    if (window.gsap) paused ? gsap.globalTimeline.pause() : gsap.globalTimeline.resume();
+  }
+
+  function resetView() {
+    closeTooltip();
+    setMode('guided');
+    setZone(0, { immediate: false });
+  }
+
+  function setZone(nextZone, options = {}) {
+    if (nextZone > zones.length - 1) nextZone = 0;
+    if (nextZone < 0) nextZone = zones.length - 1;
+    activeZone = nextZone;
+    const target = viewTargets[activeZone];
+    worldPan = { x: target.x, y: target.y };
+    setZoom(target.zoom, { keepPan: true });
+
+    $$('[data-zone-panel]').forEach(panel => panel.classList.toggle('is-active', Number(panel.dataset.zonePanel) === activeZone));
+    $$('.state-dot').forEach(dot => dot.classList.toggle('is-active', Number(dot.dataset.zone) === activeZone));
+
+    $$('.verse-node').forEach(node => {
+      const nodeZone = Number(node.dataset.zone);
+      const inZone = nodeZone === activeZone || (activeZone === 0 && nodeZone === 0);
+      node.classList.toggle('is-active-zone', inZone);
+      node.classList.toggle('is-dimmed', !inZone && activeZone !== 0);
+    });
+
+    if (activeZone === 3) animateProof();
+    if (window.gsap && !options.immediate && !prefersReducedMotion) {
+      gsap.fromTo(`[data-zone-panel="${activeZone}"] > *`, { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.58, stagger: 0.06, ease: 'power3.out' });
+    }
+  }
+
+  function setZoom(nextZoom, options = {}) {
+    worldZoom = Math.max(0.72, Math.min(1.85, nextZoom));
+    if (!options.keepPan && mode === 'explore') {
+      worldPan.x *= 0.96;
+      worldPan.y *= 0.96;
+    }
+    els.worldPlane.classList.toggle('zoomed', worldZoom > 1.16);
+    els.worldPlane.classList.toggle('deep-zoom', worldZoom > 1.45);
+    els.zoomValue.textContent = `${worldZoom.toFixed(1)}x`;
+    applyWorldTransform();
+  }
+
+  function applyWorldTransform() {
+    const x = `calc(-50% + ${worldPan.x}px)`;
+    const y = `calc(-50% + ${worldPan.y}px)`;
+    els.worldPlane.style.transform = `translate(${x}, ${y}) scale(${worldZoom})`;
+  }
+
+  function showTooltip(obj, target) {
+    $$('.verse-node, .shrimo-core').forEach(node => node.classList.remove('is-selected', 'is-focused'));
+    if (target) target.classList.add(target.classList.contains('shrimo-core') ? 'is-focused' : 'is-selected');
+    els.tooltipCategory.textContent = obj.category;
+    els.tooltipTitle.textContent = obj.label;
+    els.tooltipDescription.textContent = obj.desc;
+    els.tooltipUse.textContent = obj.use;
+    if (obj.link) {
+      els.tooltipAction.hidden = false;
+      els.tooltipAction.href = obj.link;
+      els.tooltipAction.textContent = obj.category === 'Conversion' ? 'Open Contact Path' : obj.category === 'Product' ? 'View Product' : 'Open Link';
+    } else {
+      els.tooltipAction.hidden = true;
+      els.tooltipAction.removeAttribute('href');
+    }
+    els.tooltip.setAttribute('aria-hidden', 'false');
+    els.tooltip.classList.add('is-visible');
+    if (worldZoom < 1.16 && obj.type === 'tool') setZoom(1.28);
+  }
+
+  function closeTooltip() {
+    els.tooltip.classList.remove('is-visible');
+    els.tooltip.setAttribute('aria-hidden', 'true');
+    $$('.verse-node, .shrimo-core').forEach(node => node.classList.remove('is-selected', 'is-focused'));
+  }
+
+  function animateProof() {
+    if (proofAnimated) return;
+    proofAnimated = true;
+    $$('[data-count]').forEach(el => {
+      const finalValue = Number(el.dataset.count);
+      if (window.gsap && !prefersReducedMotion) {
+        const counter = { value: 0 };
+        gsap.to(counter, {
+          value: finalValue,
+          duration: 1.4,
+          ease: 'power3.out',
+          onUpdate: () => { el.textContent = Math.round(counter.value); }
+        });
+      } else {
+        el.textContent = finalValue;
+      }
+    });
+  }
+
+  function initCursor() {
+    if (isTouch || prefersReducedMotion) return;
+    let mouse = { x: -100, y: -100 };
+    let current = { x: -100, y: -100 };
+    let previous = { x: -100, y: -100 };
+    let lastTrail = 0;
+
+    window.addEventListener('pointermove', (event) => {
+      mouse.x = event.clientX;
+      mouse.y = event.clientY;
+    });
+
+    window.addEventListener('pointerdown', () => createTrail(current.x, current.y, true));
+
+    function cursorFrame(time) {
+      current.x += (mouse.x - current.x) * 0.2;
+      current.y += (mouse.y - current.y) * 0.2;
+      const angle = Math.atan2(current.y - previous.y, current.x - previous.x) * 180 / Math.PI + 90;
+      els.shipCursor.style.transform = `translate3d(${current.x - 14}px, ${current.y - 18}px, 0) rotate(${angle}deg)`;
+      const distance = Math.hypot(current.x - previous.x, current.y - previous.y);
+      if (distance > 3 && time - lastTrail > 28) {
+        createTrail(current.x, current.y, false);
+        lastTrail = time;
+      }
+      previous.x = current.x;
+      previous.y = current.y;
+      requestAnimationFrame(cursorFrame);
+    }
+    requestAnimationFrame(cursorFrame);
+  }
+
+  function createTrail(x, y, burst) {
+    const dot = document.createElement('span');
+    dot.className = 'trail-dot';
+    dot.style.left = `${x}px`;
+    dot.style.top = `${y}px`;
+    dot.style.width = burst ? '18px' : '7px';
+    dot.style.height = burst ? '18px' : '7px';
+    els.cursorTrailLayer.appendChild(dot);
+    setTimeout(() => dot.remove(), 650);
+  }
+
+  function initThree() {
+    if (!window.THREE || !els.canvas) return;
+    const canvas = els.canvas;
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 95;
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.8));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const nodePositions = universeObjects.flatMap((obj) => {
+      const x = (obj.x - 800) / 18;
+      const y = -(obj.y - 500) / 18;
+      const z = obj.type === 'product' ? 8 : obj.type === 'tool' ? -10 : 0;
+      return [x, y, z];
+    });
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(nodePositions, 3));
+    const material = new THREE.PointsMaterial({ color: 0x67e8f9, size: 1.45, transparent: true, opacity: 0.84, depthWrite: false });
+    const points = new THREE.Points(geometry, material);
+    scene.add(points);
+
+    const ambientGeometry = new THREE.BufferGeometry();
+    const ambient = [];
+    for (let i = 0; i < 140; i++) {
+      ambient.push((Math.random() - 0.5) * 130, (Math.random() - 0.5) * 80, (Math.random() - 0.5) * 60);
+    }
+    ambientGeometry.setAttribute('position', new THREE.Float32BufferAttribute(ambient, 3));
+    const ambientPoints = new THREE.Points(ambientGeometry, new THREE.PointsMaterial({ color: 0x22d3ee, size: 0.42, transparent: true, opacity: 0.32, depthWrite: false }));
+    scene.add(ambientPoints);
+
+    threeRuntime = { paused: false };
+    let start = performance.now();
+    function render() {
+      if (!threeRuntime.paused) {
+        const elapsed = (performance.now() - start) / 1000;
+        points.rotation.z = elapsed * 0.015;
+        points.rotation.y = Math.sin(elapsed * 0.28) * 0.08;
+        ambientPoints.rotation.z = -elapsed * 0.01;
+        ambientPoints.rotation.x = Math.sin(elapsed * 0.18) * 0.05;
+        renderer.render(scene, camera);
+      }
+      requestAnimationFrame(render);
+    }
+    render();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      threeRuntime.paused = document.hidden || paused;
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();

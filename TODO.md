@@ -1,14 +1,12 @@
 # TODO
 
-## Missing real content
+The Shrimo Verse experience is production-ready as an interactive prototype, but these real-world details should be confirmed before final deployment:
 
-1. Add verified client reviews when available.
-2. Add project screenshots for Digiting Card, Photocopywala, and Business Directory Platform if approved.
-3. Confirm final contact number and preferred WhatsApp message.
-4. Refine SEO title/meta later once the final visual direction is approved.
-
-## Optional future polish
-
-1. Add lightweight project modal previews.
-2. Add real case-study links for selected work.
-3. Add structured testimonial data only after real testimonials are available.
+1. Add real client testimonials only when verified. No fake reviews were added.
+2. Confirm the WhatsApp number is correct before launch: `+91 9907472038`.
+3. Confirm GitHub URL: `https://github.com/shrikant9907`.
+4. Confirm LinkedIn URL: `https://www.linkedin.com/in/shrikant9907/`.
+5. Add product screenshots later if you want richer product tooltips.
+6. Test performance on low-end Android devices after deployment.
+7. Run Lighthouse/PageSpeed after the page is live.
+8. Decide later whether to restore stronger SEO text after the creative direction is approved.
