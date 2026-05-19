@@ -148,6 +148,12 @@
   let activeProof = 0;
   let moveIdleTimer = null;
   let shipVelocity = 0;
+  let shipPos = { ...lastMouse };
+  let shipTarget = { ...lastMouse };
+  let lastShipFrame = performance.now();
+  let launchStart = 0;
+  let isLaunching = false;
+  let pageHidden = false;
   let lockTimer = null;
 
   const GUIDE = isTouch ? [
@@ -330,14 +336,36 @@
 
   function bindEntry() {
     els.enterVerse.addEventListener('click', () => {
+      if (entered) return;
       entered = true;
+      isLaunching = true;
+      launchStart = performance.now();
+      els.enterVerse.disabled = true;
+      els.enterVerse.textContent = 'Entering Shrimo Verse...';
       els.entryGate.classList.add('is-launching');
-      setTimeout(() => {
+      document.body.classList.add('is-entering-verse');
+      els.ship?.classList.add('is-boosting', 'is-locked');
+      const statusSteps = [
+        [260, 'ALIGNING ROCKET PATH'],
+        [820, 'OPENING ORBIT FIELD'],
+        [1380, 'LOCKING SV CORE'],
+        [1900, 'ENTERING DIGITAL UNIVERSE']
+      ];
+      statusSteps.forEach(([delay, label]) => {
+        window.setTimeout(() => {
+          const status = $('#entryStatus');
+          if (status && isLaunching) status.textContent = label;
+        }, prefersReducedMotion ? 40 : delay);
+      });
+      window.setTimeout(() => {
         els.entryGate.classList.add('is-hidden');
         document.body.classList.add('verse-entered');
+        document.body.classList.remove('is-entering-verse');
+        isLaunching = false;
+        els.ship?.classList.remove('is-boosting', 'is-locked');
         setZone(0);
-        setTimeout(() => startGuide(), 700);
-      }, prefersReducedMotion ? 120 : 1450);
+        window.setTimeout(() => startGuide(), prefersReducedMotion ? 120 : 620);
+      }, prefersReducedMotion ? 180 : 2400);
     });
   }
 
@@ -592,90 +620,99 @@
 
   function bindCursor() {
     if (isTouch || prefersReducedMotion) return;
-    positionShip(lastMouse.x, lastMouse.y);
+    shipPos = { ...lastMouse };
+    shipTarget = { ...lastMouse };
+    positionShip(shipPos.x, shipPos.y);
     els.ship.classList.remove('is-hidden');
     els.ship.classList.add('is-idle');
+
     window.addEventListener('mouseenter', () => {
       els.ship.classList.remove('is-hidden');
     });
     window.addEventListener('mouseleave', () => {
       els.ship.classList.add('is-hidden');
-      els.ship.classList.remove('is-moving', 'is-boosting');
+      els.ship.classList.remove('is-moving', 'is-boosting', 'is-locked');
     });
     window.addEventListener('mousemove', (event) => {
       prevMouse = { ...lastMouse };
       lastMouse = { x: event.clientX, y: event.clientY };
-      const dx = lastMouse.x - prevMouse.x;
-      const dy = lastMouse.y - prevMouse.y;
-      const velocity = Math.hypot(dx, dy);
-      shipVelocity = velocity;
-      if (velocity > 1) {
-        shipAngle = Math.atan2(dy, dx) * 180 / Math.PI + 90;
-        createTrail(lastMouse.x, lastMouse.y, velocity);
-        els.ship.classList.remove('is-idle', 'is-hidden');
-        els.ship.classList.add('is-moving');
-        els.ship.classList.toggle('is-boosting', velocity > 18);
-        clearTimeout(moveIdleTimer);
-        moveIdleTimer = setTimeout(() => {
-          shipVelocity = 0;
-          els.ship.classList.remove('is-moving', 'is-boosting');
-          els.ship.classList.add('is-idle');
-        }, 90);
-      }
-      positionShip(lastMouse.x, lastMouse.y);
+      shipTarget = { ...lastMouse };
     }, { passive: true });
     window.addEventListener('dblclick', (event) => {
       triggerCursorLock(event.clientX, event.clientY);
     });
+    document.addEventListener('visibilitychange', () => {
+      pageHidden = document.hidden;
+      if (pageHidden) els.ship.classList.add('is-hidden');
+      else els.ship.classList.remove('is-hidden');
+    });
+  }
+
+  function updateShip(time = performance.now()) {
+    if (isTouch || prefersReducedMotion || !els.ship || pageHidden) return;
+    const dt = Math.max(16, Math.min(48, time - lastShipFrame));
+    lastShipFrame = time;
+
+    const target = isLaunching
+      ? { x: window.innerWidth * 0.5, y: window.innerHeight * 0.48 }
+      : shipTarget;
+
+    const ease = isLaunching ? 0.115 : 0.165;
+    const dx = target.x - shipPos.x;
+    const dy = target.y - shipPos.y;
+    shipPos.x += dx * ease;
+    shipPos.y += dy * ease;
+
+    const vx = shipPos.x - prevMouse.x;
+    const vy = shipPos.y - prevMouse.y;
+    const frameVelocity = Math.hypot(dx, dy) * (dt / 16) * 0.08;
+    shipVelocity = frameVelocity;
+
+    if (Math.hypot(dx, dy) > 0.65) {
+      const nextAngle = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+      const angleDelta = ((((nextAngle - shipAngle) % 360) + 540) % 360) - 180;
+      shipAngle += angleDelta * 0.18;
+      els.ship.classList.remove('is-idle', 'is-hidden');
+      els.ship.classList.add('is-moving');
+      els.ship.classList.toggle('is-boosting', isLaunching || frameVelocity > 17);
+      createTrail(shipPos.x, shipPos.y, frameVelocity);
+      clearTimeout(moveIdleTimer);
+      moveIdleTimer = setTimeout(() => {
+        shipVelocity = 0;
+        if (!isLaunching) {
+          els.ship.classList.remove('is-moving', 'is-boosting');
+          els.ship.classList.add('is-idle');
+        }
+      }, 140);
+    }
+    positionShip(shipPos.x, shipPos.y);
+    prevMouse = { ...shipPos };
   }
 
   function positionShip(x, y) {
     els.ship.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%,-50%) rotate(${shipAngle}deg)`;
+    const flameSize = Math.max(0, Math.min(1, shipVelocity / 22));
+    els.ship.style.setProperty('--thrust', flameSize.toFixed(2));
   }
 
   let lastTrailTime = 0;
   function createTrail(x, y, velocity = shipVelocity) {
+    if (pageHidden || velocity < 2.4) return;
     const now = performance.now();
-    if (now - lastTrailTime < (velocity > 18 ? 14 : velocity > 8 ? 20 : 28)) return;
+    const interval = velocity > 18 ? 30 : velocity > 8 ? 46 : 68;
+    if (now - lastTrailTime < interval) return;
     lastTrailTime = now;
-    createTrailPlume(x, y, velocity);
-    const count = velocity > 18 ? 3 : velocity > 8 ? 2 : 1;
-    for (let i = 0; i < count; i += 1) {
-      const dot = document.createElement('span');
-      const trailClass = velocity > 18 ? 'trail-boost' : velocity > 8 ? 'trail-hot' : 'trail-smoke';
-      dot.className = `trail-dot ${trailClass}`;
-      const spread = velocity > 18 ? 10 : velocity > 8 ? 6 : 3;
-      const offsetX = (Math.random() - 0.5) * spread;
-      const offsetY = (Math.random() - 0.5) * spread + (i * 2);
-      dot.style.left = `${x - 3 + offsetX}px`;
-      dot.style.top = `${y - 3 + offsetY}px`;
-      els.trail.appendChild(dot);
-      setTimeout(() => dot.remove(), velocity > 18 ? 760 : 650);
-    }
 
-    if (velocity > 6) {
-      const smoke = document.createElement('span');
-      smoke.className = 'trail-dot trail-smoke-long';
-      smoke.style.left = `${x - 6 + ((Math.random() - 0.5) * 10)}px`;
-      smoke.style.top = `${y - 6 + ((Math.random() - 0.5) * 10)}px`;
-      els.trail.appendChild(smoke);
-      setTimeout(() => smoke.remove(), 1160);
-    }
-  }
+    const activeDots = els.trail.querySelectorAll('.trail-dot').length;
+    if (activeDots > 28) return;
 
-  function createTrailPlume(x, y, velocity) {
-    if (velocity < 5) return;
-    const plume = document.createElement('span');
-    plume.className = 'trail-plume';
-    const length = velocity > 18 ? 54 : velocity > 10 ? 38 : 26;
-    const thickness = velocity > 18 ? 16 : velocity > 10 ? 13 : 10;
-    plume.style.width = `${length}px`;
-    plume.style.height = `${thickness}px`;
-    plume.style.left = `${x}px`;
-    plume.style.top = `${y - (thickness / 2)}px`;
-    plume.style.transform = `translateX(-6px) rotate(${shipAngle - 90}deg)`;
-    els.trail.appendChild(plume);
-    setTimeout(() => plume.remove(), 740);
+    const dot = document.createElement('span');
+    dot.className = `trail-dot ${velocity > 18 || isLaunching ? 'trail-boost' : velocity > 8 ? 'trail-hot' : 'trail-smoke'}`;
+    const spread = velocity > 18 ? 5 : 3;
+    dot.style.left = `${x - 3 + ((Math.random() - 0.5) * spread)}px`;
+    dot.style.top = `${y - 3 + ((Math.random() - 0.5) * spread)}px`;
+    els.trail.appendChild(dot);
+    setTimeout(() => dot.remove(), velocity > 18 ? 760 : 620);
   }
 
   function triggerCursorLock(x, y) {
@@ -752,7 +789,8 @@
   }
 
   function animate(time = 0) {
-    if (!paused) updateNodePositions(time);
+    updateShip(time);
+    if (!paused && !pageHidden) updateNodePositions(time);
     requestAnimationFrame(animate);
   }
 
@@ -795,11 +833,19 @@
       x = Math.max(leftSafe, Math.min(rect.width - rightSafe, x));
       y = Math.max(mobile ? 94 : 92, Math.min(rect.height - (mobile ? 160 : 58), y));
 
+      const depthWave = Math.sin(angle);
+      const depthScale = 0.78 + ((depthWave + 1) * 0.15);
+      const depthOpacity = currentZone === 0
+        ? 0.28 + ((depthWave + 1) * 0.18)
+        : 0.54 + ((depthWave + 1) * 0.23);
+      const blur = depthWave < -0.45 && !mobile ? 0.35 : 0;
       node.style.left = `${x}px`;
       node.style.top = `${y}px`;
+      node.style.setProperty('--depth-scale', depthScale.toFixed(3));
+      node.style.setProperty('--depth-blur', `${blur}px`);
+      node.style.zIndex = String(22 + Math.round((depthWave + 1) * 12));
       if (!node.classList.contains('is-hidden-by-zoom')) {
-        const alpha = currentZone === 0 ? .52 : .96;
-        node.style.opacity = String(alpha);
+        node.style.opacity = String(Math.min(1, depthOpacity));
       }
     });
   }
@@ -809,6 +855,21 @@
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let stars = [];
+
+    function resetStar(star, randomize = true) {
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      const angle = Math.random() * Math.PI * 2;
+      const dist = randomize ? Math.random() * Math.max(window.innerWidth, window.innerHeight) * 0.7 : 8;
+      star.x = centerX + Math.cos(angle) * dist;
+      star.y = centerY + Math.sin(angle) * dist;
+      star.vx = Math.cos(angle);
+      star.vy = Math.sin(angle);
+      star.r = Math.random() * 1.15 + .18;
+      star.a = Math.random() * .34 + .06;
+      star.s = Math.random() * .22 + .035;
+    }
+
     function resize() {
       const dpr = Math.min(2, window.devicePixelRatio || 1);
       canvas.width = Math.floor(window.innerWidth * dpr);
@@ -816,28 +877,59 @@
       canvas.style.width = `${window.innerWidth}px`;
       canvas.style.height = `${window.innerHeight}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const count = Math.max(70, Math.min(145, Math.floor(window.innerWidth * window.innerHeight / 14000)));
-      stars = Array.from({ length: count }, () => ({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        r: Math.random() * 1.3 + .2,
-        a: Math.random() * .32 + .07,
-        s: Math.random() * .18 + .03
-      }));
+      const count = Math.max(90, Math.min(170, Math.floor(window.innerWidth * window.innerHeight / 12000)));
+      stars = Array.from({ length: count }, () => {
+        const star = {};
+        resetStar(star, true);
+        return star;
+      });
     }
-    function draw() {
-      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-      ctx.fillStyle = '#05070A';
-      ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+    function draw(time = 0) {
+      if (pageHidden) { requestAnimationFrame(draw); return; }
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const cx = w / 2;
+      const cy = h / 2;
+      const launchT = isLaunching ? Math.min(1, (time - launchStart) / 2400) : 0;
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#030508';
+      ctx.fillRect(0, 0, w, h);
+
       stars.forEach(star => {
         if (!paused && !prefersReducedMotion) {
-          star.y += star.s;
-          if (star.y > window.innerHeight + 4) star.y = -4;
+          if (launchT > 0) {
+            const dx = star.x - cx;
+            const dy = star.y - cy;
+            const len = Math.hypot(dx, dy) || 1;
+            const boost = 1.4 + launchT * 13;
+            star.x += (dx / len) * boost;
+            star.y += (dy / len) * boost;
+            if (star.x < -80 || star.x > w + 80 || star.y < -80 || star.y > h + 80) resetStar(star, false);
+          } else {
+            star.y += star.s;
+            if (star.y > h + 4) star.y = -4;
+          }
         }
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(165,243,252,${star.a})`;
-        ctx.fill();
+
+        const alpha = Math.min(.76, star.a + launchT * .42);
+        if (launchT > .08) {
+          const dx = star.x - cx;
+          const dy = star.y - cy;
+          const len = Math.hypot(dx, dy) || 1;
+          const tail = 8 + launchT * 34;
+          ctx.beginPath();
+          ctx.moveTo(star.x, star.y);
+          ctx.lineTo(star.x - (dx / len) * tail, star.y - (dy / len) * tail);
+          ctx.strokeStyle = `rgba(165,243,252,${alpha * .46})`;
+          ctx.lineWidth = Math.max(.4, star.r);
+          ctx.stroke();
+        } else {
+          ctx.beginPath();
+          ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(165,243,252,${alpha})`;
+          ctx.fill();
+        }
       });
       requestAnimationFrame(draw);
     }

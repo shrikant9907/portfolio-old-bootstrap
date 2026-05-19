@@ -191,3 +191,209 @@ body.cursor-lock .ship-flame::after{width:24px!important;height:20px!important}
   .state-readout{bottom:12px!important}
   .guide-card{left:auto!important;right:24px!important;top:auto!important;bottom:78px!important;width:min(330px,calc(100vw - 48px))!important}
 }
+
+/* =========================================================
+   FINAL REALISTIC CINEMATIC UPGRADE
+   Keep current architecture. Add restrained depth, no cartoon motion.
+   ========================================================= */
+:root{
+  --void:#030508;
+  --panel-sharp:rgba(7,14,20,.72);
+  --depth-scale:1;
+  --depth-blur:0px;
+}
+
+/* keep the UI sharp and technical instead of soft cartoon cards */
+.entry-hints span,.enter-verse,.hud-btn,.verse-control,.mission-btn,.dock-beacons a,.gallery-card a,.disabled-path{
+  border-radius:8px;
+}
+.verse-control{
+  background:linear-gradient(180deg,rgba(5,7,10,.54),rgba(5,7,10,.22));
+  border-color:rgba(34,211,238,.11);
+  box-shadow:none;
+}
+.hud-btn,.verse-mark{border-radius:8px}
+
+/* Mission-control gate depth */
+.entry-gate{
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(34,211,238,.11),transparent 25%),
+    radial-gradient(circle at 50% 50%,rgba(255,176,32,.028),transparent 36%),
+    linear-gradient(180deg,#020306 0%,#05070A 55%,#010204 100%);
+}
+.entry-gate::before,
+.entry-gate::after{
+  content:"";
+  position:absolute;
+  left:50%;top:50%;
+  width:140vmax;height:140vmax;
+  pointer-events:none;
+  transform:translate(-50%,-50%) scale(.65);
+  border-radius:50%;
+  opacity:.0;
+  z-index:1;
+}
+.entry-gate::before{
+  background:
+    repeating-radial-gradient(circle,rgba(34,211,238,.0) 0 7.8%,rgba(34,211,238,.12) 8% 8.12%,rgba(34,211,238,.0) 8.4% 12%),
+    radial-gradient(circle,transparent 0 22%,rgba(34,211,238,.09) 23%,transparent 46%);
+  filter:blur(.2px);
+}
+.entry-gate::after{
+  background:conic-gradient(from 90deg,transparent 0 7deg,rgba(165,243,252,.24) 8deg 9deg,transparent 10deg 35deg,rgba(255,176,32,.12) 36deg 37deg,transparent 38deg 70deg);
+  mix-blend-mode:screen;
+  filter:blur(.8px);
+}
+.entry-gate.is-launching::before{
+  animation:realTunnel 2.4s cubic-bezier(.12,.72,.16,1) forwards;
+}
+.entry-gate.is-launching::after{
+  animation:streakTunnel 2.4s cubic-bezier(.12,.72,.16,1) forwards;
+}
+.entry-gate.is-launching .entry-kicker,
+.entry-gate.is-launching h1,
+.entry-gate.is-launching .entry-copy,
+.entry-gate.is-launching .entry-hints,
+.entry-gate.is-launching .enter-verse,
+.entry-gate.is-launching .entry-progress{
+  animation:gateTextExit 900ms cubic-bezier(.2,.7,.2,1) forwards;
+}
+.entry-gate.is-launching .entry-space{
+  animation:entrySpaceLock 2.4s cubic-bezier(.12,.72,.16,1) forwards;
+}
+.entry-gate.is-launching .entry-orbit{
+  animation:entryRingExpand 2.4s cubic-bezier(.12,.72,.16,1) forwards;
+}
+.entry-gate.is-launching .entry-sv-mini{
+  animation:entryCoreLock 2.4s cubic-bezier(.12,.72,.16,1) forwards;
+}
+.enter-verse:disabled{opacity:.82;transform:none;filter:saturate(.94)}
+@keyframes gateTextExit{
+  0%{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
+  60%{opacity:.28;transform:translate3d(0,-10px,0) scale(.985);filter:blur(1px)}
+  100%{opacity:0;transform:translate3d(0,-22px,0) scale(.96);filter:blur(5px)}
+}
+@keyframes realTunnel{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.42) rotate(0deg)}
+  28%{opacity:.26}
+  70%{opacity:.46}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.28) rotate(24deg)}
+}
+@keyframes streakTunnel{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.3) rotate(0deg)}
+  36%{opacity:.16}
+  76%{opacity:.34}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.38) rotate(-36deg)}
+}
+@keyframes entrySpaceLock{
+  0%{opacity:1;transform:translate(-50%,-50%) scale(1)}
+  45%{opacity:.75;transform:translate(-50%,-50%) scale(1.08)}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.44)}
+}
+@keyframes entryRingExpand{
+  0%{opacity:.18;transform:scale(1)}
+  80%{opacity:.36;transform:scale(1.18)}
+  100%{opacity:0;transform:scale(1.7)}
+}
+@keyframes entryCoreLock{
+  0%{opacity:.38;filter:blur(.1px);transform:translate(-50%,-50%) scale(1)}
+  46%{opacity:.72;filter:blur(0);transform:translate(-50%,-50%) scale(1.1)}
+  100%{opacity:0;filter:blur(5px);transform:translate(-50%,-50%) scale(1.9)}
+}
+
+/* Universe reveal after entry: calm, cinematic lock-in */
+.verse-main{opacity:.88;transition:opacity .8s ease}
+body:not(.verse-entered) .verse-control,
+body:not(.verse-entered) .mission-panel,
+body:not(.verse-entered) .zoom-dock,
+body:not(.verse-entered) .zone-nav,
+body:not(.verse-entered) .state-readout{
+  opacity:0;pointer-events:none;transform:translateY(10px);
+}
+body.verse-entered .verse-control,
+body.verse-entered .mission-panel,
+body.verse-entered .zoom-dock,
+body.verse-entered .zone-nav,
+body.verse-entered .state-readout{
+  animation:uiArrival 760ms cubic-bezier(.2,.75,.2,1) both;
+}
+body.verse-entered .universe-plane{animation:planeArrival 1100ms cubic-bezier(.12,.75,.16,1) both}
+@keyframes uiArrival{from{opacity:0;filter:blur(8px)}to{opacity:1;filter:blur(0)}}
+@keyframes planeArrival{from{transform:scale(1.16);filter:blur(10px);opacity:.2}to{transform:scale(1);filter:blur(0);opacity:1}}
+
+/* SV core as a calm sun, not a button card */
+.sv-core{
+  width:96px;height:96px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 50% 32%,rgba(103,232,249,.25),rgba(11,16,22,.9) 48%,rgba(3,5,8,.95) 100%);
+  box-shadow:0 0 46px rgba(34,211,238,.24), inset 0 0 34px rgba(34,211,238,.11);
+  border-color:rgba(103,232,249,.52);
+}
+.sv-core::before{
+  content:"";position:absolute;inset:-42px;border-radius:50%;
+  background:radial-gradient(circle,rgba(34,211,238,.12),transparent 62%);
+  opacity:.75;animation:coreBreath 4.8s ease-in-out infinite;pointer-events:none;
+}
+.core-ring{border-style:solid;border-color:rgba(103,232,249,.32);animation:scan 38s linear infinite}
+@keyframes coreBreath{0%,100%{transform:scale(.94);opacity:.48}50%{transform:scale(1.08);opacity:.86}}
+
+/* Physical 2.5D orbit — depth through scale/opacity/blur */
+.verse-node{
+  border-radius:8px;
+  transform:translate(-50%,-50%) scale(var(--depth-scale,1));
+  filter:blur(var(--depth-blur,0px));
+  background:linear-gradient(180deg,rgba(7,14,20,.76),rgba(3,6,10,.64));
+  border-color:rgba(34,211,238,.20);
+  box-shadow:0 10px 28px rgba(0,0,0,.34),0 0 18px rgba(34,211,238,.07);
+}
+.verse-node:hover,.verse-node:focus-visible,.verse-node.is-selected{
+  transform:translate(-50%,-50%) scale(1.065);
+  border-color:rgba(255,176,32,.7);
+  box-shadow:0 0 24px rgba(255,176,32,.28),0 0 46px rgba(255,107,0,.12),inset 0 1px 0 rgba(255,255,255,.08);
+}
+.verse-node::before{box-shadow:0 0 10px rgba(34,211,238,.65)}
+.verse-node.is-selected::after{inset:-7px;border-radius:10px;border-color:rgba(255,176,32,.45)}
+
+/* Separate layers: sharper project/proof/review panels */
+.gallery-card,.review-card,.proof-focus,.launch-dock,.object-tooltip,.guide-card{
+  border-radius:10px;
+  background:linear-gradient(145deg,rgba(3,5,8,.88),rgba(11,16,22,.72));
+  border-color:rgba(34,211,238,.22);
+  box-shadow:0 24px 70px rgba(0,0,0,.46),0 0 48px rgba(34,211,238,.08);
+}
+.gallery-preview{border-radius:10px;background:radial-gradient(circle at 50% 28%,rgba(34,211,238,.18),rgba(3,5,8,.95) 72%)}
+.world-dot{border-radius:50%;transition:transform .28s cubic-bezier(.2,.7,.2,1),box-shadow .22s ease,border-color .22s ease;background:rgba(34,211,238,.12)}
+.world-dot:hover,.world-dot:focus-visible,.world-dot.is-active{transform:translate(calc(var(--dot-x) - 50%),calc(var(--dot-y) - 50%)) scale(1.14)}
+.launch-dock{background:linear-gradient(180deg,rgba(5,7,10,.82),rgba(3,5,8,.74));}
+.launch-dock::before{content:"";position:absolute;inset:-1px;border-radius:inherit;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(34,211,238,.16),transparent);opacity:.55}
+.dock-beacons a{border-radius:8px;background:rgba(7,14,20,.72)}
+
+/* Rocket: keep premium, small, restrained */
+.ship-cursor{transition:opacity .16s ease,filter .16s ease;width:42px!important;height:58px!important;will-change:transform}
+.ship-ship{width:22px!important;height:34px!important;box-shadow:0 0 16px rgba(34,211,238,.36)!important}
+.ship-flame{top:36px!important;height:calc(12px + (var(--thrust,0) * 22px))!important;width:10px!important;opacity:calc(.58 + (var(--thrust,0) * .42))!important;filter:drop-shadow(0 0 calc(9px + (var(--thrust,0) * 14px)) rgba(255,176,32,.45))!important}
+.ship-cursor.is-boosting .ship-flame{height:34px!important;transform:translateX(-50%) scaleY(1.12)!important}
+.trail-dot{width:5px;height:5px;animation:realTrailFade .68s ease-out forwards!important;filter:blur(.35px) drop-shadow(0 0 9px rgba(255,176,32,.38))!important}
+.trail-dot.trail-hot{width:6px!important;height:6px!important}
+.trail-dot.trail-boost{width:7px!important;height:7px!important}
+.trail-plume,.trail-smoke-long{display:none!important}
+@keyframes realTrailFade{0%{opacity:.72;transform:scale(.9)}100%{opacity:0;transform:scale(.28) translateY(5px)}}
+
+/* On click/scan: lock, not cartoon burst */
+.cursor-target-ring{width:16px;height:16px;border-width:1px;animation:targetLock 580ms ease-out forwards}
+
+/* Reduced motion safety */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}
+  .entry-gate.is-launching::before,.entry-gate.is-launching::after{display:none!important}
+  .ship-flame,.cursor-trail-layer{display:none!important}
+}
+
+@media (max-width:780px){
+  .entry-gate::before,.entry-gate::after{width:170vmax;height:170vmax}
+  .sv-core{width:72px;height:72px}
+  .gallery-card,.review-card,.proof-focus{border-radius:10px;bottom:154px;max-height:36vh}
+  .launch-dock{border-radius:10px}
+}
