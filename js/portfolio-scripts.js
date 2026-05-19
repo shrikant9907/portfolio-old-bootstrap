@@ -35,7 +35,16 @@
     verseControl: $('#verseControl'),
     shipCursor: $('#shipCursor'),
     cursorTrailLayer: $('#cursorTrailLayer'),
-    canvas: $('#verseCanvas')
+    canvas: $('#verseCanvas'),
+    launchGuideButton: $('#launchGuideButton'),
+    launchGuide: $('#launchGuide'),
+    guideStart: $('#guideStart'),
+    guideSkip: $('#guideSkip'),
+    guidePrev: $('#guidePrev'),
+    guideNext: $('#guideNext'),
+    guideTitle: $('#guideTitle'),
+    guideText: $('#guideText'),
+    guideStepCount: $('#guideStepCount')
   };
 
   const zones = ['arrival', 'orbit', 'products', 'proof', 'trust', 'dock'];
@@ -56,6 +65,9 @@
   let wheelLocked = false;
   let proofAnimated = false;
   let threeRuntime = null;
+  let guideStep = 0;
+  let guideVisible = false;
+  let guideShown = false;
 
   const universeObjects = [
     { id:'core', zone:0, category:'Identity', label:'Shrimo Verse Core', type:'identity', x:800, y:500, desc:'The central identity object of this interactive portfolio universe.', use:'It keeps the experience connected: identity, products, tools, proof, and contact flow.', link:'' },
@@ -103,7 +115,7 @@
     { id:'trust-communication', zone:4, category:'Trust Signal', label:'Clear Communication', type:'trust', x:600, y:610, desc:'Professional communication is treated as part of delivery, not an extra.', use:'Keeps projects easier to understand, approve, and move forward.', link:'' },
     { id:'trust-practical', zone:4, category:'Trust Signal', label:'Practical Suggestions', type:'trust', x:1000, y:610, desc:'Suggestions are focused on what can be built, launched, and maintained.', use:'Useful for business owners who need clear next steps, not confusing technical options.', link:'' },
 
-    { id:'start-project', zone:5, category:'Conversion', label:'Start Project', type:'conversion', x:670, y:424, desc:'The main launch action inside Shrimo Verse.', use:'Use this when you want to discuss a new website, redesign, or web application.', link:'https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20start%20a%20project.' },
+    { id:'start-project', zone:5, category:'Conversion', label:'Launch Project', type:'conversion', x:670, y:424, desc:'The main launch action inside Shrimo Verse.', use:'Use this when you want to discuss a new website, redesign, or web application.', link:'https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20start%20a%20project.' },
     { id:'whatsapp', zone:5, category:'Conversion', label:'WhatsApp', type:'conversion', x:880, y:360, desc:'Fastest way to start a practical project discussion.', use:'Send your requirement, current website, or idea and get the next step.', link:'https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20start%20a%20project.' },
     { id:'email', zone:5, category:'Conversion', label:'Email', type:'conversion', x:955, y:540, desc:'Best for structured requirements or project briefs.', use:'Send project details, reference links, and timeline expectations.', link:'mailto:shrikant9907@gmail.com' },
     { id:'linkedin', zone:5, category:'Conversion', label:'LinkedIn', type:'conversion', x:722, y:625, desc:'Professional contact and profile connection.', use:'Useful for business networking, work history, and professional communication.', link:'https://www.linkedin.com/in/shrikant9907/' },
@@ -112,6 +124,7 @@
   ];
 
   function init() {
+    document.body.classList.toggle('touch-device', isTouch);
     renderNodes();
     bindEntry();
     bindControls();
@@ -186,6 +199,10 @@
     document.body.classList.add('verse-ready');
     if (!isTouch) document.body.classList.add('has-ship-cursor');
     animateInitialWorld();
+    if (!guideShown && !prefersReducedMotion) {
+      guideShown = true;
+      setTimeout(() => showLaunchGuide(false), 850);
+    }
   }
 
   function animateInitialWorld() {
@@ -200,6 +217,10 @@
     els.exploreMode.addEventListener('click', () => setMode('explore'));
     els.pauseMotion.addEventListener('click', togglePause);
     els.resetView.addEventListener('click', resetView);
+    if (els.launchGuideButton) els.launchGuideButton.addEventListener('click', () => showLaunchGuide(true));
+    if (els.guideNext) els.guideNext.addEventListener('click', nextGuideStep);
+    if (els.guidePrev) els.guidePrev.addEventListener('click', prevGuideStep);
+    if (els.guideSkip) els.guideSkip.addEventListener('click', closeLaunchGuide);
     els.brandReset.addEventListener('click', (event) => { event.preventDefault(); resetView(); });
     els.zoomIn.addEventListener('click', () => setZoom(worldZoom + 0.16));
     els.zoomOut.addEventListener('click', () => setZoom(worldZoom - 0.16));
@@ -213,6 +234,86 @@
     });
     $$('[data-zone]').forEach(btn => btn.addEventListener('click', () => setZone(Number(btn.dataset.zone))));
     $$('[data-jump-zone]').forEach(btn => btn.addEventListener('click', () => setZone(Number(btn.dataset.jumpZone))));
+  }
+
+
+  const desktopGuideSteps = [
+    { selector: null, title: 'First Launch Guide', text: 'This is not a normal portfolio page. It behaves like a small interactive universe. Learn the basics, then explore freely.' },
+    { selector: '#shipCursor', title: 'Pilot the explorer ship', text: 'Move your cursor to fly through Shrimo Verse. The yellow/orange flame reacts to motion.' },
+    { selector: '.verse-node[data-id="html"]', title: 'Scan meaningful particles', text: 'Every particle has meaning. Hover or click a glowing node to inspect a technology, tool, product, proof, or contact path.' },
+    { selector: '#zoomIn', title: 'Zoom into hidden depth', text: 'Use + / − or your mouse wheel in Free Explore to reveal smaller tools and deeper details.' },
+    { selector: '#exploreMode', title: 'Switch to Free Explore', text: 'Free Explore lets you zoom, inspect, click, and play with the universe instead of following the guided flight.' },
+    { selector: '#resetView', title: 'Return to Core anytime', text: 'If you feel lost, Return to Core resets zoom, closes tooltips, and brings you back to the starting orbit.' },
+    { selector: '.verse-cta', title: 'Launch when ready', text: 'When the signal feels right, use Launch Project to start a website, product, or web app discussion.' }
+  ];
+
+  const mobileGuideSteps = [
+    { selector: null, title: 'Touch Launch Guide', text: 'On mobile, Shrimo Verse works differently. Swipe to travel, tap nodes to inspect, and use the bottom controls to zoom or reset.' },
+    { selector: '.verse-node[data-id="html"]', title: 'Tap glowing nodes', text: 'Tap a particle to open its story in a mobile-friendly bottom sheet.' },
+    { selector: '#zoomIn', title: 'Pinch or use zoom controls', text: 'In Free Explore, pinch to zoom. You can also use the + / − controls.' },
+    { selector: '#exploreMode', title: 'Free Explore mode', text: 'Use Free Explore when you want to play with the universe instead of moving zone by zone.' },
+    { selector: '#resetView', title: 'Return to Core', text: 'Double-tap the world or use Return to Core if the view becomes too deep.' },
+    { selector: '.mobile-command', title: 'Open controls', text: 'Use Menu to open Shrimo Verse controls on smaller screens.' }
+  ];
+
+  function getGuideSteps() {
+    return isTouch ? mobileGuideSteps : desktopGuideSteps;
+  }
+
+  function showLaunchGuide(replay) {
+    if (!els.launchGuide) return;
+    guideStep = 0;
+    guideVisible = true;
+    document.body.classList.add('guide-active');
+    els.launchGuide.classList.add('is-visible');
+    els.launchGuide.setAttribute('aria-hidden', 'false');
+    updateGuideStep();
+    if (replay) closeTooltip();
+  }
+
+  function closeLaunchGuide() {
+    guideVisible = false;
+    document.body.classList.remove('guide-active');
+    els.launchGuide?.classList.remove('is-visible');
+    els.launchGuide?.setAttribute('aria-hidden', 'true');
+    clearGuideFocus();
+  }
+
+  function clearGuideFocus() {
+    $$('.guide-focus').forEach(el => el.classList.remove('guide-focus'));
+  }
+
+  function updateGuideStep() {
+    const steps = getGuideSteps();
+    const step = steps[guideStep] || steps[0];
+    clearGuideFocus();
+    if (els.guideTitle) els.guideTitle.textContent = step.title;
+    if (els.guideText) els.guideText.textContent = step.text;
+    if (els.guideStepCount) els.guideStepCount.textContent = `${guideStep} / ${steps.length - 1}`;
+    if (els.guidePrev) els.guidePrev.hidden = guideStep === 0;
+    if (els.guideNext) els.guideNext.textContent = guideStep === 0 ? 'Start Guide' : guideStep === steps.length - 1 ? 'Start Exploring' : 'Next';
+    if (step.selector) {
+      const target = $(step.selector);
+      if (target) target.classList.add('guide-focus');
+    }
+  }
+
+  function nextGuideStep() {
+    const steps = getGuideSteps();
+    if (guideStep >= steps.length - 1) {
+      closeLaunchGuide();
+      return;
+    }
+    guideStep += 1;
+    if (guideStep === 2) setZone(1);
+    if (guideStep === 5 && !isTouch) setMode('guided');
+    updateGuideStep();
+  }
+
+  function prevGuideStep() {
+    if (guideStep <= 0) return;
+    guideStep -= 1;
+    updateGuideStep();
   }
 
   function bindWheelAndKeys() {
@@ -251,7 +352,7 @@
   function togglePause() {
     paused = !paused;
     document.body.classList.toggle('motion-paused', paused);
-    els.pauseMotion.textContent = paused ? 'Play Motion' : 'Pause Motion';
+    els.pauseMotion.textContent = paused ? 'Resume Orbit' : 'Pause Orbit';
     if (threeRuntime) threeRuntime.paused = paused;
     if (window.gsap) paused ? gsap.globalTimeline.pause() : gsap.globalTimeline.resume();
   }
@@ -485,7 +586,7 @@
 
   function createTrail(x, y, burst) {
     const dot = document.createElement('span');
-    dot.className = 'trail-dot';
+    dot.className = burst ? 'trail-dot is-burst' : 'trail-dot';
     dot.style.left = `${x}px`;
     dot.style.top = `${y}px`;
     dot.style.width = burst ? '18px' : '7px';

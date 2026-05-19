@@ -20,13 +20,13 @@ The page behaves like a single living world, not separate visible sections. It u
 - Services: Business Websites, Web Applications, SEO-ready Structure
 - Products: Digiting Card, Photocopywala, Shrimo.com, Directory Platform
 - Proof: 12+ Years, 300+ Projects, 100+ Developers, Products Built
-- Conversion: Start Project, WhatsApp, Email, LinkedIn
+- Conversion: Launch Project, WhatsApp, Email, LinkedIn
 
 ## Interaction model
-- Guided Mode: mouse wheel or keyboard moves the visitor through universe zones.
-- Explore Mode: mouse wheel zooms in/out so hidden tool particles become more visible.
-- Reset View: returns the user to Arrival Core, closes tooltips, restores guided mode, and resets the camera zoom.
-- Pause Motion: pauses CSS and Three.js ambient motion.
+- Guided Flight: mouse wheel or keyboard moves the visitor through universe zones.
+- Free Explore: mouse wheel zooms in/out so hidden tool particles become more visible.
+- Return to Core: returns the user to Arrival Core, closes tooltips, restores guided mode, and resets the camera zoom.
+- Pause Orbit: pauses CSS and Three.js ambient motion.
 - Tooltips: clicking any particle opens a meaningful explanation.
 
 ## Cursor system
@@ -36,13 +36,13 @@ Desktop visitors get a custom cyan explorer ship cursor. It rotates based on mov
 - 1.0x: universe overview.
 - 1.2x+: tools and smaller technology particles become clearer.
 - 1.45x+: deep inspection mode with larger readable nodes.
-- Zoom can be controlled through mouse wheel in Explore Mode or the +/− control dock.
+- Zoom can be controlled through mouse wheel in Free Explore or the +/− control dock.
 
 ## Infinite loop behavior
-Guided Mode loops from the Conversion Dock back to Arrival Core instead of ending the page. This creates the feeling of an endless universe without duplicating DOM or creating performance issues.
+Guided Flight loops from the Conversion Dock back to Arrival Core instead of ending the page. This creates the feeling of an endless universe without duplicating DOM or creating performance issues.
 
 ## Control dock behavior
-The top control bar is not a normal navbar. It is a studio control system with Guided Mode, Explore Mode, Pause Motion, Reset View, and Start Project.
+The top control bar is not a normal navbar. It is a studio control system with Guided Flight, Free Explore, Pause Orbit, Return to Core, and Launch Project.
 
 ## Footer/base station plan
 There is no separate footer. The final visible world state is the Shrimo Base Station / Conversion Dock, containing the footer information and contact paths inside the universe itself.
@@ -78,10 +78,10 @@ There is no separate footer. The final visible world state is the Shrimo Base St
 ## Quality checklist
 - Entry screen says “You are going to enter Shrimo Verse”.
 - Enter and Skip intro work.
-- Guided Mode works.
-- Explore Mode works.
-- Reset View works.
-- Pause Motion works.
+- Guided Flight works.
+- Free Explore works.
+- Return to Core works.
+- Pause Orbit works.
 - Zoom controls work.
 - Particle tooltips open and close.
 - Rocket cursor appears only on desktop.

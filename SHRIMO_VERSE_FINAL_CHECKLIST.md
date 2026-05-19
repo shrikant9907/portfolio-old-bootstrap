@@ -27,10 +27,10 @@
 ## 4. Interaction Requirements
 - [x] Enter Shrimo Verse button works.
 - [x] Skip intro works.
-- [x] Guided Mode works with mouse wheel and keyboard.
-- [x] Explore Mode allows zoom and world inspection.
-- [x] Reset View closes tooltip, resets mode, and returns to Arrival Core.
-- [x] Pause Motion toggles ambient movement.
+- [x] Guided Flight works with mouse wheel and keyboard.
+- [x] Free Explore allows zoom and world inspection.
+- [x] Return to Core closes tooltip, resets mode, and returns to Arrival Core.
+- [x] Pause Orbit toggles ambient movement.
 - [x] Zoom In / Zoom Out controls work.
 - [x] Particles are clickable.
 - [x] Tooltip opens with title, category, description, usage, and optional link.
@@ -39,8 +39,8 @@
 
 ## 5. Mobile Interaction Requirements
 - [x] Mobile menu opens as a control drawer.
-- [x] Guided Mode supports vertical swipe navigation.
-- [x] Explore Mode supports drag/pan movement.
+- [x] Guided Flight supports vertical swipe navigation.
+- [x] Free Explore supports drag/pan movement.
 - [x] Pinch zoom support added for the universe stage.
 - [x] Double tap resets the view.
 - [x] Touch targets are enlarged.
@@ -88,3 +88,15 @@
 - [ ] Test WebGL support on hosting.
 - [ ] Test all external links after deployment.
 - [ ] Run Lighthouse after publishing.
+
+
+## Final Product Interaction Checklist
+
+- [x] First Launch Guide appears after entering Shrimo Verse.
+- [x] Guide teaches movement, particle inspection, zoom, Free Explore, Return to Core, and Launch Project.
+- [x] 1366px headings are reduced for readability.
+- [x] Desktop rocket flame uses yellow/orange thrust trail.
+- [x] Mobile keeps custom cursor disabled and uses touch-first guidance.
+- [x] Controls use immersive universe language.
+- [x] Footer remains represented as Shrimo Base Station / Launch Dock.
+- [x] Final product prompt is included in the project.

@@ -80,3 +80,14 @@
 - Tuned review stream for horizontal mobile swiping.
 - Kept rocket cursor desktop-only.
 - Preserved real reviews and Shrimo Base Station footer-as-dock concept.
+
+
+## Final Touch - Guided Universe Polish
+
+- Added `SHRIMO_VERSE_FINAL_PRODUCT_PROMPT.md` to keep the full product direction inside the project.
+- Added First Launch Guide to teach users how to move, inspect particles, zoom, switch modes, return to core, and launch a project.
+- Renamed controls to universe language: Guided Flight, Free Explore, Pause Orbit, Return to Core, Launch Project.
+- Reduced large state headings for 1366px laptop screens and mobile readability.
+- Changed rocket/ship flame and trail to yellow/orange thrust while keeping the universe color system black + cyan.
+- Improved mobile guidance model with tap-node instructions, bottom-sheet tooltip behavior, pinch zoom guidance, and double-tap reset guidance.
+- Updated zone labels to feel less like website sections and more like universe states.
