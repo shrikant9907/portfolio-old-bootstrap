@@ -22,7 +22,14 @@
 
   <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
-  <link rel="manifest" href="manifest.json" />
+  <script>
+    if (location.protocol === 'http:' || location.protocol === 'https:') {
+      const manifest = document.createElement('link');
+      manifest.rel = 'manifest';
+      manifest.href = 'manifest.json';
+      document.head.appendChild(manifest);
+    }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -198,24 +205,21 @@
         <button class="tooltip-close" id="tooltipClose" type="button" aria-label="Close details">×</button>
         <span class="tooltip-type" id="tooltipType">Technology</span>
         <h2 id="tooltipTitle">React</h2>
-        <div class="tooltip-mock technology" id="tooltipMock" aria-hidden="true">
-          <span class="mock-orbit"></span>
-          <span class="mock-core"></span>
-          <span class="mock-chip mock-chip-a"></span>
-          <span class="mock-chip mock-chip-b"></span>
-          <span class="mock-chip mock-chip-c"></span>
-          <span class="mock-grid">
-            <i></i><i></i><i></i><i></i>
-          </span>
-        </div>
         <p id="tooltipDesc">Used to build dynamic interfaces.</p>
         <p class="tooltip-use" id="tooltipUse"></p>
         <a id="tooltipLink" class="tooltip-link" href="#" target="_blank" rel="noopener">Open path</a>
       </aside>
 
       <section class="launch-dock" id="launchDock" aria-label="Launch Dock contact paths">
-        <p>Launch Dock</p>
-        <h2>Ready to build?</h2>
+        <p class="dock-kicker">Launch Dock</p>
+        <h2>Ready to launch your project?</h2>
+        <p class="dock-desc">Reach the dock and start a conversation.</p>
+        
+        <a class="launch-primary-btn" href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20launch%20a%20project%20after%20exploring%20Shrimo%20Verse." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l5 8-3.2 1.2L16 21l-4-3-4 3 2.2-8.8L7 11l5-8z"/></svg>
+          Launch Project
+        </a>
+
         <div class="dock-beacons">
           <a href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20start%20a%20project." target="_blank" rel="noopener">WhatsApp</a>
           <a href="tel:+919907472038">Call</a>

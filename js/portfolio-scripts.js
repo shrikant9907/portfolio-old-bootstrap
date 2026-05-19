@@ -105,7 +105,6 @@
     tooltipClose: $('#tooltipClose'),
     tooltipType: $('#tooltipType'),
     tooltipTitle: $('#tooltipTitle'),
-    tooltipMock: $('#tooltipMock'),
     tooltipDesc: $('#tooltipDesc'),
     tooltipUse: $('#tooltipUse'),
     tooltipLink: $('#tooltipLink'),
@@ -146,6 +145,7 @@
   let activeProduct = 0;
   let activeReview = 0;
   let activeProof = 0;
+  let proofAnimated = false;
   let moveIdleTimer = null;
   let shipVelocity = 0;
   let shipPos = { ...lastMouse };
@@ -155,6 +155,8 @@
   let isLaunching = false;
   let pageHidden = false;
   let lockTimer = null;
+  let rocketCentering = false;
+  let hoverTooltipTimer = null;
 
   const GUIDE = isTouch ? [
     { title:'Travel by touch', text:'Swipe left or right to move between Shrimo Verse zones.', target:'.mobile-control-dock' },
@@ -205,15 +207,28 @@
       node.addEventListener('mouseenter', () => {
         document.body.classList.add('cursor-lock');
         node.classList.add('is-hovered');
+        hoverTooltipTimer = setTimeout(() => {
+          showObject(obj, node);
+        }, 600);
       });
       node.addEventListener('mouseleave', () => {
         document.body.classList.remove('cursor-lock');
         node.classList.remove('is-hovered');
+        clearTimeout(hoverTooltipTimer);
       });
-      node.addEventListener('focus', () => node.classList.add('is-hovered'));
-      node.addEventListener('blur', () => node.classList.remove('is-hovered'));
+      node.addEventListener('focus', () => {
+        node.classList.add('is-hovered');
+        hoverTooltipTimer = setTimeout(() => {
+          showObject(obj, node);
+        }, 600);
+      });
+      node.addEventListener('blur', () => {
+        node.classList.remove('is-hovered');
+        clearTimeout(hoverTooltipTimer);
+      });
       node.addEventListener('click', (event) => {
         event.stopPropagation();
+        clearTimeout(hoverTooltipTimer);
         if (autoActive) stopAutoFlight();
         showObject(obj, node);
       });
@@ -263,7 +278,10 @@
       <span class="gallery-preview">${item.title.split(/\s+/).map(w => w[0]).join('').slice(0,3)}</span>
       <em>${item.desc}</em>
       <small>${item.use}</small>
-      ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener">Open path</a>` : '<button type="button" class="disabled-path" disabled>Concept path</button>'}`;
+      <div class="product-actions">
+        ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener" class="product-btn primary-path">Open Project Path</a>` : '<button type="button" class="disabled-path" disabled>Concept Path</button>'}
+        <a href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20saw%20your%20product%20${encodeURIComponent(item.title)}%20and%20want%20to%20start%20a%20similar%20mission." target="_blank" rel="noopener" class="product-btn secondary-path">Start Similar Mission</a>
+      </div>`;
     $$('.product-dot', els.productLayer).forEach((dot, index) => dot.classList.toggle('is-active', index === activeProduct));
     positionDots('.product-dot', activeProduct, 176);
   }
@@ -346,10 +364,10 @@
       document.body.classList.add('is-entering-verse');
       els.ship?.classList.add('is-boosting', 'is-locked');
       const statusSteps = [
-        [260, 'ALIGNING ROCKET PATH'],
-        [820, 'OPENING ORBIT FIELD'],
-        [1380, 'LOCKING SV CORE'],
-        [1900, 'ENTERING DIGITAL UNIVERSE']
+        [250, 'ALIGNING ROCKET PATH'],
+        [800, 'OPENING ORBIT FIELD'],
+        [1400, 'LOCKING SV CORE'],
+        [1800, 'ENTERING DIGITAL UNIVERSE']
       ];
       statusSteps.forEach(([delay, label]) => {
         window.setTimeout(() => {
@@ -357,14 +375,33 @@
           if (status && isLaunching) status.textContent = label;
         }, prefersReducedMotion ? 40 : delay);
       });
+
+      // 250ms: Rocket gently aligns toward center
+      window.setTimeout(() => {
+        if (!prefersReducedMotion) {
+          rocketCentering = true;
+        }
+      }, prefersReducedMotion ? 40 : 250);
+
+      // 1800ms: Technology particles appear from depth (revealing background)
+      window.setTimeout(() => {
+        document.body.classList.add('verse-revealing');
+      }, prefersReducedMotion ? 100 : 1800);
+
+      // 2200ms: Header, controls, zoom, and bottom bullets appear
+      window.setTimeout(() => {
+        document.body.classList.add('verse-entered');
+      }, prefersReducedMotion ? 140 : 2200);
+
+      // 2400ms: First guide appears bottom-right and app becomes interactive
       window.setTimeout(() => {
         els.entryGate.classList.add('is-hidden');
-        document.body.classList.add('verse-entered');
-        document.body.classList.remove('is-entering-verse');
+        document.body.classList.remove('is-entering-verse', 'verse-revealing');
         isLaunching = false;
+        rocketCentering = false;
         els.ship?.classList.remove('is-boosting', 'is-locked');
         setZone(0);
-        window.setTimeout(() => startGuide(), prefersReducedMotion ? 120 : 620);
+        window.setTimeout(() => startGuide(), prefersReducedMotion ? 120 : 200);
       }, prefersReducedMotion ? 180 : 2400);
     });
   }
@@ -397,9 +434,18 @@
         if (action === 'core') returnToCore();
       });
     });
-    $$('[data-zone]', els.mobileDots).forEach(btn => btn.addEventListener('click', () => setZone(Number(btn.dataset.zone))));
-    els.zonePrev?.addEventListener('click', () => setZone(currentZone - 1));
-    els.zoneNext?.addEventListener('click', () => setZone(currentZone + 1));
+    $$('[data-zone]', els.mobileDots).forEach(btn => btn.addEventListener('click', () => {
+      stopAutoFlight();
+      setZone(Number(btn.dataset.zone));
+    }));
+    els.zonePrev?.addEventListener('click', () => {
+      stopAutoFlight();
+      setZone(currentZone - 1);
+    });
+    els.zoneNext?.addEventListener('click', () => {
+      stopAutoFlight();
+      setZone(currentZone + 1);
+    });
   }
 
   function setControlActive(control) {
@@ -468,6 +514,31 @@
     return null;
   }
 
+  function animateProofNumbers() {
+    if (proofAnimated) return;
+    proofAnimated = true;
+    const strongs = $$('.proof-dot strong');
+    const targets = [
+      { element: strongs[0], max: 12, suffix: '+' },
+      { element: strongs[1], max: 300, suffix: '+' },
+      { element: strongs[2], max: 100, suffix: '+' }
+    ];
+    targets.forEach(({ element, max, suffix }) => {
+      if (!element) return;
+      let current = 0;
+      const duration = 1000;
+      const stepTime = Math.max(15, Math.floor(duration / max));
+      const timer = setInterval(() => {
+        current += Math.ceil(max / 25);
+        if (current >= max) {
+          current = max;
+          clearInterval(timer);
+        }
+        element.textContent = `${current}${suffix}`;
+      }, stepTime);
+    });
+  }
+
   function setZone(zone, options = {}) {
     currentZone = Math.max(0, Math.min(ZONES.length - 1, zone));
     const z = ZONES[currentZone];
@@ -485,6 +556,13 @@
     });
     if (els.zonePrev) els.zonePrev.disabled = currentZone === 0;
     if (els.zoneNext) els.zoneNext.disabled = currentZone === ZONES.length - 1;
+    
+    if (currentZone === 3) {
+      setTimeout(() => animateProofNumbers(), 320);
+    } else {
+      proofAnimated = false;
+    }
+
     updateLayerStates();
     if (!options.immediate && !prefersReducedMotion) pulseZone();
   }
@@ -524,12 +602,15 @@
 
   function applyZoomVisibility() {
     const orbitActive = currentZone === 0 || currentZone === 1;
+    const mobile = window.innerWidth <= 780;
     ORBIT_PARTICLES.forEach((obj, index) => {
       if (!obj.el) return;
       let visible = orbitActive;
+      if (mobile && obj.depth !== 'core') {
+        visible = false;
+      }
       if (obj.depth === 'deep' && zoom < 1.14) visible = false;
       if (obj.depth === 'hidden' && zoom < 1.56) visible = false;
-      // Arrival core keeps only the first quiet ring visible to avoid a crowded start.
       if (currentZone === 0 && index > 11 && zoom < 1.2) visible = false;
       obj.el.classList.toggle('is-hidden-by-zoom', !visible);
       if (!visible) {
@@ -549,7 +630,6 @@
     target?.classList.add(target === els.core ? 'is-focused' : 'is-selected');
     els.tooltipType.textContent = obj.category || 'Object';
     els.tooltipTitle.textContent = obj.label || obj.title || obj.name;
-    updateTooltipMock(obj, target);
     els.tooltipDesc.textContent = obj.desc || obj.text || '';
     els.tooltipUse.textContent = obj.use || obj.company || '';
     if (obj.link) {
@@ -561,18 +641,6 @@
     }
     els.tooltip.classList.add('is-open');
     els.tooltip.setAttribute('aria-hidden', 'false');
-  }
-
-  function updateTooltipMock(obj, target) {
-    if (!els.tooltipMock) return;
-    const mockType =
-      target === els.core ? 'core' :
-      target?.classList?.contains('proof-dot') ? 'proof' :
-      target?.classList?.contains('review-dot') ? 'review' :
-      obj.category === 'Tool' ? 'tool' :
-      obj.category === 'Contact' ? 'contact' :
-      'technology';
-    els.tooltipMock.className = `tooltip-mock ${mockType}`;
   }
 
   function closeObject() {
@@ -653,23 +721,24 @@
     const dt = Math.max(16, Math.min(48, time - lastShipFrame));
     lastShipFrame = time;
 
-    const target = isLaunching
+    const target = (isLaunching && rocketCentering)
       ? { x: window.innerWidth * 0.5, y: window.innerHeight * 0.48 }
       : shipTarget;
 
-    const ease = isLaunching ? 0.115 : 0.165;
+    const ease = (isLaunching && rocketCentering) ? 0.08 : 0.16;
     const dx = target.x - shipPos.x;
     const dy = target.y - shipPos.y;
     shipPos.x += dx * ease;
     shipPos.y += dy * ease;
 
-    const vx = shipPos.x - prevMouse.x;
-    const vy = shipPos.y - prevMouse.y;
     const frameVelocity = Math.hypot(dx, dy) * (dt / 16) * 0.08;
     shipVelocity = frameVelocity;
 
     if (Math.hypot(dx, dy) > 0.65) {
-      const nextAngle = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+      let nextAngle = Math.atan2(dy, dx) * 180 / Math.PI + 90;
+      if (isLaunching && rocketCentering) {
+        nextAngle = 0;
+      }
       const angleDelta = ((((nextAngle - shipAngle) % 360) + 540) % 360) - 180;
       shipAngle += angleDelta * 0.18;
       els.ship.classList.remove('is-idle', 'is-hidden');
@@ -691,8 +760,9 @@
 
   function positionShip(x, y) {
     els.ship.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%,-50%) rotate(${shipAngle}deg)`;
-    const flameSize = Math.max(0, Math.min(1, shipVelocity / 22));
-    els.ship.style.setProperty('--thrust', flameSize.toFixed(2));
+    const moving = shipVelocity > 0.4 && els.ship.classList.contains('is-moving');
+    const flameSize = moving ? Math.max(0.1, Math.min(1.0, shipVelocity * 0.08)) : 0;
+    els.ship.style.setProperty('--thrust', flameSize.toFixed(3));
   }
 
   let lastTrailTime = 0;
@@ -813,7 +883,18 @@
         return;
       }
       const ring = obj.radius * scaleRadius * (0.82 + zoom * .16);
-      const speedBase = obj.depth === 'core' ? 0.022 : obj.depth === 'deep' ? 0.018 : 0.014;
+      
+      let speedBase = 0.05;
+      if (obj.radius < 180) {
+        speedBase = (2 * Math.PI) / 42;
+      } else if (obj.radius < 260) {
+        speedBase = (2 * Math.PI) / 58;
+      } else if (obj.radius < 340) {
+        speedBase = (2 * Math.PI) / 76;
+      } else {
+        speedBase = (2 * Math.PI) / 92;
+      }
+
       const angle = (obj.angle * Math.PI / 180) + (timeScale * speedBase) + obj.phase * .04;
       const wobble = prefersReducedMotion ? 0 : Math.sin(timeScale * 1.25 + i) * (mobile ? 1.5 : 4);
       let x = cx + Math.cos(angle) * ring;
@@ -834,11 +915,19 @@
       y = Math.max(mobile ? 94 : 92, Math.min(rect.height - (mobile ? 160 : 58), y));
 
       const depthWave = Math.sin(angle);
-      const depthScale = 0.78 + ((depthWave + 1) * 0.15);
-      const depthOpacity = currentZone === 0
-        ? 0.28 + ((depthWave + 1) * 0.18)
-        : 0.54 + ((depthWave + 1) * 0.23);
-      const blur = depthWave < -0.45 && !mobile ? 0.35 : 0;
+      
+      let depthScale = 0.93 + depthWave * 0.15;
+      if (depthScale > 1.08) depthScale = 1.08;
+      if (depthScale < 0.78) depthScale = 0.78;
+
+      let depthOpacity = 0.69 + depthWave * 0.31;
+      if (depthWave >= 0) {
+        depthOpacity = 0.72 + depthWave * 0.28;
+      } else {
+        depthOpacity = 0.72 + depthWave * 0.34;
+      }
+
+      const blur = depthWave < -0.45 && !mobile ? 0.4 : 0;
       node.style.left = `${x}px`;
       node.style.top = `${y}px`;
       node.style.setProperty('--depth-scale', depthScale.toFixed(3));
@@ -891,18 +980,19 @@
       const h = window.innerHeight;
       const cx = w / 2;
       const cy = h / 2;
-      const launchT = isLaunching ? Math.min(1, (time - launchStart) / 2400) : 0;
+      const launchElapsed = time - launchStart;
+      const launchT = (isLaunching && launchElapsed > 800) ? Math.min(1, (launchElapsed - 800) / 1600) : 0;
       ctx.clearRect(0, 0, w, h);
       ctx.fillStyle = '#030508';
       ctx.fillRect(0, 0, w, h);
 
       stars.forEach(star => {
         if (!paused && !prefersReducedMotion) {
-          if (launchT > 0) {
+          if (isLaunching) {
             const dx = star.x - cx;
             const dy = star.y - cy;
             const len = Math.hypot(dx, dy) || 1;
-            const boost = 1.4 + launchT * 13;
+            const boost = 1.2 + launchT * 15;
             star.x += (dx / len) * boost;
             star.y += (dy / len) * boost;
             if (star.x < -80 || star.x > w + 80 || star.y < -80 || star.y > h + 80) resetStar(star, false);
