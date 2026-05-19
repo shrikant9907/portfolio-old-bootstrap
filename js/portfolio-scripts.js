@@ -15,10 +15,12 @@
 
   function initHeroMotion() {
     if (!window.gsap || prefersReducedMotion) return;
-    gsap.from('.hero-copy > *', { y: 28, opacity: 0, duration: .85, stagger: .12, ease: 'power3.out' });
-    gsap.from('.command-panel', { y: 42, opacity: 0, duration: 1, delay: .25, ease: 'power3.out' });
-    gsap.to('.tech-orbit span', { y: -8, duration: 2.4, stagger: .18, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-    gsap.to('.signal-line', { strokeDashoffset: -120, duration: 8, repeat: -1, ease: 'none' });
+    gsap.from('.command-nav', { y: -22, opacity: 0, duration: .7, ease: 'power3.out' });
+    gsap.from('.hero-copy > *', { y: 34, opacity: 0, duration: .9, stagger: .11, ease: 'power3.out', delay: .12 });
+    gsap.from('.command-console', { y: 48, scale: .96, opacity: 0, duration: 1.05, delay: .38, ease: 'power3.out' });
+    gsap.from('.console-card', { y: 18, opacity: 0, duration: .72, stagger: .09, delay: .85, ease: 'power3.out' });
+    gsap.to('.tech-nodes span', { y: -7, duration: 2.6, stagger: .16, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+    gsap.to('.connector, .network-line', { strokeDashoffset: -140, duration: 8, repeat: -1, ease: 'none' });
   }
 
   function initTypeIt() {
@@ -27,7 +29,7 @@
     if (!target) return;
     target.innerHTML = '';
     new TypeIt('#typed-focus', {
-      strings: ['Focused on business websites, web apps, and SEO-ready digital products.'],
+      strings: ['Business Websites · Web Apps · SEO-ready Digital Products'],
       speed: 28,
       lifeLike: true,
       cursorChar: '▍',
@@ -107,6 +109,14 @@
     $navLinks.on('click', function () { $('.navbar-collapse').collapse('hide'); });
   }
 
+
+  function initCommandMenuState() {
+    var $toggle = $('.command-toggle');
+    $('#mainNavbar')
+      .on('shown.bs.collapse', function () { $toggle.attr('aria-expanded', 'true'); })
+      .on('hidden.bs.collapse', function () { $toggle.attr('aria-expanded', 'false'); });
+  }
+
   function updateActiveLink() {
     var scrollTop = $window.scrollTop() + 120;
     var currentId = '#top';
@@ -123,6 +133,7 @@
     var docHeight = $(document).height() - $window.height();
     var progress = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
     $('.scroll-progress span').css('width', progress + '%');
+    $('#main_header').toggleClass('is-scrolled', scrollTop > 24);
     if (scrollTop > 420) { $goTop.addClass('is-visible'); $floatingCta.addClass('is-visible'); }
     else { $goTop.removeClass('is-visible'); $floatingCta.removeClass('is-visible'); }
   }
@@ -147,6 +158,7 @@
     initReviewSlider();
     initTiltLikeMotion();
     initSmoothClose();
+    initCommandMenuState();
     initScrollState();
   });
 })(jQuery);

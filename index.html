@@ -152,15 +152,24 @@
     <symbol id="icon-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c2.2 2.4 3.3 5.4 3.3 9S14.2 18.6 12 21c-2.2-2.4-3.3-5.4-3.3-9S9.8 5.4 12 3Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
   </svg>
 
-  <header id="main_header" class="site-header sticky-top">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg navbar-light px-0" aria-label="Main navigation">
-        <a class="navbar-brand site-logo" href="#top" aria-label="Shrikant Yadav home"><span class="logo-mark">SY</span><span>Shrikant<span>Yadav</span></span></a>
-        <button class="navbar-toggler menu-toggle" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-          <svg class="svg-icon"><use href="#icon-menu"></use></svg>
+  <header id="main_header" class="site-header command-header sticky-top">
+    <div class="container command-nav-container">
+      <nav class="navbar navbar-expand-lg command-nav px-0" aria-label="Main navigation">
+        <a class="navbar-brand site-logo command-brand" href="#top" aria-label="Shrikant Yadav home">
+          <span class="logo-mark command-logo-chip">SY</span>
+          <span class="brand-copy">
+            <strong>Shrikant Yadav</strong>
+            <small>Web Designer &amp; Developer</small>
+          </span>
+          <span class="brand-status d-none d-xl-inline-flex"><i aria-hidden="true"></i> Available for selected projects</span>
+        </a>
+
+        <button class="navbar-toggler menu-toggle command-toggle" type="button" data-toggle="collapse" data-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="toggle-lines" aria-hidden="true"><span></span><span></span><span></span></span>
         </button>
-        <div class="collapse navbar-collapse" id="mainNavbar">
-          <ul class="navbar-nav ml-auto align-items-lg-center">
+
+        <div class="collapse navbar-collapse command-menu" id="mainNavbar">
+          <ul class="navbar-nav ml-auto align-items-lg-center command-links">
             <li class="nav-item"><a class="nav-link active" href="#top">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="#about-me">About</a></li>
             <li class="nav-item"><a class="nav-link" href="#my-services">Services</a></li>
@@ -169,7 +178,8 @@
             <li class="nav-item"><a class="nav-link" href="#reviews">Reviews</a></li>
             <li class="nav-item"><a class="nav-link" href="#faqs">FAQs</a></li>
             <li class="nav-item"><a class="nav-link" href="#contact-details">Contact</a></li>
-            <li class="nav-item ml-lg-2"><a class="btn btn-primary btn-sm nav-cta" href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20discuss%20a%20website%20or%20web%20application%20project." target="_blank" rel="noopener">Discuss Project</a></li>
+            <li class="nav-item ml-lg-2"><a class="btn nav-cta" href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20discuss%20a%20website%20or%20web%20application%20project." target="_blank" rel="noopener">Discuss Project <svg class="svg-icon icon-sm"><use href="#icon-arrow"></use></svg></a></li>
+            <li class="nav-item d-lg-none"><a class="nav-link mobile-whatsapp" href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20discuss%20my%20project." target="_blank" rel="noopener">WhatsApp quick chat</a></li>
           </ul>
         </div>
       </nav>
@@ -177,53 +187,110 @@
   </header>
 
   <main id="main-content">
-    <section class="hero-section" aria-labelledby="hero-title" data-section-next="#my-work">
-      <div class="hero-grid" aria-hidden="true"></div>
-      <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
-      <div class="hero-orb hero-orb-two" aria-hidden="true"></div>
+    <section class="hero-section hero-command" aria-labelledby="hero-title" data-section-next="#my-work">
+      <div class="hero-world" aria-hidden="true">
+        <div class="world-grid"></div>
+        <div class="world-radial radial-one"></div>
+        <div class="world-radial radial-two"></div>
+        <div class="world-noise"></div>
+        <svg class="hero-connectors" viewBox="0 0 1440 820" preserveAspectRatio="none">
+          <path class="connector connector-a" d="M120 560 C300 350, 455 300, 640 420 S980 590, 1300 210" />
+          <path class="connector connector-b" d="M80 240 C310 190, 410 590, 710 515 S1050 230, 1390 480" />
+          <path class="connector connector-c" d="M420 92 C560 210, 750 170, 900 82 S1180 130, 1350 64" />
+        </svg>
+      </div>
+
+      <div class="hero-journey d-none d-xl-flex" aria-hidden="true">
+        <span class="is-active">Intro</span>
+        <span>Work</span>
+        <span>Proof</span>
+        <span>Reviews</span>
+        <span>Contact</span>
+      </div>
+
       <div class="container hero-content">
         <div class="row align-items-center">
           <div class="col-lg-6 hero-copy">
-            <p class="eyebrow text-primary">Shrikant Yadav · Shrimo Innovations</p>
+            <p class="eyebrow hero-eyebrow"><span class="signal-pulse"></span> Shrikant Yadav · Shrimo Innovations</p>
             <h1 id="hero-title" class="hero-title">Web Designer &amp; Full Stack Developer in Narmadapuram</h1>
-            <p class="hero-description">I build clean, responsive, SEO-ready websites, WordPress websites, React/Next.js applications, and practical business web systems for brands that want a serious online presence.</p>
-            <p class="hero-focus"><span id="typed-focus">Focused on business websites, web apps, and SEO-ready digital products.</span></p>
+            <p class="hero-description">I build clean business websites, WordPress websites, React/Next.js applications, and SEO-ready web platforms that help brands look professional and convert better.</p>
+            <p class="hero-focus"><span class="focus-prefix">System focus:</span> <span id="typed-focus">Business Websites · Web Apps · SEO-ready Digital Products</span></p>
             <div class="hero-actions">
-              <a class="btn btn-primary btn-lg" href="#my-work">View Selected Work <svg class="svg-icon icon-sm ml-1"><use href="#icon-arrow"></use></svg></a>
-              <a class="btn btn-glass btn-lg" href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20discuss%20my%20website%20or%20web%20application%20project." target="_blank" rel="noopener">WhatsApp Me</a>
+              <a class="btn btn-primary btn-lg btn-command-primary" href="#my-work">View Selected Work <svg class="svg-icon icon-sm ml-1"><use href="#icon-arrow"></use></svg></a>
+              <a class="btn btn-command-ghost btn-lg" href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20discuss%20my%20website%20or%20web%20application%20project." target="_blank" rel="noopener">Discuss Project</a>
             </div>
-            <div class="trust-strip" aria-label="Portfolio highlights">
-              <span><strong data-count="12">12</strong>+ Years Experience</span>
-              <span><strong data-count="300">300</strong>+ Projects</span>
-              <span><strong data-count="100">100</strong>+ Developers Trained</span>
+            <div class="trust-strip command-signal-strip" aria-label="Portfolio highlights">
+              <span><strong data-count="12">12</strong>+ <em>Years Experience</em></span>
+              <span><strong data-count="300">300</strong>+ <em>Projects Delivered</em></span>
+              <span><strong data-count="100">100</strong>+ <em>Developers Trained</em></span>
             </div>
           </div>
+
           <div class="col-lg-6 mt-5 mt-lg-0 hero-visual-wrap">
-            <div class="command-panel glass-panel" data-tilt-root aria-label="AI command portfolio visual">
-              <div class="panel-shine" aria-hidden="true"></div>
-              <div class="panel-top">
-                <span></span><span></span><span></span>
-                <strong>AI Command Portfolio</strong>
-              </div>
-              <div class="panel-body">
-                <div class="code-window">
-                  <p><span class="code-key">build</span>(<span class="code-string">"business website"</span>)</p>
-                  <p><span class="code-key">optimize</span>(<span class="code-string">"SEO + speed"</span>)</p>
-                  <p><span class="code-key">launch</span>(<span class="code-string">"client-ready"</span>)</p>
+            <div class="command-console" data-tilt-root aria-label="Project intelligence console visual">
+              <div class="console-ambient ambient-one" aria-hidden="true"></div>
+              <div class="console-ambient ambient-two" aria-hidden="true"></div>
+              <div class="console-shell glass-panel">
+                <div class="panel-shine" aria-hidden="true"></div>
+                <div class="console-topbar">
+                  <div class="window-dots"><span></span><span></span><span></span></div>
+                  <strong>Project Intelligence Console</strong>
+                  <span class="console-mode">Live System</span>
                 </div>
-                <div class="signal-map" aria-hidden="true">
-                  <svg viewBox="0 0 520 180" class="signal-svg">
-                    <path class="signal-line line-one" d="M25 120 C130 20, 240 20, 340 100 S460 170, 500 70"/>
-                    <path class="signal-line line-two" d="M40 50 C130 150, 260 140, 330 65 S430 15, 500 112"/>
-                    <circle class="signal-dot" cx="25" cy="120" r="5"/>
-                    <circle class="signal-dot" cx="340" cy="100" r="5"/>
-                    <circle class="signal-dot" cx="500" cy="70" r="5"/>
-                  </svg>
+
+                <div class="console-main">
+                  <div class="console-card code-command-card">
+                    <div class="console-card-head"><span>Build Sequence</span><i>01</i></div>
+                    <div class="code-window advanced-code">
+                      <p><span class="code-key">strategy</span>.<span class="code-fn">map</span>(<span class="code-string">"business goal"</span>)</p>
+                      <p><span class="code-key">ui</span>.<span class="code-fn">design</span>(<span class="code-string">"premium + clear"</span>)</p>
+                      <p><span class="code-key">seo</span>.<span class="code-fn">ship</span>(<span class="code-string">"ready to rank"</span>)</p>
+                    </div>
+                  </div>
+
+                  <div class="console-card seo-card">
+                    <div class="console-card-head"><span>SEO Readiness</span><i>92%</i></div>
+                    <div class="seo-meter" aria-hidden="true"><span style="--score:92%"></span></div>
+                    <small>Schema · Speed · Structure · Search Console</small>
+                  </div>
+
+                  <div class="console-card status-card">
+                    <div class="console-card-head"><span>Delivery Signals</span><i>Active</i></div>
+                    <ul class="status-list">
+                      <li><b></b> Website Design <span>Ready</span></li>
+                      <li><b></b> WordPress <span>Production</span></li>
+                      <li><b></b> React / Next.js <span>Available</span></li>
+                      <li><b></b> Conversion Flow <span>Guided</span></li>
+                    </ul>
+                  </div>
+
+                  <div class="console-card preview-card">
+                    <div class="console-card-head"><span>Live Preview</span><i>UI</i></div>
+                    <div class="mini-browser">
+                      <div></div><div></div><div></div>
+                      <strong>Business Website</strong>
+                      <span>Landing Page</span>
+                      <span>Web App</span>
+                    </div>
+                  </div>
+
+                  <div class="console-network" aria-hidden="true">
+                    <svg viewBox="0 0 520 280" class="network-svg">
+                      <path class="network-line network-line-a" d="M58 74 C150 18, 245 54, 304 116 S414 208, 472 96" />
+                      <path class="network-line network-line-b" d="M65 214 C162 132, 235 250, 315 170 S430 88, 486 212" />
+                      <circle class="network-node" cx="58" cy="74" r="5" />
+                      <circle class="network-node" cx="304" cy="116" r="5" />
+                      <circle class="network-node" cx="472" cy="96" r="5" />
+                      <circle class="network-node node-soft" cx="315" cy="170" r="5" />
+                    </svg>
+                  </div>
+
+                  <div class="tech-nodes">
+                    <span>SEO</span><span>Next.js</span><span>WordPress</span><span>React</span><span>UI/UX</span>
+                  </div>
+
+                  <div class="availability-chip"><span class="status-dot"></span> Available for selected projects</div>
                 </div>
-                <div class="tech-orbit">
-                  <span>SEO</span><span>Next.js</span><span>WordPress</span><span>React</span><span>Business Websites</span>
-                </div>
-                <div class="panel-status"><span class="status-dot"></span> Available for selected projects</div>
               </div>
             </div>
           </div>

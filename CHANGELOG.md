@@ -43,3 +43,15 @@
 - Added mobile review slider.
 - Added mobile bottom CTA.
 - Adjusted filters, process flow, proof numbers, contact, and footer for smaller screens.
+
+## Header + Hero Creative Upgrade
+
+- Reworked only the first-screen experience: header and hero.
+- Replaced the normal Bootstrap-looking header with a floating AI command navigation bar.
+- Added SY crystal chip mark, live availability signal, active nav scanner underline, glass nav shell, and premium CTA shine.
+- Rebuilt the hero into an AI Command Center with layered grid atmosphere, primary-color glow, SVG connector paths, and a stronger first-screen hierarchy.
+- Replaced the previous basic hero panel with a custom Project Intelligence Console built from HTML, CSS, and SVG.
+- Added console modules for build sequence, SEO readiness, delivery signals, live preview, tech nodes, and availability status.
+- Kept the H1, SEO content, links, existing section IDs, and rest of the site stable.
+- Updated GSAP animation targets for the new hero console and connector paths.
+- Improved responsive behavior for tablet and mobile first-screen layout.
