@@ -1299,125 +1299,232 @@ function updateProductLayer() {
   function initStars() {
     const canvas = $('#starCanvas');
     if (!canvas) return;
+    canvas.classList.add('real-universe-canvas');
+
     const ctx = canvas.getContext('2d');
     let stars = [];
+    let clusters = [];
+    let mouseX = 0;
+    let mouseY = 0;
+    let smoothX = 0;
+    let smoothY = 0;
 
-    function resetStar(star, randomize = true) {
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight / 2;
-      const angle = Math.random() * Math.PI * 2;
-      const dist = randomize ? Math.random() * Math.max(window.innerWidth, window.innerHeight) * 0.7 : 8;
-      star.x = centerX + Math.cos(angle) * dist;
-      star.y = centerY + Math.sin(angle) * dist;
-      star.vx = Math.cos(angle);
-      star.vy = Math.sin(angle);
-      star.r = Math.random() * 1.15 + .18;
-      star.a = Math.random() * .34 + .06;
-      star.s = Math.random() * .22 + .035;
+    const rand = (min, max) => min + Math.random() * (max - min);
+
+    function deviceProfile() {
+      const w = window.innerWidth;
+      if (w < 780 || isTouch) {
+        return { starMin: 92, starMax: 145, clusterMin: 2, clusterMax: 3, dprMax: 1.5, parallax: 0 };
+      }
+      if (w < 1100) {
+        return { starMin: 150, starMax: 230, clusterMin: 3, clusterMax: 4, dprMax: 1.75, parallax: 1 };
+      }
+      return { starMin: 280, starMax: 430, clusterMin: 4, clusterMax: 7, dprMax: 2, parallax: 1 };
+    }
+
+    function createStar(layer = 1) {
+      const rareBig = Math.random() > 0.94;
+      const tiny = Math.random() < 0.62;
+      return {
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        r: rareBig ? rand(1.55, 2.75) : tiny ? rand(0.28, 0.72) : rand(0.72, 1.35),
+        baseAlpha: rareBig ? rand(0.36, 0.86) : tiny ? rand(0.10, 0.42) : rand(0.20, 0.62),
+        blinkAmp: rareBig ? rand(0.22, 0.55) : rand(0.05, 0.22),
+        blinkSpeed: rand(0.00035, 0.00145),
+        blinkOffset: rand(0, Math.PI * 2),
+        vx: rand(-0.018, 0.018) * layer,
+        vy: rand(0.012, 0.055) * layer,
+        depth: layer,
+        hue: Math.random() > 0.82 ? 'rgba(103,232,249,' : 'rgba(248,250,252,',
+        big: rareBig
+      };
+    }
+
+    function resetStar(star, fromCenter = false) {
+      if (fromCenter) {
+        const angle = Math.random() * Math.PI * 2;
+        const dist = rand(8, 40);
+        star.x = window.innerWidth / 2 + Math.cos(angle) * dist;
+        star.y = window.innerHeight / 2 + Math.sin(angle) * dist;
+      } else {
+        star.x = Math.random() * window.innerWidth;
+        star.y = Math.random() * window.innerHeight;
+      }
+    }
+
+    function createCluster() {
+      return {
+        x: rand(0, window.innerWidth),
+        y: rand(0, window.innerHeight),
+        rx: rand(window.innerWidth * 0.10, window.innerWidth * 0.26),
+        ry: rand(window.innerHeight * 0.06, window.innerHeight * 0.18),
+        alpha: rand(0.018, 0.055),
+        driftX: rand(-0.010, 0.010),
+        driftY: rand(-0.006, 0.010),
+        rotation: rand(0, Math.PI * 2),
+        rotateSpeed: rand(-0.000018, 0.000018),
+        seed: rand(0, 1000)
+      };
     }
 
     function resize() {
-      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const profile = deviceProfile();
+      const dpr = Math.min(profile.dprMax, window.devicePixelRatio || 1);
       canvas.width = Math.floor(window.innerWidth * dpr);
       canvas.height = Math.floor(window.innerHeight * dpr);
       canvas.style.width = `${window.innerWidth}px`;
       canvas.style.height = `${window.innerHeight}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const count = Math.max(isTouch ? 170 : 240, Math.min(isTouch ? 260 : 520, Math.floor(window.innerWidth * window.innerHeight / (isTouch ? 7600 : 4300))));
-      stars = Array.from({ length: count }, () => {
-        const star = {};
-        resetStar(star, true);
-        return star;
-      });
+
+      const area = window.innerWidth * window.innerHeight;
+      const count = Math.max(profile.starMin, Math.min(profile.starMax, Math.floor(area / (isTouch ? 7200 : 3900))));
+      stars = Array.from({ length: count }, () => createStar(rand(0.45, 1.4)));
+
+      const clusterCount = Math.floor(rand(profile.clusterMin, profile.clusterMax + 1));
+      clusters = Array.from({ length: clusterCount }, createCluster);
     }
 
+    function drawCluster(cluster, time, launchT) {
+      const px = hasFinePointer ? smoothX * -0.018 : 0;
+      const py = hasFinePointer ? smoothY * -0.014 : 0;
+      cluster.x += cluster.driftX;
+      cluster.y += cluster.driftY;
+      cluster.rotation += cluster.rotateSpeed;
 
-    function drawGalaxy(time, w, h, cx, cy, launchT) {
-      const compact = w < 780;
-      const arms = compact ? 3 : 4;
-      const pointsPerArm = compact ? 28 : 54;
-      const maxRadius = Math.min(w, h) * (compact ? 0.46 : 0.54);
-      const rotation = time * 0.000055;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      if (cluster.x < -cluster.rx) cluster.x = w + cluster.rx;
+      if (cluster.x > w + cluster.rx) cluster.x = -cluster.rx;
+      if (cluster.y < -cluster.ry) cluster.y = h + cluster.ry;
+      if (cluster.y > h + cluster.ry) cluster.y = -cluster.ry;
+
       ctx.save();
+      ctx.translate(cluster.x + px, cluster.y + py);
+      ctx.rotate(cluster.rotation + Math.sin(time * 0.00006 + cluster.seed) * 0.04);
       ctx.globalCompositeOperation = 'lighter';
-      const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxRadius * 0.78);
-      coreGlow.addColorStop(0, `rgba(34,211,238,${0.085 + launchT * 0.05})`);
-      coreGlow.addColorStop(0.36, `rgba(34,211,238,${0.038 + launchT * 0.035})`);
-      coreGlow.addColorStop(1, 'rgba(34,211,238,0)');
-      ctx.fillStyle = coreGlow;
+
+      const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, Math.max(cluster.rx, cluster.ry));
+      grad.addColorStop(0, `rgba(103,232,249,${cluster.alpha + launchT * 0.025})`);
+      grad.addColorStop(0.42, `rgba(34,211,238,${cluster.alpha * 0.42})`);
+      grad.addColorStop(1, 'rgba(2,4,6,0)');
+
+      ctx.scale(1, cluster.ry / Math.max(cluster.rx, 1));
+      ctx.fillStyle = grad;
       ctx.beginPath();
-      ctx.arc(cx, cy, maxRadius * 0.92, 0, Math.PI * 2);
+      ctx.arc(0, 0, cluster.rx, 0, Math.PI * 2);
       ctx.fill();
 
-      for (let arm = 0; arm < arms; arm++) {
-        const armOffset = (arm / arms) * Math.PI * 2;
-        for (let i = 0; i < pointsPerArm; i++) {
-          const t = i / pointsPerArm;
-          const radius = 34 + t * maxRadius;
-          const angle = armOffset + rotation + t * 4.9 + Math.sin(time * 0.00045 + i) * 0.035;
-          const x = cx + Math.cos(angle) * radius;
-          const y = cy + Math.sin(angle) * radius * 0.62;
-          const opacity = (1 - t) * 0.16 + 0.016 + launchT * 0.08;
-          const size = compact ? 0.7 + t * 1.1 : 0.75 + t * 1.45;
-          ctx.beginPath();
-          ctx.arc(x, y, size, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(103,232,249,${opacity})`;
-          ctx.fill();
-        }
+      // A few soft dust points inside cluster, not a visible ring/arm.
+      for (let i = 0; i < 10; i++) {
+        const angle = (i / 10) * Math.PI * 2 + cluster.seed;
+        const dist = Math.sin(time * 0.00009 + i + cluster.seed) * cluster.rx * 0.36 + cluster.rx * 0.34;
+        const x = Math.cos(angle) * dist;
+        const y = Math.sin(angle * 1.7) * dist * 0.28;
+        ctx.beginPath();
+        ctx.arc(x, y, rand(0.35, 0.9), 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(165,243,252,${cluster.alpha * 1.4})`;
+        ctx.fill();
       }
+
       ctx.restore();
     }
 
     function draw(time = 0) {
       if (pageHidden) { requestAnimationFrame(draw); return; }
+
       const w = window.innerWidth;
       const h = window.innerHeight;
       const cx = w / 2;
       const cy = h / 2;
       const launchElapsed = time - launchStart;
       const launchT = (isLaunching && launchElapsed > 350) ? Math.min(1, (launchElapsed - 350) / 1550) : 0;
+
+      smoothX += (mouseX - smoothX) * 0.045;
+      smoothY += (mouseY - smoothY) * 0.045;
+
+      if (hasFinePointer && !isTouch) {
+        const px = (smoothX / Math.max(w, 1)) * -18;
+        const py = (smoothY / Math.max(h, 1)) * -14;
+        document.documentElement.style.setProperty('--space-parallax-x', `${(px * 0.42).toFixed(2)}px`);
+        document.documentElement.style.setProperty('--space-parallax-y', `${(py * 0.42).toFixed(2)}px`);
+        document.documentElement.style.setProperty('--space-parallax-deep-x', `${px.toFixed(2)}px`);
+        document.documentElement.style.setProperty('--space-parallax-deep-y', `${py.toFixed(2)}px`);
+      }
+
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = '#030508';
+      ctx.fillStyle = '#020406';
       ctx.fillRect(0, 0, w, h);
-      drawGalaxy(time, w, h, cx, cy, launchT);
+
+      clusters.forEach(cluster => {
+        if (!prefersReducedMotion && !paused) drawCluster(cluster, time, launchT);
+        else drawCluster({ ...cluster, driftX:0, driftY:0, rotateSpeed:0 }, time, 0);
+      });
 
       stars.forEach(star => {
+        const depthShiftX = hasFinePointer ? smoothX * -0.006 * star.depth : 0;
+        const depthShiftY = hasFinePointer ? smoothY * -0.005 * star.depth : 0;
+
         if (!paused && !prefersReducedMotion) {
           if (isLaunching) {
             const dx = star.x - cx;
             const dy = star.y - cy;
             const len = Math.hypot(dx, dy) || 1;
-            const boost = 1.9 + launchT * 26;
+            const boost = 2.1 + launchT * 30;
             star.x += (dx / len) * boost;
             star.y += (dy / len) * boost;
-            if (star.x < -80 || star.x > w + 80 || star.y < -80 || star.y > h + 80) resetStar(star, false);
+            if (star.x < -100 || star.x > w + 100 || star.y < -100 || star.y > h + 100) resetStar(star, true);
           } else {
-            star.y += star.s;
-            if (star.y > h + 4) star.y = -4;
+            star.x += star.vx;
+            star.y += star.vy;
+            if (star.y > h + 8) star.y = -8;
+            if (star.y < -8) star.y = h + 8;
+            if (star.x > w + 8) star.x = -8;
+            if (star.x < -8) star.x = w + 8;
           }
         }
 
-        const alpha = Math.min(.92, star.a + launchT * .56);
+        const blink = prefersReducedMotion ? 0 : Math.sin(time * star.blinkSpeed + star.blinkOffset) * star.blinkAmp;
+        const alpha = Math.max(0.04, Math.min(0.95, star.baseAlpha + blink + launchT * 0.5));
+        const x = star.x + depthShiftX;
+        const y = star.y + depthShiftY;
+
         if (launchT > .08) {
-          const dx = star.x - cx;
-          const dy = star.y - cy;
+          const dx = x - cx;
+          const dy = y - cy;
           const len = Math.hypot(dx, dy) || 1;
-          const tail = 14 + launchT * 62;
+          const tail = 16 + launchT * 72;
           ctx.beginPath();
-          ctx.moveTo(star.x, star.y);
-          ctx.lineTo(star.x - (dx / len) * tail, star.y - (dy / len) * tail);
-          ctx.strokeStyle = `rgba(165,243,252,${alpha * .46})`;
+          ctx.moveTo(x, y);
+          ctx.lineTo(x - (dx / len) * tail, y - (dy / len) * tail);
+          ctx.strokeStyle = `rgba(165,243,252,${alpha * .5})`;
           ctx.lineWidth = Math.max(.4, star.r);
           ctx.stroke();
         } else {
           ctx.beginPath();
-          ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(165,243,252,${alpha})`;
+          ctx.arc(x, y, star.r, 0, Math.PI * 2);
+          ctx.fillStyle = `${star.hue}${alpha})`;
           ctx.fill();
+
+          if (star.big) {
+            ctx.beginPath();
+            ctx.arc(x, y, star.r * 3.2, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(103,232,249,${alpha * 0.09})`;
+            ctx.fill();
+          }
         }
       });
+
       requestAnimationFrame(draw);
     }
+
+    if (hasFinePointer && !isTouch) {
+      window.addEventListener('pointermove', (event) => {
+        mouseX = event.clientX - window.innerWidth / 2;
+        mouseY = event.clientY - window.innerHeight / 2;
+      }, { passive:true });
+    }
+
     resize();
     window.addEventListener('resize', resize);
     draw();

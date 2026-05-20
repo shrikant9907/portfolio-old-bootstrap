@@ -246,3 +246,9 @@ Button sizing/placement is now treated as a global interface rule across Shrimo 
 **Updated:** 20 May 2026, 19:45 IST
 
 Shrimo Verse now has the complete planned journey from entry to final contact. Proof Ring, Client Signals, and Launch Dock are implemented as separate focused layers after Product Gallery.
+
+## Realistic Universe Background System
+
+**Updated:** 20 May 2026, 20:05 IST
+
+Shrimo Verse now uses a realistic black universe background instead of artificial ring-style background decoration. The SV core stays fixed and all background motion happens behind it.

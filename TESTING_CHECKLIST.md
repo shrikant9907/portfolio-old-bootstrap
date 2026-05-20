@@ -287,3 +287,18 @@ Updated: 20 May 2026, 19:45 IST
 - [ ] Buttons are compact globally.
 - [ ] SV core remains circular.
 - [ ] Desktop, tablet, and mobile layouts are visually checked.
+
+## Realistic Universe Background Test
+
+Updated: 20 May 2026, 20:05 IST
+
+- [ ] Background is black.
+- [ ] Many small stars are visible.
+- [ ] Some larger stars shine/blink.
+- [ ] Soft galaxy/dust clusters move slowly.
+- [ ] Large decorative background rings are not visible.
+- [ ] Entry and inner scenes use one continuous background.
+- [ ] Desktop mouse movement shifts background opposite direction.
+- [ ] SV core does not move with mouse.
+- [ ] UI panels do not move with mouse.
+- [ ] Mobile remains smooth.

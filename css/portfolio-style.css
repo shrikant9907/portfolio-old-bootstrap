@@ -2925,3 +2925,163 @@ a.product-btn,
 @keyframes proofRingRotate {
   to { transform:translate(-50%,-50%) rotate(360deg); }
 }
+
+
+/* ==========================================================================
+   REALISTIC UNIVERSE BACKGROUND SYSTEM
+   Updated: 20 May 2026, 20:05 IST
+   Purpose:
+   - Deep black universe background.
+   - Many blinking/shining stars.
+   - Slow moving galaxy/dust clusters.
+   - Desktop mouse opposite-direction parallax.
+   - No decorative background rings.
+   - SV core remains fixed and circular.
+   ========================================================================== */
+
+:root {
+  --black:#020406;
+  --black-soft:#05070A;
+  --space-parallax-x:0px;
+  --space-parallax-y:0px;
+  --space-parallax-deep-x:0px;
+  --space-parallax-deep-y:0px;
+}
+
+/* One continuous black universe base across all scenes. */
+html,
+body,
+.verse-stage {
+  background:#020406 !important;
+}
+
+.entry-gate {
+  background:transparent !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+/* Remove artificial background rings from entry/world background. */
+.entry-space,
+.entry-orbit,
+.orbit-field,
+.orbit-line,
+.entry-gate::before,
+.entry-gate::after,
+.verse-stage[data-zone="3"] .proof-ring-layer.is-visible::before,
+.verse-stage[data-zone="2"] .product-gallery-layer::before {
+  display:none !important;
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+
+/* Canvas is the main world background. */
+.star-canvas.real-universe-canvas,
+.star-canvas {
+  position:fixed !important;
+  inset:0 !important;
+  z-index:0 !important;
+  width:100vw !important;
+  height:100vh !important;
+  background:#020406 !important;
+  transform:
+    translate3d(var(--space-parallax-deep-x), var(--space-parallax-deep-y), 0)
+    scale(1.035);
+  transform-origin:center;
+  transition:transform .22s ease-out;
+}
+
+/* Soft deep space glow only, no ring shape. */
+.space-aura {
+  width:100vw !important;
+  height:100vh !important;
+  left:50% !important;
+  top:50% !important;
+  border-radius:0 !important;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(34,211,238,.055), transparent 26%),
+    radial-gradient(circle at 78% 68%, rgba(103,232,249,.04), transparent 28%),
+    radial-gradient(circle at 52% 50%, rgba(34,211,238,.028), transparent 34%),
+    linear-gradient(180deg, rgba(2,4,6,.08), rgba(2,4,6,.72)) !important;
+  filter:none !important;
+  opacity:.82 !important;
+  transform:
+    translate3d(calc(-50% + var(--space-parallax-x)), calc(-50% + var(--space-parallax-y)), 0)
+    scale(1.02) !important;
+  transition:transform .22s ease-out;
+  z-index:1 !important;
+}
+
+/* Preserve content layering above background. */
+.universe-plane {
+  z-index:4 !important;
+}
+
+.sv-core {
+  z-index:45 !important;
+  border-radius:50% !important;
+  transform:translate(-50%,-50%) !important;
+}
+
+.sv-core,
+.sv-core *,
+.entry-sv-mini,
+.entry-sv-mini *,
+.core-ring,
+.core-ring *,
+.core-inner,
+.core-inner * {
+  border-radius:50% !important;
+}
+
+/* Technology particles still move around the core; only decorative background rings are removed. */
+.particle-layer {
+  z-index:5 !important;
+}
+
+/* Entry mini SV should not appear as a second core when rings are removed. */
+.entry-sv-mini {
+  display:none !important;
+}
+
+/* Slightly darken panels so star field remains background, not noise. */
+.mission-panel,
+.gallery-card,
+.proof-focus,
+.review-card,
+.launch-dock,
+.guide-card,
+.object-tooltip,
+.product-detail-sheet {
+  background-color:rgba(5,7,10,.88) !important;
+}
+
+/* Mouse movement should move background only. Core and UI must stay fixed. */
+body.verse-entered:not(.touch-device) .mission-panel,
+body.verse-entered:not(.touch-device) .sv-core,
+body.verse-entered:not(.touch-device) .hud,
+body.verse-entered:not(.touch-device) .zone-nav,
+body.verse-entered:not(.touch-device) .mobile-control-dock {
+  transform-style:flat;
+}
+
+/* Reduced motion keeps stars visible but static. */
+@media (prefers-reduced-motion:reduce) {
+  .star-canvas,
+  .space-aura {
+    transform:none !important;
+    transition:none !important;
+  }
+}
+
+/* Mobile: keep performance clean and no heavy visual effects. */
+@media (max-width:780px) {
+  .space-aura {
+    opacity:.68 !important;
+    background:
+      radial-gradient(circle at 20% 18%, rgba(34,211,238,.045), transparent 28%),
+      radial-gradient(circle at 74% 72%, rgba(103,232,249,.03), transparent 24%),
+      linear-gradient(180deg, rgba(2,4,6,.08), rgba(2,4,6,.76)) !important;
+  }
+}

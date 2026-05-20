@@ -1,5 +1,20 @@
 # Changelog
 
+## Realistic Universe Background System — 20 May 2026, 20:05 IST
+
+- Replaced ring-style background direction with a black realistic universe background.
+- Hid decorative background rings from entry/world layers.
+- Added many layered stars with random blinking/shining behavior.
+- Added low-opacity drifting galaxy/dust clusters.
+- Added desktop opposite-direction mouse parallax for background only.
+- Kept SV core fixed and circular.
+- Kept mobile/tablet particle counts lower for performance.
+- Added `steps/32-realistic-universe-background-system.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
 ## Final All Phases Complete — 20 May 2026, 19:45 IST
 
 - Completed Phase 4 Proof Ring with focused proof signals and previous/next controls.

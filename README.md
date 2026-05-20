@@ -373,3 +373,17 @@ Final package:
 ```txt
 shrimo-verse-final-all-phases-complete.zip
 ```
+
+## Realistic Universe Background System
+
+**Updated:** 20 May 2026, 20:05 IST
+
+The background system now uses one shared black universe canvas with blinking stars, large shining stars, slow galaxy/dust clusters, and desktop opposite-direction mouse parallax.
+
+Large decorative background rings are hidden.
+
+See:
+
+```txt
+steps/32-realistic-universe-background-system.md
+```
