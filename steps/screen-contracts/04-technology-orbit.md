@@ -212,3 +212,20 @@ Technology Orbit now has a stronger screen contract implementation:
 - products/proof/reviews/contact remain hidden from this scene.
 
 Future changes must preserve this separation.
+
+
+---
+
+## Phase 2 Interaction Refinement
+
+**Updated:** 20 May 2026, 18:25 IST
+
+Interaction decisions:
+
+- Do not show `Step 1 of 7`.
+- Do not start guide with `Pilot the ship`.
+- Guide must be skippable/closable.
+- Desktop rocket performs one controlled lap after entry, then returns to cursor.
+- Desktop mouse movement creates subtle background motion.
+- Desktop double-click toggles zoom.
+- Touch devices keep pinch zoom; two-finger double touch may toggle zoom.

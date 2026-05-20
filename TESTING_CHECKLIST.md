@@ -182,3 +182,29 @@ Updated: 20 May 2026, 18:20 IST
 - [ ] Zoom reveals deeper tools.
 - [ ] Mobile shows compact technology focus without overlap.
 - [ ] Previous/next arrows still work on desktop.
+
+## Phase 2 Interaction Refinement Test
+
+Updated: 20 May 2026, 18:25 IST
+
+- [ ] Guide does not show `Step 1 of 7`.
+- [ ] Guide does not show `Pilot the ship`.
+- [ ] Guide can be skipped/closed.
+- [ ] Rocket takes one round after entering on desktop.
+- [ ] Rocket returns to cursor after the round.
+- [ ] Desktop mouse movement subtly moves background.
+- [ ] Desktop double-click toggles zoom.
+- [ ] Mobile pinch/two-finger zoom works.
+
+## Phase 3 Product Gallery Test
+
+Updated: 20 May 2026, 18:45 IST
+
+- [ ] Product Gallery appears after Technology Orbit.
+- [ ] Product Gallery shows one product focus at a time.
+- [ ] Product scan has Challenge / Solution / Stack / Result.
+- [ ] Product beacons switch active product.
+- [ ] Product scan previous/next arrows work.
+- [ ] Mobile does not show a product grid.
+- [ ] Technology particles are dimmed in Product Gallery.
+- [ ] Proof/reviews/contact do not appear as competing content.

@@ -185,3 +185,31 @@ After changing this scene, verify:
 ```txt
 Planned → Coded → Loaded → Wired → Visible → Usable → Validated → Documented
 ```
+
+
+---
+
+## Phase 3 Product Gallery Implementation
+
+**Updated:** 20 May 2026, 18:45 IST
+
+Product Gallery now uses a mission-scan format.
+
+Required fields per product:
+
+- Mission code
+- Challenge
+- Solution
+- Stack
+- Result
+- Primary path
+- Start similar mission path
+
+Interaction rules:
+
+- one product focus at a time,
+- beacons select product,
+- product scan arrows switch product,
+- no grid,
+- no fake screenshots,
+- technology orbit dimmed in this scene.

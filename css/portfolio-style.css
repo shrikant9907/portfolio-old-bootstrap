@@ -1426,3 +1426,335 @@ body:not(.verse-entered) .technology-focus{
 @media (prefers-reduced-motion:reduce){
   .verse-stage[data-zone="1"] .particle-layer::before{animation:none!important}
 }
+
+
+/* ==========================================================================
+   PHASE 2 REFINEMENT — GUIDE / ROCKET ORBIT / BACKGROUND MOTION / ZOOM
+   Updated: 20 May 2026, 18:25 IST
+   Contract source:
+   steps/screen-contracts/03-arrival-core.md
+   steps/screen-contracts/04-technology-orbit.md
+   ========================================================================== */
+
+/* Guide should be skippable and must not show "Step 1 of 7 / Pilot the ship". */
+.guide-step{
+  display:inline-flex!important;
+  width:max-content!important;
+  max-width:100%!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  color:var(--cyan-bright)!important;
+  letter-spacing:.18em!important;
+  font-size:10px!important;
+}
+.guide-skip{
+  color:var(--text-2)!important;
+  border-color:rgba(34,211,238,.18)!important;
+  background:rgba(5,7,10,.42)!important;
+}
+.guide-skip:hover,
+.guide-skip:focus-visible{
+  color:var(--cyan-bright)!important;
+  border-color:rgba(34,211,238,.42)!important;
+}
+
+/* Desktop background responds subtly to mouse movement after entry. */
+body.verse-entered:not(.touch-device){
+  --mx:0px;
+  --my:0px;
+}
+body.verse-entered:not(.touch-device) .space-aura{
+  transform:translate(calc(-50% + var(--mx, 0px)), calc(-50% + var(--my, 0px))) scale(calc(.98 + (var(--zoom) - 1) * .05))!important;
+  transition:transform .18s ease-out;
+}
+body.verse-entered:not(.touch-device) .orbit-large{
+  transform:translate(calc(-50% + var(--mx, 0px) * .35), calc(-50% + var(--my, 0px) * .35)) rotate(var(--orbit-rotate, 0deg));
+}
+body.verse-entered:not(.touch-device) .orbit-mid{
+  transform:translate(calc(-50% + var(--mx, 0px) * -.22), calc(-50% + var(--my, 0px) * -.22)) rotate(var(--orbit-rotate, 0deg));
+}
+body.verse-entered:not(.touch-device) .orbit-small{
+  transform:translate(calc(-50% + var(--mx, 0px) * .18), calc(-50% + var(--my, 0px) * .18)) rotate(var(--orbit-rotate, 0deg));
+}
+
+/* Rocket takes a controlled circular lap after Start, then returns to cursor. */
+body.ship-orbit-demo .ship-cursor{
+  filter:
+    drop-shadow(0 0 20px rgba(34,211,238,1))
+    drop-shadow(0 0 34px rgba(255,176,32,.52))!important;
+}
+body.ship-orbit-demo .ship-flame{
+  opacity:1!important;
+  transform:scaleY(1.7)!important;
+}
+
+/* Zoom feedback on double click / pinch. */
+body.zoom-feedback .space-aura{
+  filter:blur(5px) brightness(1.18)!important;
+}
+body.zoom-feedback .sv-core{
+  box-shadow:
+    0 0 0 1px rgba(103,232,249,.72),
+    0 0 36px rgba(34,211,238,.42),
+    inset 0 0 28px rgba(34,211,238,.16)!important;
+}
+
+@media (max-width:780px){
+  .guide-actions{
+    grid-template-columns:1fr 1fr 1fr!important;
+  }
+  .guide-step{
+    font-size:9px!important;
+  }
+}
+
+
+/* ==========================================================================
+   PHASE 3 — PRODUCT GALLERY MISSION SCAN
+   Updated: 20 May 2026, 18:45 IST
+   Scope: Product Gallery only
+   Purpose: Product Gallery must feel like a separate product mission layer,
+   not a card grid, not a website section, and not part of the skill orbit.
+   ========================================================================== */
+
+.verse-stage[data-zone="2"] .particle-layer{
+  opacity:.07!important;
+  filter:blur(.35px) saturate(.82)!important;
+}
+.verse-stage[data-zone="2"] .mission-panel{
+  max-width:330px!important;
+}
+.verse-stage[data-zone="2"] .mission-panel h2{
+  font-size:clamp(24px,2.55vw,38px)!important;
+  max-width:13ch!important;
+}
+.verse-stage[data-zone="2"] .product-gallery-layer{
+  z-index:58!important;
+}
+.verse-stage[data-zone="2"] .product-gallery-layer::before{
+  width:min(58vw,520px)!important;
+  height:min(58vw,520px)!important;
+  border-color:rgba(34,211,238,.14)!important;
+  box-shadow:
+    0 0 80px rgba(34,211,238,.07),
+    inset 0 0 60px rgba(34,211,238,.035)!important;
+  animation:productScanRing 18s linear infinite;
+}
+.gallery-card{
+  width:min(430px,31vw)!important;
+  min-height:0!important;
+  padding:18px!important;
+  border-radius:18px!important;
+  border-color:rgba(34,211,238,.24)!important;
+  background:
+    linear-gradient(145deg,rgba(5,7,10,.89),rgba(8,18,24,.74))!important;
+  box-shadow:
+    0 24px 70px rgba(0,0,0,.42),
+    0 0 44px rgba(34,211,238,.10)!important;
+}
+.product-card-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:8px;
+}
+.product-code{
+  color:var(--cyan-bright);
+  font:900 10px var(--heading);
+  letter-spacing:.18em;
+  border:1px solid rgba(34,211,238,.22);
+  border-radius:999px;
+  padding:5px 8px;
+  background:rgba(34,211,238,.06);
+}
+.gallery-card h3{
+  font-size:clamp(23px,2.35vw,34px)!important;
+  line-height:1.02!important;
+  max-width:11ch;
+}
+.gallery-preview{
+  width:64px!important;
+  height:64px!important;
+  border-radius:18px!important;
+  font-size:20px!important;
+  float:right;
+  margin:-54px 0 8px 14px!important;
+}
+.product-mission-grid{
+  display:grid;
+  gap:10px;
+  clear:both;
+  margin:14px 0 14px;
+}
+.product-mission-grid div{
+  padding:10px 0 0;
+  border-top:1px solid rgba(34,211,238,.13);
+}
+.product-mission-grid dt{
+  margin-bottom:3px;
+  color:var(--cyan-bright);
+  font:900 10px var(--heading);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.product-mission-grid dd{
+  margin:0;
+  color:var(--text-2);
+  font-size:13px;
+  line-height:1.45;
+}
+.product-scan-nav{
+  display:grid;
+  grid-template-columns:38px 1fr 38px;
+  align-items:center;
+  gap:10px;
+  margin:12px 0 14px;
+  color:var(--cyan-soft);
+  font:800 11px var(--heading);
+  letter-spacing:.06em;
+}
+.product-scan-nav span{
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  text-align:center;
+}
+.product-scan-arrow{
+  width:38px;
+  height:38px;
+  border:1px solid rgba(34,211,238,.28);
+  border-radius:12px;
+  background:rgba(5,7,10,.62);
+  color:var(--cyan-bright);
+  font-size:24px;
+  line-height:1;
+  cursor:pointer;
+}
+.product-scan-arrow:hover,
+.product-scan-arrow:focus-visible{
+  color:var(--fire);
+  border-color:rgba(255,176,32,.72);
+  box-shadow:0 0 18px rgba(255,176,32,.18);
+  outline:none;
+}
+.product-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.gallery-card a,
+.disabled-path{
+  min-height:38px!important;
+  border-radius:12px!important;
+  padding:0 13px!important;
+  font-size:12px!important;
+}
+.secondary-path{
+  background:rgba(34,211,238,.05)!important;
+  color:var(--cyan-bright)!important;
+}
+.gallery-dots{
+  z-index:3;
+}
+.product-dot{
+  width:26px!important;
+  height:26px!important;
+  transition:
+    transform .24s ease,
+    border-color .2s ease,
+    background .2s ease,
+    box-shadow .2s ease;
+}
+.product-dot::before{
+  content:"";
+  position:absolute;
+  inset:-12px;
+  border-radius:50%;
+  border:1px dashed rgba(34,211,238,.11);
+  opacity:.55;
+}
+.product-dot.is-active::before{
+  border-color:rgba(255,176,32,.42);
+  animation:productBeaconPulse 1.5s ease-in-out infinite;
+}
+.product-dot.is-active span{
+  transform:scale(.58)!important;
+  background:var(--fire)!important;
+  box-shadow:0 0 22px rgba(255,176,32,.56);
+}
+
+@media (max-width:1100px){
+  .gallery-card{
+    width:min(380px,34vw)!important;
+    right:clamp(72px,7vw,100px)!important;
+  }
+  .product-mission-grid dd{
+    font-size:12.5px;
+  }
+}
+
+@media (max-width:780px){
+  .verse-stage[data-zone="2"] .particle-layer{
+    opacity:.04!important;
+  }
+  .verse-stage[data-zone="2"] .product-gallery-layer::before{
+    width:88vw!important;
+    height:88vw!important;
+  }
+  .gallery-card{
+    left:14px!important;
+    right:14px!important;
+    bottom:146px!important;
+    top:auto!important;
+    transform:none!important;
+    width:auto!important;
+    max-height:42vh!important;
+    padding:15px!important;
+    border-radius:16px!important;
+    overflow:auto;
+  }
+  .gallery-card h3{
+    font-size:24px!important;
+    max-width:12ch;
+  }
+  .gallery-preview{
+    width:52px!important;
+    height:52px!important;
+    border-radius:14px!important;
+    font-size:16px!important;
+    margin:-46px 0 8px 12px!important;
+  }
+  .product-mission-grid{
+    gap:8px;
+    margin:10px 0;
+  }
+  .product-mission-grid div{
+    padding-top:8px;
+  }
+  .product-mission-grid dd{
+    font-size:12px;
+    line-height:1.38;
+  }
+  .product-actions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+  .gallery-card a,
+  .disabled-path{
+    width:100%;
+  }
+  .product-dot{
+    width:22px!important;
+    height:22px!important;
+  }
+}
+
+@keyframes productScanRing{
+  to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+@keyframes productBeaconPulse{
+  0%,100%{opacity:.45;transform:scale(.95)}
+  50%{opacity:1;transform:scale(1.12)}
+}

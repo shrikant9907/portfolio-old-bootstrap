@@ -57,10 +57,54 @@
   ];
 
   const PRODUCTS = [
-    { id:'shrimo', title:'Shrimo Innovations', desc:'Software and web development company focused on websites, apps, and digital products.', use:'Main business identity behind Shrimo Verse.', link:'https://shrimo.com/' },
-    { id:'digiting', title:'Digiting Card', desc:'Digital visiting card platform for professionals and businesses.', use:'Built around digital identity, contact sharing, and online presence.', link:'https://digitingcard.com/' },
-    { id:'photocopywala', title:'Photocopywala', desc:'Online tools and document utilities for common print and digital tasks.', use:'Practical platform for people who need quick document services and tools.', link:'https://photocopywala.in/' },
-    { id:'directory', title:'Business Directory Platform', desc:'Business listing and discovery platform concept for organized local search.', use:'A product direction for local discovery and business visibility.', link:'' }
+    {
+      id:'shrimo',
+      code:'SV-01',
+      title:'Shrimo Innovations',
+      desc:'Software and web development company focused on websites, apps, and digital products.',
+      challenge:'Businesses need a trusted technical partner, not only a one-time website vendor.',
+      solution:'A service and product studio direction for websites, apps, digital systems, and conversion-focused web presence.',
+      stack:'HTML, CSS, JavaScript, PHP, WordPress, React, Next.js, APIs, SEO-ready systems',
+      result:'A clear parent brand for product work, client services, and future digital platforms.',
+      use:'Main business identity behind Shrimo Verse.',
+      link:'https://shrimo.com/'
+    },
+    {
+      id:'digiting',
+      code:'SV-02',
+      title:'Digiting Card',
+      desc:'Digital visiting card platform for professionals and businesses.',
+      challenge:'Professionals need a simple way to share identity, links, business details, and contact paths.',
+      solution:'A digital profile/card platform focused on fast sharing, templates, pricing, and business identity.',
+      stack:'Next.js, Tailwind CSS, profile data, templates, CTA flows, SEO content',
+      result:'A reusable digital identity product direction for local businesses and professionals.',
+      use:'Built around digital identity, contact sharing, and online presence.',
+      link:'https://digitingcard.com/'
+    },
+    {
+      id:'photocopywala',
+      code:'SV-03',
+      title:'Photocopywala',
+      desc:'Online tools and document utilities for common print and digital tasks.',
+      challenge:'Users and shops need fast browser-based tools for photos, documents, printing, and utility workflows.',
+      solution:'A practical tools platform with focused utilities like passport photo maker, image tools, and document workflows.',
+      stack:'Web tools, image processing UX, SEO pages, responsive utility interfaces',
+      result:'A useful public platform that can attract search traffic and help real users complete small tasks quickly.',
+      use:'Practical platform for people who need quick document services and tools.',
+      link:'https://photocopywala.in/'
+    },
+    {
+      id:'directory',
+      code:'SV-04',
+      title:'Business Directory Platform',
+      desc:'Business listing and discovery platform concept for organized local search.',
+      challenge:'Local businesses need better discovery and users need cleaner searchable business information.',
+      solution:'A structured listing platform with profiles, categories, local SEO, review flow, and approval workflow.',
+      stack:'Directory architecture, user dashboard, listings, moderation, local SEO, schema',
+      result:'A scalable direction for business visibility and organized local discovery.',
+      use:'A product direction for local discovery and business visibility.',
+      link:''
+    }
   ];
 
   const PROOFS = [
@@ -124,6 +168,7 @@
     guideStep: $('#guideStep'),
     guideProgress: $('#guideProgress'),
     guideBack: $('#guideBack'),
+    guideSkip: $('#guideSkip'),
     guideNext: $('#guideNext'),
     mobileDots: $('#mobileZoneDots'),
     zonePrev: $('#zonePrev'),
@@ -160,17 +205,19 @@
   let pageHidden = false;
   let lockTimer = null;
   let rocketCentering = false;
+  let rocketOrbitDemo = false;
+  let rocketOrbitStart = 0;
+  let pointerMouse = { ...lastMouse };
+  let lastTapTime = 0;
   let hoverTooltipTimer = null;
 
   const GUIDE = isTouch ? [
-    { title:'Travel by touch', text:'Swipe left or right to move between Shrimo Verse zones.', target:'.mobile-control-dock' },
     { title:'Inspect particles', text:'Tap a glowing skill node to open its story.', target:'.verse-node[data-id="html"]' },
     { title:'Project dots', text:'Projects open from clean dots, not crowded orbit labels.', target:'#productGalleryLayer' },
     { title:'Review signals', text:'Client reviews appear as readable signal cards.', target:'#clientSignalLayer' },
     { title:'Zoom in Explore', text:'Use Orbit Zoom or pinch in Free Explore to reveal deeper tools.', target:'.zoom-dock' },
     { title:'Launch Project', text:'Use Launch when you are ready to start a project conversation.', target:'.mobile-control-dock a' }
   ] : [
-    { title:'Pilot the ship', text:'Move your cursor to pilot the explorer ship.', target:'#shipCursor' },
     { title:'Inspect skills', text:'Only skills and technologies orbit the SV core. Hover to scan them.', target:'.verse-node[data-id="html"]' },
     { title:'Open details', text:'Click a glowing node to open its story.', target:'.verse-node[data-id="react"]' },
     { title:'Project gallery', text:'Projects are managed separately as dots and a focused gallery panel.', target:'#productGalleryLayer' },
@@ -279,7 +326,19 @@
         updateProductLayer();
         setZone(2);
       });
-      dot.addEventListener('mouseenter', () => document.body.classList.add('cursor-lock'));
+      dot.addEventListener('mouseenter', () => {
+        document.body.classList.add('cursor-lock');
+        if (currentZone === 2) {
+          activeProduct = Number(dot.dataset.product);
+          updateProductLayer();
+        }
+      });
+      dot.addEventListener('focus', () => {
+        if (currentZone === 2) {
+          activeProduct = Number(dot.dataset.product);
+          updateProductLayer();
+        }
+      });
       dot.addEventListener('mouseleave', () => document.body.classList.remove('cursor-lock'));
     });
     updateProductLayer();
@@ -289,18 +348,51 @@
     const item = PRODUCTS[activeProduct];
     const card = $('#productCard');
     if (!card) return;
+
+    const initials = item.title.split(/\s+/).map(w => w[0]).join('').slice(0,3);
+    const prevIndex = (activeProduct - 1 + PRODUCTS.length) % PRODUCTS.length;
+    const nextIndex = (activeProduct + 1) % PRODUCTS.length;
+
     card.innerHTML = `
-      <p>Product signal ${activeProduct + 1}/${PRODUCTS.length}</p>
+      <div class="product-card-head">
+        <p>Product mission ${activeProduct + 1}/${PRODUCTS.length}</p>
+        <span class="product-code">${item.code || `SV-0${activeProduct + 1}`}</span>
+      </div>
       <h3>${item.title}</h3>
-      <span class="gallery-preview">${item.title.split(/\s+/).map(w => w[0]).join('').slice(0,3)}</span>
+      <span class="gallery-preview" aria-hidden="true">${initials}</span>
       <em>${item.desc}</em>
-      <small>${item.use}</small>
+
+      <dl class="product-mission-grid">
+        <div><dt>Challenge</dt><dd>${item.challenge || item.desc}</dd></div>
+        <div><dt>Solution</dt><dd>${item.solution || item.use}</dd></div>
+        <div><dt>Stack</dt><dd>${item.stack || 'Web product system, responsive UX, practical frontend/backend work'}</dd></div>
+        <div><dt>Result</dt><dd>${item.result || item.use}</dd></div>
+      </dl>
+
+      <div class="product-scan-nav" aria-label="Product mission navigation">
+        <button type="button" class="product-scan-arrow" data-product-jump="${prevIndex}" aria-label="Previous product mission">‹</button>
+        <span>${item.title}</span>
+        <button type="button" class="product-scan-arrow" data-product-jump="${nextIndex}" aria-label="Next product mission">›</button>
+      </div>
+
       <div class="product-actions">
         ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener" class="product-btn primary-path">Open Project Path</a>` : '<button type="button" class="disabled-path" disabled>Concept Path</button>'}
         <a href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20saw%20your%20product%20${encodeURIComponent(item.title)}%20and%20want%20to%20start%20a%20similar%20mission." target="_blank" rel="noopener" class="product-btn secondary-path">Start Similar Mission</a>
       </div>`;
-    $$('.product-dot', els.productLayer).forEach((dot, index) => dot.classList.toggle('is-active', index === activeProduct));
-    positionDots('.product-dot', activeProduct, 176);
+
+    $$('.product-dot', els.productLayer).forEach((dot, index) => {
+      dot.classList.toggle('is-active', index === activeProduct);
+      dot.setAttribute('aria-current', index === activeProduct ? 'true' : 'false');
+    });
+
+    $$('.product-scan-arrow', card).forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeProduct = Number(btn.dataset.productJump);
+        updateProductLayer();
+      });
+    });
+
+    positionDots('.product-dot', activeProduct, 202);
   }
 
   function renderProofLayer() {
@@ -409,12 +501,17 @@
         document.body.classList.add('verse-entered');
       }, prefersReducedMotion ? 140 : 2200);
 
-      // 2400ms: First guide appears bottom-right and app becomes interactive
+      // 2400ms: app becomes interactive, then rocket performs one controlled lap and returns to cursor
       window.setTimeout(() => {
         els.entryGate.classList.add('is-hidden');
         document.body.classList.remove('is-entering-verse', 'verse-revealing');
         isLaunching = false;
         rocketCentering = false;
+        if (!isTouch && !prefersReducedMotion) {
+          rocketOrbitDemo = true;
+          rocketOrbitStart = performance.now();
+          document.body.classList.add('ship-orbit-demo');
+        }
         setZone(0);
         window.setTimeout(() => startInitialGuide(), prefersReducedMotion ? 180 : 260);
       }, prefersReducedMotion ? 180 : 2400);
@@ -436,6 +533,12 @@
     els.stage.addEventListener('click', (event) => {
       if (!event.target.closest('.verse-node') && !event.target.closest('.world-dot') && !event.target.closest('.object-tooltip') && !event.target.closest('.sv-core')) closeObject();
     });
+    els.stage.addEventListener('dblclick', (event) => {
+      if (!entered || event.target.closest('button,a,.object-tooltip,.guide-card')) return;
+      stopAutoFlight();
+      toggleStageZoom();
+    });
+    els.guideSkip?.addEventListener('click', () => { document.body.classList.remove('first-guide-visible'); closeGuide(); });
     els.guideBack.addEventListener('click', () => stepGuide(-1));
     els.guideNext.addEventListener('click', () => stepGuide(1));
     $$('[data-action="auto"]').forEach(btn => btn.addEventListener('click', startAutoFlight));
@@ -577,6 +680,7 @@
     if (els.zoneNext) els.zoneNext.disabled = currentZone === ZONES.length - 1;
     
     if (currentZone === 1) updateTechnologyFocus(ORBIT_PARTICLES[activeTechnologyIndex] || ORBIT_PARTICLES[0], ORBIT_PARTICLES[activeTechnologyIndex]?.el || null, 'zone');
+    if (currentZone === 2) updateProductLayer();
     if (currentZone === 3) {
       setTimeout(() => animateProofNumbers(), 320);
     }
@@ -606,6 +710,13 @@
       obj.el.style.visibility = primaryVisible ? 'visible' : 'hidden';
     });
     applyZoomVisibility();
+  }
+
+  function toggleStageZoom() {
+    const next = zoom < 1.18 ? 1.48 : 1;
+    setZoom(next);
+    document.body.classList.add('zoom-feedback');
+    window.setTimeout(() => document.body.classList.remove('zoom-feedback'), 360);
   }
 
   function setZoom(value, options = {}) {
@@ -717,6 +828,7 @@
   }
 
   function closeGuide() {
+    document.body.classList.remove('first-guide-visible');
     els.guideOverlay.classList.remove('is-visible');
     els.guideOverlay.setAttribute('aria-hidden', 'true');
     $$('.guide-target').forEach(el => el.classList.remove('guide-target'));
@@ -737,7 +849,7 @@
 
   function showGuideStep() {
     const step = GUIDE[guideIndex];
-    els.guideStep.textContent = `Step ${guideIndex + 1} of ${GUIDE.length}`;
+    els.guideStep.textContent = 'MISSION BRIEFING';
     els.guideTitle.textContent = step.title;
     els.guideText.textContent = step.text;
     els.guideProgress.style.width = `${((guideIndex + 1) / GUIDE.length) * 100}%`;
@@ -764,8 +876,18 @@
       els.ship.classList.add('is-hidden');
     });
     window.addEventListener('pointermove', (event) => {
-      shipTarget.x = event.clientX;
-      shipTarget.y = event.clientY;
+      pointerMouse.x = event.clientX;
+      pointerMouse.y = event.clientY;
+      if (!rocketCentering && !rocketOrbitDemo) {
+        shipTarget.x = event.clientX;
+        shipTarget.y = event.clientY;
+      }
+      if (entered && hasFinePointer) {
+        const mx = (event.clientX - window.innerWidth / 2) * 0.018;
+        const my = (event.clientY - window.innerHeight / 2) * 0.018;
+        document.body.style.setProperty('--mx', `${mx.toFixed(2)}px`);
+        document.body.style.setProperty('--my', `${my.toFixed(2)}px`);
+      }
     }, { passive: true });
     window.addEventListener('pointerdown', () => {
       createTrail(shipPos.x, shipPos.y, true);
@@ -792,20 +914,42 @@
   function updateShip(time = performance.now()) {
     if (isTouch || prefersReducedMotion || !els.ship || pageHidden) return;
 
-    const target = rocketCentering
-      ? { x: window.innerWidth / 2, y: window.innerHeight / 2 }
-      : shipTarget;
+    let target = shipTarget;
+    let easing = 0.2;
+    let forceTrail = false;
 
-    const easing = rocketCentering ? 0.085 : 0.2;
+    if (rocketOrbitDemo) {
+      const elapsed = time - rocketOrbitStart;
+      const duration = 1750;
+      const t = Math.min(1, elapsed / duration);
+      const radius = Math.min(window.innerWidth, window.innerHeight) * 0.18;
+      const angle = (-Math.PI / 2) + t * Math.PI * 2.15;
+      target = {
+        x: window.innerWidth / 2 + Math.cos(angle) * radius,
+        y: window.innerHeight / 2 + Math.sin(angle) * radius * 0.58
+      };
+      easing = 0.16;
+      forceTrail = true;
+      if (t >= 1) {
+        rocketOrbitDemo = false;
+        document.body.classList.remove('ship-orbit-demo');
+        shipTarget = { ...pointerMouse };
+      }
+    } else if (rocketCentering) {
+      target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+      easing = 0.085;
+      forceTrail = true;
+    }
+
     shipPos.x += (target.x - shipPos.x) * easing;
     shipPos.y += (target.y - shipPos.y) * easing;
 
     shipAngle = Math.atan2(shipPos.y - prevMouse.y, shipPos.x - prevMouse.x) * 180 / Math.PI + 90;
     const distance = Math.hypot(shipPos.x - prevMouse.x, shipPos.y - prevMouse.y);
 
-    const trailDelay = rocketCentering ? 12 : 28;
+    const trailDelay = forceTrail ? 12 : 28;
     if (distance > 3 && time - lastTrailTime > trailDelay) {
-      createTrail(shipPos.x, shipPos.y, rocketCentering && distance > 10);
+      createTrail(shipPos.x, shipPos.y, forceTrail && distance > 8);
     }
 
     positionShip(shipPos.x, shipPos.y);
@@ -859,6 +1003,11 @@
         touchStartY = event.touches[0].clientY;
       }
       if (event.touches.length === 2) {
+        const now = performance.now();
+        if (entered && now - lastTapTime < 320) {
+          toggleStageZoom();
+        }
+        lastTapTime = now;
         pinchStartDistance = distance(event.touches[0], event.touches[1]);
         pinchStartZoom = zoom;
       }

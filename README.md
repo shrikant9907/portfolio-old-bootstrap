@@ -260,3 +260,27 @@ See:
 ```txt
 steps/19-phase-2-technology-orbit.md
 ```
+
+## Phase 2 Interaction Refinement
+
+**Updated:** 20 May 2026, 18:25 IST
+
+Refined guide, rocket, mouse background motion, and zoom behavior.
+
+See:
+
+```txt
+steps/20-phase-2-interaction-refinement.md
+```
+
+## Phase 3 Product Gallery
+
+**Updated:** 20 May 2026, 18:45 IST
+
+Phase 3 updates only the Product Gallery scene.
+
+See:
+
+```txt
+steps/21-phase-3-product-gallery.md
+```

@@ -1,5 +1,35 @@
 # Changelog
 
+## Phase 3 — Product Gallery Mission Scan — 20 May 2026, 18:45 IST
+
+- Improved Product Gallery as a separate product mission layer.
+- Added Challenge / Solution / Stack / Result structure to products.
+- Added mission codes for products.
+- Added product scan previous/next controls.
+- Product beacons now update the focused product on hover/focus in Product Gallery.
+- Technology orbit is dimmed more clearly during Product Gallery.
+- Mobile Product Gallery stays one focused panel, not a grid.
+- Added `steps/21-phase-3-product-gallery.md`.
+- Updated Product Gallery screen contract and testing checklist.
+
+
+# Changelog
+
+## Phase 2 Interaction Refinement — 20 May 2026, 18:25 IST
+
+- Removed `Pilot the ship` from the first guide flow.
+- Removed `Step 1 of 7` style guide label and replaced it with `MISSION BRIEFING`.
+- Added a skip/close action to the guide card.
+- Added a desktop rocket lap after entry before returning to cursor.
+- Added subtle desktop background motion based on mouse movement.
+- Added desktop double-click zoom toggle.
+- Kept touch pinch zoom and added two-finger double-touch zoom toggle.
+- Added `steps/20-phase-2-interaction-refinement.md`.
+- Updated relevant screen contracts and testing checklist.
+
+
+# Changelog
+
 ## Phase 2 — Technology Orbit Update — 20 May 2026, 18:20 IST
 
 - Improved Technology Orbit as its own focused scene.

@@ -239,3 +239,20 @@ Before Start:
 - Do not show inner scene text, HUD, guide, products, proof, reviews, or Launch Dock.
 - A subtle SV core/atmosphere may remain as part of the background.
 - Skills/tools should begin appearing only after the user starts the journey and reaches Arrival Core / Technology Orbit.
+
+
+---
+
+## Phase 2 Interaction Refinement
+
+**Updated:** 20 May 2026, 18:25 IST
+
+Interaction decisions:
+
+- Do not show `Step 1 of 7`.
+- Do not start guide with `Pilot the ship`.
+- Guide must be skippable/closable.
+- Desktop rocket performs one controlled lap after entry, then returns to cursor.
+- Desktop mouse movement creates subtle background motion.
+- Desktop double-click toggles zoom.
+- Touch devices keep pinch zoom; two-finger double touch may toggle zoom.
