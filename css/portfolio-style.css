@@ -3085,3 +3085,160 @@ body.verse-entered:not(.touch-device) .mobile-control-dock {
       linear-gradient(180deg, rgba(2,4,6,.08), rgba(2,4,6,.76)) !important;
   }
 }
+
+
+/* ==========================================================================
+   BACKGROUND PARALLAX VISIBILITY FIX
+   Updated: 20 May 2026, 20:20 IST
+   Reason: previous parallax was too subtle and partially cancelled by older
+   interaction rules. This makes only the background visibly react.
+   ========================================================================== */
+
+.star-canvas.real-universe-canvas,
+.star-canvas {
+  transform:
+    translate3d(var(--space-parallax-deep-x), var(--space-parallax-deep-y), 0)
+    scale(1.06) !important;
+  will-change: transform;
+}
+
+.space-aura {
+  transform:
+    translate3d(calc(-50% + var(--space-parallax-x)), calc(-50% + var(--space-parallax-y)), 0)
+    scale(1.04) !important;
+  will-change: transform;
+}
+
+/* Core and UI must never be part of mouse parallax. */
+.sv-core {
+  transform:translate(-50%,-50%) !important;
+}
+
+.mission-panel,
+.hud,
+.zone-nav,
+.mobile-control-dock,
+.gallery-card,
+.proof-focus,
+.review-card,
+.launch-dock,
+.guide-card,
+.object-tooltip,
+.product-detail-overlay {
+  will-change:auto !important;
+}
+
+/* Remove old background ring transform/parallax influence completely. */
+.orbit-large,
+.orbit-mid,
+.orbit-small,
+.orbit-line {
+  display:none !important;
+  transform:none !important;
+}
+
+@media (max-width:780px) {
+  .star-canvas.real-universe-canvas,
+  .star-canvas {
+    transform:none !important;
+  }
+
+  .space-aura {
+    transform:translate(-50%,-50%) !important;
+  }
+}
+
+
+/* ==========================================================================
+   PURE BLACK STARFIELD BACKGROUND
+   Updated: 20 May 2026, 20:35 IST
+   Purpose:
+   - Pure black universe background.
+   - No rings.
+   - No clouds.
+   - No gradients.
+   - More stars.
+   - Stronger mouse-driven starfield motion.
+   ========================================================================== */
+
+html,
+body,
+.verse-stage,
+.star-canvas,
+.star-canvas.real-universe-canvas {
+  background:#000000 !important;
+}
+
+.space-aura,
+.entry-space,
+.entry-orbit,
+.orbit-field,
+.orbit-line,
+.orbit-large,
+.orbit-mid,
+.orbit-small {
+  display:none !important;
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+  background:none !important;
+  box-shadow:none !important;
+  filter:none !important;
+}
+
+.star-canvas.real-universe-canvas,
+.star-canvas {
+  position:fixed !important;
+  inset:0 !important;
+  width:100vw !important;
+  height:100vh !important;
+  background:#000000 !important;
+  transform:none !important;
+  filter:none !important;
+  box-shadow:none !important;
+}
+
+.entry-gate,
+.verse-stage::before,
+.verse-stage::after,
+.universe-plane::before,
+.universe-plane::after {
+  background:none !important;
+  filter:none !important;
+  box-shadow:none !important;
+}
+
+.sv-core {
+  z-index:45 !important;
+  border-radius:50% !important;
+  transform:translate(-50%,-50%) !important;
+}
+
+.sv-core,
+.sv-core *,
+.entry-sv-mini,
+.entry-sv-mini *,
+.core-ring,
+.core-ring *,
+.core-inner,
+.core-inner * {
+  border-radius:50% !important;
+}
+
+.mission-panel,
+.gallery-card,
+.proof-focus,
+.review-card,
+.launch-dock,
+.guide-card,
+.object-tooltip,
+.product-detail-sheet {
+  background-color:rgba(5,7,10,.90) !important;
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .star-canvas,
+  .star-canvas.real-universe-canvas {
+    transform:none !important;
+  }
+}

@@ -387,3 +387,27 @@ See:
 ```txt
 steps/32-realistic-universe-background-system.md
 ```
+
+## Background Parallax Visibility Fix
+
+**Updated:** 20 May 2026, 20:20 IST
+
+Mouse parallax is now applied directly to drawn stars and galaxy dust, not only to the canvas wrapper. This makes the background motion visible while keeping the SV core fixed.
+
+See:
+
+```txt
+steps/33-background-parallax-visibility-fix.md
+```
+
+## Pure Black Starfield Background
+
+**Updated:** 20 May 2026, 20:35 IST
+
+The background is now simplified to a pure black star-only universe. Clouds, gradients, and decorative rings are removed. Star density and desktop mouse-driven parallax are increased.
+
+See:
+
+```txt
+steps/34-pure-black-starfield-background.md
+```

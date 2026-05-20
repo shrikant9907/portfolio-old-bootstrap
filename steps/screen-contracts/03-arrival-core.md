@@ -295,3 +295,20 @@ Rules:
 - SV core must not move,
 - UI panels must not move with parallax,
 - mobile uses reduced particle count.
+
+
+---
+
+## Pure Black Starfield Update
+
+**Updated:** 20 May 2026, 20:35 IST
+
+Background rules now require:
+
+- pure black background,
+- stars only,
+- no clouds,
+- no gradients,
+- no decorative rings,
+- stronger mouse-driven star motion on desktop,
+- fixed SV core.

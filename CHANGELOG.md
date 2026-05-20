@@ -1,5 +1,31 @@
 # Changelog
 
+## Pure Black Starfield Background — 20 May 2026, 20:35 IST
+
+- Simplified the universe background to pure black starfield only.
+- Removed cloud/fog clusters and gradient-based space aura.
+- Kept star-only rendering with increased quantity.
+- Increased desktop mouse-driven star parallax strength.
+- Kept SV core fixed.
+- Added `steps/34-pure-black-starfield-background.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
+## Background Parallax Visibility Fix — 20 May 2026, 20:20 IST
+
+- Strengthened desktop background parallax so it is visible.
+- Applied parallax directly inside the canvas star/galaxy draw logic.
+- Stars and galaxy dust now move opposite to mouse direction.
+- Kept SV core fixed and unaffected.
+- Removed old ring transform influence from background parallax.
+- Added `steps/33-background-parallax-visibility-fix.md`.
+- Updated README and TESTING_CHECKLIST.
+
+
+# Changelog
+
 ## Realistic Universe Background System — 20 May 2026, 20:05 IST
 
 - Replaced ring-style background direction with a black realistic universe background.

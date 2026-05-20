@@ -302,3 +302,26 @@ Updated: 20 May 2026, 20:05 IST
 - [ ] SV core does not move with mouse.
 - [ ] UI panels do not move with mouse.
 - [ ] Mobile remains smooth.
+
+## Background Parallax Visibility Test
+
+Updated: 20 May 2026, 20:20 IST
+
+- [ ] Move mouse right: background shifts subtly left.
+- [ ] Move mouse left: background shifts subtly right.
+- [ ] Move mouse down: background shifts subtly up.
+- [ ] SV core stays fixed.
+- [ ] UI panels stay fixed.
+- [ ] Mobile background does not use mouse parallax.
+
+## Pure Black Starfield Test
+
+Updated: 20 May 2026, 20:35 IST
+
+- [ ] Background is pure black.
+- [ ] No cloud/fog clusters are visible.
+- [ ] No background gradients are visible.
+- [ ] No decorative rings are visible.
+- [ ] Star count looks noticeably higher.
+- [ ] Mouse movement affects stars more strongly on desktop.
+- [ ] SV core stays fixed.

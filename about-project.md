@@ -252,3 +252,9 @@ Shrimo Verse now has the complete planned journey from entry to final contact. P
 **Updated:** 20 May 2026, 20:05 IST
 
 Shrimo Verse now uses a realistic black universe background instead of artificial ring-style background decoration. The SV core stays fixed and all background motion happens behind it.
+
+## Pure Black Starfield Background
+
+**Updated:** 20 May 2026, 20:35 IST
+
+Shrimo Verse now uses a pure black starfield universe: no clouds, no gradients, and no decorative rings. The effect is cleaner and more focused on star depth and motion.
