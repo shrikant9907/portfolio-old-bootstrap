@@ -1,3 +1,24 @@
+
+## v0.0.2 - Modular Code Refactor
+
+- Split the monolithic portfolio JavaScript into six focused files under `js/portfolio/`.
+- Split the main portfolio CSS into ordered design partials under `css/modules/`.
+- Kept `css/portfolio-style.css` as the single stylesheet manifest.
+- Updated `index.html` script loading order for the new modular JavaScript files.
+- Added `SHRIMO_VERSE_REFACTOR_PROMPT.md` to document the exact refactor rules.
+- Updated `README.md` and `ProjectStructure.md` with developer editing guidance.
+- Fixed the missing page-visibility binding so the starfield/orbit loop can safely pause when the browser tab is hidden.
+- Preserved the standalone rocket cursor as its own isolated cursor module.
+- Removed the old unused monolithic `js/portfolio-scripts.js` from the active project.
+
+## v0.0.1 - Rocket Cursor Replacement
+
+- Replaced the old integrated ship cursor with the uploaded standalone rocket cursor design.
+- Added `css/cursor-rocket.css` and `js/cursor-rocket.js` as dedicated cursor assets.
+- Updated the desktop guide target to the new rocket cursor.
+- Kept the portfolio animation loop stable by disabling duplicate cursor movement/trail code.
+- Final delivery package excludes `.git` history and old source packaging clutter.
+
 # Changelog
 
 ## Final stable production build

@@ -81,7 +81,7 @@
     body: document.body,
     entryGate: $('#entryGate'),
     enterVerse: $('#enterVerse'),
-    ship: $('#shipCursor'),
+    ship: $('#rocketCursor'),
     trail: $('#cursorTrailLayer'),
     guidedMode: $('#guidedMode'),
     exploreMode: $('#exploreMode'),
@@ -166,7 +166,7 @@
     { title:'Zoom in Explore', text:'Use Orbit Zoom or pinch in Free Explore to reveal deeper tools.', target:'.zoom-dock' },
     { title:'Launch Project', text:'Use Launch when you are ready to start a project conversation.', target:'.mobile-control-dock a' }
   ] : [
-    { title:'Pilot the ship', text:'Move your cursor to pilot the explorer ship.', target:'#shipCursor' },
+    { title:'Pilot the rocket', text:'Move your cursor to pilot the rocket cursor through Shrimo Verse.', target:'#rocketCursor' },
     { title:'Inspect skills', text:'Only skills and technologies orbit the SV core. Hover to scan them.', target:'.verse-node[data-id="html"]' },
     { title:'Open details', text:'Click a glowing node to open its story.', target:'.verse-node[data-id="react"]' },
     { title:'Project gallery', text:'Projects are managed separately as dots and a focused gallery panel.', target:'#productGalleryLayer' },
@@ -179,7 +179,6 @@
 
   function init() {
     document.body.classList.toggle('touch-device', isTouch);
-    if (!isTouch && !prefersReducedMotion) document.body.classList.add('has-ship');
     renderOrbitParticles();
     renderSeparatedLayers();
     bindControls();
@@ -687,79 +686,22 @@
   }
 
   function bindCursor() {
-    if (isTouch || prefersReducedMotion) return;
-    shipTarget = { x: -100, y: -100 };
-    shipPos = { x: -100, y: -100 };
-    prevMouse = { x: -100, y: -100 };
-    positionShip(shipPos.x, shipPos.y);
-    els.ship.classList.remove('is-hidden');
-    els.ship.classList.add('is-idle');
-
-    window.addEventListener('mouseenter', () => {
-      els.ship.classList.remove('is-hidden');
-    });
-    window.addEventListener('mouseleave', () => {
-      els.ship.classList.add('is-hidden');
-    });
-    window.addEventListener('pointermove', (event) => {
-      shipTarget.x = event.clientX;
-      shipTarget.y = event.clientY;
-    }, { passive: true });
-    window.addEventListener('pointerdown', () => {
-      createTrail(shipPos.x, shipPos.y, true);
-    });
-    document.addEventListener('visibilitychange', () => {
-      if (pageHidden) els.ship.classList.add('is-hidden');
-      else els.ship.classList.remove('is-hidden');
-    });
+    // Cursor movement, rotation, hover state, flame trail, and click burst
+    // are now handled by js/cursor-rocket.js from the standalone rocket cursor design.
   }
 
-  function bindPageVisibility() {
-    document.addEventListener('visibilitychange', () => {
-      pageHidden = document.hidden;
-      if (pageHidden) {
-        stopAutoFlight();
-        els.ship?.classList.add('is-hidden');
-      } else {
-        lastShipFrame = performance.now();
-        if (!isTouch && !prefersReducedMotion) els.ship?.classList.remove('is-hidden');
-      }
-    });
+  function updateShip() {
+    // Kept as a no-op so the main animation loop remains stable after replacing
+    // the old integrated ship cursor with the standalone rocket cursor.
   }
 
-  function updateShip(time = performance.now()) {
-    if (isTouch || prefersReducedMotion || !els.ship || pageHidden) return;
-    shipPos.x += (shipTarget.x - shipPos.x) * 0.2;
-    shipPos.y += (shipTarget.y - shipPos.y) * 0.2;
-    shipAngle = Math.atan2(shipPos.y - prevMouse.y, shipPos.x - prevMouse.x) * 180 / Math.PI + 90;
-    const distance = Math.hypot(shipPos.x - prevMouse.x, shipPos.y - prevMouse.y);
-    if (distance > 3 && time - lastTrailTime > 28) createTrail(shipPos.x, shipPos.y, false);
-    positionShip(shipPos.x, shipPos.y);
-    prevMouse = { ...shipPos };
-    if (distance > 3) lastTrailTime = time;
-  }
-
-  function positionShip(x, y) {
-    els.ship.style.transform = `translate3d(${x - 14}px, ${y - 18}px, 0) rotate(${shipAngle}deg)`;
+  function positionShip() {
+    // Standalone rocket cursor owns positioning.
   }
 
   let lastTrailTime = 0;
-  function createTrail(x, y, burst) {
-    if (pageHidden) return;
-    const activeDots = els.trail.querySelectorAll('.trail-dot').length;
-    if (activeDots > 34) return;
-    const dot = document.createElement('span');
-    dot.className = burst ? 'trail-dot is-burst' : 'trail-dot';
-    dot.style.left = `${x}px`;
-    dot.style.top = `${y}px`;
-    dot.style.width = burst ? '18px' : '7px';
-    dot.style.height = burst ? '18px' : '7px';
-    if (burst) {
-      dot.style.width = '18px';
-      dot.style.height = '18px';
-    }
-    els.trail.appendChild(dot);
-    setTimeout(() => dot.remove(), 650);
+  function createTrail() {
+    // Standalone rocket cursor owns trail particles.
   }
 
   function bindKeyboard() {

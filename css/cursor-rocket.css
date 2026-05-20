@@ -1,0 +1,218 @@
+/*
+  Rocket Cursor Design
+  --------------------
+  Extracted and cleaned from the original portfolio project.
+
+  What this file controls:
+  1. Hides the normal mouse cursor on supported desktop devices.
+  2. Draws a small CSS rocket.
+  3. Animates the rocket flame.
+  4. Styles the flame trail particles and click burst.
+
+  Required JS file:
+  - js/cursor-rocket.js
+*/
+
+:root {
+  /* Main rocket colors */
+  --rocket-cyan: #22d3ee;
+  --rocket-cyan-bright: #67e8f9;
+  --rocket-body-highlight: #e8fbff;
+
+  /* Flame colors */
+  --rocket-flame: #ffb020;
+  --rocket-flame-hot: #ff6b00;
+  --rocket-flame-soft: rgba(255, 176, 32, 0.45);
+}
+
+/* Hide the native cursor only after JS confirms the device supports this effect. */
+body.rocket-cursor-enabled {
+  cursor: none;
+}
+
+body.rocket-cursor-enabled a,
+body.rocket-cursor-enabled button,
+body.rocket-cursor-enabled [role="button"],
+body.rocket-cursor-enabled [data-cursor-lock] {
+  cursor: none;
+}
+
+/* Full-screen particle layer. It never blocks clicks because pointer-events is none. */
+.cursor-trail-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1199;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* The custom rocket cursor wrapper. JS moves and rotates this element every frame. */
+.rocket-cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1200;
+  width: 28px;
+  height: 36px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-80px, -80px, 0) rotate(0deg);
+  transition: opacity 0.25s ease, filter 0.2s ease;
+  filter: drop-shadow(0 0 14px rgba(34, 211, 238, 0.9));
+  will-change: transform;
+}
+
+body.rocket-cursor-enabled .rocket-cursor {
+  opacity: 1;
+}
+
+/* Main body of the rocket. It points upward by default. JS rotates the wrapper. */
+.rocket-body {
+  position: absolute;
+  left: 8px;
+  top: 0;
+  width: 12px;
+  height: 26px;
+  border: 1px solid var(--rocket-cyan-bright);
+  border-radius: 60% 60% 45% 45%;
+  background: linear-gradient(
+    180deg,
+    var(--rocket-body-highlight),
+    rgba(34, 211, 238, 0.42) 42%,
+    rgba(5, 7, 10, 0.2)
+  );
+  clip-path: polygon(50% 0, 88% 58%, 64% 100%, 36% 100%, 12% 58%);
+}
+
+/* Small side wings. */
+.rocket-wing {
+  position: absolute;
+  bottom: 8px;
+  width: 10px;
+  height: 15px;
+  background: rgba(34, 211, 238, 0.24);
+  border: 1px solid rgba(103, 232, 249, 0.55);
+}
+
+.rocket-wing.left {
+  left: 1px;
+  clip-path: polygon(100% 0, 100% 100%, 0 80%);
+}
+
+.rocket-wing.right {
+  right: 1px;
+  clip-path: polygon(0 0, 100% 80%, 0 100%);
+}
+
+/* Animated flame below the rocket. */
+.rocket-flame {
+  position: absolute;
+  left: 9px;
+  bottom: -8px;
+  width: 10px;
+  height: 22px;
+  border-radius: 50% 50% 70% 70%;
+  background: radial-gradient(
+    circle at 50% 20%,
+    #fff7cf 0 14%,
+    var(--rocket-flame) 30%,
+    var(--rocket-flame-hot) 58%,
+    rgba(255, 107, 0, 0.04) 82%
+  );
+  box-shadow: 0 0 18px var(--rocket-flame-soft), 0 0 34px rgba(255, 107, 0, 0.22);
+  filter: blur(0.15px);
+  transform-origin: 50% 0%;
+  animation: rocketFlame 0.16s ease-in-out infinite alternate;
+}
+
+/* Optional hover state added by JS when the cursor is above links/buttons/data-cursor-lock. */
+body.rocket-cursor-hover .rocket-flame {
+  height: 14px;
+  opacity: 0.88;
+}
+
+body.rocket-cursor-pressed .rocket-cursor {
+  filter: drop-shadow(0 0 18px rgba(255, 176, 32, 0.9));
+}
+
+/* Trail particle created by JS while the rocket is moving. */
+.trail-dot {
+  position: absolute;
+  width: var(--trail-size, 7px);
+  height: var(--trail-size, 7px);
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    #fff7cf 0 12%,
+    var(--rocket-flame) 38%,
+    var(--rocket-flame-hot) 74%,
+    transparent 100%
+  );
+  box-shadow: 0 0 18px rgba(255, 176, 32, 0.75), 0 0 36px rgba(255, 107, 0, 0.32);
+  transform: translate(-50%, -50%);
+  animation: trailFade 0.65s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+/* Bigger particle burst on click or pointer down. */
+.trail-dot.is-burst {
+  background: radial-gradient(
+    circle,
+    #ffffff 0 10%,
+    var(--rocket-flame) 32%,
+    var(--rocket-cyan) 70%,
+    transparent 100%
+  );
+}
+
+@keyframes rocketFlame {
+  from {
+    transform: scaleY(0.72);
+    opacity: 0.7;
+  }
+  to {
+    transform: scaleY(1.16);
+    opacity: 1;
+  }
+}
+
+@keyframes trailFade {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(3.6);
+  }
+}
+
+/* Safety: do not show custom cursor on touch devices. */
+@media (hover: none), (pointer: coarse) {
+  body.rocket-cursor-enabled {
+    cursor: auto;
+  }
+
+  .rocket-cursor,
+  .cursor-trail-layer {
+    display: none !important;
+  }
+}
+
+/* Accessibility: respect reduced motion preference. */
+@media (prefers-reduced-motion: reduce) {
+  body.rocket-cursor-enabled {
+    cursor: auto;
+  }
+
+  .rocket-cursor,
+  .cursor-trail-layer {
+    display: none !important;
+  }
+}
+
+/* Shrimo Verse integration: allow existing guide/visibility states to hide the standalone cursor cleanly. */
+.rocket-cursor.is-hidden {
+  opacity: 0 !important;
+}
+
+body.verse-entered .rocket-cursor {
+  filter: drop-shadow(0 0 16px rgba(34, 211, 238, 0.95));
+}
+

@@ -34,6 +34,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/portfolio-style.css" />
+  <link rel="stylesheet" href="css/cursor-rocket.css" />
 
   <script type="application/ld+json">
   {
@@ -68,14 +69,6 @@
 </head>
 <body class="shrimo-verse-shell">
   <a class="skip-link" href="#verseMain">Skip to Shrimo Verse content</a>
-
-  <div class="ship-cursor" id="shipCursor" aria-hidden="true">
-    <span class="ship-body"></span>
-    <span class="ship-wing left"></span>
-    <span class="ship-wing right"></span>
-    <span class="ship-flame"></span>
-  </div>
-  <div class="cursor-trail-layer" id="cursorTrailLayer" aria-hidden="true"></div>
 
   <div class="entry-gate" id="entryGate" aria-labelledby="entryTitle" role="dialog" aria-modal="true">
     <div class="entry-space" aria-hidden="true">
@@ -243,6 +236,12 @@
     </section>
   </main>
 
-  <script src="js/portfolio-scripts.js" defer></script>
+  <script src="js/cursor-rocket.js" defer></script>
+  <script src="js/portfolio/01-config.js" defer></script>
+  <script src="js/portfolio/02-dom-state-utils.js" defer></script>
+  <script src="js/portfolio/03-layer-renderer.js" defer></script>
+  <script src="js/portfolio/04-guide-controller.js" defer></script>
+  <script src="js/portfolio/05-scene-effects.js" defer></script>
+  <script src="js/portfolio/06-main-controller.js" defer></script>
 </body>
 </html>
