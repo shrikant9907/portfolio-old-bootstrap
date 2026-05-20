@@ -1,133 +1,139 @@
-# Project Structure — Shrimo Verse v1.0 Experience
+# Shrimo Verse Project Structure
 
-This file is the current source of truth. Older planning markdown files were removed to avoid confusion.
+Current stable test build: **v1.1 Cinematic Polish**
 
-## Root
+This project is a static portfolio experience. It does not use React, Vite, Next.js, or a build tool. Keep the structure simple and predictable.
 
-```txt
-index.html              Main static page
-README.md               Current run/edit instructions
-ProjectStructure.md     Current architecture guide
-CHANGELOG.md            Version history
-SHRIMO_VERSE_V1_EXPERIENCE_PROMPT.md  Final build prompt and rules
-manifest.json           PWA metadata
-robots.txt              Search crawling rule
-sitemap.xml             Sitemap
-```
-
-## CSS
+## Root files
 
 ```txt
-css/portfolio-style.css
+index.html
+README.md
+ProjectStructure.md
+CHANGELOG.md
+manifest.json
+robots.txt
+sitemap.xml
 ```
 
-The main CSS entry file. Keep this as the only portfolio stylesheet in `index.html`.
+## CSS structure
 
 ```txt
-css/modules/01-foundation.css
-css/modules/02-separated-layers.css
-css/modules/03-polish-overrides.css
-css/modules/04-cinematic-upgrade.css
-css/modules/05-third-party-cinematic.css
-css/modules/06-command-deck-and-polish.css
-css/modules/07-mission-briefing-performance.css
-css/modules/08-v1-experience-flow.css
+css/
+  portfolio-style.css
+  cursor-rocket.css
+  modules/
+    01-foundation.css
+    02-separated-layers.css
+    03-polish-overrides.css
+    04-cinematic-upgrade.css
+    05-third-party-cinematic.css
+    06-command-deck-and-polish.css
+    07-mission-briefing-performance.css
+    08-v1-experience-flow.css
+    09-v1-1-cinematic-polish.css
 ```
 
-### Current main CSS file to edit
+### CSS rule
 
-For the current v1 cinematic flow, edit:
+`portfolio-style.css` is the only main CSS file linked in `index.html`. Add new visual modules by importing them there in order.
+
+Use later modules for overrides. Do not edit many old modules for one visual polish change unless the base rule is wrong.
+
+## JavaScript structure
 
 ```txt
-css/modules/08-v1-experience-flow.css
+js/
+  vendors/
+    00-vendor-bridge.js
+
+  cursor-rocket.js
+
+  portfolio/
+    01-config.js
+    02-dom-state-utils.js
+    03-layer-renderer.js
+    04-guide-controller.js
+    05-scene-effects.js
+    06-main-controller.js
+
+  three/
+    01-cinematic-universe.js
+
+  animation/
+    01-motion-system.js
+
+  ui/
+    01-typed-terminal.js
+    02-command-deck.js
+    03-interaction-polish.js
+    04-mission-briefing.js
+    05-performance-director.js
+
+  experience/
+    01-experience-director.js
+    02-cinematic-polish.js
 ```
 
-Use older modules only when changing base layout, existing layer rendering, or previous visual systems.
+## File responsibilities
 
-## JavaScript
+### `js/portfolio/01-config.js`
+Update this file when changing portfolio content:
 
-### Content and configuration
+- chapters/zones
+- skills and tools
+- products
+- proof points
+- reviews
+- guide steps
+- runtime labels
 
-```txt
-js/portfolio/01-config.js
-```
+### `js/experience/01-experience-director.js`
+Owns the v1 flow:
 
-Use this to update portfolio data, products, proof, reviews, and guide text.
+- landing state
+- launch state
+- chapter state
+- settings panel
+- once-per-session guide logic
 
-### DOM and shared state
+### `js/experience/02-cinematic-polish.js`
+Owns the v1.1 polish layer:
 
-```txt
-js/portfolio/02-dom-state-utils.js
-```
+- cinematic warp overlay
+- scene captions
+- chapter keyboard shortcuts
+- settings accessibility sync
+- final clutter-control behavior
 
-Update this when adding or renaming HTML IDs.
+### `css/modules/09-v1-1-cinematic-polish.css`
+Owns final presentation polish:
 
-### Rendering layers
+- movie-style launch visuals
+- chapter-specific colors and scene mood
+- improved HUD hierarchy
+- mobile spacing
+- short-screen overlap prevention
 
-```txt
-js/portfolio/03-layer-renderer.js
-```
+## Development rules
 
-Owns visible orbit nodes, product mission cards, proof signals, and review transmissions.
+1. Keep readable content in HTML/data, not only in WebGL.
+2. Keep Three.js/canvas as the visual universe layer.
+3. Keep GSAP/Typed.js optional with fallbacks.
+4. Do not show everything at once.
+5. Every chapter should have one main focus.
+6. Guide should appear only once per browser tab session unless replayed.
+7. Use SVG icons for controls.
+8. Always test desktop, tablet, and mobile.
+9. Do not include `.git`, `.github`, `.agents`, `.codex`, or old ZIP files in final delivery.
 
-### Guide behavior
+## Recommended next change location
 
-```txt
-js/portfolio/04-guide-controller.js
-```
-
-Owns onboarding guide steps. In v1, the guide appears automatically once per browser tab session and can be replayed manually.
-
-### Scene effects
-
-```txt
-js/portfolio/05-scene-effects.js
-```
-
-Owns star canvas, orbit positioning, cursor tracking, page visibility, and zoom visibility.
-
-### Main controller
-
-```txt
-js/portfolio/06-main-controller.js
-```
-
-Wires modules together. Add new module creation here only when a new module needs shared context.
-
-### v1 experience coordinator
-
-```txt
-js/experience/01-experience-director.js
-```
-
-Owns landing, launch, chapter state, settings drawer, chapter rail, and high-level experience rules.
-
-### Optional enhancement modules
-
-```txt
-js/three/01-cinematic-universe.js
-js/animation/01-motion-system.js
-js/ui/01-typed-terminal.js
-js/ui/02-command-deck.js
-js/ui/03-interaction-polish.js
-js/ui/04-mission-briefing.js
-js/ui/05-performance-director.js
-js/vendors/00-vendor-bridge.js
-js/cursor-rocket.js
-```
-
-These improve the experience but should not contain core content data.
-
-## Architecture rule
-
-Shrimo Verse uses progressive enhancement:
-
-```txt
-Readable HTML content
-+ CSS visual world
-+ JavaScript interaction
-+ optional Three.js / GSAP / Typed.js enhancements
-+ fallback behavior if libraries fail
-```
-
-Do not move important readable portfolio content fully into canvas/WebGL.
+| Task | File |
+|---|---|
+| Change portfolio text/content | `js/portfolio/01-config.js` |
+| Change launch/scene polish | `js/experience/02-cinematic-polish.js` and `css/modules/09-v1-1-cinematic-polish.css` |
+| Change guide steps | `js/portfolio/01-config.js` |
+| Change settings behavior | `js/experience/01-experience-director.js` |
+| Change 3D/canvas world | `js/three/01-cinematic-universe.js` |
+| Change cards/proof/reviews rendering | `js/portfolio/03-layer-renderer.js` |

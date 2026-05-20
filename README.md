@@ -1,104 +1,93 @@
-# Shrimo Verse v1.0 Experience
+# Shrimo Verse v1.1 Cinematic Polish
 
-Shrimo Verse is a cinematic interactive portfolio for **Shrikant Yadav** and **Shrimo Innovations**. It is built as a static HTML/CSS/JavaScript project with progressive enhancement for 3D, motion, typed terminal text, guided exploration, and conversion-focused contact paths.
+Shrimo Verse is a static HTML/CSS/JavaScript interactive portfolio experience for Shrikant Yadav and Shrimo Innovations.
 
-## Current final direction
+This version is focused on a stable test-ready cinematic journey:
 
-This version is no longer a normal portfolio page with animations. It is a guided sci-fi portfolio experience:
+1. Landing Gate
+2. Movie-style launch transition
+3. Arrival Core
+4. Technology Orbit
+5. Product Missions
+6. Proof Signals
+7. Client Transmissions
+8. Launch Dock contact flow
 
-1. **Landing Gate** — the user first sees a focused curiosity screen.
-2. **Launch Sequence** — clicking Enter starts a short cinematic transition.
-3. **Arrival Core** — the user enters Shrimo Verse and sees the SV core.
-4. **Technology Orbit** — skills and tools orbit the core.
-5. **Product Missions** — projects open one focused mission file at a time.
-6. **Proof Signals** — delivery proof appears as data signals.
-7. **Client Transmissions** — reviews appear as readable signal cards.
-8. **Launch Dock** — the final conversion section for WhatsApp, call, email, and profile links.
+The project remains static and can be tested without a build step.
 
-## How to run locally
+## How to test locally
 
-Use a local server instead of double-clicking `index.html`:
+Run from the project folder:
 
 ```bash
 python3 -m http.server 5500
 ```
 
-Then open:
+Open:
 
 ```txt
 http://localhost:5500
 ```
 
-## Important files
+Do not test by double-clicking `index.html` because browser module/CDN behavior is more reliable through a local server.
 
-```txt
-index.html
-css/portfolio-style.css
-css/modules/08-v1-experience-flow.css
-js/experience/01-experience-director.js
-js/portfolio/01-config.js
-js/portfolio/06-main-controller.js
-js/portfolio/04-guide-controller.js
-```
+## What changed in v1.1
 
-## Editing content
+- Added stronger cinematic launch overlay.
+- Added temporary scene captions for chapter changes.
+- Added number shortcuts `1` to `6` for chapters.
+- Reduced visual clutter and improved one-focus-at-a-time behavior.
+- Improved HUD hierarchy, mobile spacing, and overlap prevention.
+- Expanded settings accessibility states.
+- Removed duplicate Three.js script reference.
+- Fixed duplicate auto-flight zone call.
+- Cleaned markdown files so this build is easier to understand.
 
-Update portfolio content in:
+## Important controls
 
-```txt
-js/portfolio/01-config.js
-```
+| Control | Action |
+|---|---|
+| Enter Shrimo Verse | Starts launch sequence |
+| 1-6 | Jump to chapters |
+| Arrow Left / Right | Previous / next chapter |
+| `[` / `]` | Previous / next chapter |
+| `A` | Auto Flight |
+| `G` or `H` or `?` | Guide |
+| `M` | Mission Briefing |
+| `Q` | Change performance quality |
+| `S` | Settings |
+| `R` or Home | Return to Arrival Core |
+| Space | Pause / resume orbit after entry |
 
-This file contains:
+## Development rule
 
-- `ZONES`
-- `ORBIT_PARTICLES`
-- `PRODUCTS`
-- `PROOFS`
-- `REVIEWS`
-- guide steps
+Keep this project as a progressive-enhancement static site:
 
-## Editing the cinematic experience
+- HTML content stays readable and SEO-friendly.
+- Three.js/canvas remains a visual layer, not the content layer.
+- GSAP/Typed.js are enhancements with fallbacks.
+- The user should see one main focus at a time.
+- Avoid adding random effects that increase clutter.
 
-Use these files:
+## Current build files to know
 
-```txt
-css/modules/08-v1-experience-flow.css
-js/experience/01-experience-director.js
-```
+- `index.html` — page structure, SEO, controls, core stage.
+- `css/portfolio-style.css` — CSS manifest importing ordered modules.
+- `css/modules/09-v1-1-cinematic-polish.css` — final visual polish layer.
+- `js/experience/01-experience-director.js` — v1 experience flow.
+- `js/experience/02-cinematic-polish.js` — v1.1 launch/chapter polish wrapper.
+- `js/portfolio/01-config.js` — content data for zones, skills, products, proof, reviews.
+- `js/portfolio/06-main-controller.js` — main app wiring.
 
-The experience director controls:
+## Final testing checklist
 
-- landing / launching / verse states
-- active chapter styling
-- one-time session guide behavior
-- settings drawer
-- chapter rail
-- reduced-clutter focus mode
+Before publishing, test:
 
-## Current UX rule
-
-Only one primary focus should be visible at a time.
-
-Do not add permanent panels everywhere. New details should open only when needed through mission cards, tooltips, drawers, or the settings panel.
-
-## Testing checklist
-
-Before deploying, test:
-
-- Enter button starts the launch sequence.
-- Tutorial appears only once in the same browser tab session.
-- Help button can replay the tutorial manually.
-- Settings opens and closes.
-- Chapter rail moves between sections.
-- Left/right arrow keys move chapters.
-- `M` opens Mission Briefing.
-- `S` opens Settings.
-- `Q` cycles quality mode.
-- Launch Dock links work.
-- Mobile swipe moves chapters.
-- Reduced motion mode still keeps content usable.
-
-## Version
-
-Current stable test package: **shrimo-verse-v1.0-experience**
+- Landing Gate → Enter → launch → Arrival Core.
+- Chapter navigation using rail, arrows, keyboard, and mobile controls.
+- Product, proof, and review chapters.
+- Guide appears once per tab session and can be replayed.
+- Settings panel opens/closes and changes motion/density/interface.
+- Launch Dock links open correctly.
+- No console errors.
+- Mobile width around 360px, tablet width around 768px, desktop width around 1366px.
