@@ -1,11 +1,11 @@
 # About Project — Shrimo Verse
 
 **Project Name:** Shrimo Verse  
-**Current Build:** `shrimo-verse-v1.1-cinematic-polish`  
+**Current Build:** `shrimo-verse-v1.2-mobile-first-polish`  
 **Owner / Portfolio:** Shrikant Yadav  
 **Company Brand Context:** Shrimo Innovations  
 **Primary Purpose:** Cinematic interactive portfolio experience  
-**Last Updated:** 20 May 2026, 12:28 PM IST  
+**Last Updated:** 20 May 2026, 12:56 PM IST
 **Timezone:** Asia/Kolkata  
 
 ---
@@ -133,7 +133,7 @@ Avoid:
 
 ## 6. Current Build Summary
 
-Current build: `shrimo-verse-v1.1-cinematic-polish`
+Current build: `shrimo-verse-v1.2-mobile-first-polish`
 
 This build introduced a cleaner and more polished cinematic experience over the earlier v1.0 experience version.
 
@@ -573,7 +573,7 @@ Check:
 
 ### v1.1 Cinematic Polish
 
-Updated on: 20 May 2026, 12:28 PM IST
+Updated on: 20 May 2026, 12:36 PM IST
 
 Purpose:
 
@@ -635,3 +635,67 @@ Every future change should protect:
 6. conversion at the end.
 
 If a new feature does not improve the journey, clarity, performance, or conversion, do not add it.
+
+---
+
+## 18. Documentation Placement Rule
+
+Updated on: 20 May 2026, 12:36 PM IST
+
+`about-project.md` must be placed in the same root level as `README.md`.
+
+Correct:
+
+```txt
+project-root/
+  README.md
+  about-project.md
+  index.html
+  css/
+  js/
+```
+
+Incorrect:
+
+```txt
+project-root/
+  docs/about-project.md
+```
+
+Reason:
+
+A new developer should immediately see both files after opening the project ZIP.
+`README.md` gives quick setup instructions.
+`about-project.md` gives the complete project understanding and future direction.
+
+---
+
+## 19. v1.2 Mobile-First Polish Notes
+
+Updated on: 20 May 2026, 12:56 PM IST
+
+The v1.2 build uses the mobile-first plan as the main source of truth.
+
+### What Changed
+
+1. The base experience is now optimized from a 375px mobile screen first.
+2. Tablet and desktop are enhancement layers, not the primary design target.
+3. Touch feedback is treated as primary interaction feedback.
+4. Hover and magnetic behavior remain desktop enhancements only.
+5. Swipe left/right navigation is available on mobile.
+6. Haptic vibration is added as progressive enhancement only.
+7. Device capability detection helps reduce visual load on weaker phones.
+8. Product Missions, Proof Signals, and Client Transmissions now use clearer mobile-readable cards.
+9. The Launch Dock now makes WhatsApp the strongest conversion action.
+10. The final ZIP must include `README.md` and `about-project.md` in the project root.
+
+### Future Developer Rule
+
+Do not design a feature only for desktop first. Any new feature must answer this first:
+
+```txt
+Does this work clearly on a 375px phone screen with thumb control?
+```
+
+If the answer is no, the feature is not ready.
+

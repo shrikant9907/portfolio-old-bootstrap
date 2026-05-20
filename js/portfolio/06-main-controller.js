@@ -32,6 +32,7 @@
       polish: null,
       missionBriefing: null,
       performanceDirector: null,
+      gestureControls: null,
       experience: null
     };
 
@@ -56,6 +57,7 @@
     context.polish = SV.polish?.createInteractionPolish?.(context) || null;
     context.missionBriefing = SV.missionBriefing?.createMissionBriefing?.(context) || null;
     context.performanceDirector = SV.performanceDirector?.createPerformanceDirector?.(context) || null;
+    context.gestureControls = SV.gestureControls?.createGestureControls?.(context) || null;
     context.experience = SV.experience?.createExperienceDirector?.(context) || null;
 
     function init() {
@@ -76,6 +78,7 @@
       context.commandDeck?.init?.();
       context.polish?.init?.();
       context.missionBriefing?.init?.();
+      context.gestureControls?.init?.();
       context.terminal?.startEntry?.();
       context.terminal?.startCore?.();
       context.terminal?.startLaunchDock?.();
@@ -198,6 +201,7 @@
           }
           if (action === 'auto') startAutoFlight();
           if (action === 'core') returnToCore();
+          if (action === 'settings') context.els.settingsToggle?.click();
         });
       });
 
@@ -424,6 +428,15 @@
       window.addEventListener('keydown', (event) => {
         const key = event.key.toLowerCase();
 
+        if (!context.state.entered && (event.key === ' ' || event.key === 'Enter')) {
+          const active = document.activeElement;
+          const isTyping = active && ['INPUT', 'TEXTAREA', 'SELECT'].includes(active.tagName);
+          if (!isTyping) {
+            event.preventDefault();
+            context.els.enterVerse?.click();
+          }
+        }
+
         if (event.key === 'Escape') {
           closeObject();
           context.guide.closeGuide();
@@ -486,6 +499,7 @@
         const dy = touch.clientY - state.touchStartY;
         if (Math.abs(dx) > 54 && Math.abs(dx) > Math.abs(dy)) {
           setZone(state.currentZone + (dx < 0 ? 1 : -1));
+          SV.haptics?.trigger?.('swipe');
         }
       }, { passive: true });
     }

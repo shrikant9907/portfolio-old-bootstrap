@@ -110,23 +110,36 @@
       const whatsappText = encodeURIComponent(`Hi Shrikant, I saw your product ${item.title} and want to start a similar mission.`);
 
       card.innerHTML = `
-        <p>Product signal ${state.activeProduct + 1}/${config.products.length}</p>
+        <p>Mission file ${state.activeProduct + 1}/${config.products.length}</p>
         <h3>${item.title}</h3>
         <span class="gallery-preview">${initials}</span>
         <em>${item.desc}</em>
         <small>${item.use}</small>
         <div class="case-study-strip" aria-label="Product case study summary">
-          ${item.problem ? `<span><b>Problem</b>${item.problem}</span>` : ''}
-          ${item.approach ? `<span><b>Approach</b>${item.approach}</span>` : ''}
+          ${item.problem ? `<span><b>Challenge</b>${item.problem}</span>` : ''}
+          ${item.approach ? `<span><b>Solution</b>${item.approach}</span>` : ''}
+          ${item.stack ? `<span><b>Stack</b>${item.stack.join(', ')}</span>` : ''}
           ${item.result ? `<span><b>Result</b>${item.result}</span>` : ''}
         </div>
-        ${item.stack ? `<div class="product-stack">${item.stack.map((tech) => `<span>${tech}</span>`).join('')}</div>` : ''}
+        ${item.stack ? `<div class="product-stack" aria-label="Technology stack">${item.stack.map((tech) => `<span>${tech}</span>`).join('')}</div>` : ''}
         <div class="product-actions">
           ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener" class="product-btn primary-path">Open Project Path</a>` : '<button type="button" class="disabled-path" disabled>Concept Path</button>'}
           <a href="https://wa.me/919907472038?text=${whatsappText}" target="_blank" rel="noopener" class="product-btn secondary-path">Start Similar Mission</a>
+        </div>
+        <div class="product-step-actions" aria-label="Product mission navigation">
+          <button type="button" data-product-step="prev">Previous</button>
+          <button type="button" data-product-step="next">Next Mission</button>
         </div>`;
 
       $$('.product-dot', els.productLayer).forEach((dot, index) => dot.classList.toggle('is-active', index === state.activeProduct));
+      $$( '[data-product-step]', card).forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const direction = btn.dataset.productStep === 'next' ? 1 : -1;
+          state.activeProduct = (state.activeProduct + direction + config.products.length) % config.products.length;
+          updateProductLayer();
+          SV.haptics?.trigger?.('tap');
+        }, { once: true });
+      });
       positionDots('.product-dot', state.activeProduct, 176);
       context.motion?.playCardRefresh?.('#productCard');
     }
@@ -156,8 +169,16 @@
       const focus = $('#proofFocus');
       if (!focus || !item) return;
 
-      focus.innerHTML = `<p>Proof signal</p><h3>${item.title}</h3><strong>${item.label}</strong><em>${item.desc}</em><small class="proof-note">Validated through delivery history, client work, training, and product-building practice.</small>`;
+      focus.innerHTML = `<p>Proof signal</p><h3>${item.title}</h3><strong>${item.label}</strong><em>${item.desc}</em><small class="proof-context">${item.context || 'Validated through delivery history, client work, training, and product-building practice.'}</small><div class="proof-step-actions" aria-label="Proof signal navigation"><button type="button" data-proof-step="prev">Previous</button><button type="button" data-proof-step="next">Next Signal</button></div>`;
       $$('.proof-dot', els.proofLayer).forEach((dot, index) => dot.classList.toggle('is-active', index === state.activeProof));
+      $$( '[data-proof-step]', focus).forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const direction = btn.dataset.proofStep === 'next' ? 1 : -1;
+          state.activeProof = (state.activeProof + direction + config.proofs.length) % config.proofs.length;
+          updateProofLayer();
+          SV.haptics?.trigger?.('tap');
+        }, { once: true });
+      });
       positionDots('.proof-dot', state.activeProof, 162);
       context.motion?.playCardRefresh?.('#proofFocus');
     }
@@ -187,8 +208,16 @@
       const card = $('#reviewCard');
       if (!card || !item) return;
 
-      card.innerHTML = `<p>Client signal ${state.activeReview + 1}/${config.reviews.length}</p><blockquote>${item.text}</blockquote><strong>${item.name}</strong><em>${item.company}</em><small class="signal-note">Readable proof signal selected from real delivery conversations.</small>`;
+      card.innerHTML = `<p>Client transmission ${state.activeReview + 1}/${config.reviews.length}</p><span class="review-stars" aria-label="Five star signal quality">★★★★★</span><blockquote>${item.text}</blockquote><strong>${item.name}</strong><em>${item.company}</em><small class="signal-note">${item.highlight || 'Readable proof signal selected from real delivery conversations.'}</small><span class="signal-quality">${item.rating || '5/5 Signal Quality'}</span><div class="review-step-actions" aria-label="Review transmission navigation"><button type="button" data-review-step="prev">Previous</button><button type="button" data-review-step="next">Next Signal</button></div>`;
       $$('.review-dot', els.reviewLayer).forEach((dot, index) => dot.classList.toggle('is-active', index === state.activeReview));
+      $$( '[data-review-step]', card).forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const direction = btn.dataset.reviewStep === 'next' ? 1 : -1;
+          state.activeReview = (state.activeReview + direction + config.reviews.length) % config.reviews.length;
+          updateReviewLayer();
+          SV.haptics?.trigger?.('tap');
+        }, { once: true });
+      });
       positionDots('.review-dot', state.activeReview, 152);
       context.motion?.playCardRefresh?.('#reviewCard');
     }

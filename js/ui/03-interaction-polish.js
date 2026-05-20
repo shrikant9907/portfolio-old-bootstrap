@@ -24,6 +24,7 @@
       bindInputMode();
       bindNumberShortcuts();
       bindMagneticHover();
+      bindTapFeedback();
       updateLaunchReadiness(0);
     }
 
@@ -97,6 +98,36 @@
         observer.observe(els.stage, { childList: true, subtree: true });
         magneticCleanups.push(() => observer.disconnect());
       }
+    }
+
+
+
+    function bindTapFeedback() {
+      const selector = 'button, a, .verse-node, .world-dot, .sv-core';
+      document.addEventListener('pointerdown', (event) => {
+        const target = event.target.closest(selector);
+        if (!target || target.closest('[disabled]')) return;
+        if (event.pointerType !== 'touch' && event.pointerType !== 'pen') return;
+        createRipple(event.clientX, event.clientY);
+        SV.haptics?.trigger?.('tap');
+      }, { passive: true });
+
+      document.addEventListener('click', (event) => {
+        const target = event.target.closest(selector);
+        if (!target || target.closest('[disabled]')) return;
+        if (state.lastInteractionType === 'touch') return;
+        target.classList.add('tap-confirmed');
+        window.setTimeout(() => target.classList.remove('tap-confirmed'), 260);
+      }, { passive: true });
+    }
+
+    function createRipple(x, y) {
+      const ripple = document.createElement('span');
+      ripple.className = 'sv-ripple';
+      ripple.style.left = `${x}px`;
+      ripple.style.top = `${y}px`;
+      document.body.appendChild(ripple);
+      window.setTimeout(() => ripple.remove(), 560);
     }
 
     function updateLaunchReadiness(zoneIndex) {

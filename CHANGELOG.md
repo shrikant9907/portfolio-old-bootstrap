@@ -1,5 +1,33 @@
 # Changelog
 
+## v1.2 Mobile-First Polish — 20 May 2026, 12:56 PM IST
+
+### Added
+- New mobile-first final CSS layer: `css/modules/10-v1-2-mobile-first-polish.css`.
+- New haptic helper: `js/animation/02-haptic-feedback.js`.
+- New gesture controls: `js/ui/06-gesture-controls.js`.
+- Swipe left/right chapter navigation on mobile.
+- Touch ripple feedback for interactive controls.
+- Device capability detection for low, medium, and high performance conditions.
+- Mobile-first Launch Dock with WhatsApp as the primary CTA.
+- `DEVELOPMENT_GUIDE.md` and `TESTING_CHECKLIST.md`.
+
+### Improved
+- Mobile spacing, typography, tap targets, and panel behavior.
+- Product Mission cards now show Challenge, Solution, Stack, and Result more clearly.
+- Proof Signals now include context explanations.
+- Client Transmissions now show rating/signal quality and next/previous controls.
+- Three.js/canvas particle density now respects device capability and quality mode.
+- Entry copy and launch CTA are now clearer for mobile-first users.
+
+### Protected
+- Static HTML/CSS/JS architecture remains unchanged.
+- No React conversion.
+- `README.md` and `about-project.md` remain at project root.
+- Progressive enhancement remains the architecture rule.
+
+---
+
 ## v1.1 Cinematic Polish
 
 Stable test-ready polished version.

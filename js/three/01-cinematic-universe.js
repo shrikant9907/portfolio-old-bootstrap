@@ -22,6 +22,9 @@
 
     function qualityMultiplier() {
       const mode = state.performanceMode || 'balanced';
+      const capability = state.deviceCapability || 'medium';
+      if (capability === 'low') return mode === 'cinematic' ? 0.38 : 0.18;
+      if (capability === 'medium') return mode === 'cinematic' ? 0.72 : mode === 'balanced' ? 0.52 : 0.26;
       if (mode === 'essential') return 0.42;
       if (mode === 'balanced') return 0.72;
       return 1;
@@ -90,7 +93,7 @@
         const camera = new THREE.PerspectiveCamera(58, 1, 0.1, 1200);
         camera.position.z = 260;
 
-        const starCount = Math.max(140, Math.round((window.innerWidth < 760 ? 360 : 760) * qualityMultiplier()));
+        const starCount = Math.max(state.deviceCapability === 'low' ? 36 : 90, Math.round((window.innerWidth < 760 ? 220 : 760) * qualityMultiplier()));
         const starPositions = new Float32Array(starCount * 3);
         for (let i = 0; i < starCount; i += 1) {
           const i3 = i * 3;
@@ -155,7 +158,8 @@
 
           camera.position.x += ((pointer.x * 22) - camera.position.x) * 0.025;
           camera.position.y += ((-pointer.y * 18) - camera.position.y) * 0.025;
-          camera.position.z += ((260 - mood.zoom * 18 - mood.launch * 60) - camera.position.z) * 0.025;
+          const zoneDepth = [0, -18, -34, -16, -26, -42][mood.zone] || 0;
+          camera.position.z += ((260 + zoneDepth - mood.zoom * 18 - mood.launch * 60) - camera.position.z) * 0.025;
           camera.lookAt(scene.position);
           renderer.render(scene, camera);
         }
@@ -191,7 +195,7 @@
         canvas.style.height = `${height}px`;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        const target = Math.max(70, Math.round((window.innerWidth < 760 ? 120 : 260) * qualityMultiplier()));
+        const target = Math.max(state.deviceCapability === 'low' ? 18 : 54, Math.round((window.innerWidth < 760 ? 90 : 260) * qualityMultiplier()));
         particles.length = 0;
         for (let i = 0; i < target; i += 1) {
           particles.push({

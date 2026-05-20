@@ -1,23 +1,58 @@
-# Shrimo Verse v1.1 Cinematic Polish
+# Shrimo Verse
 
-Shrimo Verse is a static HTML/CSS/JavaScript interactive portfolio experience for Shrikant Yadav and Shrimo Innovations.
+> **New developer note:** Start by reading [`about-project.md`](./about-project.md).  
+> It is the main project understanding file and must stay beside this README in every final ZIP.
 
-This version is focused on a stable test-ready cinematic journey:
+## Current Build
 
-1. Landing Gate
-2. Movie-style launch transition
-3. Arrival Core
-4. Technology Orbit
-5. Product Missions
-6. Proof Signals
-7. Client Transmissions
-8. Launch Dock contact flow
+**Build:** `shrimo-verse-v1.2-mobile-first-polish`  
+**Documentation Updated:** 20 May 2026, 12:56 PM IST  
+**Strategy:** Mobile-first cinematic portfolio experience  
+**Owner:** Shrikant Yadav / Shrimo Innovations
 
-The project remains static and can be tested without a build step.
+## What This Project Is
 
-## How to test locally
+Shrimo Verse is a static HTML/CSS/JavaScript portfolio that behaves like a sci-fi, guided, game-like product journey.
 
-Run from the project folder:
+The intended visitor flow is:
+
+```txt
+Landing Gate → Initiate Launch → Arrival Core → Technology Orbit → Product Missions → Proof Signals → Client Transmissions → Launch Dock
+```
+
+The most important design rule:
+
+> Build for 375px mobile first. Tablet and desktop should enhance the same journey, not replace it.
+
+## v1.2 Focus
+
+This version adds a final mobile-first polish layer:
+
+- mobile-safe spacing and typography,
+- tap-first feedback and ripple effects,
+- optional haptic feedback where browsers support it,
+- swipe left/right chapter navigation,
+- device capability detection,
+- better low-end mobile performance mode,
+- stronger Product Mission, Proof Signal, and Client Transmission cards,
+- WhatsApp-first Launch Dock conversion,
+- updated developer and testing documentation.
+
+## Required Root Documentation
+
+These two files must always be in the project root:
+
+```txt
+README.md
+about-project.md
+```
+
+`README.md` is for quick setup and testing.  
+`about-project.md` explains the full idea, architecture, journey, controls, current version, and future plan.
+
+## Local Testing
+
+From the project root:
 
 ```bash
 python3 -m http.server 5500
@@ -29,65 +64,43 @@ Open:
 http://localhost:5500
 ```
 
-Do not test by double-clicking `index.html` because browser module/CDN behavior is more reliable through a local server.
+Do not test ES-module/CDN behavior by double-clicking the HTML file. Use a local server.
 
-## What changed in v1.1
+## Main Controls
 
-- Added stronger cinematic launch overlay.
-- Added temporary scene captions for chapter changes.
-- Added number shortcuts `1` to `6` for chapters.
-- Reduced visual clutter and improved one-focus-at-a-time behavior.
-- Improved HUD hierarchy, mobile spacing, and overlap prevention.
-- Expanded settings accessibility states.
-- Removed duplicate Three.js script reference.
-- Fixed duplicate auto-flight zone call.
-- Cleaned markdown files so this build is easier to understand.
+```txt
+1 → Arrival Core
+2 → Technology Orbit
+3 → Product Missions
+4 → Proof Signals
+5 → Client Transmissions
+6 → Launch Dock
+[ or ArrowLeft  → Previous Chapter
+] or ArrowRight → Next Chapter
+M → Mission Briefing
+Q → Quality Mode
+S → Settings
+Esc → Close active panel/modal
+```
 
-## Important controls
+On mobile:
 
-| Control | Action |
-|---|---|
-| Enter Shrimo Verse | Starts launch sequence |
-| 1-6 | Jump to chapters |
-| Arrow Left / Right | Previous / next chapter |
-| `[` / `]` | Previous / next chapter |
-| `A` | Auto Flight |
-| `G` or `H` or `?` | Guide |
-| `M` | Mission Briefing |
-| `Q` | Change performance quality |
-| `S` | Settings |
-| `R` or Home | Return to Arrival Core |
-| Space | Pause / resume orbit after entry |
+```txt
+Swipe left  → Next Chapter
+Swipe right → Previous Chapter
+Tap controls from the bottom dock
+Use WhatsApp as the primary Launch Dock action
+```
 
-## Development rule
+## Before Creating Any Future ZIP
 
-Keep this project as a progressive-enhancement static site:
-
-- HTML content stays readable and SEO-friendly.
-- Three.js/canvas remains a visual layer, not the content layer.
-- GSAP/Typed.js are enhancements with fallbacks.
-- The user should see one main focus at a time.
-- Avoid adding random effects that increase clutter.
-
-## Current build files to know
-
-- `index.html` — page structure, SEO, controls, core stage.
-- `css/portfolio-style.css` — CSS manifest importing ordered modules.
-- `css/modules/09-v1-1-cinematic-polish.css` — final visual polish layer.
-- `js/experience/01-experience-director.js` — v1 experience flow.
-- `js/experience/02-cinematic-polish.js` — v1.1 launch/chapter polish wrapper.
-- `js/portfolio/01-config.js` — content data for zones, skills, products, proof, reviews.
-- `js/portfolio/06-main-controller.js` — main app wiring.
-
-## Final testing checklist
-
-Before publishing, test:
-
-- Landing Gate → Enter → launch → Arrival Core.
-- Chapter navigation using rail, arrows, keyboard, and mobile controls.
-- Product, proof, and review chapters.
-- Guide appears once per tab session and can be replayed.
-- Settings panel opens/closes and changes motion/density/interface.
-- Launch Dock links open correctly.
-- No console errors.
-- Mobile width around 360px, tablet width around 768px, desktop width around 1366px.
+1. Update `about-project.md`.
+2. Update `README.md`.
+3. Update `CHANGELOG.md`.
+4. Keep both `README.md` and `about-project.md` at project root.
+5. Exclude `.git`, `.github`, `.agents`, `.codex`, backups, and temporary folders.
+6. Validate JavaScript syntax.
+7. Check CSS imports.
+8. Check local file references.
+9. Check duplicate IDs and duplicate scripts.
+10. Confirm ZIP integrity.

@@ -17,6 +17,8 @@
     let lastAutoDowngradeAt = 0;
 
     function init() {
+      state.deviceCapability = detectDeviceCapability();
+      document.documentElement.dataset.deviceCapability = state.deviceCapability;
       state.performanceMode = resolveInitialMode();
       applyMode(state.performanceMode, { silent: true });
       bindButtons();
@@ -33,8 +35,23 @@
       }
 
       if (config.prefersReducedMotion) return 'essential';
-      if (config.isTouch || window.innerWidth < 780) return 'balanced';
+      if (state.deviceCapability === 'low') return 'essential';
+      if (state.deviceCapability === 'medium' || config.isTouch || window.innerWidth < 780) return 'balanced';
       return 'cinematic';
+    }
+
+
+
+    function detectDeviceCapability() {
+      const cores = navigator.hardwareConcurrency || 2;
+      const memory = navigator.deviceMemory || (config.isTouch ? 3 : 8);
+      const connection = navigator.connection?.effectiveType || '';
+      const smallScreen = window.innerWidth < 520;
+      const slowConnection = /2g|3g/.test(connection);
+
+      if (config.prefersReducedMotion || slowConnection || cores <= 2 || memory <= 2) return 'low';
+      if (config.isTouch || smallScreen || cores <= 4 || memory <= 4) return 'medium';
+      return 'high';
     }
 
     function bindButtons() {
@@ -66,6 +83,7 @@
       document.body.classList.toggle('quality-essential', mode === 'essential');
       document.body.classList.toggle('quality-balanced', mode === 'balanced');
       document.body.classList.toggle('quality-cinematic', mode === 'cinematic');
+      document.documentElement.dataset.deviceCapability = state.deviceCapability || 'medium';
 
       if (!options.silent) {
         try { window.localStorage.setItem(STORAGE_KEY, mode); } catch (error) { /* ignore */ }

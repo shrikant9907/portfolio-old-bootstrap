@@ -152,7 +152,8 @@
         canvas.style.height = `${window.innerHeight}px`;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        const count = Math.max(90, Math.min(170, Math.floor(window.innerWidth * window.innerHeight / 12000)));
+        const low = state.deviceCapability === 'low' || state.performanceMode === 'essential';
+        const count = low ? Math.max(28, Math.min(64, Math.floor(window.innerWidth * window.innerHeight / 26000))) : Math.max(80, Math.min(170, Math.floor(window.innerWidth * window.innerHeight / 12000)));
         stars = Array.from({ length: count }, () => {
           const star = {};
           resetStar(star, true);

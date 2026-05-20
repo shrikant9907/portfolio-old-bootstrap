@@ -1,48 +1,24 @@
 # Shrimo Verse Current Build
 
-Current file to use: **shrimo-verse-v1.1-cinematic-polish.zip**
+**Build:** `shrimo-verse-v1.2-mobile-first-polish`  
+**Updated:** 20 May 2026, 12:56 PM IST  
+**Primary Strategy:** Mobile-first cinematic portfolio polish
 
-Do not use older ZIPs unless comparing history.
+## What This Build Proves
 
-## Current goal
+This version keeps the existing architecture and adds the final v1.2 polish layer focused on mobile usability, conversion, and performance.
 
-Make Shrimo Verse feel like a guided sci-fi portfolio experience, not a normal portfolio page.
+## Main Rule
 
-User journey:
+Design for 375px mobile first, then enhance for tablet and desktop.
+
+## Included Root Docs
 
 ```txt
-Landing Gate → Cinematic Launch → Arrival Core → Technology Orbit → Product Missions → Proof Signals → Client Transmissions → Launch Dock
+README.md
+about-project.md
+CHANGELOG.md
+ProjectStructure.md
+DEVELOPMENT_GUIDE.md
+TESTING_CHECKLIST.md
 ```
-
-## What this build already covers
-
-- Root landing/entry gate.
-- Smooth launch state with warp overlay.
-- Guided chapter-based exploration.
-- One main focus at a time.
-- SVG HUD controls with tooltips.
-- Settings panel.
-- Guide only once per browser tab session.
-- Product missions with case-study structure.
-- Proof and review signal layers.
-- Final Launch Dock with WhatsApp, call, email, LinkedIn, GitHub, Shrimo, and digital profile links.
-- Mobile and short-screen polish.
-- Progressive enhancement with fallbacks.
-
-## What not to do next
-
-- Do not add random effects everywhere.
-- Do not convert to React just for animation.
-- Do not move readable portfolio content into Three.js only.
-- Do not show all panels at once.
-- Do not remove accessibility/reduced-motion support.
-
-## Best next improvement after testing
-
-Only after testing v1.1, improve real content quality:
-
-- Sharper Shrikant introduction.
-- Stronger project case studies.
-- Better proof numbers.
-- Better client review copy.
-- Final SEO and Lighthouse pass.

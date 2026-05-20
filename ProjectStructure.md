@@ -137,3 +137,16 @@ Owns final presentation polish:
 | Change settings behavior | `js/experience/01-experience-director.js` |
 | Change 3D/canvas world | `js/three/01-cinematic-universe.js` |
 | Change cards/proof/reviews rendering | `js/portfolio/03-layer-renderer.js` |
+
+
+## v1.2 Mobile-First Additions — 20 May 2026, 12:56 PM IST
+
+```txt
+css/modules/10-v1-2-mobile-first-polish.css
+js/animation/02-haptic-feedback.js
+js/ui/06-gesture-controls.js
+DEVELOPMENT_GUIDE.md
+TESTING_CHECKLIST.md
+```
+
+These files implement the mobile-first polish layer, tap feedback, optional haptics, swipe navigation, and developer testing guidance.

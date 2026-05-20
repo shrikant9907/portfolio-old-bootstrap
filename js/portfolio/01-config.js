@@ -79,60 +79,60 @@
     {
       id: 'shrimo',
       title: 'Shrimo Innovations',
-      desc: 'Software and web development company focused on websites, apps, and digital products.',
-      use: 'Main business identity behind Shrimo Verse.',
-      problem: 'Clients need one credible place to understand services, trust, and project fit.',
-      approach: 'A focused company presence with service clarity, local credibility, and conversion paths.',
-      stack: ['Brand system', 'Business website', 'SEO foundation'],
-      result: 'Positioned as the parent company for serious client work.',
+      desc: 'Software and web development company in Narmadapuram focused on websites, apps, SEO-ready pages, and practical digital products.',
+      use: 'Parent brand and professional service identity behind Shrimo Verse.',
+      problem: 'Businesses need a credible digital partner who can design, build, explain, and improve their web presence without making the process confusing.',
+      approach: 'Created a focused company presence with service clarity, local trust, portfolio proof, and direct WhatsApp conversion paths.',
+      stack: ['Brand system', 'Business website', 'Local SEO', 'Conversion UX'],
+      result: 'A stronger service identity that positions Shrimo Innovations for serious website, app, and digital product leads.',
       link: 'https://shrimo.com/'
     },
     {
       id: 'digiting',
       title: 'Digiting Card',
-      desc: 'Digital visiting card platform for professionals and businesses.',
-      use: 'Built around digital identity, contact sharing, and online presence.',
-      problem: 'Professionals need a faster way to share identity, contact details, and links.',
-      approach: 'Built as a reusable profile/product flow with sharing-first interaction design.',
-      stack: ['Product UI', 'Dashboard flows', 'Profile sharing'],
-      result: 'Turns a simple contact card into a reusable digital identity product.',
+      desc: 'Digital visiting card platform for professionals and local businesses that need a shareable online identity.',
+      use: 'Shows product thinking around identity, sharing, onboarding, profiles, pricing, templates, and dashboard flows.',
+      problem: 'Professionals still depend on printed cards or scattered links, making it difficult to share complete identity quickly.',
+      approach: 'Built a reusable digital profile flow with template browsing, pricing clarity, profile creation, and contact-first sharing.',
+      stack: ['Next.js direction', 'Profile UX', 'SEO content', 'Product dashboard'],
+      result: 'Turns a simple contact card into a reusable online identity product with clear growth potential.',
       link: 'https://digitingcard.com/'
     },
     {
       id: 'photocopywala',
       title: 'Photocopywala',
-      desc: 'Online tools and document utilities for common print and digital tasks.',
-      use: 'Practical platform for people who need quick document services and tools.',
-      problem: 'Students, shops, and common users need fast document/photo tools without complex software.',
-      approach: 'Utility-first tools with direct actions, clear outputs, and lightweight browser workflows.',
-      stack: ['Utility tools', 'Image workflows', 'Document conversion'],
-      result: 'Solves daily print-shop and student document problems quickly.',
+      desc: 'Online document and image utility platform for students, shops, and common users.',
+      use: 'Demonstrates practical tool-building, image/document workflows, and problem-first utility design.',
+      problem: 'Users need quick passport photo, image crop, document, and print-related tools without installing heavy software.',
+      approach: 'Designed lightweight browser tools with clear actions, fast output, and simple flows for daily document work.',
+      stack: ['Utility tools', 'Image processing UX', 'SEO pages', 'Performance-first UI'],
+      result: 'A practical platform direction for high-intent utility traffic and local shop/customer use cases.',
       link: 'https://photocopywala.in/'
     },
     {
       id: 'directory',
-      title: 'Business Directory Platform',
-      desc: 'Business listing and discovery platform concept for organized local search.',
-      use: 'A product direction for local discovery and business visibility.',
-      problem: 'Local customers struggle to find trusted nearby businesses in one organized place.',
-      approach: 'A listing workflow planned around search visibility, profile completion, and review trust.',
-      stack: ['Local SEO', 'Listing dashboard', 'Review workflow'],
-      result: 'Designed to organize business discovery and lead generation.',
+      title: 'Local Business Directory',
+      desc: 'Business listing and discovery platform concept for organized local search and lead generation.',
+      use: 'Shows planning around listings, user dashboards, review workflow, profile completion, and local SEO growth.',
+      problem: 'Customers often struggle to find trusted nearby businesses, and local businesses struggle to appear professionally online.',
+      approach: 'Planned listing profiles, review moderation, dashboard management, local SEO structure, and conversion-focused contact actions.',
+      stack: ['Directory UX', 'Local SEO', 'Review flow', 'User dashboard'],
+      result: 'A scalable platform direction for organized business discovery and local lead generation.',
       link: ''
     }
   ];
 
   const PROOFS = [
-    { id: 'years', title: '12+', label: 'Years Experience', desc: 'More than a decade of web design, WordPress, PHP, frontend, React, and full-stack work.' },
-    { id: 'projects', title: '300+', label: 'Projects Delivered', desc: 'A strong delivery record across websites, products, and business systems.' },
-    { id: 'trained', title: '100+', label: 'Developers Trained', desc: 'Practical training, mentoring, communication, and system thinking.' },
-    { id: 'products-proof', title: 'Multiple', label: 'Products Built', desc: 'Product ideas and platforms built inside the Shrimo ecosystem.' }
+    { id: 'years', title: '12+', label: 'Years Experience', desc: 'Full-time practical web development experience across websites, CMS, frontend, backend, and product workflows.', context: 'This means the work is not based only on tutorials. It comes from long-term client delivery, debugging, redesign, and product-building practice.' },
+    { id: 'projects', title: '300+', label: 'Projects Delivered', desc: 'Websites, business pages, tools, dashboards, and digital systems delivered across different needs and complexity levels.', context: 'This shows delivery discipline: understanding requirements, building usable interfaces, fixing issues, and taking projects live.' },
+    { id: 'trained', title: '100+', label: 'Developers Trained', desc: 'Developers and learners guided through practical web development, communication, and implementation thinking.', context: 'Training experience improves clarity, explanation quality, and the ability to make complex projects understandable for clients.' },
+    { id: 'products-proof', title: 'Multiple', label: 'Products Built', desc: 'Independent product directions built or planned inside the Shrimo ecosystem, including digital cards, utilities, and listing platforms.', context: 'This proves product thinking beyond client work: idea, UX, content, architecture, growth, and conversion planning.' }
   ];
 
   const REVIEWS = [
-    { id: 'ram', name: 'Ram Dubey', company: 'Khyati Overseas Private Limited', text: 'Shrimo supported us in website design, social setup, and digital growth work that helped us strengthen our export business presence.' },
-    { id: 'rajeev', name: 'Rajeev T.', company: 'International client', text: 'A project many people said could not be done was handled quickly, with practical suggestions and fast execution.' },
-    { id: 'sergio', name: 'Sergio W.', company: 'International client', text: 'The work was delivered on time, communication stayed professional, and the final result matched expectations.' }
+    { id: 'ram', name: 'Ram Dubey', company: 'Khyati Overseas Private Limited', rating: '5/5 Signal Quality', text: 'Shrimo supported us in website design, social setup, and digital growth work that helped us strengthen our export business presence.', highlight: 'Stronger business presence and digital setup support.' },
+    { id: 'rajeev', name: 'Rajeev T.', company: 'International client', rating: '5/5 Signal Quality', text: 'A project many people said could not be done was handled quickly, with practical suggestions and fast execution.', highlight: 'Fast practical execution on a difficult requirement.' },
+    { id: 'sergio', name: 'Sergio W.', company: 'International client', rating: '5/5 Signal Quality', text: 'The work was delivered on time, communication stayed professional, and the final result matched expectations.', highlight: 'Professional communication and reliable delivery.' }
   ];
 
   const SYSTEM_METRICS = [
