@@ -469,18 +469,45 @@ function updateProductLayer() {
   function renderProofLayer() {
     els.proofLayer.innerHTML = `
       <div class="proof-focus" id="proofFocus" aria-live="polite"></div>
+      <div class="proof-nav" aria-label="Proof navigation">
+        <button type="button" class="proof-arrow" id="proofPrev" aria-label="Previous proof signal">‹</button>
+        <button type="button" class="proof-arrow" id="proofNext" aria-label="Next proof signal">›</button>
+      </div>
       <div class="proof-dots" aria-label="Proof signals">
-        ${PROOFS.map((item, index) => `<button type="button" class="world-dot proof-dot" data-proof="${index}" aria-label="Inspect ${escapeAttr(item.label)}"><strong>${item.title}</strong></button>`).join('')}
+        ${PROOFS.map((item, index) => `<button type="button" class="world-dot proof-dot" data-proof="${index}" aria-label="Inspect ${escapeAttr(item.label)}"><strong>${item.title}</strong><span>${escapeAttr(item.label)}</span></button>`).join('')}
       </div>`;
+
     $$('.proof-dot', els.proofLayer).forEach((dot) => {
       dot.addEventListener('click', () => {
         activeProof = Number(dot.dataset.proof);
         updateProofLayer();
         setZone(3);
       });
-      dot.addEventListener('mouseenter', () => document.body.classList.add('cursor-lock'));
+      dot.addEventListener('mouseenter', () => {
+        document.body.classList.add('cursor-lock');
+        if (currentZone === 3) {
+          activeProof = Number(dot.dataset.proof);
+          updateProofLayer();
+        }
+      });
+      dot.addEventListener('focus', () => {
+        if (currentZone === 3) {
+          activeProof = Number(dot.dataset.proof);
+          updateProofLayer();
+        }
+      });
       dot.addEventListener('mouseleave', () => document.body.classList.remove('cursor-lock'));
     });
+
+    $('#proofPrev')?.addEventListener('click', () => {
+      activeProof = (activeProof - 1 + PROOFS.length) % PROOFS.length;
+      updateProofLayer();
+    });
+    $('#proofNext')?.addEventListener('click', () => {
+      activeProof = (activeProof + 1) % PROOFS.length;
+      updateProofLayer();
+    });
+
     updateProofLayer();
   }
 
@@ -488,26 +515,73 @@ function updateProductLayer() {
     const item = PROOFS[activeProof];
     const focus = $('#proofFocus');
     if (!focus) return;
-    focus.innerHTML = `<p>Proof signal</p><h3>${item.title}</h3><strong>${item.label}</strong><em>${item.desc}</em>`;
-    $$('.proof-dot', els.proofLayer).forEach((dot, index) => dot.classList.toggle('is-active', index === activeProof));
-    positionDots('.proof-dot', activeProof, 162);
+
+    focus.innerHTML = `
+      <div class="proof-signal-head">
+        <p>Proof signal ${activeProof + 1}/${PROOFS.length}</p>
+        <span>Verified Capability</span>
+      </div>
+      <h3>${item.title}</h3>
+      <strong>${item.label}</strong>
+      <em>${item.desc}</em>
+      <button type="button" class="proof-next-inline" data-proof-next>Next Proof</button>`;
+
+    $('[data-proof-next]', focus)?.addEventListener('click', () => {
+      activeProof = (activeProof + 1) % PROOFS.length;
+      updateProofLayer();
+    });
+
+    $$('.proof-dot', els.proofLayer).forEach((dot, index) => {
+      const isActive = index === activeProof;
+      dot.classList.toggle('is-active', isActive);
+      dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+    });
+
+    positionDots('.proof-dot', activeProof, window.innerWidth <= 780 ? 126 : 198);
   }
 
   function renderReviewLayer() {
     els.reviewLayer.innerHTML = `
       <div class="review-card" id="reviewCard" aria-live="polite"></div>
+      <div class="review-nav" aria-label="Client signal navigation">
+        <button type="button" class="review-arrow" id="reviewPrev" aria-label="Previous client signal">‹</button>
+        <button type="button" class="review-arrow" id="reviewNext" aria-label="Next client signal">›</button>
+      </div>
       <div class="review-dots" aria-label="Client review signal dots">
         ${REVIEWS.map((item, index) => `<button type="button" class="world-dot review-dot" data-review="${index}" aria-label="Read review by ${escapeAttr(item.name)}"><span>${initials(item.name)}</span></button>`).join('')}
       </div>`;
+
     $$('.review-dot', els.reviewLayer).forEach((dot) => {
       dot.addEventListener('click', () => {
         activeReview = Number(dot.dataset.review);
         updateReviewLayer();
         setZone(4);
       });
-      dot.addEventListener('mouseenter', () => document.body.classList.add('cursor-lock'));
+      dot.addEventListener('mouseenter', () => {
+        document.body.classList.add('cursor-lock');
+        if (currentZone === 4) {
+          activeReview = Number(dot.dataset.review);
+          updateReviewLayer();
+        }
+      });
+      dot.addEventListener('focus', () => {
+        if (currentZone === 4) {
+          activeReview = Number(dot.dataset.review);
+          updateReviewLayer();
+        }
+      });
       dot.addEventListener('mouseleave', () => document.body.classList.remove('cursor-lock'));
     });
+
+    $('#reviewPrev')?.addEventListener('click', () => {
+      activeReview = (activeReview - 1 + REVIEWS.length) % REVIEWS.length;
+      updateReviewLayer();
+    });
+    $('#reviewNext')?.addEventListener('click', () => {
+      activeReview = (activeReview + 1) % REVIEWS.length;
+      updateReviewLayer();
+    });
+
     updateReviewLayer();
   }
 
@@ -515,9 +589,28 @@ function updateProductLayer() {
     const item = REVIEWS[activeReview];
     const card = $('#reviewCard');
     if (!card) return;
-    card.innerHTML = `<p>Client signal ${activeReview + 1}/${REVIEWS.length}</p><blockquote>${item.text}</blockquote><strong>${item.name}</strong><em>${item.company}</em>`;
-    $$('.review-dot', els.reviewLayer).forEach((dot, index) => dot.classList.toggle('is-active', index === activeReview));
-    positionDots('.review-dot', activeReview, 152);
+
+    card.innerHTML = `
+      <p>Client signal ${activeReview + 1}/${REVIEWS.length}</p>
+      <blockquote>${item.text}</blockquote>
+      <div class="review-person">
+        <strong>${item.name}</strong>
+        <em>${item.company}</em>
+      </div>
+      <button type="button" class="review-next-inline" data-review-next>Next Signal</button>`;
+
+    $('[data-review-next]', card)?.addEventListener('click', () => {
+      activeReview = (activeReview + 1) % REVIEWS.length;
+      updateReviewLayer();
+    });
+
+    $$('.review-dot', els.reviewLayer).forEach((dot, index) => {
+      const isActive = index === activeReview;
+      dot.classList.toggle('is-active', isActive);
+      dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+    });
+
+    positionDots('.review-dot', activeReview, window.innerWidth <= 780 ? 118 : 180);
   }
 
   function positionDots(selector, activeIndex, radius) {
@@ -767,7 +860,9 @@ function updateProductLayer() {
     if (currentZone === 2) updateProductLayer();
     if (currentZone === 3) {
       setTimeout(() => animateProofNumbers(), 320);
+      updateProofLayer();
     }
+    if (currentZone === 4) updateReviewLayer();
 
     updateLayerStates();
     if (!options.immediate && !prefersReducedMotion) pulseZone();
@@ -1534,4 +1629,44 @@ function updateProductLayer() {
     toggleZoom: togglePhaseZoom,
     closeProductDetail: closeProductDetailOverlay
   };
+})();
+
+
+/* ==========================================================================
+   FINAL PHASES COMPLETION PATCH
+   Updated: 20 May 2026, 19:45 IST
+   Purpose: Proof Ring, Client Signals, Launch Dock, and final interaction
+   completion without changing earlier scene contracts.
+   ========================================================================== */
+(function () {
+  const d = document;
+
+  function qs(sel, root = d) { return root.querySelector(sel); }
+
+  function syncFinalSceneState() {
+    const scene = d.body.dataset.scene || "";
+    d.body.classList.toggle("is-proof-scene", scene === "proof-ring");
+    d.body.classList.toggle("is-review-scene", scene === "client-signals");
+    d.body.classList.toggle("is-launch-scene", scene === "launch-dock");
+  }
+
+  const stage = qs("#verseStage");
+  if (stage) {
+    const observer = new MutationObserver(syncFinalSceneState);
+    observer.observe(stage, { attributes: true, attributeFilter: ["data-zone"] });
+  }
+
+  const bodyObserver = new MutationObserver(syncFinalSceneState);
+  bodyObserver.observe(d.body, { attributes: true, attributeFilter: ["data-scene"] });
+
+  d.addEventListener("click", (event) => {
+    const proofNext = event.target.closest("[data-proof-next]");
+    const reviewNext = event.target.closest("[data-review-next]");
+    if (proofNext || reviewNext) {
+      d.body.classList.add("scene-action-feedback");
+      setTimeout(() => d.body.classList.remove("scene-action-feedback"), 280);
+    }
+  });
+
+  syncFinalSceneState();
 })();
