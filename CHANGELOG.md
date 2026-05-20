@@ -69,3 +69,26 @@
 - Improved Auto Flight so it moves through clean layers instead of highlighting crowded orbit labels.
 - Added zoom visibility rules so deeper tools only appear when the user zooms in.
 - Added `SHRIMO_VERSE_CLUSTER_FIX_PLAN.md` to document the final cleanup decision.
+
+## v0.0.3 - Cinematic 3D + Motion Upgrade
+
+- Added optional async CDN hooks for Three.js, GSAP, and Typed.js.
+- Added `js/vendors/00-vendor-bridge.js` with local fallbacks so the static project keeps working without CDN access.
+- Added `js/three/01-cinematic-universe.js` for a WebGL-ready/canvas cinematic universe layer.
+- Added `js/animation/01-motion-system.js` for GSAP-style entry, zone, panel, and tooltip choreography.
+- Added `js/ui/01-typed-terminal.js` for controlled typed mission copy.
+- Added `css/modules/05-third-party-cinematic.css` for premium 3D depth, glass surfaces, core energy, library badges, product stack tags, and CTA motion.
+- Updated `index.html` with a dedicated cinematic canvas, core terminal line, zone terminal line, library badges, and launch dock typed copy.
+- Updated product data with technology stack and impact/result fields.
+- Kept all existing portfolio controls, rocket cursor, guide, orbit zoom, product gallery, proof ring, reviews, and launch dock behavior.
+- Kept the project static and deployable without a build step.
+
+## v0.0.4 - Command Deck and product storytelling upgrade
+
+- Added a Live Build Deck cockpit that shows active zone progress, runtime/library status, input mode, and motion/3D fallback state.
+- Added zone intelligence copy so each section explains the frontend/product skill being demonstrated.
+- Upgraded product cards into mini case-study panels with problem, approach, stack, result, and action paths.
+- Added interaction polish module for magnetic desktop hover, numeric keyboard shortcuts, input-mode tracking, and launch readiness state.
+- Added `css/modules/06-command-deck-and-polish.css` to keep the new cockpit and interaction layer isolated from the base visual system.
+- Switched CDN library tags from `async` to `defer` so vendor bridge detection is more reliable while still preserving fallback behavior.
+- Kept the project static, SEO-readable, and deployable without a build step.

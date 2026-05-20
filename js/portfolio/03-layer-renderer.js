@@ -115,6 +115,12 @@
         <span class="gallery-preview">${initials}</span>
         <em>${item.desc}</em>
         <small>${item.use}</small>
+        <div class="case-study-strip" aria-label="Product case study summary">
+          ${item.problem ? `<span><b>Problem</b>${item.problem}</span>` : ''}
+          ${item.approach ? `<span><b>Approach</b>${item.approach}</span>` : ''}
+          ${item.result ? `<span><b>Result</b>${item.result}</span>` : ''}
+        </div>
+        ${item.stack ? `<div class="product-stack">${item.stack.map((tech) => `<span>${tech}</span>`).join('')}</div>` : ''}
         <div class="product-actions">
           ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener" class="product-btn primary-path">Open Project Path</a>` : '<button type="button" class="disabled-path" disabled>Concept Path</button>'}
           <a href="https://wa.me/919907472038?text=${whatsappText}" target="_blank" rel="noopener" class="product-btn secondary-path">Start Similar Mission</a>
@@ -122,6 +128,7 @@
 
       $$('.product-dot', els.productLayer).forEach((dot, index) => dot.classList.toggle('is-active', index === state.activeProduct));
       positionDots('.product-dot', state.activeProduct, 176);
+      context.motion?.playCardRefresh?.('#productCard');
     }
 
     function renderProofLayer() {
@@ -149,9 +156,10 @@
       const focus = $('#proofFocus');
       if (!focus || !item) return;
 
-      focus.innerHTML = `<p>Proof signal</p><h3>${item.title}</h3><strong>${item.label}</strong><em>${item.desc}</em>`;
+      focus.innerHTML = `<p>Proof signal</p><h3>${item.title}</h3><strong>${item.label}</strong><em>${item.desc}</em><small class="proof-note">Validated through delivery history, client work, training, and product-building practice.</small>`;
       $$('.proof-dot', els.proofLayer).forEach((dot, index) => dot.classList.toggle('is-active', index === state.activeProof));
       positionDots('.proof-dot', state.activeProof, 162);
+      context.motion?.playCardRefresh?.('#proofFocus');
     }
 
     function renderReviewLayer() {
@@ -179,9 +187,10 @@
       const card = $('#reviewCard');
       if (!card || !item) return;
 
-      card.innerHTML = `<p>Client signal ${state.activeReview + 1}/${config.reviews.length}</p><blockquote>${item.text}</blockquote><strong>${item.name}</strong><em>${item.company}</em>`;
+      card.innerHTML = `<p>Client signal ${state.activeReview + 1}/${config.reviews.length}</p><blockquote>${item.text}</blockquote><strong>${item.name}</strong><em>${item.company}</em><small class="signal-note">Readable proof signal selected from real delivery conversations.</small>`;
       $$('.review-dot', els.reviewLayer).forEach((dot, index) => dot.classList.toggle('is-active', index === state.activeReview));
       positionDots('.review-dot', state.activeReview, 152);
+      context.motion?.playCardRefresh?.('#reviewCard');
     }
 
     function positionDots(selector, activeIndex, radius) {

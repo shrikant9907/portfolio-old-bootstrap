@@ -1,0 +1,281 @@
+/*
+ * Third-party cinematic upgrade
+ * -----------------------------
+ * Visual layer for the v0.0.3 upgrade: WebGL/canvas depth, GSAP-friendly
+ * motion states, typed terminal lines, and more premium mission-control UI.
+ */
+.three-universe-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.78;
+  mix-blend-mode: screen;
+  filter: saturate(1.18) contrast(1.08);
+}
+
+.star-canvas {
+  z-index: 1;
+  opacity: 0.56;
+}
+
+.verse-stage::before {
+  content: "";
+  position: absolute;
+  inset: clamp(72px, 9vw, 128px) clamp(16px, 7vw, 112px) clamp(94px, 10vw, 126px);
+  border: 1px solid rgba(103, 232, 249, 0.08);
+  border-radius: 46% 54% 58% 42% / 50% 46% 54% 50%;
+  background:
+    linear-gradient(90deg, rgba(103, 232, 249, 0.06), transparent 26%, transparent 74%, rgba(255, 159, 28, 0.045)),
+    radial-gradient(circle at 50% 50%, rgba(8, 145, 178, 0.08), transparent 58%);
+  box-shadow: inset 0 0 80px rgba(103, 232, 249, 0.035), 0 0 90px rgba(8, 145, 178, 0.07);
+  pointer-events: none;
+  transform: perspective(900px) rotateX(62deg) translateY(10px);
+  transform-origin: center;
+  opacity: 0.8;
+}
+
+.verse-stage[data-zone="2"]::before,
+.verse-stage[data-zone="3"]::before,
+.verse-stage[data-zone="4"]::before {
+  border-color: rgba(255, 159, 28, 0.11);
+  box-shadow: inset 0 0 96px rgba(255, 159, 28, 0.045), 0 0 100px rgba(8, 145, 178, 0.06);
+}
+
+.sv-core {
+  isolation: isolate;
+}
+
+.sv-core::before,
+.sv-core::after {
+  content: "";
+  position: absolute;
+  inset: -34px;
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.sv-core::before {
+  background:
+    conic-gradient(from 0deg, rgba(103, 232, 249, 0), rgba(103, 232, 249, 0.38), rgba(255, 159, 28, 0.26), rgba(103, 232, 249, 0));
+  filter: blur(14px);
+  opacity: 0.52;
+  animation: sv-core-energy 7s linear infinite;
+}
+
+.sv-core::after {
+  inset: -56px;
+  border: 1px dashed rgba(103, 232, 249, 0.18);
+  opacity: 0.55;
+  animation: sv-core-scan 12s linear infinite reverse;
+}
+
+.core-terminal {
+  display: block;
+  position: absolute;
+  left: 50%;
+  bottom: -46px;
+  width: max-content;
+  max-width: 260px;
+  transform: translateX(-50%);
+  padding: 7px 11px;
+  border: 1px solid rgba(103, 232, 249, 0.18);
+  border-radius: 999px;
+  background: rgba(2, 6, 12, 0.72);
+  color: rgba(199, 249, 255, 0.86);
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-size: 0.62rem;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.32);
+}
+
+.zone-terminal {
+  margin: 14px 0 0;
+  padding: 10px 13px;
+  border: 1px solid rgba(103, 232, 249, 0.12);
+  border-radius: 14px;
+  background: linear-gradient(90deg, rgba(2, 132, 199, 0.12), rgba(2, 6, 23, 0.12));
+  color: rgba(203, 251, 255, 0.78);
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.library-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.library-badges span,
+.product-stack span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 6px 10px;
+  border: 1px solid rgba(103, 232, 249, 0.14);
+  border-radius: 999px;
+  background: rgba(3, 11, 18, 0.72);
+  color: rgba(236, 254, 255, 0.8);
+  font-family: "Montserrat", system-ui, sans-serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.has-real-gsap .library-badges span:nth-child(2),
+.has-real-typed .library-badges span:nth-child(3),
+.has-three-js .library-badges span:nth-child(1),
+.using-canvas-3d-fallback .library-badges span:nth-child(1) {
+  border-color: rgba(34, 211, 238, 0.36);
+  box-shadow: 0 0 22px rgba(34, 211, 238, 0.08);
+}
+
+.gallery-card,
+.proof-focus,
+.review-card,
+.object-tooltip,
+.guide-card,
+.mission-panel,
+.launch-dock {
+  backdrop-filter: blur(22px) saturate(1.22);
+  -webkit-backdrop-filter: blur(22px) saturate(1.22);
+}
+
+.gallery-card {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(103, 232, 249, 0.2) !important;
+  background:
+    linear-gradient(145deg, rgba(2, 6, 23, 0.88), rgba(3, 21, 31, 0.78)),
+    radial-gradient(circle at 16% 12%, rgba(103, 232, 249, 0.16), transparent 42%) !important;
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+.gallery-card::before,
+.review-card::before,
+.proof-focus::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(115deg, rgba(255,255,255,0.11), transparent 24%, transparent 68%, rgba(103,232,249,0.08));
+  opacity: 0.5;
+}
+
+.proof-focus,
+.review-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-impact {
+  display: block;
+  margin-top: 14px;
+  color: #f8fafc;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.product-stack {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 7px;
+  margin: 15px auto 2px;
+}
+
+.world-dot {
+  box-shadow: 0 0 0 1px rgba(103, 232, 249, 0.18), 0 0 26px rgba(103, 232, 249, 0.12);
+}
+
+.world-dot.is-active,
+.verse-node.is-selected,
+.verse-node.is-hovered {
+  box-shadow: 0 0 0 1px rgba(255, 159, 28, 0.46), 0 0 34px rgba(255, 159, 28, 0.2), 0 0 60px rgba(34, 211, 238, 0.12) !important;
+}
+
+.verse-node {
+  transition: opacity 220ms ease, transform 220ms ease, box-shadow 220ms ease, filter 220ms ease;
+}
+
+.verse-node:hover,
+.verse-node:focus-visible {
+  filter: saturate(1.22) brightness(1.1);
+}
+
+.launch-dock {
+  background:
+    linear-gradient(145deg, rgba(2, 6, 23, 0.92), rgba(9, 28, 39, 0.84)),
+    radial-gradient(circle at 50% 0%, rgba(255, 159, 28, 0.12), transparent 44%) !important;
+  border-color: rgba(255, 159, 28, 0.24) !important;
+}
+
+.launch-primary-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.launch-primary-btn::after {
+  content: "";
+  position: absolute;
+  inset: -40% -70%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.34), transparent);
+  transform: translateX(-60%) rotate(14deg);
+  animation: cta-sweep 4.2s ease-in-out infinite;
+}
+
+.mission-launching .entry-gate {
+  box-shadow: inset 0 0 180px rgba(34, 211, 238, 0.08);
+}
+
+@keyframes sv-core-energy {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes sv-core-scan {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes cta-sweep {
+  0%, 52% { transform: translateX(-60%) rotate(14deg); opacity: 0; }
+  64% { opacity: 0.7; }
+  82%, 100% { transform: translateX(64%) rotate(14deg); opacity: 0; }
+}
+
+@media (max-width: 780px) {
+  .three-universe-canvas {
+    opacity: 0.48;
+  }
+
+  .verse-stage::before {
+    inset: 96px 10px 170px;
+    opacity: 0.5;
+  }
+
+  .core-terminal,
+  .library-badges {
+    display: none;
+  }
+
+  .zone-terminal {
+    font-size: 0.64rem;
+    padding: 8px 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sv-core::before,
+  .sv-core::after,
+  .launch-primary-btn::after {
+    animation: none !important;
+  }
+}

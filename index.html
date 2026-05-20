@@ -123,6 +123,7 @@
 
   <main id="verseMain" class="verse-main">
     <section class="verse-stage" id="verseStage" aria-label="Interactive Shrimo Verse portfolio universe">
+      <canvas id="verse3dCanvas" class="three-universe-canvas" aria-hidden="true"></canvas>
       <canvas id="starCanvas" class="star-canvas" aria-hidden="true"></canvas>
       <div class="space-aura" aria-hidden="true"></div>
       <div class="orbit-field" id="orbitField" aria-hidden="true">
@@ -135,6 +136,16 @@
         <span id="stateName">Arrival Core</span>
         <em id="stateHint">Enter the center, then explore every orbit.</em>
       </div>
+
+      <aside class="command-deck" id="commandDeck" aria-label="Shrimo Verse live command deck">
+        <div class="command-deck__header">
+          <span>Live Build Deck</span>
+          <strong id="deckZoneName">Arrival Core</strong>
+        </div>
+        <div class="deck-progress" aria-hidden="true"><span id="deckProgressBar"></span></div>
+        <div class="deck-grid" id="deckMetrics" aria-label="Runtime and product metrics"></div>
+        <p class="deck-advisor" id="deckAdvisor">System ready. Enter the verse to inspect skills, products, proof, and contact paths.</p>
+      </aside>
 
       <div class="zoom-dock" aria-label="Orbit Zoom">
         <button type="button" id="zoomIn" aria-label="Zoom in"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
@@ -165,6 +176,7 @@
           <span class="core-ring"></span>
           <strong>SV</strong>
           <em>Shrimo Verse Core</em>
+          <small id="coreTerminal" class="core-terminal">Three.js-ready layer online.</small>
         </button>
         <div class="particle-layer" id="particleLayer" aria-label="Skill and technology orbit particles"></div>
         <div class="content-layer product-gallery-layer" id="productGalleryLayer" aria-label="Product gallery dots and showcase"></div>
@@ -176,6 +188,17 @@
         <p class="mission-kicker" id="missionKicker">ARRIVAL CORE</p>
         <h2 id="missionTitle">Welcome to Shrimo Verse.</h2>
         <p id="missionCopy">A living portfolio universe where products, tools, technologies, proof, and client signals orbit one meaningful center.</p>
+        <p class="zone-terminal" id="zoneTerminalLine">Core stable. Explore the orbit.</p>
+        <div class="mission-intelligence" id="missionIntelligence" aria-label="Active zone build intelligence">
+          <span>Focus</span>
+          <strong id="intelFocus">Portfolio universe</strong>
+          <em id="intelProof">Static HTML content with enhanced motion and 3D depth.</em>
+        </div>
+        <div class="library-badges" aria-label="Frontend libraries demonstrated in this portfolio">
+          <span>Three.js layer</span>
+          <span>GSAP motion</span>
+          <span>Typed terminal</span>
+        </div>
         <div class="mission-actions" id="missionActions">
           <button type="button" class="mission-btn primary" data-action="auto">Start Auto Flight</button>
           <button type="button" class="mission-btn secondary" data-action="guide">Learn Controls</button>
@@ -207,7 +230,7 @@
       <section class="launch-dock" id="launchDock" aria-label="Launch Dock contact paths">
         <p class="dock-kicker">Launch Dock</p>
         <h2>Ready to launch your project?</h2>
-        <p class="dock-desc">Reach the dock and start a conversation.</p>
+        <p class="dock-desc" id="launchDockTyped">Reach the dock and start a conversation.</p>
         
         <a class="launch-primary-btn" href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20launch%20a%20project%20after%20exploring%20Shrimo%20Verse." target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l5 8-3.2 1.2L16 21l-4-3-4 3 2.2-8.8L7 11l5-8z"/></svg>
@@ -236,12 +259,22 @@
     </section>
   </main>
 
+  <!-- Optional CDN libraries: real versions are used when online, local fallbacks keep the static build working. -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js" defer></script>
+  <script src="js/vendors/00-vendor-bridge.js" defer></script>
   <script src="js/cursor-rocket.js" defer></script>
   <script src="js/portfolio/01-config.js" defer></script>
   <script src="js/portfolio/02-dom-state-utils.js" defer></script>
   <script src="js/portfolio/03-layer-renderer.js" defer></script>
   <script src="js/portfolio/04-guide-controller.js" defer></script>
   <script src="js/portfolio/05-scene-effects.js" defer></script>
+  <script src="js/three/01-cinematic-universe.js" defer></script>
+  <script src="js/animation/01-motion-system.js" defer></script>
+  <script src="js/ui/01-typed-terminal.js" defer></script>
+  <script src="js/ui/02-command-deck.js" defer></script>
+  <script src="js/ui/03-interaction-polish.js" defer></script>
   <script src="js/portfolio/06-main-controller.js" defer></script>
 </body>
 </html>

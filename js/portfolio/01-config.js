@@ -29,12 +29,12 @@
   }
 
   const ZONES = [
-    { name: 'Arrival Core', hint: 'Start from the center.', title: 'Welcome to Shrimo Verse.', kicker: 'ARRIVAL CORE', copy: 'SV stays fixed in the center. Skills and technologies orbit around it like a living product universe.' },
-    { name: 'Technology Orbit', hint: 'Skills and tools around the core.', title: 'Skills orbit the core.', kicker: 'TECHNOLOGY ORBIT', copy: 'Only technologies and tools orbit SV. Zoom in to reveal deeper tools without crowding the screen.' },
-    { name: 'Product Gallery', hint: 'Products are shown separately.', title: 'Products enter as gallery signals.', kicker: 'PRODUCT GALLERY', copy: 'Projects do not clutter the orbit. Use the product dots to inspect Shrimo, Digiting Card, Photocopywala, and the directory platform.' },
-    { name: 'Proof Ring', hint: 'Delivery proof appears as data dots.', title: 'Proof becomes data.', kicker: 'PROOF RING', copy: 'Experience, delivered work, training, and product-building proof appear as separate signals, not mixed with the skill orbit.' },
-    { name: 'Client Signals', hint: 'Reviews are readable, not crowded.', title: 'Client signals confirm the path.', kicker: 'CLIENT SIGNAL STREAM', copy: 'Real reviews appear as clean signal dots with one readable review panel at a time.' },
-    { name: 'Launch Dock', hint: 'Contact paths are the final dock.', title: 'Reach the Launch Dock.', kicker: 'LAUNCH DOCK', copy: 'When the path is clear, use the Launch Dock to send a message, call, email, or open professional links.' }
+    { name: 'Arrival Core', hint: 'Start from the center.', title: 'Welcome to Shrimo Verse.', kicker: 'ARRIVAL CORE', copy: 'SV stays fixed in the center. Skills and technologies orbit around it like a living product universe.', focus: 'Identity + system architecture', proof: 'Static SEO content stays readable while enhanced layers add motion and WebGL depth.' },
+    { name: 'Technology Orbit', hint: 'Skills and tools around the core.', title: 'Skills orbit the core.', kicker: 'TECHNOLOGY ORBIT', copy: 'Only technologies and tools orbit SV. Zoom in to reveal deeper tools without crowding the screen.', focus: 'Frontend stack intelligence', proof: 'Core, deep, and hidden skills are separated so the interface stays usable at every zoom level.' },
+    { name: 'Product Gallery', hint: 'Products are shown separately.', title: 'Products enter as gallery signals.', kicker: 'PRODUCT GALLERY', copy: 'Projects do not clutter the orbit. Use the product dots to inspect Shrimo, Digiting Card, Photocopywala, and the directory platform.', focus: 'Product thinking + case study flow', proof: 'Every product card now shows problem, build approach, stack, result, and next action.' },
+    { name: 'Proof Ring', hint: 'Delivery proof appears as data dots.', title: 'Proof becomes data.', kicker: 'PROOF RING', copy: 'Experience, delivered work, training, and product-building proof appear as separate signals, not mixed with the skill orbit.', focus: 'Trust signals and measurable history', proof: 'Numbers are presented as focused data signals instead of noisy generic achievement cards.' },
+    { name: 'Client Signals', hint: 'Reviews are readable, not crowded.', title: 'Client signals confirm the path.', kicker: 'CLIENT SIGNAL STREAM', copy: 'Real reviews appear as clean signal dots with one readable review panel at a time.', focus: 'Readable social proof', proof: 'Signal cards keep testimonials easy to scan on desktop and mobile without overcrowding the orbit.' },
+    { name: 'Launch Dock', hint: 'Contact paths are the final dock.', title: 'Reach the Launch Dock.', kicker: 'LAUNCH DOCK', copy: 'When the path is clear, use the Launch Dock to send a message, call, email, or open professional links.', focus: 'Conversion and project start', proof: 'The final screen keeps WhatsApp primary and all other contact paths secondary.' }
   ];
 
   const ORBIT_PARTICLES = [
@@ -76,10 +76,50 @@
   ];
 
   const PRODUCTS = [
-    { id: 'shrimo', title: 'Shrimo Innovations', desc: 'Software and web development company focused on websites, apps, and digital products.', use: 'Main business identity behind Shrimo Verse.', link: 'https://shrimo.com/' },
-    { id: 'digiting', title: 'Digiting Card', desc: 'Digital visiting card platform for professionals and businesses.', use: 'Built around digital identity, contact sharing, and online presence.', link: 'https://digitingcard.com/' },
-    { id: 'photocopywala', title: 'Photocopywala', desc: 'Online tools and document utilities for common print and digital tasks.', use: 'Practical platform for people who need quick document services and tools.', link: 'https://photocopywala.in/' },
-    { id: 'directory', title: 'Business Directory Platform', desc: 'Business listing and discovery platform concept for organized local search.', use: 'A product direction for local discovery and business visibility.', link: '' }
+    {
+      id: 'shrimo',
+      title: 'Shrimo Innovations',
+      desc: 'Software and web development company focused on websites, apps, and digital products.',
+      use: 'Main business identity behind Shrimo Verse.',
+      problem: 'Clients need one credible place to understand services, trust, and project fit.',
+      approach: 'A focused company presence with service clarity, local credibility, and conversion paths.',
+      stack: ['Brand system', 'Business website', 'SEO foundation'],
+      result: 'Positioned as the parent company for serious client work.',
+      link: 'https://shrimo.com/'
+    },
+    {
+      id: 'digiting',
+      title: 'Digiting Card',
+      desc: 'Digital visiting card platform for professionals and businesses.',
+      use: 'Built around digital identity, contact sharing, and online presence.',
+      problem: 'Professionals need a faster way to share identity, contact details, and links.',
+      approach: 'Built as a reusable profile/product flow with sharing-first interaction design.',
+      stack: ['Product UI', 'Dashboard flows', 'Profile sharing'],
+      result: 'Turns a simple contact card into a reusable digital identity product.',
+      link: 'https://digitingcard.com/'
+    },
+    {
+      id: 'photocopywala',
+      title: 'Photocopywala',
+      desc: 'Online tools and document utilities for common print and digital tasks.',
+      use: 'Practical platform for people who need quick document services and tools.',
+      problem: 'Students, shops, and common users need fast document/photo tools without complex software.',
+      approach: 'Utility-first tools with direct actions, clear outputs, and lightweight browser workflows.',
+      stack: ['Utility tools', 'Image workflows', 'Document conversion'],
+      result: 'Solves daily print-shop and student document problems quickly.',
+      link: 'https://photocopywala.in/'
+    },
+    {
+      id: 'directory',
+      title: 'Business Directory Platform',
+      desc: 'Business listing and discovery platform concept for organized local search.',
+      use: 'A product direction for local discovery and business visibility.',
+      problem: 'Local customers struggle to find trusted nearby businesses in one organized place.',
+      approach: 'A listing workflow planned around search visibility, profile completion, and review trust.',
+      stack: ['Local SEO', 'Listing dashboard', 'Review workflow'],
+      result: 'Designed to organize business discovery and lead generation.',
+      link: ''
+    }
   ];
 
   const PROOFS = [
@@ -93,6 +133,13 @@
     { id: 'ram', name: 'Ram Dubey', company: 'Khyati Overseas Private Limited', text: 'Shrimo supported us in website design, social setup, and digital growth work that helped us strengthen our export business presence.' },
     { id: 'rajeev', name: 'Rajeev T.', company: 'International client', text: 'A project many people said could not be done was handled quickly, with practical suggestions and fast execution.' },
     { id: 'sergio', name: 'Sergio W.', company: 'International client', text: 'The work was delivered on time, communication stayed professional, and the final result matched expectations.' }
+  ];
+
+  const SYSTEM_METRICS = [
+    { id: 'engine', label: 'Engine', value: 'Static + Enhanced', desc: 'SEO-first HTML with optional cinematic layers.' },
+    { id: 'webgl', label: '3D Layer', value: 'Adaptive', desc: 'Three.js when available, canvas fallback when not.' },
+    { id: 'motion', label: 'Motion', value: prefersReducedMotion ? 'Reduced' : 'Cinematic', desc: 'Respects user motion preferences.' },
+    { id: 'controls', label: 'Controls', value: isTouch ? 'Touch' : 'Keyboard + Mouse', desc: 'Device-aware navigation and inspection.' }
   ];
 
   function getGuideSteps() {
@@ -126,6 +173,7 @@
     products: PRODUCTS,
     proofs: PROOFS,
     reviews: REVIEWS,
+    systemMetrics: SYSTEM_METRICS,
     getGuideSteps
   };
 })(window);

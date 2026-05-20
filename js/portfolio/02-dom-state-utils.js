@@ -17,6 +17,10 @@
       body: document.body,
       entryGate: $('#entryGate'),
       enterVerse: $('#enterVerse'),
+      verse3dCanvas: $('#verse3dCanvas'),
+      coreTerminal: $('#coreTerminal'),
+      zoneTerminalLine: $('#zoneTerminalLine'),
+      launchDockTyped: $('#launchDockTyped'),
       guidedMode: $('#guidedMode'),
       exploreMode: $('#exploreMode'),
       autoFlight: $('#autoFlight'),
@@ -48,6 +52,15 @@
       stateName: $('#stateName'),
       stateHint: $('#stateHint'),
       missionPanel: $('#missionPanel'),
+      stateReadout: $('#stateReadout'),
+      commandDeck: $('#commandDeck'),
+      deckZoneName: $('#deckZoneName'),
+      deckProgressBar: $('#deckProgressBar'),
+      deckMetrics: $('#deckMetrics'),
+      deckAdvisor: $('#deckAdvisor'),
+      missionIntelligence: $('#missionIntelligence'),
+      intelFocus: $('#intelFocus'),
+      intelProof: $('#intelProof'),
       launchDock: $('#launchDock'),
       guideOverlay: $('#guideOverlay'),
       guideTitle: $('#guideTitle'),
@@ -84,7 +97,10 @@
       isLaunching: false,
       pageHidden: false,
       rocketCentering: false,
-      hoverTooltipTimer: null
+      hoverTooltipTimer: null,
+      lastInteractionType: 'mouse',
+      runtimeFps: 0,
+      activeEngine: 'fallback'
     };
   }
 

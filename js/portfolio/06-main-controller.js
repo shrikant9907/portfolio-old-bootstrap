@@ -24,7 +24,12 @@
       actions: null,
       layers: null,
       guide: null,
-      effects: null
+      effects: null,
+      motion: null,
+      terminal: null,
+      universe: null,
+      commandDeck: null,
+      polish: null
     };
 
     const actions = {
@@ -41,11 +46,17 @@
     context.layers = SV.layers.createLayerRenderer(context);
     context.guide = SV.guide.createGuideController(context);
     context.effects = SV.effects.createSceneEffects(context);
+    context.motion = SV.motion?.createMotionSystem?.(context) || null;
+    context.terminal = SV.terminal?.createTypedTerminal?.(context) || null;
+    context.universe = SV.cinematic?.createUniverse?.(context) || null;
+    context.commandDeck = SV.commandDeck?.createCommandDeck?.(context) || null;
+    context.polish = SV.polish?.createInteractionPolish?.(context) || null;
 
     function init() {
       document.body.classList.toggle('touch-device', context.config.isTouch);
       context.layers.renderOrbitParticles();
       context.layers.renderSeparatedLayers();
+      context.motion?.primeInitialState?.();
       bindControls();
       bindEntry();
       bindKeyboard();
@@ -53,6 +64,12 @@
       context.effects.bindCursor();
       context.effects.bindPageVisibility();
       context.effects.initStars();
+      context.universe?.init?.();
+      context.commandDeck?.init?.();
+      context.polish?.init?.();
+      context.terminal?.startEntry?.();
+      context.terminal?.startCore?.();
+      context.terminal?.startLaunchDock?.();
       setZone(0, { immediate: true });
       setZoom(1, { silent: true });
       context.effects.animate();
@@ -71,6 +88,9 @@
         state.entered = true;
         state.isLaunching = true;
         state.launchStart = performance.now();
+        context.terminal?.stopEntry?.();
+        context.motion?.playEntryLaunch?.();
+        context.universe?.launch?.();
         els.enterVerse.disabled = true;
         els.enterVerse.textContent = 'Entering...';
         els.entryGate.classList.add('is-launching');
@@ -110,6 +130,7 @@
           state.isLaunching = false;
           state.rocketCentering = false;
           setZone(0);
+          context.motion?.revealInterface?.();
           window.setTimeout(() => context.guide.startGuide(), config.prefersReducedMotion ? 120 : 200);
         }, config.prefersReducedMotion ? 180 : 2400);
       });
@@ -192,6 +213,7 @@
       state.paused = !state.paused;
       document.body.classList.toggle('orbit-paused', state.paused);
       els.pauseOrbit.classList.toggle('is-active', state.paused);
+      context.universe?.setPaused?.(state.paused);
     }
 
     function returnToCore() {
@@ -291,6 +313,11 @@
       }
 
       updateLayerStates();
+      context.universe?.setZone?.(state.currentZone);
+      context.terminal?.setZone?.(state.currentZone);
+      context.commandDeck?.updateZone?.(state.currentZone, options);
+      context.polish?.updateLaunchReadiness?.(state.currentZone);
+      if (!options.immediate) context.motion?.playZoneChange?.(state.currentZone);
       if (!options.immediate && !config.prefersReducedMotion) pulseZone();
     }
 
@@ -342,6 +369,7 @@
 
       context.effects.applyZoomVisibility();
       context.effects.updateNodePositions(performance.now());
+      context.universe?.setZoom?.(state.zoom);
     }
 
     function showObject(obj, target) {
@@ -366,6 +394,8 @@
 
       els.tooltip.classList.add('is-open');
       els.tooltip.setAttribute('aria-hidden', 'false');
+      context.motion?.playTooltipOpen?.(target);
+      context.universe?.pulseAt?.(target);
     }
 
     function closeObject() {

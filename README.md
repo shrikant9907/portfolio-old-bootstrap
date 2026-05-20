@@ -1,39 +1,87 @@
-# Shrimo Verse
+# Shrimo Verse v0.0.3
 
-Static HTML/CSS/JavaScript portfolio universe for Shrikant Yadav.
+Shrimo Verse is an interactive cinematic portfolio universe for Shrikant Yadav / Shrimo Innovations.
 
-## What this version focuses on
+## What changed in v0.0.3
 
-- Modular JavaScript structure for easier future updates
-- Split CSS design partials with clear ownership
-- Realistic deep-universe entry animation
-- Fixed SV core as the center of the system
-- Technology-only orbit around the core
-- Separate Product Gallery, Proof Ring, Client Signals, and Launch Dock
-- Smooth desktop rocket cursor with velocity-based flame
-- Touch-first mobile controls
-- Working WhatsApp, call, email, LinkedIn, GitHub, Shrimo, and digital profile links
+- Added a cinematic 3D/WebGL-ready universe layer.
+- Added a safe vendor bridge for GSAP, Typed.js, and Three.js-style enhancements.
+- Added local fallbacks so the static site does not break when CDN libraries are unavailable.
+- Added typed terminal lines for the entry gate, SV core, zone status, and launch dock.
+- Added GSAP-style motion hooks for entry launch, panel reveals, tooltips, and zone changes.
+- Upgraded product cards with stack tags and impact/result copy.
+- Added stronger cinematic CSS polish, depth, glass surfaces, glowing core energy, and CTA motion.
 
-## Editing guide
+## Important testing note
 
-- Update portfolio content in `js/portfolio/01-config.js`.
-- Update DOM IDs and shared helpers in `js/portfolio/02-dom-state-utils.js`.
-- Update product/proof/review rendering in `js/portfolio/03-layer-renderer.js`.
-- Update onboarding guide behavior in `js/portfolio/04-guide-controller.js`.
-- Update orbit movement, starfield, and zoom visibility in `js/portfolio/05-scene-effects.js`.
-- Update entry flow, controls, keyboard, touch, and zone logic in `js/portfolio/06-main-controller.js`.
-- Update visual styles inside `css/modules/` instead of one large CSS file.
+Open this project through a local server, not by double-clicking `index.html`.
 
-## Run locally
-
-You can open `index.html` directly, but serving the folder is better for real browser testing:
+Recommended:
 
 ```bash
-python3 -m http.server 8000
+python3 -m http.server 3000
 ```
 
-Then open `http://localhost:8000`.
+Then open:
 
-## Deploy
+```txt
+http://localhost:3000
+```
 
-Upload the full folder contents to any static hosting service.
+## Main file structure
+
+```txt
+css/
+  portfolio-style.css
+  cursor-rocket.css
+  modules/
+    01-foundation.css
+    02-separated-layers.css
+    03-polish-overrides.css
+    04-cinematic-upgrade.css
+    05-third-party-cinematic.css
+
+js/
+  vendors/
+    00-vendor-bridge.js
+  three/
+    01-cinematic-universe.js
+  animation/
+    01-motion-system.js
+  ui/
+    01-typed-terminal.js
+  portfolio/
+    01-config.js
+    02-dom-state-utils.js
+    03-layer-renderer.js
+    04-guide-controller.js
+    05-scene-effects.js
+    06-main-controller.js
+  cursor-rocket.js
+```
+
+## Developer guide
+
+- Update portfolio content in `js/portfolio/01-config.js`.
+- Update DOM selectors in `js/portfolio/02-dom-state-utils.js`.
+- Update rendered product/proof/review HTML in `js/portfolio/03-layer-renderer.js`.
+- Update guide steps in `js/portfolio/01-config.js`.
+- Update cinematic background behavior in `js/three/01-cinematic-universe.js`.
+- Update motion choreography in `js/animation/01-motion-system.js`.
+- Update typed messages in `js/ui/01-typed-terminal.js`.
+- Update premium visual styling in `css/modules/05-third-party-cinematic.css`.
+
+## Dependency strategy
+
+This project remains static and does not require a build step.
+
+The HTML includes optional async CDN references for Three.js, GSAP, and Typed.js. The local vendor bridge keeps the site working even when those CDN files do not load.
+
+
+## v0.0.4 additions
+
+- Live Build Deck cockpit for active zone, runtime, input, and enhancement status.
+- Product cards upgraded into mini case studies with problem, approach, stack, and result.
+- New interaction polish layer with magnetic hover and number-key zone shortcuts.
+- CDN scripts now use `defer` so vendor detection runs in a more reliable order while fallbacks remain active.
+
