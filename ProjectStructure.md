@@ -1,68 +1,133 @@
-# Project Structure - Shrimo Verse v0.0.5
+# Project Structure — Shrimo Verse v1.0 Experience
 
-## Core idea
+This file is the current source of truth. Older planning markdown files were removed to avoid confusion.
 
-The project is split by responsibility so future developers can edit content, visuals, animation, and cinematic rendering without searching through one large file.
+## Root
+
+```txt
+index.html              Main static page
+README.md               Current run/edit instructions
+ProjectStructure.md     Current architecture guide
+CHANGELOG.md            Version history
+SHRIMO_VERSE_V1_EXPERIENCE_PROMPT.md  Final build prompt and rules
+manifest.json           PWA metadata
+robots.txt              Search crawling rule
+sitemap.xml             Sitemap
+```
 
 ## CSS
 
-- `css/portfolio-style.css` imports all design modules in order.
-- `css/modules/01-foundation.css` owns base layout, variables, core UI, and responsive foundation.
-- `css/modules/02-separated-layers.css` owns product/proof/review separated layers.
-- `css/modules/03-polish-overrides.css` owns previous visual polish.
-- `css/modules/04-cinematic-upgrade.css` owns older cinematic improvements.
-- `css/modules/05-third-party-cinematic.css` owns v0.0.3 3D/motion/typed visual polish.
+```txt
+css/portfolio-style.css
+```
+
+The main CSS entry file. Keep this as the only portfolio stylesheet in `index.html`.
+
+```txt
+css/modules/01-foundation.css
+css/modules/02-separated-layers.css
+css/modules/03-polish-overrides.css
+css/modules/04-cinematic-upgrade.css
+css/modules/05-third-party-cinematic.css
+css/modules/06-command-deck-and-polish.css
+css/modules/07-mission-briefing-performance.css
+css/modules/08-v1-experience-flow.css
+```
+
+### Current main CSS file to edit
+
+For the current v1 cinematic flow, edit:
+
+```txt
+css/modules/08-v1-experience-flow.css
+```
+
+Use older modules only when changing base layout, existing layer rendering, or previous visual systems.
 
 ## JavaScript
 
-- `js/vendors/00-vendor-bridge.js` safely exposes animation and typing helpers.
-- `js/three/01-cinematic-universe.js` owns WebGL-ready/canvas cinematic background rendering.
-- `js/animation/01-motion-system.js` owns GSAP-style motion choreography.
-- `js/ui/01-typed-terminal.js` owns typewriter terminal copy.
-- `js/portfolio/01-config.js` owns content and journey data.
-- `js/portfolio/02-dom-state-utils.js` owns DOM references, state, and small helpers.
-- `js/portfolio/03-layer-renderer.js` owns dynamic HTML for nodes, product cards, proof cards, and reviews.
-- `js/portfolio/04-guide-controller.js` owns guided tour behavior.
-- `js/portfolio/05-scene-effects.js` owns original star canvas, orbit positions, zoom visibility, and page visibility.
-- `js/portfolio/06-main-controller.js` wires all modules together.
-- `js/cursor-rocket.js` owns the rocket cursor only.
-
-## Safe editing rule
-
-If you are changing text or data, edit config first.
-If you are changing visual style, edit CSS modules.
-If you are changing behavior, edit the smallest matching JS module.
-
-## v0.0.4 structure additions
+### Content and configuration
 
 ```txt
+js/portfolio/01-config.js
+```
+
+Use this to update portfolio data, products, proof, reviews, and guide text.
+
+### DOM and shared state
+
+```txt
+js/portfolio/02-dom-state-utils.js
+```
+
+Update this when adding or renaming HTML IDs.
+
+### Rendering layers
+
+```txt
+js/portfolio/03-layer-renderer.js
+```
+
+Owns visible orbit nodes, product mission cards, proof signals, and review transmissions.
+
+### Guide behavior
+
+```txt
+js/portfolio/04-guide-controller.js
+```
+
+Owns onboarding guide steps. In v1, the guide appears automatically once per browser tab session and can be replayed manually.
+
+### Scene effects
+
+```txt
+js/portfolio/05-scene-effects.js
+```
+
+Owns star canvas, orbit positioning, cursor tracking, page visibility, and zoom visibility.
+
+### Main controller
+
+```txt
+js/portfolio/06-main-controller.js
+```
+
+Wires modules together. Add new module creation here only when a new module needs shared context.
+
+### v1 experience coordinator
+
+```txt
+js/experience/01-experience-director.js
+```
+
+Owns landing, launch, chapter state, settings drawer, chapter rail, and high-level experience rules.
+
+### Optional enhancement modules
+
+```txt
+js/three/01-cinematic-universe.js
+js/animation/01-motion-system.js
+js/ui/01-typed-terminal.js
 js/ui/02-command-deck.js
-  Live cockpit for zone progress, runtime status, library/fallback state, and active build intelligence.
-
 js/ui/03-interaction-polish.js
-  Desktop magnetic hover, number-key zone shortcuts, input-mode tracking, and launch readiness state.
-
-css/modules/06-command-deck-and-polish.css
-  Styling for the command deck, mission intelligence panel, case-study strips, magnetic states, and final dock polish.
+js/ui/04-mission-briefing.js
+js/ui/05-performance-director.js
+js/vendors/00-vendor-bridge.js
+js/cursor-rocket.js
 ```
 
-Keep future advanced UI layers isolated in `js/ui/` and `css/modules/` instead of adding more logic to `06-main-controller.js`.
+These improve the experience but should not contain core content data.
 
+## Architecture rule
 
-## v0.0.5 structure additions
+Shrimo Verse uses progressive enhancement:
 
 ```txt
-js/ui/04-mission-briefing.js
-  Drawer-style product/developer briefing for the active zone, selected product, proof signal, review signal, and launch path.
-
-js/ui/05-performance-director.js
-  Visual quality controller with Essential, Balanced, and Cinematic modes plus light FPS-based downgrade protection.
-
-css/modules/07-mission-briefing-performance.css
-  Styling for the briefing drawer, performance mode switcher, and quality-level visual states.
+Readable HTML content
++ CSS visual world
++ JavaScript interaction
++ optional Three.js / GSAP / Typed.js enhancements
++ fallback behavior if libraries fail
 ```
 
-Keyboard shortcuts added in v0.0.5:
-
-- `M` opens Mission Briefing.
-- `Q` cycles Essential, Balanced, and Cinematic quality modes.
+Do not move important readable portfolio content fully into canvas/WebGL.

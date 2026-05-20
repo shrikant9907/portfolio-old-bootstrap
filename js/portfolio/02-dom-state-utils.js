@@ -27,6 +27,7 @@
       pauseOrbit: $('#pauseOrbit'),
       returnCore: $('#returnCore'),
       replayGuide: $('#replayGuide'),
+      settingsToggle: $('#settingsToggle'),
       brandReset: $('#brandReset'),
       zoomIn: $('#zoomIn'),
       zoomOut: $('#zoomOut'),
@@ -77,6 +78,10 @@
       guideProgress: $('#guideProgress'),
       guideBack: $('#guideBack'),
       guideNext: $('#guideNext'),
+      guideSkip: $('#guideSkip'),
+      settingsPanel: $('#settingsPanel'),
+      settingsClose: $('#settingsClose'),
+      chapterRail: $('#chapterRail'),
       mobileDots: $('#mobileZoneDots'),
       zonePrev: $('#zonePrev'),
       zoneNext: $('#zoneNext'),
@@ -111,7 +116,8 @@
       activeEngine: 'fallback',
       performanceMode: '',
       lowFpsSamples: 0,
-      briefingOpen: false
+      briefingOpen: false,
+      chapterTransitionTimer: null
     };
   }
 

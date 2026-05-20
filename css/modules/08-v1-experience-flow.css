@@ -1,0 +1,748 @@
+/*
+ * Shrimo Verse v1 experience flow
+ * --------------------------------
+ * This module turns the portfolio into a guided cinematic chapter experience.
+ * It intentionally reduces always-visible UI, improves landing/launch drama,
+ * and keeps one main focus active at a time.
+ */
+
+:root {
+  --v1-panel-bg: rgba(4, 11, 18, 0.72);
+  --v1-panel-border: rgba(56, 214, 232, 0.22);
+  --v1-panel-strong: rgba(8, 22, 34, 0.9);
+  --v1-gold: #ffb923;
+  --v1-cyan: #34d8ee;
+  --v1-text: #f7fbff;
+  --v1-muted: #9fb3c7;
+  --v1-danger: #ff715b;
+  --v1-radius-lg: 28px;
+  --v1-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+html,
+body {
+  overflow: hidden;
+}
+
+body.experience-v1-ready {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(21, 168, 194, 0.12), transparent 32rem),
+    radial-gradient(circle at 80% 12%, rgba(255, 185, 35, 0.08), transparent 24rem),
+    #03070b;
+}
+
+body:not(.verse-entered) .verse-control,
+body:not(.verse-entered) .verse-main {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.985);
+}
+
+body.verse-entered .verse-control,
+body.verse-entered .verse-main {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 720ms var(--v1-ease), transform 900ms var(--v1-ease);
+}
+
+/* Landing should create curiosity, not show the whole portfolio at once. */
+.entry-gate {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(31, 223, 244, 0.13), transparent 20rem),
+    radial-gradient(circle at 50% 140%, rgba(255, 185, 35, 0.12), transparent 28rem),
+    linear-gradient(180deg, rgba(2, 5, 9, 0.96), rgba(4, 10, 16, 0.98));
+  overflow: hidden;
+}
+
+.entry-gate::before,
+.entry-gate::after {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+}
+
+.entry-gate::before {
+  background:
+    linear-gradient(90deg, transparent 0 48%, rgba(52, 216, 238, .16) 49% 51%, transparent 52% 100%),
+    radial-gradient(circle, rgba(255,255,255,.38) 0 1px, transparent 1.6px);
+  background-size: 100% 100%, 82px 82px;
+  opacity: .25;
+  transform: perspective(900px) rotateX(62deg) translateY(8%);
+}
+
+.entry-gate::after {
+  background: conic-gradient(from 180deg at 50% 50%, transparent, rgba(52,216,238,.16), transparent, rgba(255,185,35,.12), transparent);
+  mask-image: radial-gradient(circle, transparent 0 8rem, #000 8.2rem 24rem, transparent 25rem);
+  animation: v1LandingRadar 9s linear infinite;
+  opacity: .7;
+}
+
+.entry-space {
+  transform-origin: center;
+  transition: transform 1600ms var(--v1-ease), filter 1600ms var(--v1-ease), opacity 1100ms var(--v1-ease);
+}
+
+.entry-gate.is-launching .entry-space {
+  transform: scale(3.8) rotate(16deg);
+  filter: blur(4px) brightness(1.45);
+  opacity: .2;
+}
+
+.entry-gate.is-launching .entry-progress span {
+  animation-duration: 1800ms;
+}
+
+.entry-gate.is-launching .enter-verse {
+  transform: translateY(3px) scale(.96);
+  opacity: .76;
+}
+
+.entry-gate.is-launching .entry-copy,
+.entry-gate.is-launching .entry-hints {
+  opacity: .18;
+  transform: translateY(16px);
+}
+
+.entry-gate.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 520ms var(--v1-ease), visibility 0s linear 520ms;
+}
+
+.enter-verse {
+  position: relative;
+  isolation: isolate;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.12) inset, 0 18px 70px rgba(255, 185, 35, .22);
+}
+
+.enter-verse::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: inherit;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 185, 35, .32), transparent 60%);
+  z-index: -1;
+  opacity: .6;
+  animation: v1EnterPulse 1800ms ease-in-out infinite;
+}
+
+/* Main world: make it feel like a scene, not a stacked webpage. */
+.verse-stage {
+  min-height: 100vh;
+  isolation: isolate;
+}
+
+.verse-control {
+  top: max(16px, env(safe-area-inset-top));
+  left: 28px;
+  right: 28px;
+  background: transparent;
+  border: 0;
+  pointer-events: none;
+  z-index: 90;
+}
+
+.verse-brand,
+.hud-controls {
+  pointer-events: auto;
+}
+
+.verse-brand {
+  background: rgba(4, 12, 18, .52);
+  border: 1px solid rgba(52, 216, 238, .18);
+  backdrop-filter: blur(18px);
+  border-radius: 18px;
+  padding: 8px 10px;
+}
+
+.hud-controls {
+  gap: 10px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+.hud-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: rgba(5, 17, 26, .62);
+  border-color: rgba(52, 216, 238, .22);
+  backdrop-filter: blur(20px);
+  transition: transform 220ms var(--v1-ease), background 220ms var(--v1-ease), border-color 220ms var(--v1-ease), box-shadow 220ms var(--v1-ease);
+}
+
+.hud-btn:hover,
+.hud-btn:focus-visible {
+  transform: translateY(-2px);
+  background: rgba(7, 26, 38, .92);
+  border-color: rgba(52, 216, 238, .58);
+  box-shadow: 0 0 0 4px rgba(52, 216, 238, .09), 0 14px 36px rgba(0,0,0,.38);
+}
+
+.hud-btn.is-active {
+  border-color: rgba(255, 185, 35, .72);
+  color: var(--v1-gold);
+}
+
+/* SVG tooltip for command controls. */
+[data-tip] {
+  position: relative;
+}
+
+[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  right: 50%;
+  top: calc(100% + 10px);
+  transform: translateX(50%) translateY(-4px);
+  width: max-content;
+  max-width: 220px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: rgba(2, 8, 12, .92);
+  color: #d9faff;
+  border: 1px solid rgba(52, 216, 238, .18);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+  z-index: 999;
+}
+
+[data-tip]:hover::after,
+[data-tip]:focus-visible::after {
+  opacity: 1;
+  transform: translateX(50%) translateY(0);
+}
+
+/* Live deck becomes a compact status chip. Detailed settings move to Settings. */
+.command-deck {
+  top: auto;
+  left: 28px;
+  bottom: 30px;
+  width: min(310px, calc(100vw - 56px));
+  max-height: none;
+  padding: 14px 16px;
+  border-radius: 22px;
+  background: rgba(4, 12, 18, .56);
+  border: 1px solid rgba(52, 216, 238, .18);
+  backdrop-filter: blur(22px);
+  box-shadow: 0 20px 70px rgba(0,0,0,.35);
+  z-index: 65;
+}
+
+.command-deck .deck-grid,
+.command-deck .performance-director,
+.command-deck .deck-advisor {
+  display: none !important;
+}
+
+.command-deck__header {
+  margin-bottom: 10px;
+}
+
+.command-deck__header span {
+  color: var(--v1-cyan);
+}
+
+.deck-progress {
+  height: 3px;
+}
+
+/* Active chapter rail: compact game progression indicator. */
+.chapter-rail {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border: 1px solid rgba(52, 216, 238, .18);
+  border-radius: 999px;
+  background: rgba(4, 12, 18, .58);
+  backdrop-filter: blur(24px);
+  box-shadow: 0 18px 60px rgba(0,0,0,.38);
+  z-index: 70;
+}
+
+.chapter-rail__meta {
+  min-width: 116px;
+  display: grid;
+  gap: 1px;
+  padding-right: 10px;
+  border-right: 1px solid rgba(255,255,255,.1);
+}
+
+.chapter-rail__meta span {
+  color: var(--v1-gold);
+  font: 800 12px/1 Montserrat, sans-serif;
+  letter-spacing: .1em;
+}
+
+.chapter-rail__meta strong {
+  color: #fff;
+  font: 800 12px/1.2 Montserrat, sans-serif;
+  white-space: nowrap;
+}
+
+.chapter-rail__items {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chapter-rail__item {
+  width: 13px;
+  height: 13px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(160, 185, 199, .32);
+  background: rgba(160, 185, 199, .24);
+  cursor: pointer;
+  transition: width 220ms var(--v1-ease), border-color 220ms var(--v1-ease), background 220ms var(--v1-ease), transform 220ms var(--v1-ease);
+}
+
+.chapter-rail__item.is-active {
+  width: 36px;
+  border-radius: 999px;
+  border-color: rgba(255, 185, 35, .9);
+  background: linear-gradient(90deg, var(--v1-gold), var(--v1-cyan));
+  box-shadow: 0 0 28px rgba(255, 185, 35, .28);
+}
+
+.chapter-rail__count {
+  color: var(--v1-muted);
+  font: 700 11px/1 Montserrat, sans-serif;
+  letter-spacing: .08em;
+}
+
+.zone-nav {
+  display: none !important;
+}
+
+/* Mission panel becomes the single storytelling focus. */
+.mission-panel {
+  top: auto !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: 96px !important;
+  transform: translateX(-50%) !important;
+  width: min(720px, calc(100vw - 56px));
+  padding: 22px 24px;
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, rgba(7, 18, 29, .86), rgba(4, 10, 16, .68)),
+    radial-gradient(circle at 12% 0%, rgba(52, 216, 238, .14), transparent 18rem);
+  border: 1px solid rgba(52, 216, 238, .22);
+  box-shadow: 0 28px 90px rgba(0,0,0,.42);
+  backdrop-filter: blur(24px);
+  z-index: 60;
+}
+
+.mission-panel::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,.045);
+  pointer-events: none;
+}
+
+.mission-kicker {
+  color: var(--v1-gold);
+  letter-spacing: .2em;
+}
+
+.mission-panel h2 {
+  font-size: clamp(28px, 5vw, 54px);
+  line-height: .92;
+  letter-spacing: -.055em;
+  max-width: 660px;
+}
+
+.mission-panel p:not(.mission-kicker) {
+  max-width: 620px;
+}
+
+.zone-terminal {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: #dffcff;
+  background: rgba(0, 0, 0, .28);
+  border: 1px solid rgba(52, 216, 238, .14);
+  border-radius: 16px;
+  padding: 11px 14px;
+}
+
+.library-badges {
+  display: none;
+}
+
+.mission-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mission-btn {
+  border-radius: 999px;
+}
+
+.mission-btn.primary {
+  background: linear-gradient(135deg, var(--v1-gold), #ffdf84);
+  color: #201200;
+}
+
+/* World objects should support the active chapter instead of competing with it. */
+.universe-plane {
+  transition: transform 900ms var(--v1-ease), opacity 500ms var(--v1-ease), filter 500ms var(--v1-ease);
+}
+
+body[data-chapter="arrival-core"] .universe-plane {
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+body[data-chapter="technology-orbit"] .universe-plane {
+  transform: translate3d(0, -2vh, 0) scale(1.06);
+}
+
+body[data-chapter="product-missions"] .universe-plane,
+body[data-chapter="proof-signals"] .universe-plane,
+body[data-chapter="client-transmissions"] .universe-plane,
+body[data-chapter="launch-dock"] .universe-plane {
+  transform: translate3d(0, -6vh, 0) scale(.92);
+}
+
+body[data-chapter="product-missions"] .particle-layer,
+body[data-chapter="proof-signals"] .particle-layer,
+body[data-chapter="client-transmissions"] .particle-layer,
+body[data-chapter="launch-dock"] .particle-layer {
+  opacity: .12;
+  filter: blur(1px);
+}
+
+body[data-chapter="launch-dock"] .mission-panel {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(20px) !important;
+}
+
+.gallery-card,
+.proof-focus,
+.review-card {
+  background:
+    linear-gradient(145deg, rgba(6, 20, 31, .9), rgba(3, 10, 15, .75)),
+    radial-gradient(circle at 0 0, rgba(52, 216, 238, .14), transparent 16rem);
+  border: 1px solid rgba(52, 216, 238, .24);
+  border-radius: 30px;
+  backdrop-filter: blur(22px);
+  box-shadow: 0 24px 80px rgba(0,0,0,.42);
+}
+
+body[data-chapter="product-missions"] .gallery-card,
+body[data-chapter="proof-signals"] .proof-focus,
+body[data-chapter="client-transmissions"] .review-card {
+  animation: v1PanelDock 640ms var(--v1-ease) both;
+}
+
+/* Guide is now onboarding, not a permanent visual competitor. */
+.guide-overlay {
+  background: linear-gradient(90deg, transparent, rgba(0, 0, 0, .22));
+  pointer-events: none;
+}
+
+.guide-overlay.is-visible {
+  pointer-events: auto;
+}
+
+.guide-card {
+  border-radius: 28px;
+  border-color: rgba(255, 185, 35, .28);
+  background: rgba(4, 12, 18, .84);
+  backdrop-filter: blur(26px);
+}
+
+.guide-actions {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 10px;
+}
+
+#guideSkip {
+  color: var(--v1-muted);
+  border-color: rgba(160,185,199,.2);
+}
+
+/* Settings drawer: all game/product controls live in one place. */
+.settings-panel {
+  position: fixed;
+  top: 84px;
+  right: 28px;
+  width: min(390px, calc(100vw - 40px));
+  max-height: calc(100vh - 112px);
+  overflow: auto;
+  padding: 18px;
+  border-radius: 28px;
+  background:
+    linear-gradient(145deg, rgba(6, 19, 30, .94), rgba(3, 8, 13, .88)),
+    radial-gradient(circle at 100% 0%, rgba(255, 185, 35, .12), transparent 18rem);
+  border: 1px solid rgba(52, 216, 238, .24);
+  box-shadow: 0 32px 110px rgba(0,0,0,.5);
+  backdrop-filter: blur(28px);
+  z-index: 120;
+  opacity: 0;
+  transform: translateY(-12px) scale(.98);
+  pointer-events: none;
+  transition: opacity 220ms var(--v1-ease), transform 220ms var(--v1-ease);
+}
+
+body.settings-open .settings-panel {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.settings-panel__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.settings-panel__head p {
+  margin: 0 0 5px;
+  color: var(--v1-gold);
+  font: 800 11px/1 Montserrat, sans-serif;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.settings-panel__head h2 {
+  margin: 0;
+  color: var(--v1-text);
+  font: 900 28px/.92 Montserrat, sans-serif;
+  letter-spacing: -.04em;
+}
+
+.settings-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  color: #fff;
+  cursor: pointer;
+}
+
+.settings-group {
+  padding: 14px 0;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.settings-group label,
+.settings-group strong {
+  display: block;
+  margin-bottom: 9px;
+  color: #eefbff;
+  font: 800 12px/1.2 Montserrat, sans-serif;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.settings-group p {
+  margin: 8px 0 0;
+  color: var(--v1-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.settings-segment {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.settings-segment.two {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.settings-segment button,
+.settings-action {
+  min-height: 38px;
+  border-radius: 999px;
+  border: 1px solid rgba(52, 216, 238, .18);
+  background: rgba(255,255,255,.04);
+  color: #d9faff;
+  font: 800 11px/1 Montserrat, sans-serif;
+  letter-spacing: .05em;
+  cursor: pointer;
+}
+
+.settings-segment button.is-active {
+  background: linear-gradient(135deg, rgba(255,185,35,.95), rgba(52,216,238,.9));
+  color: #031015;
+  border-color: transparent;
+}
+
+.settings-action {
+  width: 100%;
+  margin-top: 8px;
+}
+
+body[data-motion="reduced"] *,
+body[data-motion="reduced"] *::before,
+body[data-motion="reduced"] *::after {
+  animation-duration: .001ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+}
+
+body[data-interface="focus"] .object-tooltip:not(.is-open),
+body[data-interface="focus"] .mission-briefing:not(.is-open) {
+  pointer-events: none;
+}
+
+body[data-density="low"] .star-canvas,
+body[data-density="low"] .three-universe-canvas,
+body[data-density="low"] .space-aura {
+  opacity: .5;
+}
+
+body[data-density="cinematic"] .space-aura,
+body[data-density="cinematic"] .three-universe-canvas {
+  opacity: 1;
+  filter: saturate(1.22) contrast(1.08);
+}
+
+/* Mobile: command should become simple, not cramped. */
+@media (max-width: 900px) {
+  .verse-control {
+    left: 14px;
+    right: 14px;
+  }
+
+  .verse-brand span:last-child {
+    display: none;
+  }
+
+  .hud-controls {
+    gap: 6px;
+  }
+
+  .hud-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+  }
+
+  .command-deck {
+    display: none;
+  }
+
+  .mission-panel {
+    bottom: 96px !important;
+    width: calc(100vw - 24px);
+    padding: 18px;
+    border-radius: 24px;
+  }
+
+  .mission-panel h2 {
+    font-size: clamp(30px, 10vw, 42px);
+  }
+
+  .mission-intelligence,
+  .zone-terminal {
+    display: none;
+  }
+
+  .chapter-rail {
+    bottom: 74px;
+    padding: 8px 10px;
+    max-width: calc(100vw - 20px);
+  }
+
+  .chapter-rail__meta {
+    display: none;
+  }
+
+  .settings-panel {
+    top: 72px;
+    right: 10px;
+    width: calc(100vw - 20px);
+  }
+
+  .zoom-dock {
+    display: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .entry-gate h1 {
+    font-size: clamp(42px, 14vw, 72px);
+  }
+
+  .entry-copy {
+    max-width: 34ch;
+  }
+
+  .entry-hints {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mission-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .guide-card {
+    width: calc(100vw - 22px);
+    right: 11px;
+  }
+
+  .guide-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  #guideSkip {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entry-gate::after,
+  .enter-verse::after,
+  body[data-chapter="product-missions"] .gallery-card,
+  body[data-chapter="proof-signals"] .proof-focus,
+  body[data-chapter="client-transmissions"] .review-card {
+    animation: none !important;
+  }
+
+  .entry-space,
+  .universe-plane,
+  .mission-panel,
+  .hud-btn,
+  .chapter-rail__item {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes v1LandingRadar {
+  to { transform: rotate(1turn); }
+}
+
+@keyframes v1EnterPulse {
+  50% { opacity: .95; transform: scale(1.08); }
+}
+
+@keyframes v1PanelDock {
+  from { opacity: 0; transform: translate3d(0, 18px, 0) scale(.96); filter: blur(6px); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
+}

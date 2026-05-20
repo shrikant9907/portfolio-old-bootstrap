@@ -1,8 +1,9 @@
 /*
  * Guided tour controller
  * ----------------------
- * Owns the onboarding overlay. It does not decide app state by itself;
- * it only highlights targets and moves between guide steps.
+ * Owns the onboarding overlay. The v1 experience uses sessionStorage so the
+ * guide appears automatically only once per browser tab session. Manual replay
+ * is always available from the Help or Settings controls.
  */
 (function initShrimoVerseGuideController(window) {
   'use strict';
@@ -13,23 +14,29 @@
     const { $, $$ } = SV.dom;
     const { els, state, guideSteps } = context;
 
-    function startGuide() {
+    function startGuide(options = {}) {
       context.actions.stopAutoFlight();
+
+      if (options.auto && context.experience && !context.experience.shouldShowGuideAutomatically()) {
+        return;
+      }
+
       state.guideIndex = 0;
       els.guideOverlay.classList.add('is-visible');
       els.guideOverlay.setAttribute('aria-hidden', 'false');
       showGuideStep();
     }
 
-    function closeGuide() {
+    function closeGuide(markSeen = true) {
       els.guideOverlay.classList.remove('is-visible');
       els.guideOverlay.setAttribute('aria-hidden', 'true');
       $$('.guide-target').forEach((el) => el.classList.remove('guide-target'));
+      if (markSeen) context.experience?.markGuideSeen?.();
     }
 
     function stepGuide(direction) {
       if (direction > 0 && state.guideIndex === guideSteps.length - 1) {
-        closeGuide();
+        closeGuide(true);
         return;
       }
 
@@ -52,6 +59,8 @@
       const target = $(step.target);
       if (target) target.classList.add('guide-target');
     }
+
+    els.guideSkip?.addEventListener('click', () => closeGuide(true));
 
     return {
       startGuide,

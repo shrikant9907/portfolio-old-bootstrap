@@ -31,9 +31,9 @@
   const ZONES = [
     { name: 'Arrival Core', hint: 'Start from the center.', title: 'Welcome to Shrimo Verse.', kicker: 'ARRIVAL CORE', copy: 'SV stays fixed in the center. Skills and technologies orbit around it like a living product universe.', focus: 'Identity + system architecture', proof: 'Static SEO content stays readable while enhanced layers add motion and WebGL depth.' },
     { name: 'Technology Orbit', hint: 'Skills and tools around the core.', title: 'Skills orbit the core.', kicker: 'TECHNOLOGY ORBIT', copy: 'Only technologies and tools orbit SV. Zoom in to reveal deeper tools without crowding the screen.', focus: 'Frontend stack intelligence', proof: 'Core, deep, and hidden skills are separated so the interface stays usable at every zoom level.' },
-    { name: 'Product Gallery', hint: 'Products are shown separately.', title: 'Products enter as gallery signals.', kicker: 'PRODUCT GALLERY', copy: 'Projects do not clutter the orbit. Use the product dots to inspect Shrimo, Digiting Card, Photocopywala, and the directory platform.', focus: 'Product thinking + case study flow', proof: 'Every product card now shows problem, build approach, stack, result, and next action.' },
+    { name: 'Product Missions', hint: 'One build file opens at a time.', title: 'Projects open as mission files.', kicker: 'PRODUCT MISSIONS', copy: 'Every product appears as a focused build file with problem, approach, stack, result, and next action. No crowded project grid.', focus: 'Product thinking + case study flow', proof: 'Every mission card shows problem, build approach, stack, result, and next action.' },
     { name: 'Proof Ring', hint: 'Delivery proof appears as data dots.', title: 'Proof becomes data.', kicker: 'PROOF RING', copy: 'Experience, delivered work, training, and product-building proof appear as separate signals, not mixed with the skill orbit.', focus: 'Trust signals and measurable history', proof: 'Numbers are presented as focused data signals instead of noisy generic achievement cards.' },
-    { name: 'Client Signals', hint: 'Reviews are readable, not crowded.', title: 'Client signals confirm the path.', kicker: 'CLIENT SIGNAL STREAM', copy: 'Real reviews appear as clean signal dots with one readable review panel at a time.', focus: 'Readable social proof', proof: 'Signal cards keep testimonials easy to scan on desktop and mobile without overcrowding the orbit.' },
+    { name: 'Client Transmissions', hint: 'One readable signal at a time.', title: 'Client transmissions confirm the path.', kicker: 'CLIENT TRANSMISSIONS', copy: 'Real reviews appear like incoming transmissions with one readable signal selected at a time.', focus: 'Readable social proof', proof: 'Signal cards keep testimonials easy to scan on desktop and mobile without overcrowding the orbit.' },
     { name: 'Launch Dock', hint: 'Contact paths are the final dock.', title: 'Reach the Launch Dock.', kicker: 'LAUNCH DOCK', copy: 'When the path is clear, use the Launch Dock to send a message, call, email, or open professional links.', focus: 'Conversion and project start', proof: 'The final screen keeps WhatsApp primary and all other contact paths secondary.' }
   ];
 
@@ -147,8 +147,8 @@
       return [
         { title: 'Travel by touch', text: 'Swipe left or right to move between Shrimo Verse zones.', target: '.mobile-control-dock' },
         { title: 'Inspect particles', text: 'Tap a glowing skill node to open its story.', target: '.verse-node[data-id="html"]' },
-        { title: 'Project dots', text: 'Projects open from clean dots, not crowded orbit labels.', target: '#productGalleryLayer' },
-        { title: 'Review signals', text: 'Client reviews appear as readable signal cards.', target: '#clientSignalLayer' },
+        { title: 'Product missions', text: 'Projects open from clean mission dots, not crowded orbit labels.', target: '#productGalleryLayer' },
+        { title: 'Client transmissions', text: 'Client reviews appear as readable transmission cards.', target: '#clientSignalLayer' },
         { title: 'Zoom in Explore', text: 'Use Orbit Zoom or pinch in Free Explore to reveal deeper tools.', target: '.zoom-dock' },
         { title: 'Launch Project', text: 'Use Launch when you are ready to start a project conversation.', target: '.mobile-control-dock a' }
       ];
@@ -158,8 +158,8 @@
       { title: 'Pilot the rocket', text: 'Move your cursor to pilot the rocket cursor through Shrimo Verse.', target: '#rocketCursor' },
       { title: 'Inspect skills', text: 'Only skills and technologies orbit the SV core. Hover to scan them.', target: '.verse-node[data-id="html"]' },
       { title: 'Open details', text: 'Click a glowing node to open its story.', target: '.verse-node[data-id="react"]' },
-      { title: 'Project gallery', text: 'Projects are managed separately as dots and a focused gallery panel.', target: '#productGalleryLayer' },
-      { title: 'Client signals', text: 'Reviews are readable signal dots, not orbit clutter.', target: '#clientSignalLayer' },
+      { title: 'Product missions', text: 'Projects open as focused mission files, one build story at a time.', target: '#productGalleryLayer' },
+      { title: 'Client transmissions', text: 'Reviews appear as readable transmissions, not orbit clutter.', target: '#clientSignalLayer' },
       { title: 'Zoom deeper', text: 'Use Orbit Zoom to reveal hidden tools and details.', target: '.zoom-dock' },
       { title: 'Return to Core', text: 'Lost in the orbit? Return to Core anytime.', target: '#returnCore' }
     ];

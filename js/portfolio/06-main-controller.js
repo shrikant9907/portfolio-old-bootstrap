@@ -31,7 +31,8 @@
       commandDeck: null,
       polish: null,
       missionBriefing: null,
-      performanceDirector: null
+      performanceDirector: null,
+      experience: null
     };
 
     const actions = {
@@ -55,6 +56,7 @@
     context.polish = SV.polish?.createInteractionPolish?.(context) || null;
     context.missionBriefing = SV.missionBriefing?.createMissionBriefing?.(context) || null;
     context.performanceDirector = SV.performanceDirector?.createPerformanceDirector?.(context) || null;
+    context.experience = SV.experience?.createExperienceDirector?.(context) || null;
 
     function init() {
       document.body.classList.toggle('touch-device', context.config.isTouch);
@@ -69,6 +71,7 @@
       context.effects.bindPageVisibility();
       context.effects.initStars();
       context.performanceDirector?.init?.();
+      context.experience?.init?.();
       context.universe?.init?.();
       context.commandDeck?.init?.();
       context.polish?.init?.();
@@ -96,6 +99,7 @@
         state.launchStart = performance.now();
         context.terminal?.stopEntry?.();
         context.motion?.playEntryLaunch?.();
+        context.experience?.beginLaunch?.();
         context.universe?.launch?.();
         els.enterVerse.disabled = true;
         els.enterVerse.textContent = 'Entering...';
@@ -136,8 +140,9 @@
           state.isLaunching = false;
           state.rocketCentering = false;
           setZone(0);
+          context.experience?.completeArrival?.();
           context.motion?.revealInterface?.();
-          window.setTimeout(() => context.guide.startGuide(), config.prefersReducedMotion ? 120 : 200);
+          window.setTimeout(() => context.guide.startGuide({ auto: true }), config.prefersReducedMotion ? 120 : 200);
         }, config.prefersReducedMotion ? 180 : 2400);
       });
     }
@@ -325,6 +330,7 @@
       context.polish?.updateLaunchReadiness?.(state.currentZone);
       context.missionBriefing?.updateZone?.(state.currentZone);
       context.performanceDirector?.updateZone?.(state.currentZone);
+      context.experience?.updateZone?.(state.currentZone, options);
       if (!options.immediate) context.motion?.playZoneChange?.(state.currentZone);
       if (!options.immediate && !config.prefersReducedMotion) pulseZone();
     }

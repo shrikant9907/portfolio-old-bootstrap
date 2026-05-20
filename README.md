@@ -1,103 +1,104 @@
-# Shrimo Verse v0.0.5
+# Shrimo Verse v1.0 Experience
 
-Shrimo Verse is an interactive cinematic portfolio universe for Shrikant Yadav / Shrimo Innovations.
+Shrimo Verse is a cinematic interactive portfolio for **Shrikant Yadav** and **Shrimo Innovations**. It is built as a static HTML/CSS/JavaScript project with progressive enhancement for 3D, motion, typed terminal text, guided exploration, and conversion-focused contact paths.
 
-## What changed in v0.0.3
+## Current final direction
 
-- Added a cinematic 3D/WebGL-ready universe layer.
-- Added a safe vendor bridge for GSAP, Typed.js, and Three.js-style enhancements.
-- Added local fallbacks so the static site does not break when CDN libraries are unavailable.
-- Added typed terminal lines for the entry gate, SV core, zone status, and launch dock.
-- Added GSAP-style motion hooks for entry launch, panel reveals, tooltips, and zone changes.
-- Upgraded product cards with stack tags and impact/result copy.
-- Added stronger cinematic CSS polish, depth, glass surfaces, glowing core energy, and CTA motion.
+This version is no longer a normal portfolio page with animations. It is a guided sci-fi portfolio experience:
 
-## Important testing note
+1. **Landing Gate** — the user first sees a focused curiosity screen.
+2. **Launch Sequence** — clicking Enter starts a short cinematic transition.
+3. **Arrival Core** — the user enters Shrimo Verse and sees the SV core.
+4. **Technology Orbit** — skills and tools orbit the core.
+5. **Product Missions** — projects open one focused mission file at a time.
+6. **Proof Signals** — delivery proof appears as data signals.
+7. **Client Transmissions** — reviews appear as readable signal cards.
+8. **Launch Dock** — the final conversion section for WhatsApp, call, email, and profile links.
 
-Open this project through a local server, not by double-clicking `index.html`.
+## How to run locally
 
-Recommended:
+Use a local server instead of double-clicking `index.html`:
 
 ```bash
-python3 -m http.server 3000
+python3 -m http.server 5500
 ```
 
 Then open:
 
 ```txt
-http://localhost:3000
+http://localhost:5500
 ```
 
-## Main file structure
+## Important files
 
 ```txt
-css/
-  portfolio-style.css
-  cursor-rocket.css
-  modules/
-    01-foundation.css
-    02-separated-layers.css
-    03-polish-overrides.css
-    04-cinematic-upgrade.css
-    05-third-party-cinematic.css
-    06-command-deck-and-polish.css
-    07-mission-briefing-performance.css
-
-js/
-  vendors/
-    00-vendor-bridge.js
-  three/
-    01-cinematic-universe.js
-  animation/
-    01-motion-system.js
-  ui/
-    01-typed-terminal.js
-    02-command-deck.js
-    03-interaction-polish.js
-    04-mission-briefing.js
-    05-performance-director.js
-  portfolio/
-    01-config.js
-    02-dom-state-utils.js
-    03-layer-renderer.js
-    04-guide-controller.js
-    05-scene-effects.js
-    06-main-controller.js
-  cursor-rocket.js
+index.html
+css/portfolio-style.css
+css/modules/08-v1-experience-flow.css
+js/experience/01-experience-director.js
+js/portfolio/01-config.js
+js/portfolio/06-main-controller.js
+js/portfolio/04-guide-controller.js
 ```
 
-## Developer guide
+## Editing content
 
-- Update portfolio content in `js/portfolio/01-config.js`.
-- Update DOM selectors in `js/portfolio/02-dom-state-utils.js`.
-- Update rendered product/proof/review HTML in `js/portfolio/03-layer-renderer.js`.
-- Update guide steps in `js/portfolio/01-config.js`.
-- Update cinematic background behavior in `js/three/01-cinematic-universe.js`.
-- Update motion choreography in `js/animation/01-motion-system.js`.
-- Update typed messages in `js/ui/01-typed-terminal.js`.
-- Update premium visual styling in `css/modules/05-third-party-cinematic.css`, `06-command-deck-and-polish.css`, or `07-mission-briefing-performance.css`.
+Update portfolio content in:
 
-## Dependency strategy
+```txt
+js/portfolio/01-config.js
+```
 
-This project remains static and does not require a build step.
+This file contains:
 
-The HTML includes optional defer CDN references for Three.js, GSAP, and Typed.js. The local vendor bridge keeps the site working even when those CDN files do not load.
+- `ZONES`
+- `ORBIT_PARTICLES`
+- `PRODUCTS`
+- `PROOFS`
+- `REVIEWS`
+- guide steps
 
+## Editing the cinematic experience
 
-## v0.0.4 additions
+Use these files:
 
-- Live Build Deck cockpit for active zone, runtime, input, and enhancement status.
-- Product cards upgraded into mini case studies with problem, approach, stack, and result.
-- New interaction polish layer with magnetic hover and number-key zone shortcuts.
-- CDN scripts now use `defer` so vendor detection runs in a more reliable order while fallbacks remain active.
+```txt
+css/modules/08-v1-experience-flow.css
+js/experience/01-experience-director.js
+```
 
+The experience director controls:
 
+- landing / launching / verse states
+- active chapter styling
+- one-time session guide behavior
+- settings drawer
+- chapter rail
+- reduced-clutter focus mode
 
-## v0.0.5 additions
+## Current UX rule
 
-- Added a Mission Briefing drawer that explains the active zone, product case-study logic, proof context, review context, and next action.
-- Added a Performance Director with Essential, Balanced, and Cinematic quality modes.
-- Added keyboard shortcuts: `M` opens Mission Briefing and `Q` cycles visual quality.
-- Added adaptive quality fallback that can reduce cinematic mode when FPS is consistently low.
-- Fixed a duplicated guide-actions wrapper in `index.html`.
-- Kept all upgrades isolated in `js/ui/04-mission-briefing.js`, `js/ui/05-performance-director.js`, and `css/modules/07-mission-briefing-performance.css`.
+Only one primary focus should be visible at a time.
+
+Do not add permanent panels everywhere. New details should open only when needed through mission cards, tooltips, drawers, or the settings panel.
+
+## Testing checklist
+
+Before deploying, test:
+
+- Enter button starts the launch sequence.
+- Tutorial appears only once in the same browser tab session.
+- Help button can replay the tutorial manually.
+- Settings opens and closes.
+- Chapter rail moves between sections.
+- Left/right arrow keys move chapters.
+- `M` opens Mission Briefing.
+- `S` opens Settings.
+- `Q` cycles quality mode.
+- Launch Dock links work.
+- Mobile swipe moves chapters.
+- Reduced motion mode still keeps content usable.
+
+## Version
+
+Current stable test package: **shrimo-verse-v1.0-experience**
