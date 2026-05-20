@@ -148,3 +148,17 @@ Additional assistant files:
 ```
 
 All agents should read `AI_AGENT_START_HERE.md` first.
+
+## Final Working Project Package
+
+**Updated:** 20 May 2026, 16:45 IST
+
+This package includes the working Shrimo Verse app, required docs, AI-agent files, and the complete `steps/` planning system.
+
+See:
+
+```txt
+FINAL_PROJECT_CHECK.md
+```
+
+for the final package validation record.

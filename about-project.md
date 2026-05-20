@@ -164,3 +164,16 @@ GEMINI.md
 ```
 
 These files tell AI tools to read project rules, about-project, changelog, and steps before editing.
+
+## Final Working Project Package
+
+**Updated:** 20 May 2026, 16:45 IST
+
+The current final project package keeps the working static Shrimo Verse app together with:
+
+- mandatory project rules,
+- full about-project guide,
+- preserved changelog memory,
+- AI-agent entry files,
+- complete scene planning in `steps/`,
+- final validation record in `FINAL_PROJECT_CHECK.md`.
