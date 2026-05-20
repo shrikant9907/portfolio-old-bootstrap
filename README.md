@@ -67,3 +67,60 @@ Do not add another visual recovery CSS file. If something breaks visually, audit
 ## Rocket Cursor Fix Note
 
 This build restores the desktop rocket cursor. It is enabled only on devices with a fine pointer/hover support and remains disabled on touch/mobile devices. Reduced-motion mode keeps the cursor visible but removes the trail/noisy flame motion.
+
+
+## Mandatory Steps Folder
+
+**Updated:** 20 May 2026, 15:40 IST
+
+This project must always include the root `steps/` folder.
+
+Before editing any scene or feature, read:
+
+```txt
+project-rules.md
+about-project.md
+steps/00-steps-index.md
+```
+
+The `steps/` folder contains pre-planned markdown files for each Shrimo Verse scene from start to end, including scene purpose, connection, animation triggers, and mobile/tablet/desktop behavior.
+
+## Master Product Planning System
+
+**Updated:** 20 May 2026, 15:55 IST
+
+The refined expert-level product plan is now stored permanently at:
+
+```txt
+steps/00-master-product-planning-system.md
+```
+
+Before any future code or UI work, read in this order:
+
+```txt
+project-rules.md
+about-project.md
+steps/00-master-product-planning-system.md
+steps/00-steps-index.md
+```
+
+This prevents patch stacking and forces product-first, scene-first, mobile-first planning.
+
+## Steps Flow Management Upgrade
+
+**Updated:** 20 May 2026, 16:10 IST
+
+The `steps/` folder has been refined so each major step now includes:
+
+- previous scene,
+- next scene,
+- trigger,
+- connected layers/cards,
+- mobile animation,
+- tablet animation,
+- desktop animation,
+- transition rules,
+- failure risks,
+- completion test.
+
+Read `steps/00-flow-transition-map.md` first, then the relevant step file.

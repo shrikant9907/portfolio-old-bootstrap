@@ -1,5 +1,39 @@
 # Changelog
 
+## Steps Flow Management Refined — 20 May 2026, 16:10 IST
+
+- Added `steps/00-flow-transition-map.md`.
+- Updated major step files with previous/next scene mapping.
+- Added connected layers/cards/objects for each step.
+- Added mobile/tablet/desktop animation behavior to each step.
+- Added transition rules and failure risks for each step.
+- Updated master planning system with mandatory previous/next/device animation planning.
+- Updated README, about-project, project-rules, and testing checklist references.
+
+
+# Changelog
+
+## Master Product Planning System Added — 20 May 2026, 15:55 IST
+
+- Added `steps/00-master-product-planning-system.md`.
+- Stored the refined expert-level product strategy, scene flow, UI impression rules, motion trigger plan, conversion strategy, architecture rules, and QA standard.
+- Updated `README.md`, `about-project.md`, `project-rules.md`, and `steps/00-steps-index.md` to reference the master plan.
+- Future builds must read the master plan before coding.
+
+
+# Changelog
+
+## Steps Planning Folder Added — 20 May 2026, 15:40 IST
+
+- Added permanent root `steps/` folder.
+- Added pre-planned markdown files for every Shrimo Verse scene from Mission Entry to QA/Packaging.
+- Documented how scenes connect, what triggers animation, and how each scene behaves on mobile, tablet, and desktop.
+- Updated `README.md`, `about-project.md`, and `project-rules.md` to mark `steps/` as mandatory.
+- Future builds must keep this folder and update the relevant step file when behavior changes.
+
+
+# Changelog
+
 ## Final stable production build
 
 ### Visual system
@@ -56,4 +90,3 @@
 - Reworked desktop pointer detection so hybrid laptops with touch support still get the rocket cursor when a fine pointer/mouse is available.
 - Reduced-motion mode now removes trail/noisy flame motion instead of fully disabling the desktop rocket cursor.
 - Preserved touch/mobile rule: rocket cursor remains disabled on mobile and coarse-pointer devices.
-

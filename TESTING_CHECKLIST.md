@@ -65,3 +65,31 @@ Do not claim Lighthouse scores or real device testing unless actually measured.
 - [ ] Clicking creates a small burst.
 - [ ] On mobile/touch devices, rocket cursor is disabled and normal touch controls work.
 - [ ] In reduced-motion mode, cursor remains visible on desktop but trail/noisy flame motion is reduced.
+
+
+## Steps Folder Validation
+
+Updated: 20 May 2026, 15:40 IST
+
+- [ ] Root `steps/` folder exists.
+- [ ] `steps/00-steps-index.md` exists.
+- [ ] All scene step markdown files exist.
+- [ ] Matching step file was updated for any changed scene.
+- [ ] Each completed scene passes its step checklist.
+
+## Step Flow Management Validation
+
+Updated: 20 May 2026, 16:10 IST
+
+Before approving a scene:
+
+- [ ] Previous scene is defined.
+- [ ] Next scene is defined.
+- [ ] Trigger is defined.
+- [ ] Connected layers/cards are listed.
+- [ ] Mobile animation is defined.
+- [ ] Tablet animation is defined.
+- [ ] Desktop animation is defined.
+- [ ] Failure risks are listed.
+- [ ] Scene completion test is present.
+- [ ] Relevant step file is updated.

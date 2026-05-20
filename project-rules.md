@@ -957,3 +957,58 @@ Only after that should code changes start.
 `CHANGELOG.md` is mandatory and must always remain in the root. It preserves the old stable production decisions, including the full-screen universe interface, no grid/dashboard look, fixed SV core, SVG HUD controls, desktop rocket cursor, mobile bottom dock, no heavy WebGL dependency, clean central orbit, Product Gallery, Client Signals, Proof Ring, and Launch Dock separation.
 
 Before changing Shrimo Verse, read `CHANGELOG.md`, `project-rules.md`, and `about-project.md` together.
+
+
+## 36. Mandatory Steps Folder
+
+Updated: 20 May 2026, 15:40 IST
+
+Every future ZIP must include a root `steps/` folder.
+
+The `steps/` folder must contain scene-by-scene planning markdown files from start to end. These files define:
+
+- scene purpose,
+- scene connection,
+- animation triggers,
+- visible and hidden elements,
+- mobile/tablet/desktop behavior,
+- completion checklist.
+
+Do not delete `steps/`.
+Do not start major coding without reading the relevant step file.
+
+## 37. Master Product Planning System
+
+Updated: 20 May 2026, 15:55 IST
+
+Every future major build must read:
+
+```txt
+steps/00-master-product-planning-system.md
+```
+
+This file contains the refined expert-level planning system for Shrimo Verse.
+
+Do not start coding until the product experience decision, full scene map, scene-by-scene UX table, motion trigger plan, responsive layout plan, conversion plan, keep/remove files list, development order, and QA checklist are prepared.
+
+## 38. Step Flow Management Rule
+
+Updated: 20 May 2026, 16:10 IST
+
+Every scene step must define:
+
+```txt
+Previous
+Current
+Next
+Primary Trigger
+Connected Layers
+Connected Cards / Panels
+Mobile Animation
+Tablet Animation
+Desktop Animation
+Failure Risks
+Completion Test
+```
+
+If this is missing, the step is not ready for coding.

@@ -99,3 +99,51 @@ Future work should improve one scene at a time, with visual verification after e
 Updated on: 20 May 2026
 
 The desktop rocket cursor is part of the stable Shrimo Verse identity. It must work from the Mission Entry screen on desktop/fine-pointer devices, must stay above the entry gate/HUD layers, and must remain disabled on mobile/touch devices. Future UI cleanup must not remove or hide this cursor accidentally.
+
+---
+
+
+## Mandatory Steps Folder
+
+**Updated:** 20 May 2026, 15:40 IST
+
+Every future ZIP must include the root `steps/` folder.
+
+The `steps/` folder contains the planned scene-by-scene system for Shrimo Verse:
+
+1. Mission Entry
+2. Launch Sequence
+3. Arrival Core
+4. Technology Orbit
+5. Product Gallery
+6. Proof Ring
+7. Client Signals
+8. Launch Dock
+
+Each step file documents the purpose, visible content, hidden content, animation triggers, device behavior, and completion checklist.
+
+This folder must not be removed.
+
+## Master Product Planning System
+
+**Updated:** 20 May 2026, 15:55 IST
+
+The final refined planning system for Shrimo Verse is stored in:
+
+```txt
+steps/00-master-product-planning-system.md
+```
+
+This file defines the product strategy, scene flow, UI impression, motion trigger plan, conversion strategy, mobile/tablet/desktop plan, architecture rules, documentation rules, and validation standard.
+
+Future builds must read this file before coding.
+
+## Steps Flow Management Upgrade
+
+**Updated:** 20 May 2026, 16:10 IST
+
+The project now has stronger scene planning inside `steps/`.
+
+Each scene step documents how it connects to the previous/next scene and how animations should behave on mobile, tablet, and desktop.
+
+This is required so future updates do not break flow, overlap controls, or create website-like layouts.
