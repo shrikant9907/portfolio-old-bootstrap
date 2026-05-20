@@ -486,21 +486,12 @@
         }
       }, { passive: true });
 
-      els.stage.addEventListener('touchend', (event) => {
+      els.stage.addEventListener('touchend', () => {
         if (state.pinchStartDistance) {
           state.pinchStartDistance = null;
-          return;
         }
-
-        const touch = event.changedTouches[0];
-        if (!touch) return;
-
-        const dx = touch.clientX - state.touchStartX;
-        const dy = touch.clientY - state.touchStartY;
-        if (Math.abs(dx) > 54 && Math.abs(dx) > Math.abs(dy)) {
-          setZone(state.currentZone + (dx < 0 ? 1 : -1));
-          SV.haptics?.trigger?.('swipe');
-        }
+        // Single-finger swipe navigation is owned by ui/06-gesture-controls.js.
+        // Keeping it out of the main controller prevents double chapter jumps.
       }, { passive: true });
     }
 

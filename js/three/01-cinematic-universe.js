@@ -20,11 +20,23 @@
     let rendererApi = null;
     let started = false;
 
+    function frameInterval() {
+      const capability = state.deviceCapability || 'medium';
+      const mode = state.performanceMode || 'balanced';
+      if (hasReducedMotion || capability === 'low' || mode === 'essential') return 1000 / 24;
+      if (capability === 'medium' || mode === 'balanced') return 1000 / 30;
+      return 1000 / 60;
+    }
+
+    function activeParticleCount(base) {
+      return Math.max(0, Math.round(base * qualityMultiplier()));
+    }
+
     function qualityMultiplier() {
       const mode = state.performanceMode || 'balanced';
       const capability = state.deviceCapability || 'medium';
-      if (capability === 'low') return mode === 'cinematic' ? 0.38 : 0.18;
-      if (capability === 'medium') return mode === 'cinematic' ? 0.72 : mode === 'balanced' ? 0.52 : 0.26;
+      if (capability === 'low') return mode === 'cinematic' ? 0.24 : mode === 'balanced' ? 0.12 : 0;
+      if (capability === 'medium') return mode === 'cinematic' ? 0.62 : mode === 'balanced' ? 0.42 : 0.12;
       if (mode === 'essential') return 0.42;
       if (mode === 'balanced') return 0.72;
       return 1;
@@ -93,9 +105,9 @@
         const camera = new THREE.PerspectiveCamera(58, 1, 0.1, 1200);
         camera.position.z = 260;
 
-        const starCount = Math.max(state.deviceCapability === 'low' ? 36 : 90, Math.round((window.innerWidth < 760 ? 220 : 760) * qualityMultiplier()));
-        const starPositions = new Float32Array(starCount * 3);
-        for (let i = 0; i < starCount; i += 1) {
+        const maxStars = window.innerWidth < 760 ? 220 : 760;
+        const starPositions = new Float32Array(maxStars * 3);
+        for (let i = 0; i < maxStars; i += 1) {
           const i3 = i * 3;
           starPositions[i3] = (Math.random() - 0.5) * 760;
           starPositions[i3 + 1] = (Math.random() - 0.5) * 460;
@@ -104,6 +116,7 @@
 
         const starGeometry = new THREE.BufferGeometry();
         starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+        starGeometry.setDrawRange(0, activeParticleCount(maxStars));
         const starMaterial = new THREE.PointsMaterial({ color: 0x8df3ff, size: 1.15, transparent: true, opacity: 0.58, depthWrite: false });
         const stars = new THREE.Points(starGeometry, starMaterial);
         scene.add(stars);
@@ -117,7 +130,7 @@
         const rings = [86, 136, 192].map((radius, index) => {
           const ring = new THREE.Mesh(
             new THREE.TorusGeometry(radius, 0.5, 8, 140),
-            new THREE.MeshBasicMaterial({ color: index === 1 ? 0xff9f1c : 0x67e8f9, transparent: true, opacity: 0.18 })
+            new THREE.MeshBasicMaterial({ color: index === 1 ? 0x22d3ee : 0x67e8f9, transparent: true, opacity: 0.18 })
           );
           ring.rotation.x = Math.PI * (0.55 + index * 0.04);
           ring.rotation.y = Math.PI * (0.1 + index * 0.06);
@@ -136,9 +149,15 @@
           camera.updateProjectionMatrix();
         }
 
+        let lastRender = 0;
+
         function render(time) {
           window.requestAnimationFrame(render);
           if (state.pageHidden || state.paused) return;
+          if (time - lastRender < frameInterval()) return;
+          lastRender = time;
+          starGeometry.setDrawRange(0, activeParticleCount(maxStars));
+          starMaterial.opacity = 0.22 + qualityMultiplier() * 0.38;
 
           pointer.x += (pointer.tx - pointer.x) * 0.04;
           pointer.y += (pointer.ty - pointer.y) * 0.04;
@@ -165,6 +184,8 @@
         }
 
         function setQuality() {
+          starGeometry.setDrawRange(0, activeParticleCount(maxStars));
+          starMaterial.opacity = 0.22 + qualityMultiplier() * 0.38;
           resize();
         }
 
@@ -195,7 +216,7 @@
         canvas.style.height = `${height}px`;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        const target = Math.max(state.deviceCapability === 'low' ? 18 : 54, Math.round((window.innerWidth < 760 ? 90 : 260) * qualityMultiplier()));
+        const target = activeParticleCount(window.innerWidth < 760 ? 90 : 260);
         particles.length = 0;
         for (let i = 0; i < target; i += 1) {
           particles.push({
@@ -222,9 +243,13 @@
         ctx.restore();
       }
 
+      let lastRender = 0;
+
       function render(time) {
         window.requestAnimationFrame(render);
         if (state.pageHidden || state.paused) return;
+        if (time - lastRender < frameInterval()) return;
+        lastRender = time;
 
         pointer.x += (pointer.tx - pointer.x) * 0.045;
         pointer.y += (pointer.ty - pointer.y) * 0.045;
@@ -251,7 +276,7 @@
 
           ctx.beginPath();
           ctx.arc(x, y, particle.size * depth * (1 + mood.pulse * 0.3), 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${index % 7 === 0 ? '255, 159, 28' : '165, 243, 252'}, ${particle.alpha * twinkle})`;
+          ctx.fillStyle = `rgba(${index % 7 === 0 ? '34, 211, 238' : '165, 243, 252'}, ${particle.alpha * twinkle})`;
           ctx.fill();
         });
 
@@ -261,7 +286,7 @@
 
         ctx.beginPath();
         ctx.arc(cx, cy, 42 + Math.sin(time * 0.002) * 2 + mood.pulse * 18, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(255, 159, 28, ${0.16 + mood.pulse * 0.22})`;
+        ctx.strokeStyle = `rgba(34, 211, 238, ${0.16 + mood.pulse * 0.22})`;
         ctx.lineWidth = 1.2;
         ctx.stroke();
       }

@@ -1,0 +1,477 @@
+/*
+ * Shrimo Verse v1.3.1 Visual Recovery
+ * ------------------------------------
+ * Scene-first cleanup after visual review. This layer removes website-like
+ * panels, heavy borders, article padding, warm color leakage, and overlapping
+ * HUD content. The experience is black/cyan, cinematic, mobile-first, and
+ * focused on one scene at a time.
+ */
+:root {
+  --sv-cyan: #22d3ee;
+  --sv-cyan-soft: #67e8f9;
+  --sv-cyan-bright: #d7fbff;
+  --sv-black: #010305;
+  --sv-black-2: #03080d;
+  --sv-panel-clean: rgba(1, 7, 11, .72);
+  --sv-hairline: rgba(34, 211, 238, .18);
+  --sv-hairline-strong: rgba(103, 232, 249, .44);
+  --sv-text-main: #f1fdff;
+  --sv-text-soft: rgba(217, 250, 255, .76);
+  --sv-text-muted: rgba(151, 190, 202, .58);
+  --sv-bottom-dock-height: 96px;
+  --sv-safe-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+html,
+body,
+body[data-build] {
+  background: var(--sv-black) !important;
+  color: var(--sv-text-main) !important;
+  overflow: hidden !important;
+}
+
+body::before,
+body::after,
+body[data-build]::before,
+body[data-build]::after {
+  background:
+    radial-gradient(circle at 50% 38%, rgba(34, 211, 238, .08), transparent 34%),
+    linear-gradient(180deg, #010305 0%, #02060a 48%, #010305 100%) !important;
+}
+
+/* Global color recovery: black/cyan selected states only. */
+*::selection { background: rgba(34, 211, 238, .28); color: #f1fdff; }
+.hud-btn,
+.mobile-control-dock button,
+.mobile-control-dock a,
+.zone-arrow,
+.chapter-rail__item,
+.mission-btn,
+.product-btn,
+.settings-segment button,
+.quality-switch button,
+.settings-action,
+.guide-actions button,
+.launch-primary-btn,
+.dock-beacons a,
+.tooltip-link {
+  border-color: rgba(34, 211, 238, .16) !important;
+  color: var(--sv-cyan-bright) !important;
+  background: rgba(1, 8, 13, .48) !important;
+  box-shadow: none !important;
+}
+.hud-btn.is-active,
+.hud-btn:hover,
+.hud-btn:focus-visible,
+.mobile-control-dock button:focus-visible,
+.mobile-control-dock a:focus-visible,
+.mobile-control-dock button.is-active,
+.chapter-rail__item.is-active,
+.settings-segment button.is-active,
+.quality-switch button.is-active,
+.world-dot.is-active,
+.world-dot.is-selected,
+.verse-node.is-selected,
+.verse-node.is-focused {
+  background: rgba(34, 211, 238, .14) !important;
+  border-color: rgba(103, 232, 249, .52) !important;
+  color: var(--sv-cyan-bright) !important;
+  box-shadow: 0 0 22px rgba(34, 211, 238, .18) !important;
+}
+
+/* Background must feel deep, not like a huge flat blob on top of content. */
+.three-universe-canvas { opacity: .38 !important; filter: saturate(.9) contrast(.88) !important; }
+.star-canvas { opacity: .5 !important; }
+.space-aura {
+  opacity: .3 !important;
+  transform: translate(-50%, -50%) scale(.56) !important;
+  background: radial-gradient(circle, rgba(34, 211, 238, .14) 0 8%, rgba(34, 211, 238, .045) 34%, transparent 66%) !important;
+  filter: blur(8px) !important;
+}
+.orbit-line {
+  opacity: .38 !important;
+  border-color: rgba(34, 211, 238, .1) !important;
+  box-shadow: none !important;
+}
+
+/* Header: quiet command strip, not a website navbar. */
+.verse-control {
+  height: 48px !important;
+  top: max(8px, env(safe-area-inset-top)) !important;
+  left: 10px !important;
+  right: 10px !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(34, 211, 238, .12) !important;
+  border-radius: 0 !important;
+  background: linear-gradient(180deg, rgba(1, 6, 10, .76), rgba(1, 6, 10, .28)) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(18px);
+}
+.verse-brand { min-height: 40px !important; padding: 0 6px !important; }
+.verse-mark { width: 34px !important; height: 34px !important; border-radius: 10px !important; }
+.hud-controls { gap: 6px !important; }
+.hud-btn { width: 40px !important; height: 40px !important; border-radius: 14px !important; }
+.hud-btn svg { width: 18px !important; height: 18px !important; }
+
+/* Debug/status UI is not part of the cinematic scene. Keep it hidden by default. */
+.command-deck,
+.zoom-dock,
+.deck-grid,
+.performance-director,
+.deck-advisor,
+.mission-intelligence,
+.library-badges,
+.zone-terminal {
+  display: none !important;
+}
+
+/* Scene readout: small signal, not a panel. */
+.state-readout {
+  top: calc(max(8px, env(safe-area-inset-top)) + 56px) !important;
+  width: auto !important;
+  max-width: calc(100vw - 34px) !important;
+  padding: 7px 12px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: rgba(1, 7, 11, .5) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(14px);
+}
+.state-readout span {
+  color: var(--sv-cyan-bright) !important;
+  font-size: .72rem !important;
+  letter-spacing: .16em !important;
+}
+.state-readout em { display: none !important; }
+
+/* Dots should never look like a content block. */
+.chapter-rail {
+  top: calc(max(8px, env(safe-area-inset-top)) + 94px) !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  width: min(64vw, 300px) !important;
+}
+.chapter-rail__items { gap: 7px !important; }
+.chapter-rail__item {
+  width: 7px !important;
+  min-width: 7px !important;
+  height: 7px !important;
+  min-height: 7px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: rgba(103, 232, 249, .22) !important;
+}
+.chapter-rail__item.is-active {
+  width: 26px !important;
+  background: var(--sv-cyan) !important;
+  box-shadow: 0 0 14px rgba(34, 211, 238, .5) !important;
+}
+
+/* Central world focus. */
+.universe-plane { transform: translate3d(0, -2vh, 0) scale(.96); }
+.sv-core {
+  width: clamp(92px, 26vw, 132px) !important;
+  height: clamp(92px, 26vw, 132px) !important;
+  background: radial-gradient(circle at 50% 32%, rgba(103, 232, 249, .22), rgba(1, 8, 12, .92) 55%, #010305 100%) !important;
+  border: 1px solid rgba(103, 232, 249, .42) !important;
+  box-shadow: 0 0 54px rgba(34, 211, 238, .22), inset 0 0 24px rgba(34, 211, 238, .08) !important;
+}
+.sv-core strong { color: var(--sv-cyan-bright) !important; }
+.sv-core em { color: rgba(165, 243, 252, .58) !important; }
+.core-terminal { display: none !important; }
+
+/* Mission panel becomes a lightweight scene caption. No article card, no scrollbar. */
+.mission-panel {
+  left: 50% !important;
+  right: auto !important;
+  top: auto !important;
+  bottom: calc(var(--sv-bottom-dock-height) + var(--sv-safe-bottom) + 16px) !important;
+  transform: translateX(-50%) !important;
+  width: min(88vw, 390px) !important;
+  max-height: none !important;
+  overflow: visible !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  text-align: center !important;
+  pointer-events: none;
+}
+.mission-kicker,
+.dock-kicker,
+.briefing-kicker,
+.tooltip-type {
+  color: var(--sv-cyan-soft) !important;
+  letter-spacing: .22em !important;
+  font-size: .67rem !important;
+  margin-bottom: 8px !important;
+}
+.mission-panel h2 {
+  margin: 0 auto 8px !important;
+  color: var(--sv-text-main) !important;
+  font-size: clamp(1.18rem, 6.2vw, 1.72rem) !important;
+  line-height: 1.06 !important;
+  max-width: 13ch;
+  text-wrap: balance;
+}
+.mission-panel p:not(.mission-kicker) {
+  margin: 0 auto !important;
+  max-width: 30ch !important;
+  color: var(--sv-text-soft) !important;
+  font-size: .92rem !important;
+  line-height: 1.45 !important;
+}
+.mission-actions { display: none !important; }
+body[data-chapter="launch-dock"] .mission-panel,
+body[data-chapter="launch-dock"] .object-tooltip,
+body[data-chapter="launch-dock"] .mission-briefing:not(.is-open) {
+  display: none !important;
+}
+
+/* Mobile dock: command control, not a bordered article footer. */
+.mobile-control-dock {
+  height: auto !important;
+  min-height: 0 !important;
+  bottom: var(--sv-safe-bottom) !important;
+  left: 14px !important;
+  right: 14px !important;
+  padding: 8px !important;
+  gap: 4px 7px !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  grid-template-areas: "guide core settings" "explore auto launch" !important;
+  border: 0 !important;
+  border-top: 1px solid rgba(34, 211, 238, .18) !important;
+  border-radius: 22px !important;
+  background: linear-gradient(180deg, rgba(1, 8, 13, .36), rgba(1, 5, 8, .78)) !important;
+  box-shadow: 0 -12px 52px rgba(0,0,0,.42) !important;
+  backdrop-filter: blur(18px);
+}
+.mobile-control-dock [data-mobile="guide"] { grid-area: guide; }
+.mobile-control-dock [data-mobile="explore"] { grid-area: explore; }
+.mobile-control-dock [data-mobile="auto"] { grid-area: auto; }
+.mobile-control-dock [data-mobile="core"] { grid-area: core; }
+.mobile-control-dock [data-mobile="settings"] { grid-area: settings; }
+.mobile-control-dock a { grid-area: launch; }
+.mobile-control-dock button,
+.mobile-control-dock a {
+  min-height: 42px !important;
+  border: 0 !important;
+  border-radius: 16px !important;
+  padding: 5px 4px !important;
+  display: grid !important;
+  place-items: center !important;
+  gap: 1px !important;
+  background: transparent !important;
+  color: var(--sv-cyan-bright) !important;
+}
+.mobile-control-dock button:active,
+.mobile-control-dock a:active,
+.mobile-control-dock button:hover,
+.mobile-control-dock a:hover,
+.mobile-control-dock button:focus-visible,
+.mobile-control-dock a:focus-visible {
+  background: rgba(34, 211, 238, .12) !important;
+  box-shadow: 0 0 20px rgba(34,211,238,.14) !important;
+}
+.mobile-control-dock svg { width: 18px !important; height: 18px !important; stroke: currentColor !important; }
+.mobile-control-dock span { font-size: .58rem !important; letter-spacing: .04em !important; color: rgba(224,251,255,.74) !important; }
+.mobile-control-dock a { background: rgba(34,211,238,.12) !important; }
+
+/* Guide and sheets: compact, not competing with the universe. */
+.guide-card,
+.object-tooltip,
+.settings-panel,
+.mission-briefing__shell {
+  border: 0 !important;
+  border-top: 1px solid rgba(34,211,238,.18) !important;
+  background: rgba(1, 8, 13, .86) !important;
+  box-shadow: 0 22px 70px rgba(0,0,0,.62) !important;
+  color: var(--sv-text-main) !important;
+  backdrop-filter: blur(22px);
+}
+.guide-card h2,
+.object-tooltip h2,
+.settings-panel h2,
+.mission-briefing h2 { color: var(--sv-text-main) !important; }
+.guide-card p,
+.object-tooltip p,
+.settings-group p,
+.briefing-body { color: var(--sv-text-soft) !important; }
+.guide-progress { height: 2px !important; background: rgba(34,211,238,.12) !important; }
+.guide-progress span { background: var(--sv-cyan) !important; }
+.guide-actions { gap: 8px !important; }
+.guide-actions button { min-height: 38px !important; border-radius: 14px !important; }
+
+/* Launch Dock: conversion screen, not an article card. */
+.launch-dock {
+  border: 0 !important;
+  border-top: 1px solid rgba(34, 211, 238, .18) !important;
+  border-radius: 0 !important;
+  background: linear-gradient(180deg, rgba(1, 8, 13, .08), rgba(1, 8, 13, .48)) !important;
+  box-shadow: none !important;
+  color: var(--sv-text-main) !important;
+  text-align: center !important;
+}
+.launch-dock h2 {
+  margin: 0 auto 16px !important;
+  color: var(--sv-text-main) !important;
+  font-size: clamp(1.95rem, 9vw, 2.65rem) !important;
+  line-height: .98 !important;
+  letter-spacing: -.06em !important;
+  max-width: 11ch !important;
+  text-wrap: balance;
+}
+.dock-desc { display: none !important; }
+.launch-primary-btn {
+  width: min(100%, 380px) !important;
+  margin: 0 auto 14px !important;
+  min-height: 54px !important;
+  padding: 0 18px !important;
+  border: 1px solid rgba(103, 232, 249, .56) !important;
+  border-radius: 18px !important;
+  background: linear-gradient(180deg, rgba(34,211,238,.18), rgba(1,8,13,.64)) !important;
+  color: var(--sv-cyan-bright) !important;
+  font-size: .88rem !important;
+  line-height: 1.12 !important;
+  letter-spacing: .07em !important;
+  text-transform: uppercase !important;
+  box-shadow: 0 0 28px rgba(34,211,238,.18), inset 0 1px 0 rgba(165,243,252,.12) !important;
+}
+.launch-primary-btn svg { width: 17px !important; height: 17px !important; }
+.dock-confidence {
+  display: flex !important;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px !important;
+  margin: 12px auto 12px !important;
+  max-width: 370px !important;
+}
+.dock-confidence span {
+  border: 0 !important;
+  background: transparent !important;
+  color: rgba(217,250,255,.7) !important;
+  font-size: .72rem !important;
+  padding: 0 !important;
+}
+.dock-beacons {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+  max-width: 300px !important;
+  margin: 10px auto 0 !important;
+}
+.dock-beacons a {
+  min-height: 38px !important;
+  border: 0 !important;
+  border-radius: 14px !important;
+  background: rgba(34,211,238,.07) !important;
+  font-size: .78rem !important;
+}
+.dock-beacons a:nth-child(n+3),
+.launch-dock small { display: none !important; }
+
+/* Mobile-first exact screen positioning. */
+@media (max-width: 780px) {
+  .hud-controls { display: none !important; }
+  .verse-control { justify-content: center !important; }
+  .verse-brand { width: auto !important; justify-content: center !important; }
+  .verse-brand strong { font-size: .9rem !important; }
+  .verse-brand em { display: none !important; }
+
+  .chapter-rail { display: none !important; }
+  .zone-nav { display: none !important; }
+
+  .guide-card,
+  .object-tooltip,
+  .settings-panel,
+  .mission-briefing__shell {
+    left: 14px !important;
+    right: 14px !important;
+    bottom: calc(var(--sv-bottom-dock-height) + var(--sv-safe-bottom) + 14px) !important;
+    top: auto !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: min(46svh, 360px) !important;
+    overflow: auto !important;
+    padding: 16px !important;
+    border-radius: 22px !important;
+    transform: none !important;
+  }
+
+  .guide-card {
+    max-height: none !important;
+    padding: 14px !important;
+  }
+  .guide-card h2 { font-size: 1.28rem !important; margin: 4px 0 8px !important; }
+  .guide-card p { font-size: .9rem !important; line-height: 1.45 !important; }
+
+  .launch-dock {
+    position: fixed !important;
+    left: 18px !important;
+    right: 18px !important;
+    top: calc(max(8px, env(safe-area-inset-top)) + 88px) !important;
+    bottom: calc(var(--sv-bottom-dock-height) + var(--sv-safe-bottom) + 18px) !important;
+    width: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    padding: 18px 0 10px !important;
+    display: grid;
+    align-content: center;
+    overflow: hidden !important;
+  }
+
+  body[data-chapter="launch-dock"] .state-readout { display: none !important; }
+  body[data-chapter="launch-dock"] .universe-plane { opacity: .2 !important; transform: scale(.86) !important; }
+  body[data-chapter="launch-dock"] .space-aura { opacity: .2 !important; }
+}
+
+/* Tablet gets more breathing room but keeps the same scene model. */
+@media (min-width: 781px) and (max-width: 1023px) {
+  .mission-panel { width: min(70vw, 440px) !important; bottom: 34px !important; }
+  .launch-dock { width: min(72vw, 520px) !important; left: 50% !important; right: auto !important; transform: translateX(-50%) !important; bottom: 44px !important; padding: 22px 0 !important; }
+}
+
+/* Desktop: no debug deck, no article side panel. Let the universe breathe. */
+@media (min-width: 1024px) {
+  .command-deck { display: none !important; }
+  .zoom-dock { display: none !important; }
+  .verse-control { left: 18px !important; right: 18px !important; height: 54px !important; }
+  .hud-btn { width: 42px !important; height: 42px !important; }
+  .mission-panel {
+    left: 36px !important;
+    top: auto !important;
+    bottom: 42px !important;
+    transform: none !important;
+    width: min(28vw, 360px) !important;
+    text-align: left !important;
+  }
+  .mission-panel h2 { margin-left: 0 !important; max-width: 12ch !important; }
+  .mission-panel p:not(.mission-kicker) { margin-left: 0 !important; max-width: 30ch !important; }
+  .guide-card {
+    right: 28px !important;
+    left: auto !important;
+    bottom: 30px !important;
+    width: 330px !important;
+    max-height: none !important;
+    padding: 18px !important;
+    border-radius: 22px !important;
+  }
+  .settings-panel { right: 28px !important; left: auto !important; top: 78px !important; bottom: auto !important; width: 360px !important; max-height: calc(100vh - 112px) !important; }
+  .object-tooltip { right: 28px !important; left: auto !important; bottom: 28px !important; width: 340px !important; }
+  .mission-briefing__shell { right: 28px !important; left: auto !important; bottom: 28px !important; width: min(38vw, 500px) !important; }
+  .launch-dock {
+    right: 42px !important;
+    left: auto !important;
+    bottom: 42px !important;
+    width: min(34vw, 460px) !important;
+    padding: 24px 0 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .space-aura, .orbit-line, .sv-core, .launch-primary-btn, .mobile-control-dock, .guide-card { animation: none !important; transition-duration: 1ms !important; }
+}

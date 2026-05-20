@@ -19,6 +19,7 @@
     function init() {
       state.deviceCapability = detectDeviceCapability();
       document.documentElement.dataset.deviceCapability = state.deviceCapability;
+      document.body.dataset.deviceCapability = state.deviceCapability;
       state.performanceMode = resolveInitialMode();
       applyMode(state.performanceMode, { silent: true });
       bindButtons();
@@ -56,7 +57,7 @@
 
     function bindButtons() {
       if (!els.qualitySwitch) return;
-      els.qualitySwitch.addEventListener('click', (event) => {
+      document.addEventListener('click', (event) => {
         const button = event.target.closest('[data-quality]');
         if (!button) return;
         applyMode(button.dataset.quality);
@@ -80,10 +81,13 @@
 
       state.performanceMode = mode;
       document.documentElement.dataset.quality = mode;
+      document.documentElement.dataset.qualityMode = mode;
+      document.body.dataset.qualityMode = mode;
       document.body.classList.toggle('quality-essential', mode === 'essential');
       document.body.classList.toggle('quality-balanced', mode === 'balanced');
       document.body.classList.toggle('quality-cinematic', mode === 'cinematic');
       document.documentElement.dataset.deviceCapability = state.deviceCapability || 'medium';
+      document.body.dataset.deviceCapability = state.deviceCapability || 'medium';
 
       if (!options.silent) {
         try { window.localStorage.setItem(STORAGE_KEY, mode); } catch (error) { /* ignore */ }
@@ -96,7 +100,7 @@
 
     function updateButtons(mode) {
       if (!els.qualitySwitch) return;
-      Array.from(els.qualitySwitch.querySelectorAll('[data-quality]')).forEach((button) => {
+      Array.from(document.querySelectorAll('[data-quality]')).forEach((button) => {
         const active = button.dataset.quality === mode;
         button.classList.toggle('is-active', active);
         button.setAttribute('aria-pressed', active ? 'true' : 'false');

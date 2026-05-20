@@ -1,24 +1,19 @@
 # Shrimo Verse Current Build
 
-**Build:** `shrimo-verse-v1.2-mobile-first-polish`  
-**Updated:** 20 May 2026, 12:56 PM IST  
-**Primary Strategy:** Mobile-first cinematic portfolio polish
+**Version:** `shrimo-verse-v1.3-cinematic-universe-ui`  
+**Updated:** 20 May 2026, 01:45 PM IST
 
-## What This Build Proves
+This build treats Shrimo Verse as a cinematic product/game/AI futuristic universe experience — not a standard website.
 
-This version keeps the existing architecture and adds the final v1.2 polish layer focused on mobile usability, conversion, and performance.
+## Core Direction
 
-## Main Rule
+- Mobile-first from 375px.
+- Black/cyan dominant UI.
+- One clear scene focus at a time.
+- Minimal HUD controls.
+- No overlapping information.
+- WhatsApp remains the primary Launch Dock action.
 
-Design for 375px mobile first, then enhance for tablet and desktop.
+## Validation Status
 
-## Included Root Docs
-
-```txt
-README.md
-about-project.md
-CHANGELOG.md
-ProjectStructure.md
-DEVELOPMENT_GUIDE.md
-TESTING_CHECKLIST.md
-```
+Package-level validation passed. Real-device mobile testing is still required before production publishing.

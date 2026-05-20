@@ -106,10 +106,11 @@
       const selector = 'button, a, .verse-node, .world-dot, .sv-core';
       document.addEventListener('pointerdown', (event) => {
         const target = event.target.closest(selector);
-        if (!target || target.closest('[disabled]')) return;
-        if (event.pointerType !== 'touch' && event.pointerType !== 'pen') return;
+        if (!target || target.closest('[disabled]') || event.button > 0) return;
         createRipple(event.clientX, event.clientY);
-        SV.haptics?.trigger?.('tap');
+        if (event.pointerType === 'touch' || event.pointerType === 'pen') {
+          SV.haptics?.trigger?.('tap');
+        }
       }, { passive: true });
 
       document.addEventListener('click', (event) => {

@@ -1,49 +1,59 @@
-# Development Guide — Shrimo Verse v1.2
+# Development Guide — Shrimo Verse
 
-**Updated:** 20 May 2026, 12:56 PM IST
+**Current Build:** `shrimo-verse-v1.3.1-visual-recovery`  
+**Updated:** 20 May 2026
 
-## Main Development Rule
+## Main Rule
 
-This is a static HTML/CSS/JavaScript project. Do not convert it to React or rebuild the architecture unless the project direction changes completely.
+This is not a normal website. Build it like a cinematic black/cyan universe product.
 
-## Start Here
+## Before Editing
 
-1. Read `about-project.md`.
-2. Read `README.md`.
-3. Check `ProjectStructure.md`.
-4. Run the project locally with:
+Read:
+
+1. `about-project.md`
+2. `README.md`
+3. `ProjectStructure.md`
+
+## Local Test
 
 ```bash
 python3 -m http.server 5500
 ```
 
-## v1.2 Files Added
+Open:
 
 ```txt
-css/modules/10-v1-2-mobile-first-polish.css
-js/animation/02-haptic-feedback.js
-js/ui/06-gesture-controls.js
-DEVELOPMENT_GUIDE.md
-TESTING_CHECKLIST.md
+http://localhost:5500
 ```
 
-## File Responsibilities
+## Design Rules
 
-- `css/modules/10-v1-2-mobile-first-polish.css` owns final mobile-first polish and should be loaded last.
-- `js/animation/02-haptic-feedback.js` owns optional vibration feedback.
-- `js/ui/06-gesture-controls.js` owns swipe navigation and swipe hint UI.
-- `js/ui/05-performance-director.js` owns Essential/Balanced/Cinematic mode and device capability detection.
-- `js/portfolio/01-config.js` owns portfolio content data.
-- `js/portfolio/03-layer-renderer.js` owns Product, Proof, and Review card rendering.
+- Mobile first from 375px.
+- One scene focus at a time.
+- No article-style cards in the main view.
+- No heavy borders everywhere.
+- No orange/yellow selected states.
+- Use black/cyan for UI, controls, active states, and selection.
+- Keep Launch Dock simple and conversion-focused.
+- Keep debug/status panels hidden from default cinematic view.
 
-## Mobile-First Rule
+## Completion Rule
 
-Base styles should work at 375px without media queries. Add enhancements at 768px and 1366px.
+A feature is only complete if it is:
 
-## Do Not
+```txt
+Planned → Coded → Loaded → Wired → Visible → Validated → Documented
+```
 
-- Do not show all portfolio data at once.
-- Do not make desktop the source layout.
-- Do not add heavy 3D models.
-- Do not rely on haptic vibration for important feedback.
-- Do not remove `README.md` or `about-project.md`.
+## Visual QA Rule
+
+Before packaging, inspect at least:
+
+- 375px mobile arrival scene,
+- 375px mobile Launch Dock,
+- desktop arrival scene,
+- guide open,
+- settings open.
+
+Do not ship if content overlaps, panels scroll internally in the main scene, or the screen feels like a website/dashboard.

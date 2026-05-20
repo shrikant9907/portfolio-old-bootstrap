@@ -1,55 +1,57 @@
-# Testing Checklist — Shrimo Verse v1.2
+# Testing Checklist — Shrimo Verse
 
-**Updated:** 20 May 2026, 12:56 PM IST
+**Current Build:** `shrimo-verse-v1.3.1-visual-recovery`  
+**Updated:** 20 May 2026
 
-## Mobile First
+## Package Validation
 
-Test first at 375px width.
-
-- [ ] Landing Gate text is readable.
-- [ ] Initiate Launch button is easy to tap.
-- [ ] Launch sequence does not overlap content.
-- [ ] Bottom dock controls are reachable by thumb.
-- [ ] Swipe left moves to next chapter.
-- [ ] Swipe right moves to previous chapter.
-- [ ] Product Mission cards fit mobile screen.
-- [ ] Proof Signals are readable and tappable.
-- [ ] Client Transmissions are readable one at a time.
-- [ ] Launch Dock WhatsApp button is the strongest CTA.
-- [ ] No horizontal scrolling.
-- [ ] Tap targets are at least 44px.
-- [ ] Settings panel opens and closes.
-- [ ] Guide appears once per browser tab session.
-
-## Tablet
-
-- [ ] 768px layout has better spacing.
-- [ ] Controls remain easy to tap.
-- [ ] Product/review navigation works.
-- [ ] Particles do not cause visible jank.
-
-## Desktop
-
-- [ ] Hover states work.
-- [ ] Keyboard shortcuts work.
-- [ ] Mission Briefing opens with `M`.
-- [ ] Quality mode changes with `Q`.
-- [ ] Settings opens with `S`.
-- [ ] Launch Dock links work.
-
-## Accessibility
-
-- [ ] Keyboard focus is visible.
-- [ ] Buttons have accessible labels.
-- [ ] Text contrast is readable.
-- [ ] Reduced motion mode is respected.
-- [ ] Escape closes active panels.
-
-## Code Validation
-
-- [ ] JS syntax passes.
+- [ ] JavaScript syntax passes.
 - [ ] CSS imports exist.
-- [ ] Local HTML references exist.
+- [ ] CSS brace count is valid.
+- [ ] HTML local file references exist.
 - [ ] No duplicate IDs.
 - [ ] No duplicate scripts.
+- [ ] README.md exists in root.
+- [ ] about-project.md exists in root.
 - [ ] ZIP integrity passes.
+
+## Mobile Visual QA — 375px
+
+- [ ] Landing Signal is clean and not website-like.
+- [ ] Arrival Core has one clear focus.
+- [ ] Mission caption does not have internal scrollbar.
+- [ ] Bottom HUD does not cover important content.
+- [ ] Launch Dock is not an article card.
+- [ ] WhatsApp CTA is primary.
+- [ ] Call and Email are secondary.
+- [ ] No horizontal scroll.
+- [ ] No orange/yellow selected states.
+
+## Tablet QA — 768px
+
+- [ ] Same scene model works with more space.
+- [ ] Controls remain touch-friendly.
+- [ ] Panels do not overlap.
+
+## Desktop QA — 1366px+
+
+- [ ] Scene feels cinematic, not like a dashboard.
+- [ ] Debug deck is not visible by default.
+- [ ] Guide/settings panels do not compete with the main scene.
+- [ ] Background supports content and does not cover it.
+
+## Real Device QA Still Needed
+
+Test on:
+
+- [ ] Android Chrome.
+- [ ] iPhone Safari.
+- [ ] Tablet browser.
+- [ ] Desktop Chrome/Firefox/Edge.
+
+## Performance QA Still Needed
+
+- [ ] Lighthouse mobile target checked after hosting.
+- [ ] Low-end Android performance checked.
+- [ ] Reduced motion checked.
+- [ ] Essential/Balanced/Cinematic modes checked visually.

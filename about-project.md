@@ -1,701 +1,108 @@
 # About Project — Shrimo Verse
 
-**Project Name:** Shrimo Verse  
-**Current Build:** `shrimo-verse-v1.2-mobile-first-polish`  
-**Owner / Portfolio:** Shrikant Yadav  
-**Company Brand Context:** Shrimo Innovations  
-**Primary Purpose:** Cinematic interactive portfolio experience  
-**Last Updated:** 20 May 2026, 12:56 PM IST
-**Timezone:** Asia/Kolkata  
+**Current Build:** `shrimo-verse-v1.3.1-visual-recovery`  
+**Updated:** 20 May 2026  
+**Owner:** Shrikant Yadav / Shrimo Innovations
 
----
+## Main Project Understanding
 
-## 1. Important Rule for Future Developers
+Shrimo Verse is a cinematic, futuristic, black/cyan interactive universe experience. It must not be treated as a normal website, article layout, dashboard, or generic portfolio.
 
-This file must always stay in the root of every future project ZIP.
-
-Do not delete `about-project.md`.
-
-Whenever the project is updated, this file must also be updated with:
-
-1. New version name.
-2. Update date and time.
-3. What changed.
-4. Why the change was made.
-5. Any known issues or next improvements.
-6. Any new files, folders, or architecture changes.
-
-This file is the main project understanding document for future developers.
-
----
-
-## 2. Project Vision
-
-Shrimo Verse is not meant to feel like a normal portfolio website.
-
-The goal is to create a sci-fi, cinematic, game-like digital universe where a visitor enters through a landing gate, launches into a universe experience, explores Shrikant Yadav’s skills, products, proof, reviews, and finally reaches the Launch Dock to contact or start a project.
-
-The experience should feel like:
-
-- a digital universe,
-- a mission control interface,
-- a sci-fi portfolio game,
-- a premium interactive frontend showcase,
-- and a conversion-focused portfolio journey.
-
-The visitor should feel curious at the start, then guided step-by-step through the portfolio.
-
----
-
-## 3. Core User Journey
-
-The experience should follow this flow:
+The product experience should feel like:
 
 ```txt
-Landing Gate
-    ↓
-Enter Button
-    ↓
-Cinematic Launch Sequence
-    ↓
-Arrival in Shrimo Verse
-    ↓
-Chapter 1: Arrival Core
-    ↓
-Chapter 2: Technology Orbit
-    ↓
-Chapter 3: Product Missions
-    ↓
-Chapter 4: Proof Signals
-    ↓
-Chapter 5: Client Transmissions
-    ↓
-Chapter 6: Launch Dock / Contact
+cinematic universe + AI command tool + game-like exploration + portfolio proof system
 ```
 
-The main rule is:
-
-> Do not show everything at once.  
-> The user should explore one main focus at a time.
-
----
-
-## 4. Experience Goals
-
-The project should achieve these goals:
-
-1. Build curiosity on the root landing screen.
-2. Make the Enter button feel meaningful.
-3. Use a smooth cinematic launch animation.
-4. Make the user feel like they are travelling into Shrimo Verse.
-5. Keep the interface controlled and clean.
-6. Avoid clutter and overlapping panels.
-7. Reveal content step-by-step.
-8. Use controls like a game or command system.
-9. Keep the experience smooth on desktop and mobile.
-10. End with a strong contact/conversion section.
-
----
-
-## 5. Design Direction
-
-The design should feel like a premium sci-fi command center.
-
-### Visual Style
-
-- Dark universe background.
-- Neon blue, cyan, violet, and warm accent energy.
-- Glass-like panels.
-- Controlled glow.
-- Subtle scan lines.
-- Space depth.
-- Holographic project cards.
-- Mission-control inspired UI.
-- Smooth transitions.
-- Clean typography.
-- Strong contrast and readability.
-
-### What to Avoid
-
-Avoid:
-
-- generic portfolio layout,
-- normal website sections,
-- card grids that show everything at once,
-- too many panels open together,
-- random animation without purpose,
-- heavy 3D models,
-- cluttered controls,
-- unreadable text,
-- overused SaaS-style hero sections.
-
----
-
-## 6. Current Build Summary
-
-Current build: `shrimo-verse-v1.2-mobile-first-polish`
-
-This build introduced a cleaner and more polished cinematic experience over the earlier v1.0 experience version.
-
-### Main Improvements
-
-1. Stronger cinematic launch feeling.
-2. Movie-style warp overlay.
-3. Better launch readout messages.
-4. Cleaner chapter focus.
-5. Temporary scene captions.
-6. Better HUD behavior.
-7. Compact command deck by default.
-8. Expanded command deck only when needed.
-9. Keyboard shortcuts for chapter navigation.
-10. Better mobile and short-screen spacing.
-11. Reduced overlap risk.
-12. Duplicate script/reference cleanup.
-13. Updated markdown documentation.
-
----
-
-## 7. Main Chapters
-
-### 7.1 Landing Gate
-
-Purpose:
-
-- Build curiosity.
-- Keep the screen minimal.
-- Encourage the user to click Enter.
-
-Should show:
-
-- strong visual atmosphere,
-- short mysterious copy,
-- one primary Enter button,
-- optional small identity line.
-
-Should not show:
-
-- all portfolio content,
-- too many controls,
-- project cards,
-- testimonials,
-- full navigation.
-
----
-
-### 7.2 Cinematic Launch Sequence
-
-Purpose:
-
-- Make the user feel they are entering a digital universe.
-- Create a memorable first interaction.
-
-Expected behavior:
-
-1. User clicks Enter.
-2. Interface locks into launch mode.
-3. Warp/space movement begins.
-4. Launch readout appears.
-5. Scene transitions into Shrimo Verse.
-6. Controls and first chapter reveal after arrival.
-
-This should feel smooth and movie-like, not like a normal page transition.
-
----
-
-### 7.3 Arrival Core
-
-Purpose:
-
-- Introduce Shrimo Verse.
-- Introduce Shrikant Yadav.
-- Establish the central SV core.
-
-Content should be minimal and focused.
-
-Good copy direction:
-
-- who Shrikant is,
-- what he builds,
-- what Shrimo Verse represents,
-- how to explore next.
-
----
-
-### 7.4 Technology Orbit
-
-Purpose:
-
-- Show technical skills and frontend capability.
-
-Should include:
-
-- technology nodes,
-- selected skill details,
-- clear explanation of business value,
-- controlled orbit/scan animation.
-
-Do not show all skill explanations at once.
-
----
-
-### 7.5 Product Missions
-
-Purpose:
-
-- Show real work as mission files, not generic project cards.
-
-Each product/project should explain:
-
-1. Problem.
-2. Solution.
-3. Technology stack.
-4. Result or impact.
-5. Action link if available.
-
-Best behavior:
-
-- show one featured mission at a time,
-- allow next/previous mission,
-- avoid a big cluttered grid.
-
----
-
-### 7.6 Proof Signals
-
-Purpose:
-
-- Build trust.
-
-Should include:
-
-- metrics,
-- delivery proof,
-- real capability signals,
-- result-style achievements.
-
-Animation style:
-
-- radar sweep,
-- signal confirmation,
-- count-up numbers.
-
----
-
-### 7.7 Client Transmissions
-
-Purpose:
-
-- Show reviews/testimonials in a cinematic way.
-
-Should feel like:
-
-- incoming signals,
-- readable transmissions,
-- one highlighted message at a time.
-
-Do not show too many reviews at once.
-
----
-
-### 7.8 Launch Dock
-
-Purpose:
-
-- Convert visitor into lead/contact.
-
-Primary action should be:
-
-- WhatsApp or direct contact.
-
-Secondary actions:
-
-- email,
-- call,
-- portfolio links,
-- social/profile links.
-
-The section should feel calm, confident, and conversion-focused.
-
----
-
-## 8. Controls and Interaction System
-
-Controls should feel like part of the Shrimo Verse interface, not normal website buttons.
-
-### Required Controls
-
-1. Help / Guide.
-2. Auto Tour.
-3. Pause.
-4. Home / Arrival Core.
-5. Previous Chapter.
-6. Next Chapter.
-7. Settings.
-8. Zoom In.
-9. Zoom Out.
-10. Reset View.
-11. Quality Mode.
-
-### Keyboard Shortcuts
-
-Recommended shortcuts:
+## Core Experience Flow
 
 ```txt
-1 → Arrival Core
-2 → Technology Orbit
-3 → Product Missions
-4 → Proof Signals
-5 → Client Transmissions
-6 → Launch Dock
-[ → Previous Chapter
-] → Next Chapter
-M → Mission Briefing
-Q → Quality Mode
-Esc → Close panel / modal
+Landing Signal
+→ Launch Sequence
+→ Arrival Core
+→ Technology Orbit
+→ Product Missions
+→ Proof Signals
+→ Client Transmissions
+→ Launch Dock
 ```
 
-### Tooltip Rule
+Each scene should show one main focus, one short message, and one clear next action.
 
-Every icon control should have a tooltip explaining what it does.
+## Visual Direction
 
-### SVG Icon Rule
+Use black and cyan as the core visual system.
 
-Controls should use SVG icons, not random emoji or inconsistent icon styles.
+- Background: deep black / near black.
+- Main UI: cyan.
+- Selected states: cyan only.
+- Controls: black/cyan only.
+- Text: white, soft cyan, muted blue-grey.
+- Orange/yellow: only for rare alerts or one-time special highlights.
 
----
+Do not use orange/yellow as normal selected, hover, or active state colors.
 
-## 9. Tutorial / Guide Rule
+## v1.3.1 Visual Recovery Fixes
 
-The guide should appear automatically only once per browser tab session.
+This build fixes the visual direction after v1.3 became too layered and website-like.
 
-Implementation rule:
+### Fixed
 
-- use `sessionStorage`,
-- if guide has not been seen in the current session, show it,
-- after skip/complete, save the guide state,
-- do not auto-show it again in the same tab session,
-- allow manual replay from Help or Settings.
+1. Hidden dashboard-style `Live Build Deck` by default.
+2. Hidden zoom dock by default.
+3. Converted main mission panel into a lightweight scene caption.
+4. Removed internal scrollbar from the main scene caption.
+5. Reduced the huge center cyan blob into subtle background atmosphere.
+6. Simplified the mobile command dock.
+7. Changed Launch Dock from article-card layout into a clean conversion signal.
+8. Reduced border-heavy confidence cards.
+9. Kept WhatsApp as primary CTA using black/cyan style.
+10. Kept call and email as secondary actions on mobile.
+11. Hid excess social/contact links on mobile to reduce clutter.
+12. Made guide/settings/briefing sheets less visually dominant.
 
-This keeps the experience friendly without annoying returning users.
+## Mobile-First Rules
 
----
+Design from 375px first:
 
-## 10. Settings Panel
+- one focus at a time,
+- no horizontal scroll,
+- no overlapping cards,
+- no article-like padding blocks,
+- readable text without zoom,
+- compact bottom HUD,
+- WhatsApp primary at Launch Dock,
+- swipe navigation supported.
 
-The Settings panel should allow the user to control the experience.
+Tablet and desktop should enhance the same scene model without exposing too much content at once.
 
-Recommended settings:
+## Performance Modes
 
-1. Motion intensity.
-2. Particle density.
-3. Interface mode.
-4. Tutorial replay.
-5. Reduced motion support.
-6. Quality mode:
-   - Essential
-   - Balanced
-   - Cinematic
-7. Reset experience.
-8. Return to Arrival Core.
+The experience supports:
 
-Settings should be useful, not decorative.
+- Essential,
+- Balanced,
+- Cinematic.
 
----
+Lower quality modes should reduce visual heaviness. Do not only store the mode; visual layers must respond to it.
 
-## 11. Accessibility and Performance Rules
+## Developer Rule
 
-This project uses heavy visual ideas, so performance and accessibility must be protected.
+Before packaging any future ZIP, verify:
 
-### Accessibility Rules
+1. Files exist.
+2. Files are loaded.
+3. Functions are called.
+4. UI states are visible.
+5. Features are validated.
+6. Documentation is updated.
 
-1. Respect `prefers-reduced-motion`.
-2. Keep text readable.
-3. Maintain keyboard navigation.
-4. Provide focus states.
-5. Use semantic buttons for controls.
-6. Avoid motion that can cause discomfort.
-7. Let users reduce or disable non-essential animation.
-
-### Performance Rules
-
-1. Do not add heavy 3D models unless necessary.
-2. Reduce particles on mobile.
-3. Pause expensive animation when tab is hidden.
-4. Avoid showing all animated elements at once.
-5. Keep fallback visuals if WebGL/Three.js fails.
-6. Avoid unnecessary dependencies.
-7. Test on mobile and low-end devices.
-
----
-
-## 12. Technical Architecture
-
-The project is a static HTML/CSS/JavaScript project.
-
-Do not convert to React unless the project direction changes clearly.
-
-### Current Technology Direction
-
-- HTML for SEO and accessible content.
-- CSS modules for visual layers.
-- Vanilla JavaScript modules/files for behavior.
-- Three.js or canvas layer for universe visuals.
-- GSAP-style animation logic for cinematic transitions.
-- Typed terminal effect for selected storytelling text.
-- Session storage for one-time guide state.
-
-### Architecture Principle
-
-The project should use progressive enhancement:
+Feature completion chain:
 
 ```txt
-HTML content should work first.
-CSS should provide strong visual fallback.
-JavaScript should enhance the experience.
-3D/canvas should enhance the atmosphere.
-The site should not become unusable if an enhancement fails.
+Planned → Coded → Loaded → Wired → Visible → Validated → Documented
 ```
 
----
+## Known Limitation
 
-## 13. Recommended Folder Meaning
-
-The exact folder structure may evolve, but the responsibilities should stay clear.
-
-```txt
-css/
-  modules/
-    design tokens
-    base layout
-    cinematic layers
-    controls
-    chapter styles
-    responsive rules
-    accessibility/reduced motion
-
-js/
-  core/
-    app state
-    events
-    DOM helpers
-    shared utilities
-
-  experience/
-    landing
-    launch sequence
-    chapter flow
-    tutorial
-    settings
-    experience director
-
-  ui/
-    controls
-    tooltips
-    panels
-    mission briefing
-    typed text
-
-  three/ or world/
-    3D/canvas universe
-    starfield
-    core aura
-    particles
-    camera/resize/performance
-
-  animation/
-    entry animations
-    chapter transitions
-    HUD motion
-    microinteractions
-
-  data/
-    skills
-    products
-    proofs
-    reviews
-    profile content
-```
-
----
-
-## 14. Current Known Priorities
-
-The current build is stable for testing.
-
-The next improvements should focus on polish, not random new features.
-
-### Priority 1 — Test Full Flow
-
-Test:
-
-1. Landing page.
-2. Enter button.
-3. Launch sequence.
-4. Chapter navigation.
-5. Settings panel.
-6. Tutorial once-per-session behavior.
-7. Mobile layout.
-8. Contact actions.
-
-### Priority 2 — Improve Content
-
-Improve:
-
-1. Shrikant introduction.
-2. Project mission details.
-3. Proof metrics.
-4. Review/transmission content.
-5. Final Launch Dock CTA.
-
-### Priority 3 — Improve Cinematic Depth
-
-Improve:
-
-1. Star warp timing.
-2. Scene transitions.
-3. 3D/canvas depth.
-4. Chapter-specific visual identity.
-5. Camera movement.
-
-### Priority 4 — Mobile QA
-
-Check:
-
-1. Small screen overlap.
-2. Button tap targets.
-3. Controls visibility.
-4. Settings usability.
-5. Launch sequence performance.
-
----
-
-## 15. Version Update Notes
-
-### v1.1 Cinematic Polish
-
-Updated on: 20 May 2026, 12:36 PM IST
-
-Purpose:
-
-- Make v1.0 more polished, cinematic, and test-ready.
-
-Main changes:
-
-1. Stronger launch sequence.
-2. Improved cinematic readouts.
-3. Better chapter captions.
-4. Cleaner HUD behavior.
-5. Compact command deck default.
-6. Better mobile spacing.
-7. Overlap risk reduced.
-8. Duplicate scripts/references cleaned.
-9. Current build markdown added.
-
----
-
-## 16. Rules for Future Updates
-
-Before creating any new ZIP:
-
-1. Update `about-project.md`.
-2. Update `CHANGELOG.md`.
-3. Keep `README.md` aligned with current behavior.
-4. Keep `ProjectStructure.md` aligned with current folders.
-5. Do not include `.git`, `.github`, `.agents`, `.codex`, or backup folders in final ZIP.
-6. Validate JavaScript syntax.
-7. Check local file references in HTML.
-8. Check CSS imports.
-9. Check duplicate IDs.
-10. Check duplicate script references.
-11. Confirm ZIP integrity.
-
----
-
-## 17. Final Project Summary for New Developer
-
-Shrimo Verse is a cinematic, sci-fi, interactive portfolio experience for Shrikant Yadav / Shrimo Innovations.
-
-It should not be maintained like a normal portfolio website.
-
-Think of it as:
-
-```txt
-portfolio + game-like exploration + sci-fi mission control + frontend skill showcase
-```
-
-The user should not see everything at once. They should enter, travel, arrive, explore one chapter at a time, and finally reach contact.
-
-Every future change should protect:
-
-1. cinematic feeling,
-2. performance,
-3. accessibility,
-4. clear chapter flow,
-5. clean developer structure,
-6. conversion at the end.
-
-If a new feature does not improve the journey, clarity, performance, or conversion, do not add it.
-
----
-
-## 18. Documentation Placement Rule
-
-Updated on: 20 May 2026, 12:36 PM IST
-
-`about-project.md` must be placed in the same root level as `README.md`.
-
-Correct:
-
-```txt
-project-root/
-  README.md
-  about-project.md
-  index.html
-  css/
-  js/
-```
-
-Incorrect:
-
-```txt
-project-root/
-  docs/about-project.md
-```
-
-Reason:
-
-A new developer should immediately see both files after opening the project ZIP.
-`README.md` gives quick setup instructions.
-`about-project.md` gives the complete project understanding and future direction.
-
----
-
-## 19. v1.2 Mobile-First Polish Notes
-
-Updated on: 20 May 2026, 12:56 PM IST
-
-The v1.2 build uses the mobile-first plan as the main source of truth.
-
-### What Changed
-
-1. The base experience is now optimized from a 375px mobile screen first.
-2. Tablet and desktop are enhancement layers, not the primary design target.
-3. Touch feedback is treated as primary interaction feedback.
-4. Hover and magnetic behavior remain desktop enhancements only.
-5. Swipe left/right navigation is available on mobile.
-6. Haptic vibration is added as progressive enhancement only.
-7. Device capability detection helps reduce visual load on weaker phones.
-8. Product Missions, Proof Signals, and Client Transmissions now use clearer mobile-readable cards.
-9. The Launch Dock now makes WhatsApp the strongest conversion action.
-10. The final ZIP must include `README.md` and `about-project.md` in the project root.
-
-### Future Developer Rule
-
-Do not design a feature only for desktop first. Any new feature must answer this first:
-
-```txt
-Does this work clearly on a 375px phone screen with thumb control?
-```
-
-If the answer is no, the feature is not ready.
-
+This sandbox could validate code/package structure, but final real-device QA still needs to be done on actual Android/iOS phones and tablets.

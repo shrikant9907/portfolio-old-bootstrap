@@ -1,5 +1,74 @@
 # Changelog
 
+## v1.3.1 — Visual Recovery (20 May 2026)
+
+### Fixed
+
+- Recovered the interface from the over-layered v1.3 screen.
+- Added `css/modules/12-v1-3-1-visual-recovery.css` as the final cleanup layer.
+- Hidden dashboard/debug panels from the default cinematic view.
+- Removed heavy article-style borders, padding, and internal scrolling from the main scene caption.
+- Reduced the oversized background aura that was covering the scene.
+- Simplified Launch Dock into a clean black/cyan conversion signal.
+- Made WhatsApp primary without using orange/yellow as the main CTA color.
+- Kept call/email as secondary actions and hid excess mobile contact links.
+- Simplified mobile HUD styling and reduced visual noise.
+- Updated README.md and about-project.md for the visual recovery direction.
+
+### Validation
+
+- JavaScript syntax checked.
+- CSS imports checked.
+- CSS brace structure checked.
+- HTML local file references checked.
+- Duplicate IDs checked.
+- Duplicate scripts checked.
+- Required root docs checked.
+- ZIP integrity checked.
+
+### Not Claimed
+
+- No real iPhone/Android testing was performed in this sandbox.
+- No Lighthouse score is claimed.
+
+---
+
+
+## v1.3 — Cinematic Universe UI (20 May 2026, 01:45 PM IST)
+
+### Added
+- Added `css/modules/11-v1-3-cinematic-universe-ui.css` as the final black/cyan cinematic visual layer.
+- Added `js/ui/07-universe-ui-director.js` to keep information layers exclusive and reduce visual overlap.
+- Added Settings quality buttons that also use the shared `[data-quality]` system.
+
+### Improved
+- Reframed the UI as a scene-based futuristic universe, not a website layout.
+- Reworked the mobile control dock into a thumb-friendly two-row command HUD.
+- Converted selected/active states to black/cyan styling.
+- Made mission information read more like a cinematic scene caption.
+- Improved Launch Dock conversion hierarchy with WhatsApp as the primary CTA.
+- Strengthened performance-mode integration with document state and particle rendering.
+- Wired ripple feedback for pointer activation and haptic feedback for supported touch input.
+
+### Fixed
+- Removed duplicate mobile swipe handling from the main controller so gesture controls own chapter swipes.
+- Replaced orange/yellow rendering in the cinematic universe with cyan rendering.
+- Improved panel exclusivity so settings, guide, briefing, tooltip, and launch layers do not compete visually.
+
+### Validation
+- JavaScript syntax checked.
+- CSS imports checked.
+- HTML local references checked.
+- Duplicate IDs checked.
+- Duplicate scripts checked.
+- Required root docs checked.
+- ZIP integrity checked.
+
+
+---
+
+# Changelog
+
 ## v1.2 Mobile-First Polish — 20 May 2026, 12:56 PM IST
 
 ### Added

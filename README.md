@@ -1,58 +1,18 @@
 # Shrimo Verse
 
-> **New developer note:** Start by reading [`about-project.md`](./about-project.md).  
-> It is the main project understanding file and must stay beside this README in every final ZIP.
+> New developer note: read [`about-project.md`](./about-project.md) first. It explains the complete project vision, scene flow, mobile-first rules, visual system, and future direction.
 
 ## Current Build
 
-**Build:** `shrimo-verse-v1.2-mobile-first-polish`  
-**Documentation Updated:** 20 May 2026, 12:56 PM IST  
-**Strategy:** Mobile-first cinematic portfolio experience  
-**Owner:** Shrikant Yadav / Shrimo Innovations
+**Version:** `shrimo-verse-v1.3.1-visual-recovery`  
+**Updated:** 20 May 2026  
+**Purpose:** Visual recovery and cleanup after v1.3 became too panel-heavy and website-like.
 
 ## What This Project Is
 
-Shrimo Verse is a static HTML/CSS/JavaScript portfolio that behaves like a sci-fi, guided, game-like product journey.
+Shrimo Verse is a cinematic black/cyan universe experience for Shrikant Yadav / Shrimo Innovations. It is not a normal portfolio website. It should feel like a futuristic product/game/AI command universe where visitors explore identity, skills, products, proof, reviews, and finally the Launch Dock.
 
-The intended visitor flow is:
-
-```txt
-Landing Gate → Initiate Launch → Arrival Core → Technology Orbit → Product Missions → Proof Signals → Client Transmissions → Launch Dock
-```
-
-The most important design rule:
-
-> Build for 375px mobile first. Tablet and desktop should enhance the same journey, not replace it.
-
-## v1.2 Focus
-
-This version adds a final mobile-first polish layer:
-
-- mobile-safe spacing and typography,
-- tap-first feedback and ripple effects,
-- optional haptic feedback where browsers support it,
-- swipe left/right chapter navigation,
-- device capability detection,
-- better low-end mobile performance mode,
-- stronger Product Mission, Proof Signal, and Client Transmission cards,
-- WhatsApp-first Launch Dock conversion,
-- updated developer and testing documentation.
-
-## Required Root Documentation
-
-These two files must always be in the project root:
-
-```txt
-README.md
-about-project.md
-```
-
-`README.md` is for quick setup and testing.  
-`about-project.md` explains the full idea, architecture, journey, controls, current version, and future plan.
-
-## Local Testing
-
-From the project root:
+## Main Testing Command
 
 ```bash
 python3 -m http.server 5500
@@ -64,43 +24,49 @@ Open:
 http://localhost:5500
 ```
 
-Do not test ES-module/CDN behavior by double-clicking the HTML file. Use a local server.
+## v1.3.1 Visual Recovery Notes
 
-## Main Controls
+This version focuses on clean experience design:
 
-```txt
-1 → Arrival Core
-2 → Technology Orbit
-3 → Product Missions
-4 → Proof Signals
-5 → Client Transmissions
-6 → Launch Dock
-[ or ArrowLeft  → Previous Chapter
-] or ArrowRight → Next Chapter
-M → Mission Briefing
-Q → Quality Mode
-S → Settings
-Esc → Close active panel/modal
-```
+- hides dashboard-style `Live Build Deck` by default,
+- removes heavy article-card styling from the main scene,
+- simplifies Launch Dock into a clean conversion signal,
+- reduces excessive borders and padding,
+- keeps black/cyan as the main UI system,
+- reduces the large center background blob,
+- keeps mobile controls compact and thumb-friendly,
+- avoids overlapping information layers.
 
-On mobile:
+## Controls
 
 ```txt
-Swipe left  → Next Chapter
-Swipe right → Previous Chapter
-Tap controls from the bottom dock
-Use WhatsApp as the primary Launch Dock action
+1-6  -> jump scenes
+[    -> previous scene
+]    -> next scene
+M    -> mission briefing
+Q    -> quality mode
+Esc  -> close active panel
+Swipe left/right on mobile -> next/previous scene
 ```
 
-## Before Creating Any Future ZIP
+## Required Root Docs
 
-1. Update `about-project.md`.
-2. Update `README.md`.
-3. Update `CHANGELOG.md`.
-4. Keep both `README.md` and `about-project.md` at project root.
-5. Exclude `.git`, `.github`, `.agents`, `.codex`, backups, and temporary folders.
-6. Validate JavaScript syntax.
-7. Check CSS imports.
-8. Check local file references.
-9. Check duplicate IDs and duplicate scripts.
-10. Confirm ZIP integrity.
+These must always stay in the root of every ZIP:
+
+```txt
+README.md
+about-project.md
+```
+
+Also keep:
+
+```txt
+CHANGELOG.md
+ProjectStructure.md
+DEVELOPMENT_GUIDE.md
+TESTING_CHECKLIST.md
+```
+
+## Important Rule
+
+A feature is complete only when it is planned, coded, loaded, wired, visible, validated, and documented.
