@@ -210,3 +210,9 @@ Phase 1 now defines the entry screen as part of the same universe background, no
 The Mission Entry screen now keeps the same universe background but hides skill particles and inner journey content until the user clicks Start.
 
 This keeps the first screen clean and prevents early clutter.
+
+## Phase 2 Technology Orbit Update
+
+**Updated:** 20 May 2026, 18:20 IST
+
+Technology Orbit now has a stronger focused scan behavior. Skills/tools stay separate from Product Gallery, Proof Ring, Client Signals, and Launch Dock.

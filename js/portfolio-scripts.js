@@ -146,6 +146,7 @@
   let pinchStartDistance = null;
   let pinchStartZoom = 1;
   let activeProduct = 0;
+  let activeTechnologyIndex = 0;
   let activeReview = 0;
   let activeProof = 0;
   let proofAnimated = false;
@@ -211,6 +212,7 @@
       node.addEventListener('mouseenter', () => {
         document.body.classList.add('cursor-lock');
         node.classList.add('is-hovered');
+        updateTechnologyFocus(obj, node, 'hover');
         hoverTooltipTimer = setTimeout(() => {
           showObject(obj, node);
         }, 600);
@@ -222,6 +224,7 @@
       });
       node.addEventListener('focus', () => {
         node.classList.add('is-hovered');
+        updateTechnologyFocus(obj, node, 'focus');
         hoverTooltipTimer = setTimeout(() => {
           showObject(obj, node);
         }, 600);
@@ -234,11 +237,21 @@
         event.stopPropagation();
         clearTimeout(hoverTooltipTimer);
         if (autoActive) stopAutoFlight();
+        activeTechnologyIndex = ORBIT_PARTICLES.indexOf(obj);
+        updateTechnologyFocus(obj, node, 'selected');
         showObject(obj, node);
       });
       els.layer.appendChild(node);
       obj.el = node;
     });
+
+    const technologyFocus = document.createElement('aside');
+    technologyFocus.className = 'technology-focus';
+    technologyFocus.id = 'technologyFocus';
+    technologyFocus.setAttribute('aria-live', 'polite');
+    technologyFocus.innerHTML = '<span>TECH SCAN</span><h3>Technology Orbit</h3><p>Select a moving particle to inspect its use case.</p>';
+    els.layer.appendChild(technologyFocus);
+    updateTechnologyFocus(ORBIT_PARTICLES[activeTechnologyIndex], null, 'ready');
 
     els.core.addEventListener('click', () => showObject({
       label: 'Shrimo Verse Core',
@@ -563,6 +576,7 @@
     if (els.zonePrev) els.zonePrev.disabled = currentZone === 0;
     if (els.zoneNext) els.zoneNext.disabled = currentZone === ZONES.length - 1;
     
+    if (currentZone === 1) updateTechnologyFocus(ORBIT_PARTICLES[activeTechnologyIndex] || ORBIT_PARTICLES[0], ORBIT_PARTICLES[activeTechnologyIndex]?.el || null, 'zone');
     if (currentZone === 3) {
       setTimeout(() => animateProofNumbers(), 320);
     }
@@ -577,6 +591,7 @@
 
   function updateLayerStates() {
     const orbitActive = currentZone === 0 || currentZone === 1;
+    const technologyMode = currentZone === 1;
     els.layer.classList.toggle('is-muted', !orbitActive);
     els.productLayer.classList.toggle('is-visible', currentZone === 2);
     els.proofLayer.classList.toggle('is-visible', currentZone === 3);
@@ -606,6 +621,7 @@
 
   function applyZoomVisibility() {
     const orbitActive = currentZone === 0 || currentZone === 1;
+    const technologyMode = currentZone === 1;
     const mobile = window.innerWidth <= 780;
     ORBIT_PARTICLES.forEach((obj, index) => {
       if (!obj.el) return;
@@ -613,8 +629,16 @@
       if (mobile && obj.depth !== 'core') {
         visible = false;
       }
-      if (obj.depth === 'deep' && zoom < 1.14) visible = false;
-      if (obj.depth === 'hidden' && zoom < 1.56) visible = false;
+      if (!mobile && currentZone === 1 && obj.depth === 'deep') {
+        visible = zoom >= .96;
+      } else if (obj.depth === 'deep' && zoom < 1.14) {
+        visible = false;
+      }
+      if (!mobile && currentZone === 1 && obj.depth === 'hidden') {
+        visible = zoom >= 1.42;
+      } else if (obj.depth === 'hidden' && zoom < 1.56) {
+        visible = false;
+      }
       if (currentZone === 0 && index > 11 && zoom < 1.2) visible = false;
       obj.el.classList.toggle('is-hidden-by-zoom', !visible);
       if (!visible) {
@@ -626,6 +650,24 @@
         obj.el.style.pointerEvents = orbitActive ? 'auto' : 'none';
       }
     });
+  }
+
+  function updateTechnologyFocus(obj, target = null, mode = 'ready') {
+    const focus = $('#technologyFocus');
+    if (!focus || !obj) return;
+    const label = obj.label || 'Technology Orbit';
+    const category = obj.category || 'Technology';
+    const desc = obj.desc || 'Inspect this particle to understand the capability.';
+    const use = obj.use || 'This supports the Shrimo Verse product journey.';
+    focus.dataset.mode = mode;
+    focus.innerHTML = `
+      <span>${category.toUpperCase()} SCAN</span>
+      <h3>${label}</h3>
+      <p>${desc}</p>
+      <em>${use}</em>
+    `;
+    $$('.verse-node').forEach(node => node.classList.remove('is-focused-tech'));
+    target?.classList.add('is-focused-tech');
   }
 
   function showObject(obj, target) {
@@ -858,6 +900,7 @@
     const scaleRadius = mobile ? .45 : laptop ? .68 : .82;
     const timeScale = paused ? 0 : time / 1000;
     const orbitActive = currentZone === 0 || currentZone === 1;
+    const technologyMode = currentZone === 1;
 
     ORBIT_PARTICLES.forEach((obj, i) => {
       const node = obj.el;
@@ -880,6 +923,7 @@
         speedBase = (2 * Math.PI) / 92;
       }
 
+      if (technologyMode) speedBase *= mobile ? 1.08 : 1.24;
       const angle = (obj.angle * Math.PI / 180) + (timeScale * speedBase) + obj.phase * .04;
       const wobble = prefersReducedMotion ? 0 : Math.sin(timeScale * 1.25 + i) * (mobile ? 1.5 : 4);
       let x = cx + Math.cos(angle) * ring;

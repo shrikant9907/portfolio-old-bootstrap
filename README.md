@@ -244,3 +244,19 @@ See:
 ```txt
 steps/18-phase-1-entry-background-only.md
 ```
+
+## Phase 2 Technology Orbit Update
+
+**Updated:** 20 May 2026, 18:20 IST
+
+Phase 2 improves only:
+
+```txt
+Technology Orbit
+```
+
+See:
+
+```txt
+steps/19-phase-2-technology-orbit.md
+```

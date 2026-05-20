@@ -169,3 +169,16 @@ Updated: 20 May 2026, 18:05 IST
 - [ ] Start CTA is visible.
 - [ ] After Start, journey content appears.
 - [ ] Mobile/tablet/desktop do not reveal skills before Start.
+
+## Phase 2 Technology Orbit Test
+
+Updated: 20 May 2026, 18:20 IST
+
+- [ ] Start the journey and reach Technology Orbit.
+- [ ] Skill/tool particles move around the SV core.
+- [ ] Products/proof/reviews/contact are not mixed into the orbit.
+- [ ] Hover/focus updates the Technology Scan panel on desktop.
+- [ ] Click/tap opens detail panel or bottom sheet.
+- [ ] Zoom reveals deeper tools.
+- [ ] Mobile shows compact technology focus without overlap.
+- [ ] Previous/next arrows still work on desktop.

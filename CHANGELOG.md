@@ -1,5 +1,20 @@
 # Changelog
 
+## Phase 2 — Technology Orbit Update — 20 May 2026, 18:20 IST
+
+- Improved Technology Orbit as its own focused scene.
+- Added generated Technology Scan focus panel inside the orbit layer.
+- Hover/focus now updates the technology scan panel.
+- Click/tap still opens the detail tooltip/bottom sheet.
+- Increased Technology Orbit movement speed slightly.
+- More core/deep skill particles are available in Technology Orbit on desktop/tablet.
+- Preserved separation from Product Gallery, Proof Ring, Client Signals, and Launch Dock.
+- Added `steps/19-phase-2-technology-orbit.md`.
+- Updated the Technology Orbit screen contract and testing checklist.
+
+
+# Changelog
+
 ## Phase 1 Entry Background Only — 20 May 2026, 18:05 IST
 
 - Hid skill labels and inner scene content before the user clicks Start.

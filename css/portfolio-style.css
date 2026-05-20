@@ -1256,3 +1256,173 @@ body.verse-entered .verse-node:not(.is-hidden-by-zoom){
   visibility:visible!important;
   pointer-events:auto;
 }
+
+
+/* ==========================================================================
+   PHASE 2 — TECHNOLOGY ORBIT CONTRACT IMPLEMENTATION
+   Updated: 20 May 2026, 18:20 IST
+   Scope: Arrival Core → Technology Orbit → Product Gallery
+   Purpose: Make the skill/tool orbit feel alive, inspectable, and separate from products/proof/reviews.
+   ========================================================================== */
+
+/* Technology Orbit must feel active only after the journey starts. */
+body:not(.verse-entered) .technology-focus{
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+}
+
+.technology-focus{
+  position:fixed;
+  right:clamp(24px,5.2vw,82px);
+  top:50%;
+  width:min(330px,26vw);
+  transform:translateY(-50%) translateX(16px);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  z-index:145;
+  padding:16px 17px;
+  border:1px solid rgba(34,211,238,.22);
+  border-radius:16px;
+  background:linear-gradient(145deg,rgba(5,7,10,.76),rgba(11,16,22,.54));
+  box-shadow:0 18px 58px rgba(0,0,0,.42),0 0 34px rgba(34,211,238,.08);
+  backdrop-filter:blur(16px);
+  transition:opacity .34s ease, transform .34s ease, visibility .34s ease;
+}
+.technology-focus span{
+  display:block;
+  margin-bottom:8px;
+  color:var(--cyan-bright);
+  font:900 10px var(--heading);
+  letter-spacing:.22em;
+  text-transform:uppercase;
+}
+.technology-focus h3{
+  margin:0 0 8px;
+  color:var(--text);
+  font:900 clamp(22px,2.15vw,30px)/1.03 var(--heading);
+  letter-spacing:-.045em;
+}
+.technology-focus p,
+.technology-focus em{
+  display:block;
+  margin:0;
+  color:var(--text-2);
+  font-style:normal;
+  font-size:14px;
+  line-height:1.48;
+}
+.technology-focus em{
+  margin-top:9px;
+  color:var(--cyan-soft);
+  font-size:13px;
+}
+.verse-stage[data-zone="1"] .technology-focus{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(-50%) translateX(0);
+}
+
+/* Skill orbit gets stronger in Technology Orbit; Arrival Core remains calmer. */
+.verse-stage[data-zone="1"] .particle-layer{
+  opacity:1!important;
+  filter:none!important;
+}
+.verse-stage[data-zone="1"] .verse-node:not(.is-hidden-by-zoom){
+  opacity:.96!important;
+  visibility:visible!important;
+}
+.verse-stage[data-zone="1"] .verse-node{
+  min-width:74px;
+  min-height:36px;
+  border-radius:999px!important;
+  border-color:rgba(34,211,238,.30)!important;
+  background:linear-gradient(180deg,rgba(5,13,18,.82),rgba(3,6,10,.66))!important;
+}
+.verse-stage[data-zone="1"] .verse-node strong{
+  padding-left:12px;
+}
+.verse-stage[data-zone="1"] .verse-node::before{
+  width:7px!important;
+  height:7px!important;
+  background:var(--cyan)!important;
+  box-shadow:0 0 16px rgba(34,211,238,.72)!important;
+}
+.verse-stage[data-zone="1"] .verse-node.is-focused-tech,
+.verse-stage[data-zone="1"] .verse-node.is-hovered,
+.verse-stage[data-zone="1"] .verse-node.is-selected{
+  border-color:rgba(255,176,32,.82)!important;
+  box-shadow:0 0 26px rgba(255,176,32,.42),0 0 52px rgba(34,211,238,.12),inset 0 1px 0 rgba(255,255,255,.1)!important;
+}
+
+/* Add a subtle scanning ring only in Technology Orbit. */
+.verse-stage[data-zone="1"] .particle-layer::before{
+  content:"";
+  position:fixed;
+  left:50%;
+  top:50%;
+  width:min(62vw,680px);
+  aspect-ratio:1;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  border:1px dashed rgba(34,211,238,.18);
+  box-shadow:0 0 56px rgba(34,211,238,.06), inset 0 0 50px rgba(34,211,238,.025);
+  animation:techOrbitScan 34s linear infinite;
+  pointer-events:none;
+  z-index:1;
+}
+.verse-stage[data-zone="1"] .sv-core{
+  box-shadow:0 0 58px rgba(34,211,238,.32), inset 0 0 36px rgba(34,211,238,.13)!important;
+}
+
+@media (max-width:780px){
+  .technology-focus{
+    left:14px;
+    right:14px;
+    top:auto;
+    bottom:148px;
+    width:auto;
+    transform:translateY(18px);
+    padding:14px;
+    border-radius:16px;
+    max-height:30vh;
+    overflow:auto;
+  }
+  .verse-stage[data-zone="1"] .technology-focus{
+    transform:translateY(0);
+  }
+  .technology-focus h3{
+    font-size:22px;
+  }
+  .technology-focus p,
+  .technology-focus em{
+    font-size:13px;
+    line-height:1.42;
+  }
+  .verse-stage[data-zone="1"] .verse-node{
+    min-width:58px!important;
+    min-height:34px!important;
+    font-size:10px!important;
+  }
+  .verse-stage[data-zone="1"] .particle-layer::before{
+    width:110vw;
+    opacity:.44;
+  }
+}
+
+@media (min-width:781px) and (max-width:1120px){
+  .technology-focus{
+    right:24px;
+    width:min(300px,30vw);
+  }
+}
+
+@keyframes techOrbitScan{
+  from{transform:translate(-50%,-50%) rotate(0deg)}
+  to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .verse-stage[data-zone="1"] .particle-layer::before{animation:none!important}
+}
