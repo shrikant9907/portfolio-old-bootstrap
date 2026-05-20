@@ -226,3 +226,18 @@ Rules:
 - zoom bar must not look like a card wrapper,
 - icon controls must be circular,
 - Exit control must let the user return to Mission Entry.
+
+
+---
+
+## Screenshot QA No Dotted Rings
+
+**Updated:** 20 May 2026, 21:10 IST
+
+Scene rule:
+
+- no dotted background/orbit guide rings,
+- no pseudo-element decorative rings,
+- proof signal nodes must be circular,
+- detail panels must not overlap,
+- repeated scene/state readout should stay hidden.

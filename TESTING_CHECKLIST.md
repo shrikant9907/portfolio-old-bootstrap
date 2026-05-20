@@ -338,3 +338,16 @@ Updated: 20 May 2026, 20:55 IST
 - [ ] Exit button appears after Start.
 - [ ] Exit button returns to Mission Entry.
 - [ ] SV core remains circular.
+
+## Screenshot QA No Dotted Rings Test
+
+Updated: 20 May 2026, 21:10 IST
+
+- [ ] Technology Orbit has no dotted background ring.
+- [ ] Product Gallery has no dotted/guide ring.
+- [ ] Proof Ring has no dotted/guide ring.
+- [ ] Client Signals has no dotted/guide ring.
+- [ ] Proof signals are circular.
+- [ ] Proof detail panel text does not overlap.
+- [ ] Technology tooltip hides duplicate scan panel.
+- [ ] Bottom-left repeated state readout is hidden.

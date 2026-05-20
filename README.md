@@ -423,3 +423,15 @@ See:
 ```txt
 steps/35-transparent-ui-circular-controls-exit.md
 ```
+
+## Screenshot QA No Dotted Rings
+
+**Updated:** 20 May 2026, 21:10 IST
+
+Removed remaining dotted orbit/guide rings, made Proof Ring signals circular, fixed Proof panel text overlap, and prevented Technology tooltip/scan duplication.
+
+See:
+
+```txt
+steps/36-screenshot-qa-no-dotted-rings-proof-circles.md
+```

@@ -3492,3 +3492,292 @@ body.verse-entered .exit-verse-control {
     background: rgba(5,7,10,.50) !important;
   }
 }
+
+
+/* ==========================================================================
+   SCREENSHOT QA FIX — NO DOTTED RINGS + CIRCULAR PROOF SIGNALS
+   Updated: 20 May 2026, 21:10 IST
+
+   Issues found from user screenshots:
+   1. Dotted orbit rings were still visible behind Technology Orbit.
+   2. Proof/Client layers still showed circular guide rings.
+   3. Proof signal nodes looked like rounded squares, not circles.
+   4. Proof detail panel text overlapped.
+   5. Technology tooltip and scan panel visually duplicated/overlapped.
+   6. Bottom-left state readout repeated the current scene and looked like a wrapper card.
+   ========================================================================== */
+
+/* Kill every decorative / dotted ring from world and scene layers. */
+.particle-layer::before,
+.particle-layer::after,
+.product-gallery-layer::before,
+.product-gallery-layer::after,
+.proof-ring-layer::before,
+.proof-ring-layer::after,
+.client-signal-layer::before,
+.client-signal-layer::after,
+.core-ring,
+.verse-node::after,
+.product-dot::before,
+.proof-dot::before,
+.review-dot::before,
+.verse-stage[data-zone="1"] .particle-layer::before,
+.verse-stage[data-zone="1"] .particle-layer::after,
+.verse-stage[data-zone="2"] .product-gallery-layer::before,
+.verse-stage[data-zone="2"] .product-gallery-layer::after,
+.verse-stage[data-zone="3"] .proof-ring-layer::before,
+.verse-stage[data-zone="3"] .proof-ring-layer::after,
+.verse-stage[data-zone="4"] .client-signal-layer::before,
+.verse-stage[data-zone="4"] .client-signal-layer::after {
+  content: none !important;
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  animation: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  background: none !important;
+}
+
+/* No dashed styling anywhere in skill/proof/review/product nodes. */
+.verse-node,
+.verse-node.depth-hidden,
+.verse-node:hover,
+.verse-node:focus-visible,
+.verse-node.is-hovered,
+.verse-node.is-selected,
+.world-dot,
+.product-dot,
+.proof-dot,
+.review-dot {
+  border-style: solid !important;
+}
+
+/* Proof signal nodes must be true circles, not rounded squares. */
+.proof-dot {
+  width: 76px !important;
+  height: 76px !important;
+  min-width: 76px !important;
+  min-height: 76px !important;
+  border-radius: 50% !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 0 !important;
+  background: rgba(5, 7, 10, .50) !important;
+  border: 1px solid rgba(34, 211, 238, .30) !important;
+  box-shadow: 0 0 22px rgba(34, 211, 238, .12) !important;
+  overflow: visible !important;
+}
+
+.proof-dot strong {
+  position: static !important;
+  display: block !important;
+  color: var(--cyan-bright) !important;
+  font: 900 17px/1 var(--heading) !important;
+  letter-spacing: -.03em !important;
+  transform: none !important;
+  text-align: center !important;
+  pointer-events: none !important;
+}
+
+.proof-dot span {
+  position: absolute !important;
+  left: 50% !important;
+  top: calc(100% + 10px) !important;
+  transform: translateX(-50%) !important;
+  width: max-content !important;
+  max-width: 130px !important;
+  color: var(--text-2) !important;
+  font: 800 10px/1.2 var(--heading) !important;
+  letter-spacing: .04em !important;
+  text-align: center !important;
+  opacity: .72 !important;
+  pointer-events: none !important;
+}
+
+.proof-dot.is-active {
+  border-color: rgba(255, 176, 32, .72) !important;
+  background: rgba(255, 176, 32, .13) !important;
+  box-shadow: 0 0 28px rgba(255, 176, 32, .24) !important;
+}
+
+.proof-dot.is-active strong,
+.proof-dot.is-active span {
+  color: var(--fire) !important;
+}
+
+.review-dot,
+.product-dot {
+  border-radius: 50% !important;
+  overflow: visible !important;
+}
+
+/* Fix Proof Ring right panel overlapping typography. */
+.proof-focus {
+  display: grid !important;
+  gap: 9px !important;
+  align-content: start !important;
+  min-height: 0 !important;
+  width: min(430px, 34vw) !important;
+  padding: 18px 18px 16px !important;
+}
+
+.proof-signal-head {
+  margin: 0 !important;
+}
+
+.proof-focus h3 {
+  margin: 2px 0 0 !important;
+  font-size: clamp(42px, 4.7vw, 64px) !important;
+  line-height: .88 !important;
+  letter-spacing: -.07em !important;
+  white-space: nowrap !important;
+}
+
+.proof-focus strong {
+  margin: 0 !important;
+  display: block !important;
+  color: var(--text) !important;
+  font: 900 clamp(20px, 1.9vw, 28px)/1.05 var(--heading) !important;
+  letter-spacing: -.035em !important;
+}
+
+.proof-focus em {
+  margin: 0 !important;
+  display: block !important;
+  color: var(--text-2) !important;
+  font-style: normal !important;
+  font-size: 14.5px !important;
+  line-height: 1.45 !important;
+}
+
+.proof-next-inline {
+  width: max-content !important;
+  margin-top: 4px !important;
+}
+
+/* Fix Client Signals panel density and overlap. */
+.review-card {
+  display: grid !important;
+  gap: 12px !important;
+  align-content: start !important;
+  width: min(500px, 37vw) !important;
+}
+
+.review-card blockquote {
+  margin: 0 !important;
+  font-size: clamp(15px, 1.35vw, 18px) !important;
+  line-height: 1.52 !important;
+}
+
+.review-next-inline {
+  width: max-content !important;
+}
+
+/* Avoid duplicated detail panels in Technology Orbit after a tooltip opens. */
+body.object-detail-open .technology-focus {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.verse-stage[data-zone="1"] .object-tooltip {
+  right: clamp(24px, 5vw, 74px) !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  max-width: min(360px, 30vw) !important;
+  z-index: 180 !important;
+}
+
+/* Remove repeated bottom-left scene readout card/wrapper. */
+.state-readout,
+.scene-info {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* Keep bottom bullets clean and without wrapper. */
+.zone-nav,
+.zone-dots {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Keep zoom bar clean and without wrapper. */
+.zoom-control {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Controls remain circular. */
+.hud-btn,
+.zone-arrow,
+.zoom-control button,
+.product-scan-arrow,
+.product-detail-close,
+.product-detail-arrows button,
+.proof-arrow,
+.review-arrow,
+.exit-verse-control {
+  border-radius: 50% !important;
+}
+
+/* SV core remains circular and fixed. */
+.sv-core,
+.sv-core *,
+.entry-sv-mini,
+.entry-sv-mini *,
+.core-inner,
+.core-inner * {
+  border-radius: 50% !important;
+}
+
+.sv-core {
+  transform: translate(-50%, -50%) !important;
+}
+
+/* Mobile fixes: proof dots and panels stay readable. */
+@media (max-width: 780px) {
+  .proof-dot {
+    width: 58px !important;
+    height: 58px !important;
+    min-width: 58px !important;
+    min-height: 58px !important;
+  }
+
+  .proof-dot strong {
+    font-size: 14px !important;
+  }
+
+  .proof-dot span {
+    display: none !important;
+  }
+
+  .proof-focus h3 {
+    font-size: 42px !important;
+  }
+
+  .proof-focus,
+  .review-card {
+    max-height: 42vh !important;
+    overflow: auto !important;
+  }
+
+  .verse-stage[data-zone="1"] .object-tooltip {
+    left: 14px !important;
+    right: 14px !important;
+    bottom: 92px !important;
+    top: auto !important;
+    transform: none !important;
+    max-width: none !important;
+  }
+}

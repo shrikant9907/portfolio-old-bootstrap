@@ -1,5 +1,19 @@
 # Changelog
 
+## Screenshot QA No Dotted Rings and Proof Circle Fix — 20 May 2026, 21:10 IST
+
+- Removed remaining dotted orbit/guide rings from Technology, Product, Proof, and Client scenes.
+- Disabled generated pseudo-element rings around particles, proof nodes, product nodes, and review nodes.
+- Forced Proof Ring signal nodes to true circular shape.
+- Fixed Proof detail card text overlap.
+- Hid duplicated Technology Scan panel when object tooltip is open.
+- Hid repeated bottom-left state readout.
+- Added `steps/36-screenshot-qa-no-dotted-rings-proof-circles.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
 ## Transparent UI, Circular Controls, Exit Button — 20 May 2026, 20:55 IST
 
 - Made cards and panels use around 50% transparent black.

@@ -1003,6 +1003,7 @@ function bindEntry() {
 
   function showObject(obj, target) {
     stopAutoFlight();
+    document.body.classList.add('object-detail-open');
     $$('.verse-node,.sv-core,.world-dot').forEach(node => node.classList.remove('is-selected','is-focused'));
     target?.classList.add(target === els.core ? 'is-focused' : 'is-selected');
     els.tooltipType.textContent = obj.category || 'Object';
@@ -1021,6 +1022,7 @@ function bindEntry() {
   }
 
   function closeObject() {
+    document.body.classList.remove('object-detail-open');
     els.tooltip.classList.remove('is-open');
     els.tooltip.setAttribute('aria-hidden', 'true');
     $$('.verse-node,.sv-core,.world-dot').forEach(node => node.classList.remove('is-selected','is-focused'));

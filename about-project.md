@@ -264,3 +264,9 @@ Shrimo Verse now uses a pure black starfield universe: no clouds, no gradients, 
 **Updated:** 20 May 2026, 20:55 IST
 
 Shrimo Verse now uses transparent cinematic overlays instead of solid cards. Controls are circular and an Exit button is available after entering.
+
+## Screenshot QA No Dotted Rings
+
+**Updated:** 20 May 2026, 21:10 IST
+
+The universe UI now avoids decorative dotted rings completely. Proof signals are circular and detail panels are cleaner.
