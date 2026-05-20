@@ -547,3 +547,11 @@ See:
 ```txt
 steps/46-mobile-screen-fix.md
 ```
+
+## Phase 47 Entry Screen Purity Fix
+
+**Updated:** 21 May 2026, 00:18 IST
+
+Phase 47 cleans the pre-start entry screen so only the cinematic welcome layer is visible.
+
+See: `steps/47-entry-screen-purity-fix.md`

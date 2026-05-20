@@ -328,3 +328,11 @@ The SV core must always stay at the visual center of the universe. Phase 45 prot
 **Updated:** 20 May 2026, 23:59 IST
 
 The mobile experience now uses a clearer control model: bottom dock for journey controls, top-right Exit for system action, and a calmer Arrival Core around the centered SV core.
+
+## Phase 47 Entry Screen Purity Fix
+
+**Updated:** 21 May 2026, 00:18 IST
+
+Phase 47 cleans the pre-start entry screen so only the cinematic welcome layer is visible.
+
+See: `steps/47-entry-screen-purity-fix.md`

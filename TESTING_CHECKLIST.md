@@ -465,3 +465,11 @@ Updated: 20 May 2026, 23:59 IST
 - [ ] Zoom is subtle and close to the left edge.
 - [ ] Arrival Core has fewer visible labels.
 - [ ] SV core is centered and readable.
+
+## Phase 47 Entry Screen Purity Fix
+
+**Updated:** 21 May 2026, 00:18 IST
+
+Phase 47 cleans the pre-start entry screen so only the cinematic welcome layer is visible.
+
+See: `steps/47-entry-screen-purity-fix.md`

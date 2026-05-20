@@ -1,5 +1,16 @@
 # Changelog
 
+
+## Phase 47 Entry Screen Purity Fix — 21 May 2026, 00:18 IST
+
+- Hid zoom, exit, step navigation, mobile dock, and floating controls before Start.
+- Hid SV core, particle layer, and orbit lines before Start.
+- Kept cinematic universe elements available again during the launch transition.
+- Removed entry progress line.
+- Made entry hint chips lighter and smaller.
+- Forced viewport overflow hidden to remove the entry-screen scrollbar.
+- Added `steps/47-entry-screen-purity-fix.md`.
+
 ## Phase 46 Mobile Screen Fix — 20 May 2026, 23:59 IST
 
 - Hid duplicate right-side floating control rail on mobile.

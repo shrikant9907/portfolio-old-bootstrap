@@ -207,3 +207,10 @@ Before exiting this scene:
 - [ ] Animation supports the scene purpose.
 - [ ] No website/card/dashboard feeling appears.
 
+
+
+---
+
+## Phase 47 Entry Screen Purity Fix
+
+Before Start, the user must see only the cinematic entry layer. Do not leak zoom, exit, step navigation, bottom dock, SV core, orbit labels, or detail overlays into the entry state.
