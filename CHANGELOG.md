@@ -1,5 +1,15 @@
 # Changelog
 
+## Phase 51 Final Mobile Issue Fixes — 21 May 2026, 02:10 IST
+
+- Fixed Arrival Core mobile node positioning with a protected radius around the SV core.
+- Refined Product / Proof / Client / Launch mobile cards into safer bottom-sheet layouts.
+- Fixed Launch Dock mobile button clipping.
+- Removed duplicate secondary WhatsApp CTA from the Launch Dock mobile grid.
+- Hid Proof / Review side navigation on mobile and simplified the mobile action flow.
+- Added `steps/51-final-mobile-issue-fixes.md`.
+
+
 
 ## Phase 50 Mobile Scene Stability Fix — 21 May 2026, 01:22 IST
 

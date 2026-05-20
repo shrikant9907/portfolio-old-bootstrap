@@ -501,3 +501,15 @@ Updated: 21 May 2026, 00:58 IST
 - [ ] Client Signals card is readable.
 - [ ] Launch Dock is compact and not scroll-heavy.
 - [ ] Right-side desktop controls are hidden on mobile.
+
+## Phase 51 Final Mobile Issue Fixes Test
+
+Updated: 21 May 2026, 02:10 IST
+
+- [ ] Arrival Core mobile shows 4 balanced nodes outside the SV core radius.
+- [ ] No node goes behind or overlaps the core.
+- [ ] Product Gallery mobile card is readable and stable.
+- [ ] Proof Ring mobile card is not clipped.
+- [ ] Client Signals mobile card is readable.
+- [ ] Launch Dock mobile shows all visible buttons fully without clipping.
+- [ ] Launch Dock mobile does not duplicate WhatsApp as both primary and secondary CTA.

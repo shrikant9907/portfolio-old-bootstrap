@@ -1951,3 +1951,86 @@ function bindEntry() {
     initPhase49();
   }
 })();
+
+
+/* ==========================================================================
+   PHASE 51 — FINAL MOBILE ISSUE FIXES JS
+   Updated: 21 May 2026, 02:10 IST
+   Purpose: keep Arrival Core mobile nodes outside the SV core safe radius.
+   ========================================================================== */
+(function () {
+  const IDS = ['css', 'react', 'javascript', 'html'];
+  const OFFSETS = [
+    [0, -78],
+    [78, -2],
+    [-64, 50],
+    [64, 50]
+  ];
+
+  function applyArrivalMobilePrecision() {
+    const mobile = window.innerWidth <= 780;
+    const stage = document.querySelector('.verse-stage');
+    const plane = document.querySelector('.universe-plane');
+    const core = document.querySelector('.sv-core');
+    if (!mobile || !stage || !plane || !core) return resetArrivalMobilePrecision();
+
+    const inArrival = document.body.classList.contains('verse-entered') && stage.dataset.zone === '0';
+    const nodes = Array.from(document.querySelectorAll('.particle-layer .verse-node'));
+    if (!inArrival) return resetArrivalMobilePrecision();
+
+    const map = new Map(nodes.map((el) => [el.dataset.id, el]));
+    const chosen = IDS.map((id) => map.get(id)).filter(Boolean);
+
+    const planeRect = plane.getBoundingClientRect();
+    const coreRect = core.getBoundingClientRect();
+    const cx = coreRect.left - planeRect.left + coreRect.width / 2;
+    const cy = coreRect.top - planeRect.top + coreRect.height / 2;
+
+    nodes.forEach((node) => {
+      if (!chosen.includes(node)) {
+        node.classList.remove('phase51-arrival-node');
+        node.style.display = 'none';
+        node.style.visibility = 'hidden';
+        node.style.opacity = '0';
+      }
+    });
+
+    chosen.forEach((node, index) => {
+      const [ox, oy] = OFFSETS[index] || [0, 0];
+      node.classList.add('phase51-arrival-node');
+      node.style.display = '';
+      node.style.visibility = 'visible';
+      node.style.opacity = '0.92';
+      node.style.left = `${cx + ox}px`;
+      node.style.top = `${cy + oy}px`;
+      node.style.pointerEvents = 'none';
+    });
+  }
+
+  function resetArrivalMobilePrecision() {
+    document.querySelectorAll('.particle-layer .verse-node').forEach((node) => {
+      node.classList.remove('phase51-arrival-node');
+      node.style.removeProperty('display');
+      node.style.removeProperty('pointer-events');
+      node.style.removeProperty('left');
+      node.style.removeProperty('top');
+      node.style.removeProperty('visibility');
+      node.style.removeProperty('opacity');
+    });
+  }
+
+  function initPhase51Mobile() {
+    const loop = () => {
+      applyArrivalMobilePrecision();
+      window.requestAnimationFrame(loop);
+    };
+    loop();
+    window.addEventListener('resize', applyArrivalMobilePrecision, { passive: true });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPhase51Mobile);
+  } else {
+    initPhase51Mobile();
+  }
+})();

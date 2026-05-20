@@ -7183,3 +7183,215 @@ body.is-entering-verse:not(.verse-entered) > .floating-hud-controls {
     max-height: 84px !important;
   }
 }
+
+
+/* ==========================================================================
+   PHASE 51 — FINAL MOBILE ISSUE FIXES
+   Updated: 21 May 2026, 02:10 IST
+
+   Final mobile fixes based on screenshot QA:
+   - prevent node overlap with the SV core on Arrival Core
+   - make all mobile scene cards use a clean bottom-sheet contract
+   - prevent button clipping / hidden actions on Launch Dock mobile
+   - simplify mobile CTA hierarchy and remove duplicate WhatsApp secondary CTA
+   - keep Product / Proof / Client / Launch scenes readable and stable
+   ========================================================================== */
+
+@media (max-width: 780px) {
+  /* Arrival nodes: only a few small nodes, all outside the protected core radius. */
+  .verse-stage[data-zone="0"] .verse-node.phase51-arrival-node {
+    min-width: 54px !important;
+    min-height: 34px !important;
+    padding: 6px 10px !important;
+    font-size: 9.5px !important;
+    border-radius: 999px !important;
+    z-index: 32 !important;
+  }
+
+  .verse-stage[data-zone="0"] .verse-node.phase51-arrival-node::before {
+    width: 5px !important;
+    height: 5px !important;
+    left: 8px !important;
+  }
+
+  .verse-stage[data-zone="0"] .verse-node.phase51-arrival-node strong,
+  .verse-stage[data-zone="0"] .verse-node.phase51-arrival-node span,
+  .verse-stage[data-zone="0"] .verse-node.phase51-arrival-node .node-label {
+    padding-left: 10px !important;
+    font-size: 9.5px !important;
+    line-height: 1 !important;
+  }
+
+  /* Keep launch / product / proof / review cards safely above the bottom dock. */
+  .gallery-card,
+  .proof-focus,
+  .review-card,
+  .launch-dock {
+    bottom: 78px !important;
+    left: 18px !important;
+    right: 18px !important;
+    width: auto !important;
+    max-width: none !important;
+    overflow: visible !important;
+  }
+
+  .gallery-card,
+  .proof-focus,
+  .review-card {
+    min-height: 168px !important;
+    max-height: none !important;
+  }
+
+  /* Product Gallery mobile */
+  .gallery-card {
+    padding: 12px !important;
+  }
+
+  .gallery-card h3 {
+    font-size: clamp(18px, 5.8vw, 24px) !important;
+    max-width: 11ch !important;
+  }
+
+  .gallery-preview {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+    border-radius: 13px !important;
+  }
+
+  .product-copy em {
+    max-width: 22ch !important;
+    font-size: 11px !important;
+    line-height: 1.32 !important;
+  }
+
+  .product-actions {
+    gap: 7px !important;
+  }
+
+  .product-btn,
+  .disabled-path,
+  .product-details-trigger {
+    min-height: 34px !important;
+    font-size: 9px !important;
+  }
+
+  /* Proof Ring mobile */
+  .proof-focus {
+    padding: 12px !important;
+    gap: 5px !important;
+  }
+
+  .proof-focus h3 {
+    font-size: clamp(30px, 10vw, 42px) !important;
+  }
+
+  .proof-focus strong {
+    font-size: clamp(17px, 5vw, 22px) !important;
+    max-width: 11ch !important;
+  }
+
+  .proof-focus em {
+    max-height: none !important;
+    font-size: 11px !important;
+    line-height: 1.34 !important;
+  }
+
+  .proof-nav {
+    display: none !important;
+  }
+
+  /* Client Signals mobile */
+  .review-card {
+    padding: 12px !important;
+    gap: 7px !important;
+  }
+
+  .review-card blockquote {
+    font-size: 12.5px !important;
+    line-height: 1.42 !important;
+    max-height: none !important;
+  }
+
+  .review-next-inline {
+    min-height: 32px !important;
+  }
+
+  .review-nav {
+    display: none !important;
+  }
+
+  /* Launch Dock mobile: no clipped buttons, no duplicate WhatsApp secondary action. */
+  body.is-launch-scene .mission-panel {
+    width: min(185px, 60vw) !important;
+  }
+
+  body.is-launch-scene .mission-panel p:not(.mission-kicker) {
+    max-width: 20ch !important;
+    font-size: 10.5px !important;
+    line-height: 1.3 !important;
+  }
+
+  .launch-dock {
+    min-height: 236px !important;
+    max-height: none !important;
+    padding: 12px !important;
+    overflow: visible !important;
+  }
+
+  .launch-dock h2 {
+    font-size: clamp(18px, 6vw, 24px) !important;
+    line-height: 1.02 !important;
+    max-width: 10ch !important;
+    margin-bottom: 6px !important;
+  }
+
+  .launch-dock .dock-desc,
+  .launch-dock p + p,
+  .launch-dock p:not(:first-child) {
+    font-size: 11px !important;
+    line-height: 1.32 !important;
+    max-width: 22ch !important;
+    margin-bottom: 9px !important;
+  }
+
+  .launch-primary-btn {
+    min-height: 42px !important;
+    margin: 8px 0 10px !important;
+    width: 100% !important;
+  }
+
+  .dock-beacons {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+
+  .dock-beacons a {
+    min-height: 32px !important;
+    font-size: 9px !important;
+  }
+
+  .dock-beacons a:first-child,
+  .dock-beacons a:nth-child(n+6) {
+    display: none !important;
+  }
+
+  /* Keep dots around the core clean in scene layers. */
+  .proof-dots,
+  .review-dots,
+  .gallery-dots {
+    top: 45% !important;
+  }
+
+  .proof-dot,
+  .review-dot,
+  .product-dot {
+    transform: translate(calc(-50% + var(--dot-x)), calc(-50% + var(--dot-y))) scale(.92) !important;
+  }
+
+  /* Mobile zoom stays hidden once inside. */
+  body.verse-entered .zoom-dock,
+  body.verse-entered .zoom-control {
+    display: none !important;
+  }
+}

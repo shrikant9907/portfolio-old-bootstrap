@@ -354,3 +354,9 @@ Brand placement is now fixed with the wordmark at top-left and Exit at top-right
 **Updated:** 21 May 2026, 01:22 IST
 
 Mobile scene details now behave like a focused control sheet instead of desktop floating panels.
+
+## Phase 51 Final Mobile Issue Fixes
+
+**Updated:** 21 May 2026, 02:10 IST
+
+Mobile scene polish is now focused on protected SV-core spacing, stable bottom-sheet scene cards, and unclipped CTA actions. The Launch Dock mobile state now prioritizes one primary WhatsApp CTA with a reduced secondary action grid to avoid clipping.

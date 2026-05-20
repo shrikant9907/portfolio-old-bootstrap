@@ -581,3 +581,11 @@ See: `steps/49-logo-left-node-center-fix.md`
 **Updated:** 21 May 2026, 01:22 IST
 
 Mobile Product, Proof, Review, and Launch screens now use one controlled bottom-sheet layout. See `steps/50-mobile-scene-stability-fix.md`.
+
+## Phase 51 Final Mobile Issue Fixes
+
+**Updated:** 21 May 2026, 02:10 IST
+
+This phase completes the remaining mobile scene polish. Arrival Core now uses a protected centered node layout around the SV core, and Product / Proof / Client / Launch screens follow a safer bottom-sheet layout on mobile.
+
+See: `steps/51-final-mobile-issue-fixes.md`
