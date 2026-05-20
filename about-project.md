@@ -258,3 +258,9 @@ Shrimo Verse now uses a realistic black universe background instead of artificia
 **Updated:** 20 May 2026, 20:35 IST
 
 Shrimo Verse now uses a pure black starfield universe: no clouds, no gradients, and no decorative rings. The effect is cleaner and more focused on star depth and motion.
+
+## Transparent UI and Circular Controls
+
+**Updated:** 20 May 2026, 20:55 IST
+
+Shrimo Verse now uses transparent cinematic overlays instead of solid cards. Controls are circular and an Exit button is available after entering.

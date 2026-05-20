@@ -1,5 +1,19 @@
 # Changelog
 
+## Transparent UI, Circular Controls, Exit Button — 20 May 2026, 20:55 IST
+
+- Made cards and panels use around 50% transparent black.
+- Removed heavy wrapper feeling from step bullets/navigation.
+- Removed heavy wrapper feeling from zoom control bar.
+- Converted icon controls to circular controls.
+- Added Exit button to return from the journey to Mission Entry.
+- Kept Start button solid and prominent.
+- Added `steps/35-transparent-ui-circular-controls-exit.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
 ## Pure Black Starfield Background — 20 May 2026, 20:35 IST
 
 - Simplified the universe background to pure black starfield only.

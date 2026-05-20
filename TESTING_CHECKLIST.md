@@ -325,3 +325,16 @@ Updated: 20 May 2026, 20:35 IST
 - [ ] Star count looks noticeably higher.
 - [ ] Mouse movement affects stars more strongly on desktop.
 - [ ] SV core stays fixed.
+
+## Transparent UI and Circular Controls Test
+
+Updated: 20 May 2026, 20:55 IST
+
+- [ ] Cards/panels are around 50% transparent.
+- [ ] Start button remains solid.
+- [ ] Step bullets have no heavy wrapper.
+- [ ] Zoom bar has no heavy wrapper.
+- [ ] Icon controls are circular.
+- [ ] Exit button appears after Start.
+- [ ] Exit button returns to Mission Entry.
+- [ ] SV core remains circular.

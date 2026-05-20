@@ -411,3 +411,15 @@ See:
 ```txt
 steps/34-pure-black-starfield-background.md
 ```
+
+## Transparent UI and Circular Controls
+
+**Updated:** 20 May 2026, 20:55 IST
+
+Panels now use 50% transparent black, step/zoom wrappers are visually removed, icon controls are circular, and an Exit button returns the user to the beginning.
+
+See:
+
+```txt
+steps/35-transparent-ui-circular-controls-exit.md
+```

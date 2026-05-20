@@ -128,6 +128,7 @@
     body: document.body,
     entryGate: $('#entryGate'),
     enterVerse: $('#enterVerse'),
+    exitVerse: $('#exitVerse'),
     ship: $('#shipCursor'),
     trail: $('#cursorTrailLayer'),
     guidedMode: $('#guidedMode'),
@@ -625,7 +626,46 @@ function updateProductLayer() {
     });
   }
 
-  function bindEntry() {
+  
+  function exitToBeginning() {
+    stopAutoFlight();
+    closeObject();
+    closeGuide();
+    if (typeof closeProductDetail === 'function') closeProductDetail();
+
+    isLaunching = false;
+    entered = false;
+    currentZone = 0;
+    rocketCentering = false;
+
+    document.body.classList.remove(
+      'verse-entered',
+      'is-entering-verse',
+      'verse-revealing',
+      'first-guide-visible',
+      'product-detail-open',
+      'ship-orbit-demo',
+      'is-proof-scene',
+      'is-review-scene',
+      'is-launch-scene'
+    );
+
+    document.body.dataset.scene = 'mission-entry';
+
+    if (els.entryGate) {
+      els.entryGate.classList.remove('is-hidden', 'is-launching');
+    }
+
+    if (els.enterVerse) {
+      els.enterVerse.disabled = false;
+      els.enterVerse.textContent = 'Start';
+    }
+
+    setZone(0);
+    window.scrollTo({ top: 0, left: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+  }
+
+function bindEntry() {
     els.enterVerse.addEventListener('click', () => {
       if (entered) return;
       entered = true;
@@ -683,6 +723,7 @@ function updateProductLayer() {
   }
 
   function bindControls() {
+    els.exitVerse?.addEventListener('click', exitToBeginning);
     els.guidedMode.addEventListener('click', () => { stopAutoFlight(); startGuide({ manual: true }); setControlActive(els.guidedMode); });
     els.exploreMode.addEventListener('click', () => { stopAutoFlight(); setControlActive(els.exploreMode); setZone(1); });
     els.autoFlight.addEventListener('click', () => toggleAutoFlight());

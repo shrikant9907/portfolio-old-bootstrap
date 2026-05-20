@@ -322,3 +322,19 @@ Background rules now require:
 - no decorative rings,
 - stronger mouse-driven star motion on desktop,
 - fixed SV core.
+
+
+---
+
+## Transparent UI and Circular Controls
+
+**Updated:** 20 May 2026, 20:55 IST
+
+Rules:
+
+- cards/panels use around 50% transparent black,
+- no solid card backgrounds except Start button,
+- step bullets must not have a heavy wrapper,
+- zoom bar must not look like a card wrapper,
+- icon controls must be circular,
+- Exit control must let the user return to Mission Entry.

@@ -210,3 +210,19 @@ Rules:
 - SV core must not move,
 - UI panels must not move with parallax,
 - mobile uses reduced particle count.
+
+
+---
+
+## Transparent UI and Circular Controls
+
+**Updated:** 20 May 2026, 20:55 IST
+
+Rules:
+
+- cards/panels use around 50% transparent black,
+- no solid card backgrounds except Start button,
+- step bullets must not have a heavy wrapper,
+- zoom bar must not look like a card wrapper,
+- icon controls must be circular,
+- Exit control must let the user return to Mission Entry.
