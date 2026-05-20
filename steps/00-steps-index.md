@@ -133,3 +133,20 @@ Future developers must keep these sections updated whenever scene behavior chang
 
 
 - `14-product-bug-recovery-plan.md` — tracks recovered product bugs and expected behavior after restoration.
+
+
+---
+
+## Screen Contracts
+
+**Updated:** 20 May 2026, 17:05 IST
+
+The strongest planning now lives in:
+
+```txt
+steps/screen-contracts/00-contract-index.md
+```
+
+Each screen contract defines previous/current/next, animations, device behavior, connected layers, safe zones, failure risks, and acceptance criteria.
+
+Use these contracts before code changes.

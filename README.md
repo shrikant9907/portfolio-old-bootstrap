@@ -167,3 +167,31 @@ for the final package validation record.
 ## Recovered Cinematic Product Build
 
 This build recovers the visually fuller working Shrimo Verse app as the active product base and merges the mandatory docs, steps, and AI-agent files into it.
+
+## Screen Contracts and Meaningful Changes
+
+**Updated:** 20 May 2026, 17:05 IST
+
+Planning must now live inside markdown files, not only chat.
+
+Before changing any screen, read and update:
+
+```txt
+steps/screen-contracts/00-contract-index.md
+steps/screen-contracts/<scene-file>.md
+steps/15-meaningful-change-protocol.md
+```
+
+Every screen contract defines:
+
+- previous state,
+- current state,
+- next state,
+- visible elements,
+- hidden elements,
+- user interactions,
+- animation plan,
+- device behavior,
+- safe zones,
+- failure risks,
+- acceptance criteria.

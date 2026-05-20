@@ -113,3 +113,18 @@ Before final ZIP:
 ## Recovered Product Bug QA
 
 Verify entry impact, circular background after entry, moving orbit particles, desktop arrows, first guide, no content overlap, medium font/radius, galaxy movement, and launch dock clarity.
+
+## Screen Contract Validation
+
+Updated: 20 May 2026, 17:05 IST
+
+Before accepting a screen:
+
+- [ ] Screen contract exists.
+- [ ] Previous/current/next states are defined.
+- [ ] Visible and hidden elements are defined.
+- [ ] Animation plan exists.
+- [ ] Mobile/tablet/desktop behavior exists.
+- [ ] Failure risks are listed.
+- [ ] Acceptance criteria pass.
+- [ ] Related code change is documented.

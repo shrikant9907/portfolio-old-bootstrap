@@ -1,5 +1,18 @@
 # Changelog
 
+## Screen Contracts and Meaningful Change Protocol Added — 20 May 2026, 17:05 IST
+
+- Added `steps/screen-contracts/` as the source of truth for every original screen/scene.
+- Added a detailed screen contract for Mission Entry, Launch Sequence, Arrival Core, Technology Orbit, Product Gallery, Proof Ring, Client Signals, and Launch Dock.
+- Added `steps/screen-contracts/00-contract-index.md`.
+- Added `steps/15-meaningful-change-protocol.md`.
+- Updated README, about-project, project-rules, TESTING_CHECKLIST, and steps index.
+- Future work must update the matching screen contract before code changes.
+- Future changes must be meaningful, contract-based, and not random patch stacking.
+
+
+# Changelog
+
 ## Final stable production build
 
 ### Visual system
@@ -63,4 +76,3 @@
   - improved canvas galaxy/starfield movement,
   - made the entry CTA more impressive with full “Enter Shrimo Verse” copy.
 - Kept all mandatory docs, AI-agent files, and `steps/` planning system.
-

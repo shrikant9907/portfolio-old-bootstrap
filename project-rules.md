@@ -1049,3 +1049,36 @@ before making changes.
 ## 40. Recovered Working Product Base Rule
 
 Future builds must preserve the visually working app as base. Do not replace a complete visual product with a clean skeleton.
+
+## 40. Screen Contract Rule
+
+Updated: 20 May 2026, 17:05 IST
+
+Every original screen/scene must have a screen contract inside:
+
+```txt
+steps/screen-contracts/
+```
+
+Each contract must define:
+
+```txt
+Previous State
+Current State
+Next State
+Visible Elements
+Hidden Elements
+Primary Action
+Secondary Action
+Entry Animation
+User-Triggered Animation
+Exit Animation
+Mobile 375px Behavior
+Tablet 768px Behavior
+Desktop 1366px Behavior
+Safe Zones
+Failure Risks
+Acceptance Criteria
+```
+
+Do not make major UI/code changes without updating the relevant screen contract first.

@@ -182,3 +182,17 @@ The current final project package keeps the working static Shrimo Verse app toge
 ## Recovered Cinematic Product Build
 
 This build uses the older visually working universe interface as the product base and fixes the reported product bugs without replacing the app with a clean skeleton.
+
+## Screen Contracts and Meaningful Changes
+
+**Updated:** 20 May 2026, 17:05 IST
+
+Shrimo Verse now uses screen contracts inside:
+
+```txt
+steps/screen-contracts/
+```
+
+These files are the source of truth for how each screen works.
+
+Future changes must be meaningful and must connect to a screen contract, not chat-only planning.
