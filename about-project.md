@@ -306,3 +306,25 @@ Shrimo Verse now uses the correct zoom selector `.zoom-dock` and keeps the main 
 **Updated:** 20 May 2026, 22:55 IST
 
 Shrimo Verse controls are now detached from the header at runtime and rendered as a reliable bottom-right floating icon rail.
+
+## Wordmark / Exit / Copyright / Arrow Cleanup
+
+The universe shell is now treated as a floating control system rather than a traditional page shell. Brand chrome is reduced to a simple wordmark, the exit action is promoted to the top-right corner, copyright is moved to desktop bottom-left, and step arrows no longer feel like button cards.
+
+## Phase 44 Visual Hierarchy Cleanup
+
+**Updated:** 20 May 2026, 23:35 IST
+
+The project now prioritizes a cleaner cinematic control-system feel. Repeated buttons are removed from scene panels and the floating controls become the primary interaction model.
+
+## Phase 45 Core Center Protection
+
+**Updated:** 20 May 2026, 23:50 IST
+
+The SV core must always stay at the visual center of the universe. Phase 45 protects the full-screen universe plane and core positioning from future generic UI cleanup rules.
+
+## Phase 46 Mobile Screen Fix
+
+**Updated:** 20 May 2026, 23:59 IST
+
+The mobile experience now uses a clearer control model: bottom dock for journey controls, top-right Exit for system action, and a calmer Arrival Core around the centered SV core.

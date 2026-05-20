@@ -5225,3 +5225,1049 @@ body > .floating-hud-controls .hud-btn:focus-visible::after {
     padding: 6px 9px !important;
   }
 }
+
+
+/* ==========================================================================
+   FLOATING WORDMARK + EXIT TOP RIGHT + CLEAN ARROWS
+   Updated: 20 May 2026, 23:10 IST
+
+   Request:
+   - Exit icon at the top-right corner.
+   - Remove the "SV" badge from ShrimoVerse.
+   - No visual header or footer wrappers.
+   - Keep only a floating ShrimoVerse wordmark at the top-right.
+   - Copyright bottom-left on desktop.
+   - Previous/next arrows without background or border.
+   ========================================================================== */
+
+/* Remove header styling and keep only a floating wordmark. */
+.verse-control{
+  position: fixed !important;
+  top: 18px !important;
+  right: 64px !important;
+  left: auto !important;
+  width: auto !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  z-index: 1700 !important;
+  display: block !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+body.verse-entered .verse-control{
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.verse-brand{
+  display: inline-flex !important;
+  align-items: flex-end !important;
+  justify-content: flex-end !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: var(--text) !important;
+  text-align: right !important;
+  pointer-events: auto !important;
+}
+.verse-mark{ display:none !important; }
+.verse-brand > span:last-child,
+.brand-wordmark{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-end !important;
+  gap:2px !important;
+}
+.verse-brand strong{
+  font: 900 18px/1 var(--heading) !important;
+  letter-spacing: -.03em !important;
+  color: var(--text) !important;
+}
+.verse-brand em{
+  font: 800 9px/1.1 var(--heading) !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+  color: var(--muted) !important;
+  font-style: normal !important;
+}
+
+/* Exit icon goes to the actual top-right corner. */
+.exit-verse-control{
+  position: fixed !important;
+  top: 18px !important;
+  right: 18px !important;
+  left: auto !important;
+  bottom: auto !important;
+  z-index: 1800 !important;
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  min-height: 30px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  color: rgba(103,232,249,.98) !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+body.verse-entered .exit-verse-control{
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+.exit-verse-control svg{
+  width: 24px !important;
+  height: 24px !important;
+  fill: currentColor !important;
+  filter: drop-shadow(0 0 6px rgba(34,211,238,.58)) !important;
+}
+.exit-verse-control:hover,
+.exit-verse-control:focus-visible{
+  color: var(--fire) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transform: translateY(-1px) scale(1.05) !important;
+}
+.exit-verse-control::after{
+  content: 'Exit' !important;
+  position: absolute !important;
+  right: calc(100% + 12px) !important;
+  top: 50% !important;
+  transform: translateY(-50%) translateX(8px) !important;
+  padding: 7px 10px !important;
+  white-space: nowrap !important;
+  border-radius: 999px !important;
+  background: rgba(5,7,10,.74) !important;
+  color: var(--text) !important;
+  border: 1px solid rgba(34,211,238,.18) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.30) !important;
+  font: 800 10.5px/1 var(--heading) !important;
+  letter-spacing: .06em !important;
+  text-transform: uppercase !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  transition: opacity .16s ease, transform .16s ease, visibility .16s ease !important;
+}
+.exit-verse-control:hover::after,
+.exit-verse-control:focus-visible::after{
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-50%) translateX(0) !important;
+}
+
+/* Clean prev/next arrows: no background, no border. */
+.zone-arrow{
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: rgba(103,232,249,.94) !important;
+}
+.zone-arrow svg,
+.zone-arrow svg *{
+  width: 24px !important;
+  height: 24px !important;
+  stroke: currentColor !important;
+  fill: none !important;
+  stroke-width: 2.4 !important;
+  filter: drop-shadow(0 0 5px rgba(34,211,238,.55)) !important;
+}
+.zone-arrow:hover,
+.zone-arrow:focus-visible{
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  color: var(--fire) !important;
+}
+.zone-arrow:disabled{
+  opacity: .34 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Floating copyright bottom-left on desktop only. */
+.verse-copyright{
+  position: fixed !important;
+  left: 18px !important;
+  bottom: 16px !important;
+  z-index: 1400 !important;
+  color: rgba(182,194,207,.72) !important;
+  font: 700 10px/1.2 var(--heading) !important;
+  letter-spacing: .08em !important;
+  text-transform: uppercase !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+body.verse-entered .verse-copyright{
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+@media (max-width:780px){
+  .verse-control{
+    top: 14px !important;
+    right: 50px !important;
+  }
+  .verse-brand strong{
+    font-size: 15px !important;
+  }
+  .verse-brand em{
+    font-size: 8px !important;
+  }
+  .exit-verse-control{
+    top: 14px !important;
+    right: 12px !important;
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
+  }
+  .exit-verse-control svg{
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .verse-copyright{ display:none !important; }
+  .zone-arrow{
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+  }
+  .zone-arrow svg,
+  .zone-arrow svg *{
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
+
+/* ==========================================================================
+   PHASE 44 — VISUAL HIERARCHY CLEANUP
+   Updated: 20 May 2026, 23:35 IST
+
+   Goals:
+   1. reduce right icon glow
+   2. improve icon order support
+   3. make wordmark smaller and quieter
+   4. clean left mission panel
+   5. remove repeated buttons from scene panels
+   6. improve zoom spacing
+   7. reduce label collisions
+   8. simplify bottom navigation
+   9. soften copyright
+   10. keep pure black starfield and control-system feel
+   ========================================================================== */
+
+/* Keep stars, but protect readable content zones. */
+.verse-stage::before {
+  content: "" !important;
+  position: fixed !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+  background:
+    radial-gradient(ellipse at 17% 51%, rgba(0,0,0,.50), transparent 25%),
+    radial-gradient(circle at 52% 52%, rgba(0,0,0,.22), transparent 18%),
+    linear-gradient(90deg, rgba(0,0,0,.12), transparent 26%, transparent 72%, rgba(0,0,0,.10)) !important;
+  opacity: .78 !important;
+}
+
+.universe-plane,
+.mission-panel,
+.zone-nav,
+.zoom-dock,
+.floating-hud-controls {
+  position: relative;
+  z-index: 4;
+}
+
+/* Floating controls: less glow, clearer hierarchy. */
+body > .floating-hud-controls,
+body > .hud-controls.floating-hud-controls {
+  right: 16px !important;
+  bottom: 116px !important;
+  gap: 15px !important;
+  z-index: 9999 !important;
+}
+
+body > .floating-hud-controls .hud-btn {
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  min-height: 30px !important;
+  color: rgba(103,232,249,.76) !important;
+  opacity: .86 !important;
+  filter: none !important;
+}
+
+body > .floating-hud-controls .hud-btn svg,
+body > .floating-hud-controls .hud-btn svg * {
+  width: 23px !important;
+  height: 23px !important;
+  filter: drop-shadow(0 0 2px rgba(34,211,238,.22)) !important;
+}
+
+body > .floating-hud-controls .hud-btn.is-active,
+body > .floating-hud-controls .hud-btn:hover,
+body > .floating-hud-controls .hud-btn:focus-visible {
+  color: var(--fire) !important;
+  opacity: 1 !important;
+  transform: translateY(-1px) scale(1.04) !important;
+}
+
+body > .floating-hud-controls .hud-btn.is-active svg,
+body > .floating-hud-controls .hud-btn:hover svg,
+body > .floating-hud-controls .hud-btn:focus-visible svg {
+  filter: drop-shadow(0 0 6px rgba(255,176,32,.48)) !important;
+}
+
+/* Wordmark smaller, quieter, and placed left of Exit. */
+.verse-control {
+  top: 16px !important;
+  right: 60px !important;
+  z-index: 1700 !important;
+}
+
+.verse-brand strong {
+  font-size: 16px !important;
+  line-height: .95 !important;
+  letter-spacing: -.035em !important;
+}
+
+.verse-brand em {
+  font-size: 7.5px !important;
+  opacity: .58 !important;
+  letter-spacing: .15em !important;
+}
+
+.exit-verse-control {
+  top: 16px !important;
+  right: 18px !important;
+  width: 28px !important;
+  height: 28px !important;
+  min-width: 28px !important;
+  min-height: 28px !important;
+}
+
+.exit-verse-control svg {
+  width: 22px !important;
+  height: 22px !important;
+  filter: drop-shadow(0 0 3px rgba(34,211,238,.28)) !important;
+}
+
+/* Scene panels are informational only; remove repeated control buttons. */
+.mission-panel {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 0 !important;
+  max-width: min(330px, 28vw) !important;
+}
+
+.mission-panel .mission-actions {
+  display: none !important;
+}
+
+.mission-panel h2 {
+  font-size: clamp(30px, 3.05vw, 42px) !important;
+  line-height: 1.03 !important;
+  letter-spacing: -.045em !important;
+  margin-bottom: 12px !important;
+  max-width: 12.5ch !important;
+}
+
+.mission-panel p:not(.mission-kicker) {
+  max-width: 30ch !important;
+  font-size: 15px !important;
+  line-height: 1.55 !important;
+  color: rgba(214,226,238,.78) !important;
+}
+
+.mission-kicker {
+  font-size: 11px !important;
+  letter-spacing: .22em !important;
+  color: var(--cyan-bright) !important;
+}
+
+/* Left-center zoom: closer to edge, quieter label/buttons. */
+.zoom-dock,
+.zoom-control {
+  left: 8px !important;
+  width: 26px !important;
+  min-width: 26px !important;
+  max-width: 26px !important;
+  gap: 8px !important;
+  z-index: 1500 !important;
+}
+
+.zoom-dock button,
+.zoom-control button {
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  color: rgba(103,232,249,.76) !important;
+}
+
+.zoom-dock button svg,
+.zoom-control button svg {
+  width: 14px !important;
+  height: 14px !important;
+  filter: drop-shadow(0 0 2px rgba(34,211,238,.28)) !important;
+}
+
+.zoom-dock input[type="range"],
+.zoom-control input[type="range"],
+.zoom-range {
+  height: 128px !important;
+  width: 18px !important;
+  opacity: .76 !important;
+}
+
+.zoom-value {
+  font-size: 8.5px !important;
+  opacity: .78 !important;
+  letter-spacing: .06em !important;
+}
+
+/* Reduce label collisions: Arrival is calmer; more labels appear in Technology step. */
+.phase44-arrival-calm .verse-node {
+  opacity: .62 !important;
+  transform: translate(var(--orbit-x), var(--orbit-y)) scale(.88) !important;
+}
+
+.phase44-arrival-calm .verse-node:nth-child(n+9) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.phase44-arrival-calm .verse-node .node-label,
+.phase44-arrival-calm .verse-node span {
+  font-size: 10px !important;
+  max-width: 92px !important;
+}
+
+.verse-stage[data-zone="1"] .verse-node {
+  opacity: .92 !important;
+}
+
+.verse-node {
+  min-width: 74px !important;
+  max-width: 118px !important;
+  padding-inline: 10px !important;
+}
+
+.verse-node span,
+.verse-node .node-label {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Bottom navigation: no card label by default; softer step name. */
+.zone-name,
+.zone-label,
+.current-zone-label {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  color: rgba(182,194,207,.72) !important;
+  font-size: 12px !important;
+  letter-spacing: .03em !important;
+  opacity: .78 !important;
+}
+
+.zone-nav {
+  gap: 12px !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.zone-dots {
+  gap: 9px !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.zone-dot {
+  width: 9px !important;
+  height: 9px !important;
+  border: 0 !important;
+  background: rgba(103,232,249,.22) !important;
+}
+
+.zone-dot.is-active {
+  width: 11px !important;
+  height: 11px !important;
+  background: var(--fire) !important;
+  box-shadow: 0 0 13px rgba(255,176,32,.38) !important;
+}
+
+.zone-arrow {
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  min-height: 30px !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: rgba(103,232,249,.76) !important;
+}
+
+.zone-arrow svg,
+.zone-arrow svg * {
+  width: 21px !important;
+  height: 21px !important;
+  filter: drop-shadow(0 0 2px rgba(34,211,238,.25)) !important;
+}
+
+.zone-arrow:hover,
+.zone-arrow:focus-visible {
+  color: var(--fire) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Copyright quieter. */
+.verse-copyright {
+  left: 16px !important;
+  bottom: 14px !important;
+  font-size: 8.5px !important;
+  letter-spacing: .055em !important;
+  opacity: 0 !important;
+  color: rgba(182,194,207,.52) !important;
+}
+
+body.verse-entered .verse-copyright {
+  opacity: .54 !important;
+}
+
+/* Keep large detail panels readable but lighter. */
+.gallery-card,
+.proof-focus,
+.review-card,
+.launch-dock,
+.object-tooltip,
+.product-detail-sheet,
+.guide-card {
+  background: rgba(5,7,10,.44) !important;
+  border-color: rgba(34,211,238,.15) !important;
+  box-shadow: 0 18px 54px rgba(0,0,0,.24), 0 0 22px rgba(34,211,238,.045) !important;
+}
+
+/* Responsive tuning. */
+@media (max-width: 1100px) and (min-width: 781px) {
+  .mission-panel {
+    max-width: min(310px, 30vw) !important;
+  }
+
+  body > .floating-hud-controls,
+  body > .hud-controls.floating-hud-controls {
+    right: 14px !important;
+    bottom: 110px !important;
+    gap: 13px !important;
+  }
+
+  .zoom-dock,
+  .zoom-control {
+    left: 7px !important;
+  }
+}
+
+@media (max-width: 780px) {
+  .verse-stage::before {
+    background:
+      radial-gradient(ellipse at 50% 24%, rgba(0,0,0,.28), transparent 28%),
+      linear-gradient(90deg, rgba(0,0,0,.06), transparent 32%, transparent 70%, rgba(0,0,0,.07)) !important;
+    opacity: .62 !important;
+  }
+
+  .verse-control {
+    top: 13px !important;
+    right: 46px !important;
+  }
+
+  .verse-brand strong {
+    font-size: 14px !important;
+  }
+
+  .verse-brand em {
+    font-size: 7px !important;
+    opacity: .52 !important;
+  }
+
+  .mission-panel {
+    max-width: 78vw !important;
+  }
+
+  .mission-panel h2 {
+    font-size: clamp(25px, 8vw, 33px) !important;
+    max-width: 12.5ch !important;
+  }
+
+  .mission-panel p:not(.mission-kicker) {
+    font-size: 13.5px !important;
+    max-width: 28ch !important;
+  }
+
+  .zoom-dock,
+  .zoom-control {
+    left: 5px !important;
+    width: 24px !important;
+    max-width: 24px !important;
+  }
+
+  body > .floating-hud-controls,
+  body > .hud-controls.floating-hud-controls {
+    right: 8px !important;
+    bottom: 126px !important;
+    gap: 11px !important;
+  }
+
+  body > .floating-hud-controls .hud-btn {
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
+  }
+
+  body > .floating-hud-controls .hud-btn svg,
+  body > .floating-hud-controls .hud-btn svg * {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .phase44-arrival-calm .verse-node:nth-child(n+7) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  .verse-copyright {
+    display: none !important;
+  }
+}
+
+
+/* ==========================================================================
+   PHASE 45 — SV CORE CENTER PROTECTION FIX
+   Updated: 20 May 2026, 23:50 IST
+
+   Root cause:
+   Phase 44 accidentally changed `.universe-plane` to `position: relative`.
+   The SV core is absolutely positioned inside `.universe-plane`, so changing
+   that parent layer broke the center coordinate system.
+
+   Non-negotiable rule:
+   `.universe-plane` must remain full-screen absolute.
+   `.sv-core` must remain fixed at the visual center of the viewport.
+   ========================================================================== */
+
+/* Restore the universe coordinate layer. Never make this relative. */
+.universe-plane {
+  position: absolute !important;
+  inset: 0 !important;
+  left: 0 !important;
+  top: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  z-index: 4 !important;
+  transform-origin: center center !important;
+  pointer-events: none !important;
+}
+
+/* Keep the core exactly centered inside the full-screen universe plane. */
+.sv-core {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  width: 108px !important;
+  height: 108px !important;
+  min-width: 108px !important;
+  min-height: 108px !important;
+  aspect-ratio: 1 / 1 !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 45 !important;
+  display: grid !important;
+  place-items: center !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  border-radius: 50% !important;
+  overflow: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Protect all inner core shapes from global button/control radius rules. */
+.sv-core *,
+.core-inner,
+.core-inner *,
+.core-ring,
+.core-ring * {
+  border-radius: 50% !important;
+}
+
+/* Keep technology particles above background but below the core. */
+.particle-layer {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 8 !important;
+  pointer-events: none !important;
+}
+
+.verse-node {
+  pointer-events: auto !important;
+}
+
+/* Do not let Phase 44 z-index helper alter the full-screen universe plane. */
+.universe-plane.floating-hud-controls,
+.universe-plane.zoom-dock,
+.universe-plane.zone-nav {
+  position: absolute !important;
+}
+
+/* Mobile/tablet keep the same center contract. */
+@media (max-width: 780px) {
+  .universe-plane {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+  }
+
+  .sv-core {
+    left: 50% !important;
+    top: 50% !important;
+    width: 72px !important;
+    height: 72px !important;
+    min-width: 72px !important;
+    min-height: 72px !important;
+    transform: translate(-50%, -50%) !important;
+  }
+}
+
+
+/* ==========================================================================
+   PHASE 46 — MOBILE SCREEN FIX
+   Updated: 20 May 2026, 23:59 IST
+
+   Screenshot issues fixed:
+   1. Mobile had duplicate control systems: right floating rail + bottom dock.
+   2. Mission heading was too large and broke badly.
+   3. Left zoom control felt heavy and too close to the content.
+   4. Arrival Core had too many visible technology labels on mobile.
+   5. Core needed stronger visual breathing room.
+   ========================================================================== */
+
+/* Desktop/tablet keep the floating rail. Mobile uses only the bottom dock. */
+@media (max-width: 780px) {
+  body > .floating-hud-controls,
+  body > .hud-controls.floating-hud-controls {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Keep Exit as the only top-right system action. */
+  .exit-verse-control {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    top: 14px !important;
+    right: 12px !important;
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    z-index: 1900 !important;
+  }
+
+  .exit-verse-control svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  /* Wordmark stays small and does not behave like a header. */
+  .verse-control {
+    top: 15px !important;
+    right: 42px !important;
+    left: auto !important;
+    max-width: 120px !important;
+    z-index: 1800 !important;
+  }
+
+  .verse-brand strong {
+    font-size: 12.5px !important;
+    line-height: .95 !important;
+    letter-spacing: -.025em !important;
+  }
+
+  .verse-brand em {
+    font-size: 6px !important;
+    letter-spacing: .12em !important;
+    opacity: .50 !important;
+  }
+
+  /* Mobile mission panel: readable, not giant, not squeezed. */
+  .mission-panel {
+    top: 64px !important;
+    left: 22px !important;
+    right: auto !important;
+    width: min(210px, 62vw) !important;
+    max-width: min(210px, 62vw) !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .mission-kicker {
+    font-size: 9px !important;
+    letter-spacing: .19em !important;
+    margin-bottom: 8px !important;
+  }
+
+  .mission-panel h2 {
+    font-size: clamp(24px, 7vw, 30px) !important;
+    line-height: 1.04 !important;
+    letter-spacing: -.045em !important;
+    max-width: 9.6ch !important;
+    margin: 0 0 10px !important;
+  }
+
+  .mission-panel p:not(.mission-kicker) {
+    font-size: 12.5px !important;
+    line-height: 1.45 !important;
+    max-width: 25ch !important;
+    color: rgba(214,226,238,.70) !important;
+  }
+
+  .mission-panel .mission-actions {
+    display: none !important;
+  }
+
+  /* Zoom: still left-center, but lighter and pushed to the edge. */
+  .zoom-dock,
+  .zoom-control {
+    left: 1px !important;
+    top: 51% !important;
+    width: 20px !important;
+    max-width: 20px !important;
+    min-width: 20px !important;
+    gap: 6px !important;
+    opacity: .78 !important;
+    z-index: 1500 !important;
+  }
+
+  .zoom-dock button,
+  .zoom-control button {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+  }
+
+  .zoom-dock button svg,
+  .zoom-control button svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  .zoom-dock input[type="range"],
+  .zoom-control input[type="range"],
+  .zoom-range {
+    height: 88px !important;
+    width: 14px !important;
+    opacity: .64 !important;
+  }
+
+  .zoom-value {
+    font-size: 7px !important;
+    opacity: .70 !important;
+  }
+
+  /* Core remains centered, but smaller enough for mobile breathing room. */
+  .universe-plane {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+  }
+
+  .sv-core {
+    left: 50% !important;
+    top: 50% !important;
+    width: 66px !important;
+    height: 66px !important;
+    min-width: 66px !important;
+    min-height: 66px !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 45 !important;
+  }
+
+  .core-inner strong,
+  .sv-core strong {
+    font-size: 24px !important;
+  }
+
+  .core-label,
+  .sv-core small {
+    font-size: 6.5px !important;
+    letter-spacing: .16em !important;
+  }
+
+  /* Arrival Core on mobile must be calm: fewer visible nodes. */
+  body.phase44-arrival-calm .verse-node,
+  .phase44-arrival-calm .verse-node {
+    min-width: 68px !important;
+    max-width: 94px !important;
+    height: 28px !important;
+    padding-inline: 8px !important;
+    font-size: 10px !important;
+    opacity: .68 !important;
+  }
+
+  body.phase44-arrival-calm .verse-node:nth-child(n+6),
+  .phase44-arrival-calm .verse-node:nth-child(n+6) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .phase44-arrival-calm .verse-node span,
+  .phase44-arrival-calm .verse-node .node-label {
+    font-size: 10px !important;
+    max-width: 72px !important;
+  }
+
+  /* Move any still-visible particle labels away from mission text edge. */
+  .particle-layer {
+    z-index: 8 !important;
+  }
+
+  /* Mobile bottom dock becomes the only journey control system. */
+  .mobile-control-dock {
+    display: grid !important;
+    z-index: 1700 !important;
+    background: rgba(0, 0, 0, .46) !important;
+    border-top: 1px solid rgba(34, 211, 238, .14) !important;
+    backdrop-filter: blur(9px) !important;
+    -webkit-backdrop-filter: blur(9px) !important;
+  }
+
+  .mobile-control-dock button {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .mobile-control-dock svg {
+    filter: drop-shadow(0 0 3px rgba(34, 211, 238, .28)) !important;
+  }
+
+  /* Bottom step nav should not fight with dock on mobile. */
+  .zone-nav {
+    bottom: 68px !important;
+    transform: translateX(-50%) scale(.88) !important;
+    opacity: .86 !important;
+  }
+
+  .zone-name,
+  .zone-label,
+  .current-zone-label {
+    display: none !important;
+  }
+
+  .zone-dot {
+    width: 7px !important;
+    height: 7px !important;
+  }
+
+  .zone-dot.is-active {
+    width: 9px !important;
+    height: 9px !important;
+  }
+
+  .zone-arrow {
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
+  }
+
+  .zone-arrow svg,
+  .zone-arrow svg * {
+    width: 17px !important;
+    height: 17px !important;
+  }
+
+  /* More readable star field behind text. */
+  .verse-stage::before {
+    background:
+      radial-gradient(ellipse at 17% 24%, rgba(0,0,0,.58), transparent 35%),
+      radial-gradient(circle at 50% 50%, rgba(0,0,0,.24), transparent 20%),
+      linear-gradient(90deg, rgba(0,0,0,.16), transparent 34%, transparent 72%, rgba(0,0,0,.08)) !important;
+    opacity: .82 !important;
+  }
+}
+
+/* Very small mobile extra safety. */
+@media (max-width: 390px) {
+  .mission-panel {
+    left: 20px !important;
+    width: min(195px, 61vw) !important;
+    max-width: min(195px, 61vw) !important;
+  }
+
+  .mission-panel h2 {
+    font-size: clamp(23px, 7.4vw, 28px) !important;
+  }
+
+  .mission-panel p:not(.mission-kicker) {
+    font-size: 12px !important;
+  }
+
+  .sv-core {
+    width: 62px !important;
+    height: 62px !important;
+    min-width: 62px !important;
+    min-height: 62px !important;
+  }
+}

@@ -507,3 +507,43 @@ See:
 ```txt
 steps/42-final-visible-controls-rail.md
 ```
+
+## Wordmark / Exit / Copyright / Arrow Cleanup
+
+Updated the UI chrome so the experience no longer uses a visible header treatment. The ShrimoVerse wordmark is now a floating top-right element without the `SV` badge, the exit control is at the true top-right corner, desktop copyright is bottom-left, and step arrows are background-free.
+
+## Phase 44 Visual Hierarchy Cleanup
+
+**Updated:** 20 May 2026, 23:35 IST
+
+Phase 44 improves the visual hierarchy: quieter controls, smaller wordmark, cleaner mission panel, softened zoom, reduced label collisions, cleaner bottom navigation, and subtler copyright.
+
+See:
+
+```txt
+steps/44-visual-hierarchy-cleanup.md
+```
+
+## Phase 45 Core Center Protection
+
+**Updated:** 20 May 2026, 23:50 IST
+
+Fixed a Phase 44 regression where `.universe-plane` was changed to relative positioning. The SV core center contract is now protected.
+
+See:
+
+```txt
+steps/45-core-center-protection-fix.md
+```
+
+## Phase 46 Mobile Screen Fix
+
+**Updated:** 20 May 2026, 23:59 IST
+
+Phase 46 fixes the mobile screen: duplicate right-side controls are hidden on mobile, bottom dock becomes primary, mission title is reduced, zoom is softened, Arrival Core nodes are reduced, and the SV core keeps breathing room.
+
+See:
+
+```txt
+steps/46-mobile-screen-fix.md
+```

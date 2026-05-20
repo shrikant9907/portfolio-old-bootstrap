@@ -428,3 +428,50 @@ Rules:
 - no icon background/border,
 - hover/focus tooltip required,
 - actual `.zoom-dock` stays left-center.
+
+
+---
+
+## Phase 44 Visual Hierarchy Cleanup
+
+**Updated:** 20 May 2026, 23:35 IST
+
+Rules added:
+
+- reduce control glow in normal state,
+- keep only hover/active controls visually strong,
+- mission panels should not repeat floating control actions,
+- Arrival Core should be calm and less crowded,
+- zoom must stay closer to the left edge and visually quiet,
+- bottom navigation must stay clean,
+- copyright should be subtle.
+
+
+---
+
+## Phase 45 Core Center Protection
+
+**Updated:** 20 May 2026, 23:50 IST
+
+Critical rule:
+
+- `.universe-plane` must always remain `position: absolute; inset: 0;`.
+- `.sv-core` must always remain centered with `left: 50%; top: 50%; transform: translate(-50%, -50%);`.
+- Never use generic layout cleanup rules on `.universe-plane`.
+
+
+---
+
+## Phase 46 Mobile Screen Fix
+
+**Updated:** 20 May 2026, 23:59 IST
+
+Mobile rules:
+
+- bottom dock is the primary mobile control system,
+- hide duplicate right floating rail on mobile,
+- keep Exit at top-right,
+- keep mission title compact,
+- keep zoom close to the left edge and subtle,
+- reduce Arrival Core node count,
+- keep SV core centered with breathing room.

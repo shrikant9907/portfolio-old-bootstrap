@@ -421,3 +421,47 @@ Updated: 20 May 2026, 22:55 IST
 - [ ] Hover/focus tooltip appears.
 - [ ] Zoom dock is left-center.
 - [ ] Browser loads cache-busted CSS/JS.
+
+## Wordmark / Exit / Copyright / Arrow Cleanup Test
+
+- [ ] ShrimoVerse shows without the SV badge.
+- [ ] Wordmark is visible at the top-right after entering.
+- [ ] Exit control is at the top-right corner.
+- [ ] Copyright is bottom-left on desktop.
+- [ ] Prev/next arrows have no border or background.
+
+## Phase 44 Visual Hierarchy Cleanup Test
+
+Updated: 20 May 2026, 23:35 IST
+
+- [ ] Right floating icons are visible but less bright.
+- [ ] Only hover/active icon glows strongly.
+- [ ] ShrimoVerse wordmark is smaller and quieter.
+- [ ] Mission panel no longer shows repeated action buttons.
+- [ ] Zoom control is closer to left edge and less intrusive.
+- [ ] Arrival Core has fewer/calm labels.
+- [ ] Bottom navigation is clean.
+- [ ] Desktop copyright is subtle.
+
+## Phase 45 Core Center Protection Test
+
+Updated: 20 May 2026, 23:50 IST
+
+- [ ] SV core is exactly centered on desktop.
+- [ ] SV core is exactly centered on tablet.
+- [ ] SV core is exactly centered on mobile.
+- [ ] Technology particles orbit around the centered core.
+- [ ] Changing UI panels does not move the core.
+- [ ] `.universe-plane` remains absolute/full-screen.
+
+## Phase 46 Mobile Screen Fix Test
+
+Updated: 20 May 2026, 23:59 IST
+
+- [ ] Mobile does not show duplicate right-side floating controls.
+- [ ] Mobile bottom dock remains visible and primary.
+- [ ] Exit stays visible top-right.
+- [ ] Arrival title fits without feeling oversized.
+- [ ] Zoom is subtle and close to the left edge.
+- [ ] Arrival Core has fewer visible labels.
+- [ ] SV core is centered and readable.

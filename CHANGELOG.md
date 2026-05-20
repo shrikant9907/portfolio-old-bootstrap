@@ -1,5 +1,48 @@
 # Changelog
 
+## Phase 46 Mobile Screen Fix — 20 May 2026, 23:59 IST
+
+- Hid duplicate right-side floating control rail on mobile.
+- Kept mobile bottom dock as primary journey control system.
+- Kept Exit control visible at top-right.
+- Reduced mobile mission title/copy sizing.
+- Softened and shortened left zoom control on mobile.
+- Reduced visible Arrival Core technology nodes on mobile.
+- Reduced mobile SV core size slightly while keeping it centered.
+- Added `steps/46-mobile-screen-fix.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
+## Phase 45 Core Center Protection — 20 May 2026, 23:50 IST
+
+- Fixed Phase 44 regression where `.universe-plane` could become relative.
+- Restored `.universe-plane` to full-screen absolute positioning.
+- Protected `.sv-core` with forced center positioning.
+- Added mobile/tablet center protection.
+- Added `steps/45-core-center-protection-fix.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
+## Phase 44 Visual Hierarchy Cleanup — 20 May 2026, 23:35 IST
+
+- Reduced normal-state glow on right floating controls.
+- Normalized control ordering with JS without cloning nodes.
+- Made wordmark smaller and quieter.
+- Hid repeated action buttons inside scene mission panels.
+- Moved zoom closer to the left edge and softened its styling.
+- Reduced label collisions in Arrival Core by calming/hiding lower-priority nodes.
+- Simplified bottom navigation and softened dots/arrows.
+- Softened desktop copyright.
+- Added `steps/44-visual-hierarchy-cleanup.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
 ## Final Visible Controls Rail — 20 May 2026, 22:55 IST
 
 - Moved `.hud-controls` into body at runtime as `.floating-hud-controls`.
@@ -388,3 +431,12 @@
   - improved canvas galaxy/starfield movement,
   - made the entry CTA more impressive with full “Enter Shrimo Verse” copy.
 - Kept all mandatory docs, AI-agent files, and `steps/` planning system.
+
+## Wordmark / Exit / Copyright / Arrow Cleanup — 20 May 2026, 23:10 IST
+
+- Removed `SV` badge from the wordmark.
+- Reduced the visible header to a floating top-right wordmark only.
+- Moved exit control to the top-right corner.
+- Added bottom-left desktop copyright.
+- Removed border/background from prev/next arrows.
+- Added `steps/43-wordmark-exit-copyright-arrow-cleanup.md`.

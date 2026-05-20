@@ -1776,3 +1776,79 @@ function bindEntry() {
   window.setTimeout(moveControlsRailToBody, 600);
   window.setTimeout(moveControlsRailToBody, 2600);
 })();
+
+
+/* ==========================================================================
+   PHASE 44 — VISUAL HIERARCHY CLEANUP JS
+   Updated: 20 May 2026, 23:35 IST
+   Purpose:
+   - Normalize HUD icon order without cloning nodes.
+   - Keep controls predictable: Guide, Explore, Auto, Pause, Core, Help, Launch.
+   - Add a stable class for calm Arrival state.
+   ========================================================================== */
+(function () {
+  function normalizeControlOrder() {
+    const rail = document.querySelector('.floating-hud-controls') || document.querySelector('.hud-controls');
+    if (!rail || rail.dataset.phase44Ordered === 'true') return;
+
+    const preferred = [
+      'guide',
+      'explore',
+      'auto',
+      'pause',
+      'core',
+      'help',
+      'launch'
+    ];
+
+    const buttons = Array.from(rail.querySelectorAll('.hud-btn'));
+    const pick = (key) => buttons.find((btn) => {
+      const label = ((btn.getAttribute('aria-label') || '') + ' ' + (btn.getAttribute('data-tip') || '') + ' ' + (btn.id || '') + ' ' + btn.className).toLowerCase();
+      if (key === 'guide') return label.includes('guide') || label.includes('guided');
+      if (key === 'explore') return label.includes('explore') || label.includes('free');
+      if (key === 'auto') return label.includes('auto');
+      if (key === 'pause') return label.includes('pause');
+      if (key === 'core') return label.includes('core') || label.includes('home') || label.includes('return');
+      if (key === 'help') return label.includes('help') || label.includes('replay') || label.includes('question');
+      if (key === 'launch') return label.includes('launch') || label.includes('project');
+      return false;
+    });
+
+    const ordered = [];
+    preferred.forEach((key) => {
+      const btn = pick(key);
+      if (btn && !ordered.includes(btn)) ordered.push(btn);
+    });
+    buttons.forEach((btn) => {
+      if (!ordered.includes(btn)) ordered.push(btn);
+    });
+
+    ordered.forEach((btn) => rail.appendChild(btn));
+    rail.dataset.phase44Ordered = 'true';
+  }
+
+  function syncPhase44State() {
+    const scene = document.body.dataset.scene || '';
+    document.body.classList.toggle('phase44-arrival-calm', scene === 'arrival-core' || scene === 'mission-entry');
+  }
+
+  function initPhase44Cleanup() {
+    normalizeControlOrder();
+    syncPhase44State();
+
+    const observer = new MutationObserver(() => {
+      normalizeControlOrder();
+      syncPhase44State();
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['data-scene', 'class'] });
+
+    setTimeout(normalizeControlOrder, 500);
+    setTimeout(normalizeControlOrder, 2500);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPhase44Cleanup);
+  } else {
+    initPhase44Cleanup();
+  }
+})();
