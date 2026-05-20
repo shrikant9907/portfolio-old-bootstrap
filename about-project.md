@@ -336,3 +336,21 @@ The mobile experience now uses a clearer control model: bottom dock for journey 
 Phase 47 cleans the pre-start entry screen so only the cinematic welcome layer is visible.
 
 See: `steps/47-entry-screen-purity-fix.md`
+
+## Phase 48 Mobile Arrival Layout Polish
+
+**Updated:** 21 May 2026, 00:38 IST
+
+Mobile Arrival Core now prioritizes one clean focus: a centered SV core with fewer surrounding nodes, quieter controls, and a calmer mission panel.
+
+## Phase 49 Logo Left + Arrival Node Center Fix
+
+**Updated:** 21 May 2026, 00:58 IST
+
+Brand placement is now fixed with the wordmark at top-left and Exit at top-right. Mobile Arrival Core now uses a curated centered node composition around the SV core instead of a loose scattered cluster.
+
+## Phase 50 Mobile Scene Stability Fix
+
+**Updated:** 21 May 2026, 01:22 IST
+
+Mobile scene details now behave like a focused control sheet instead of desktop floating panels.

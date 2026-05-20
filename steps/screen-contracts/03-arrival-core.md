@@ -475,3 +475,31 @@ Mobile rules:
 - keep zoom close to the left edge and subtle,
 - reduce Arrival Core node count,
 - keep SV core centered with breathing room.
+
+
+---
+
+## Phase 48 Mobile Arrival Layout Polish
+
+**Updated:** 21 May 2026, 00:38 IST
+
+Mobile Arrival rules:
+
+- keep heading compact,
+- keep mission copy short and readable,
+- keep zoom subtle and close to left edge,
+- hide extra Arrival nodes,
+- keep SV core centered with breathing room,
+- keep bottom dock as primary mobile controller.
+
+
+---
+
+## Phase 49 Logo Left + Arrival Node Center Fix
+
+**Updated:** 21 May 2026, 00:58 IST
+
+Rules added:
+- ShrimoVerse wordmark stays top-left.
+- Exit stays top-right.
+- On mobile Arrival Core, only a few nodes should remain visible and they should form a balanced centered composition around the SV core.

@@ -6419,3 +6419,767 @@ body.is-entering-verse:not(.verse-entered) > .floating-hud-controls {
   }
 }
 
+
+
+/* ==========================================================================
+   PHASE 48 — MOBILE ARRIVAL LAYOUT POLISH
+   Updated: 21 May 2026, 00:38 IST
+
+   Screenshot issues fixed:
+   - Arrival Core text was still too large on mobile.
+   - Mission panel felt cramped near top-left.
+   - Mobile zoom was still visually competing with content.
+   - Arrival Core still showed too many labels around SV.
+   - Core needed a cleaner focus zone on mobile.
+   ========================================================================== */
+
+@media (max-width: 780px) {
+  /* Mobile must feel like one clean control screen, not a compressed desktop. */
+  body.verse-entered {
+    overflow: hidden !important;
+  }
+
+  /* Make the wordmark quieter and keep Exit clear. */
+  .verse-control {
+    top: 14px !important;
+    right: 42px !important;
+    max-width: 110px !important;
+  }
+
+  .verse-brand strong {
+    font-size: 11.5px !important;
+    letter-spacing: -.02em !important;
+  }
+
+  .verse-brand em {
+    font-size: 5.8px !important;
+    opacity: .42 !important;
+  }
+
+  .exit-verse-control {
+    top: 13px !important;
+    right: 11px !important;
+    width: 23px !important;
+    height: 23px !important;
+    min-width: 23px !important;
+    min-height: 23px !important;
+  }
+
+  .exit-verse-control svg {
+    width: 17px !important;
+    height: 17px !important;
+  }
+
+  /* Arrival text: smaller, calmer, more premium. */
+  .mission-panel {
+    top: 62px !important;
+    left: 24px !important;
+    width: min(188px, 58vw) !important;
+    max-width: min(188px, 58vw) !important;
+    z-index: 90 !important;
+  }
+
+  .mission-kicker {
+    font-size: 8px !important;
+    letter-spacing: .18em !important;
+    margin-bottom: 7px !important;
+  }
+
+  .mission-panel h2 {
+    font-size: clamp(21px, 6.2vw, 25px) !important;
+    line-height: 1.03 !important;
+    letter-spacing: -.045em !important;
+    max-width: 10.5ch !important;
+    margin-bottom: 9px !important;
+  }
+
+  .mission-panel p:not(.mission-kicker) {
+    font-size: 11.2px !important;
+    line-height: 1.42 !important;
+    max-width: 24ch !important;
+    color: rgba(214,226,238,.66) !important;
+  }
+
+  /* On mobile, zoom should be a subtle utility, not a visual column. */
+  .zoom-dock,
+  .zoom-control {
+    left: 0 !important;
+    top: 55% !important;
+    width: 15px !important;
+    max-width: 15px !important;
+    min-width: 15px !important;
+    gap: 4px !important;
+    opacity: .45 !important;
+    transform: translateY(-50%) scale(.88) !important;
+  }
+
+  .zoom-dock:hover,
+  .zoom-control:hover,
+  .zoom-dock:focus-within,
+  .zoom-control:focus-within {
+    opacity: .82 !important;
+  }
+
+  .zoom-dock button,
+  .zoom-control button {
+    width: 16px !important;
+    height: 16px !important;
+    min-width: 16px !important;
+    min-height: 16px !important;
+  }
+
+  .zoom-dock button svg,
+  .zoom-control button svg {
+    width: 9px !important;
+    height: 9px !important;
+  }
+
+  .zoom-dock input[type="range"],
+  .zoom-control input[type="range"],
+  .zoom-range {
+    height: 70px !important;
+    width: 10px !important;
+    opacity: .56 !important;
+  }
+
+  .zoom-value {
+    font-size: 6px !important;
+    opacity: .56 !important;
+  }
+
+  /* Keep core centered and create a cleaner visual focus. */
+  .sv-core {
+    left: 50% !important;
+    top: 50% !important;
+    width: 62px !important;
+    height: 62px !important;
+    min-width: 62px !important;
+    min-height: 62px !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 50 !important;
+  }
+
+  .core-inner strong,
+  .sv-core strong {
+    font-size: 23px !important;
+  }
+
+  .core-label,
+  .sv-core small {
+    font-size: 6px !important;
+    letter-spacing: .14em !important;
+    opacity: .64 !important;
+  }
+
+  /* Arrival Core should not show a full technology cloud on mobile. */
+  body.phase44-arrival-calm .verse-node,
+  .phase44-arrival-calm .verse-node {
+    min-width: 60px !important;
+    max-width: 78px !important;
+    height: 24px !important;
+    padding-inline: 7px !important;
+    opacity: .58 !important;
+    font-size: 9px !important;
+  }
+
+  body.phase44-arrival-calm .verse-node:nth-child(n+5),
+  .phase44-arrival-calm .verse-node:nth-child(n+5) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .phase44-arrival-calm .verse-node span,
+  .phase44-arrival-calm .verse-node .node-label {
+    font-size: 8.8px !important;
+    max-width: 58px !important;
+  }
+
+  /* Reduce glow bloom around labels on mobile Arrival. */
+  .phase44-arrival-calm .verse-node {
+    box-shadow: 0 0 14px rgba(34,211,238,.10) !important;
+  }
+
+  /* Stronger reading zone near mission text; center remains starry. */
+  .verse-stage::before {
+    background:
+      radial-gradient(ellipse at 19% 20%, rgba(0,0,0,.66), transparent 36%),
+      radial-gradient(circle at 50% 50%, rgba(0,0,0,.18), transparent 21%),
+      linear-gradient(90deg, rgba(0,0,0,.18), transparent 34%, transparent 78%, rgba(0,0,0,.05)) !important;
+    opacity: .84 !important;
+  }
+
+  /* Bottom dock remains the primary mobile controller. */
+  .mobile-control-dock {
+    height: 64px !important;
+    padding-bottom: 3px !important;
+    background: rgba(0,0,0,.52) !important;
+    border-top: 1px solid rgba(34,211,238,.13) !important;
+  }
+
+  .mobile-control-dock button {
+    min-height: 54px !important;
+    font-size: 9px !important;
+    letter-spacing: .04em !important;
+  }
+
+  .mobile-control-dock svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* Keep step dots out of the dock area and visually light. */
+  .zone-nav {
+    bottom: 72px !important;
+    transform: translateX(-50%) scale(.78) !important;
+    opacity: .68 !important;
+  }
+
+  .zone-arrow {
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+  }
+
+  .zone-arrow svg,
+  .zone-arrow svg * {
+    width: 15px !important;
+    height: 15px !important;
+  }
+
+  .zone-dot {
+    width: 6px !important;
+    height: 6px !important;
+  }
+
+  .zone-dot.is-active {
+    width: 8px !important;
+    height: 8px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .mission-panel {
+    top: 60px !important;
+    left: 22px !important;
+    width: min(178px, 58vw) !important;
+    max-width: min(178px, 58vw) !important;
+  }
+
+  .mission-panel h2 {
+    font-size: clamp(20px, 6.3vw, 24px) !important;
+  }
+
+  .mission-panel p:not(.mission-kicker) {
+    font-size: 10.8px !important;
+  }
+
+  .sv-core {
+    width: 60px !important;
+    height: 60px !important;
+    min-width: 60px !important;
+    min-height: 60px !important;
+  }
+
+  body.phase44-arrival-calm .verse-node:nth-child(n+4),
+  .phase44-arrival-calm .verse-node:nth-child(n+4) {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+}
+
+
+/* ==========================================================================
+   PHASE 49 — LOGO LEFT + ARRIVAL NODE CENTER FIX
+   Updated: 21 May 2026, 00:58 IST
+
+   Fixes:
+   1. Keep ShrimoVerse logo/wordmark at top-left.
+   2. Keep Exit at top-right.
+   3. Make mobile Arrival nodes feel centered around the SV core.
+   ========================================================================== */
+
+/* Brand always lives top-left as a small wordmark block. */
+.verse-control {
+  left: 16px !important;
+  right: auto !important;
+  top: 14px !important;
+  width: auto !important;
+  max-width: 148px !important;
+  z-index: 1800 !important;
+}
+
+.verse-brand {
+  justify-content: flex-start !important;
+}
+
+.verse-brand strong {
+  text-align: left !important;
+}
+
+.verse-brand em {
+  text-align: left !important;
+}
+
+.exit-verse-control {
+  right: 12px !important;
+  left: auto !important;
+  top: 14px !important;
+  z-index: 1900 !important;
+}
+
+@media (max-width: 780px) {
+  .verse-control {
+    left: 12px !important;
+    right: auto !important;
+    top: 12px !important;
+    max-width: 120px !important;
+  }
+
+  .exit-verse-control {
+    right: 10px !important;
+    top: 12px !important;
+  }
+
+  /* Arrival mobile should show only a few centered nodes around the core. */
+  .verse-stage[data-zone="0"] .verse-node.phase49-arrival-center {
+    opacity: .82 !important;
+    visibility: visible !important;
+    z-index: 34 !important;
+  }
+
+  .verse-stage[data-zone="0"] .verse-node.phase49-arrival-center strong {
+    font-size: 9px !important;
+  }
+
+  .verse-stage[data-zone="0"] .verse-node.phase49-arrival-center::before {
+    width: 5px !important;
+    height: 5px !important;
+  }
+}
+
+
+/* ==========================================================================
+   PHASE 50 — MOBILE SCENE STABILITY FIX
+   Updated: 21 May 2026, 01:22 IST
+
+   Screenshot fixes:
+   - Product/Proof/Review/Launch cards were using desktop panel behavior.
+   - Proof and Client cards were clipped on the left and overlapping SV.
+   - Launch card was too tall and scroll-heavy.
+   - Mobile needed one stable bottom-sheet card rule for all scene details.
+   ========================================================================== */
+
+@media (max-width: 780px) {
+  /* Mobile uses bottom dock only. No duplicate right rail. */
+  body > .floating-hud-controls,
+  body > .hud-controls.floating-hud-controls {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  /* Zoom is hidden during scene browsing on mobile to avoid competing with panels. */
+  body.verse-entered .zoom-dock,
+  body.verse-entered .zoom-control {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  /* Keep brand/exit simple and stable. */
+  .verse-control {
+    left: 12px !important;
+    right: auto !important;
+    top: 12px !important;
+    max-width: 120px !important;
+    z-index: 1900 !important;
+  }
+
+  .verse-brand strong { font-size: 11.5px !important; }
+  .verse-brand em { font-size: 5.8px !important; opacity: .42 !important; }
+
+  .exit-verse-control {
+    right: 10px !important;
+    top: 12px !important;
+    width: 24px !important;
+    height: 24px !important;
+    min-width: 24px !important;
+    min-height: 24px !important;
+    z-index: 1950 !important;
+  }
+
+  .exit-verse-control svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  /* Top mission copy stays small; cards carry the scene content. */
+  .mission-panel {
+    left: 22px !important;
+    top: 54px !important;
+    width: min(225px, 70vw) !important;
+    max-width: min(225px, 70vw) !important;
+    z-index: 72 !important;
+    pointer-events: none !important;
+  }
+
+  .mission-kicker {
+    font-size: 8px !important;
+    letter-spacing: .18em !important;
+    margin-bottom: 5px !important;
+  }
+
+  .mission-panel h2 {
+    font-size: clamp(18px, 5.6vw, 24px) !important;
+    line-height: 1.04 !important;
+    max-width: 12ch !important;
+    margin: 0 0 6px !important;
+  }
+
+  .mission-panel p:not(.mission-kicker) {
+    font-size: 11px !important;
+    line-height: 1.38 !important;
+    max-width: 26ch !important;
+    color: rgba(214,226,238,.62) !important;
+  }
+
+  /* One mobile bottom-sheet contract for Product / Proof / Review / Launch. */
+  .gallery-card,
+  .proof-focus,
+  .review-card,
+  .launch-dock {
+    position: fixed !important;
+    left: 20px !important;
+    right: 20px !important;
+    top: auto !important;
+    bottom: 76px !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    max-height: min(42vh, 268px) !important;
+    overflow: hidden !important;
+    padding: 13px 13px 12px !important;
+    border-radius: 18px !important;
+    background: rgba(5,7,10,.58) !important;
+    border: 1px solid rgba(34,211,238,.18) !important;
+    box-shadow: 0 -18px 54px rgba(0,0,0,.38), 0 0 34px rgba(34,211,238,.065) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    z-index: 1200 !important;
+    transform: none !important;
+  }
+
+  /* Hide all scene cards except the active scene. */
+  .gallery-card,
+  .proof-focus,
+  .review-card,
+  .launch-dock {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .product-gallery-layer.is-visible .gallery-card,
+  .proof-ring-layer.is-visible .proof-focus,
+  .client-signal-layer.is-visible .review-card,
+  .launch-dock.is-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+
+  /* Product Gallery mobile: compact summary, detail button available. */
+  .product-card-head,
+  .proof-signal-head {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    margin-bottom: 7px !important;
+  }
+
+  .product-card-head p,
+  .proof-signal-head p,
+  .review-card > p,
+  .launch-dock p {
+    margin: 0 !important;
+    font-size: 8.5px !important;
+    letter-spacing: .16em !important;
+    line-height: 1.1 !important;
+    color: var(--cyan-bright) !important;
+  }
+
+  .product-code,
+  .proof-signal-head span {
+    font-size: 8px !important;
+    letter-spacing: .12em !important;
+    opacity: .75 !important;
+  }
+
+  .product-compact-layout {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    gap: 10px !important;
+    align-items: start !important;
+    margin-bottom: 8px !important;
+  }
+
+  .product-copy h3,
+  .gallery-card h3,
+  .launch-dock h2 {
+    font-size: clamp(20px, 6vw, 26px) !important;
+    line-height: 1.02 !important;
+    letter-spacing: -.045em !important;
+    margin: 0 0 6px !important;
+  }
+
+  .product-copy em {
+    display: block !important;
+    max-width: 24ch !important;
+    font-size: 11.5px !important;
+    line-height: 1.35 !important;
+    color: rgba(214,226,238,.70) !important;
+    font-style: normal !important;
+  }
+
+  .gallery-preview {
+    width: 46px !important;
+    height: 46px !important;
+    min-width: 46px !important;
+    border-radius: 14px !important;
+    font-size: 14px !important;
+  }
+
+  .product-mission-grid {
+    display: none !important;
+  }
+
+  .product-scan-nav {
+    display: grid !important;
+    grid-template-columns: 30px 1fr 30px !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 8px 0 !important;
+  }
+
+  .product-scan-nav span {
+    font-size: 10px !important;
+    text-align: center !important;
+    color: var(--cyan-soft) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .product-scan-arrow,
+  .proof-arrow,
+  .review-arrow {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+    border-radius: 50% !important;
+    background: transparent !important;
+    border: 1px solid rgba(34,211,238,.22) !important;
+    color: var(--cyan-bright) !important;
+    box-shadow: none !important;
+  }
+
+  .product-details-trigger {
+    width: 100% !important;
+    min-height: 34px !important;
+    margin: 6px 0 8px !important;
+    border-radius: 999px !important;
+    font-size: 9px !important;
+    letter-spacing: .12em !important;
+  }
+
+  .product-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+
+  .product-btn,
+  .disabled-path {
+    min-height: 36px !important;
+    border-radius: 12px !important;
+    font-size: 10px !important;
+    letter-spacing: .06em !important;
+  }
+
+  /* Proof mobile: centered bottom-sheet, no clipped desktop panel. */
+  .proof-focus {
+    display: grid !important;
+    gap: 6px !important;
+    align-content: start !important;
+  }
+
+  .proof-focus h3 {
+    font-size: clamp(34px, 12vw, 48px) !important;
+    line-height: .9 !important;
+    margin: 0 !important;
+    letter-spacing: -.07em !important;
+    white-space: nowrap !important;
+  }
+
+  .proof-focus strong {
+    font-size: clamp(18px, 5.4vw, 24px) !important;
+    line-height: 1.02 !important;
+    margin: 0 !important;
+    max-width: 12ch !important;
+  }
+
+  .proof-focus em {
+    font-size: 11.5px !important;
+    line-height: 1.36 !important;
+    max-width: 28ch !important;
+    max-height: 48px !important;
+    overflow: hidden !important;
+  }
+
+  .proof-next-inline,
+  .review-next-inline {
+    width: max-content !important;
+    min-height: 32px !important;
+    padding: 0 12px !important;
+    border-radius: 999px !important;
+    font-size: 9px !important;
+  }
+
+  /* Client Signal mobile: readable card, no narrow side strip. */
+  .review-card {
+    display: grid !important;
+    gap: 8px !important;
+    align-content: start !important;
+  }
+
+  .review-card blockquote {
+    margin: 0 !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+    max-height: 92px !important;
+    overflow: hidden !important;
+    color: rgba(248,250,252,.88) !important;
+  }
+
+  .review-person strong {
+    font-size: 12px !important;
+    color: var(--cyan-bright) !important;
+  }
+
+  .review-person em {
+    font-size: 10px !important;
+    color: rgba(214,226,238,.62) !important;
+  }
+
+  /* Launch Dock mobile: final action first, no scroll-heavy footer feel. */
+  .launch-dock {
+    max-height: min(40vh, 255px) !important;
+  }
+
+  .launch-dock h2 {
+    max-width: 12ch !important;
+  }
+
+  .launch-dock > span,
+  .launch-dock > small,
+  .launch-dock .launch-note {
+    display: none !important;
+  }
+
+  .launch-dock .launch-copy,
+  .launch-dock p + p,
+  .launch-dock p:not(:first-child) {
+    font-size: 11.5px !important;
+    line-height: 1.35 !important;
+    max-width: 27ch !important;
+    color: rgba(214,226,238,.68) !important;
+  }
+
+  .launch-primary-btn {
+    min-height: 42px !important;
+    border-radius: 13px !important;
+    font-size: 12px !important;
+    letter-spacing: .08em !important;
+    margin: 12px 0 10px !important;
+  }
+
+  .dock-beacons {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+
+  .dock-beacons a {
+    min-height: 32px !important;
+    border-radius: 999px !important;
+    font-size: 9px !important;
+  }
+
+  /* Keep scene nodes away from card zone. */
+  .proof-dots,
+  .review-dots,
+  .gallery-dots {
+    transform: translate(-50%, -50%) scale(.82) !important;
+  }
+
+  .proof-dot,
+  .review-dot,
+  .product-dot {
+    width: 54px !important;
+    height: 54px !important;
+    min-width: 54px !important;
+    min-height: 54px !important;
+  }
+
+  .proof-dot span {
+    display: none !important;
+  }
+
+  /* Bottom navigation is not needed when bottom dock is present. */
+  .zone-nav {
+    display: none !important;
+  }
+
+  .mobile-control-dock {
+    height: 64px !important;
+    z-index: 1600 !important;
+    background: rgba(0,0,0,.58) !important;
+    border-top: 1px solid rgba(34,211,238,.14) !important;
+  }
+
+  .mobile-control-dock button,
+  .mobile-control-dock a {
+    min-height: 54px !important;
+    font-size: 9px !important;
+  }
+}
+
+@media (max-width: 390px) {
+  .gallery-card,
+  .proof-focus,
+  .review-card,
+  .launch-dock {
+    left: 18px !important;
+    right: 18px !important;
+    bottom: 74px !important;
+    max-height: min(41vh, 250px) !important;
+    padding: 12px !important;
+  }
+
+  .product-copy h3,
+  .gallery-card h3,
+  .launch-dock h2 {
+    font-size: clamp(19px, 6vw, 24px) !important;
+  }
+
+  .review-card blockquote {
+    font-size: 12.5px !important;
+    max-height: 84px !important;
+  }
+}

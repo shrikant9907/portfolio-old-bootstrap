@@ -249,3 +249,10 @@ Rules:
 - zoom bar must not look like a card wrapper,
 - icon controls must be circular,
 - Exit control must let the user return to Mission Entry.
+
+
+---
+
+## Phase 50 Mobile Scene Stability Fix
+
+Mobile scene detail cards must use a centered bottom-sheet layout above the mobile dock. Do not use desktop side panels on mobile. Keep content compact and hide secondary long sections until the user opens full details.

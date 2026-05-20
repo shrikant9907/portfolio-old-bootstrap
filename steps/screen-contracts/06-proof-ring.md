@@ -241,3 +241,10 @@ Scene rule:
 - proof signal nodes must be circular,
 - detail panels must not overlap,
 - repeated scene/state readout should stay hidden.
+
+
+---
+
+## Phase 50 Mobile Scene Stability Fix
+
+Mobile scene detail cards must use a centered bottom-sheet layout above the mobile dock. Do not use desktop side panels on mobile. Keep content compact and hide secondary long sections until the user opens full details.

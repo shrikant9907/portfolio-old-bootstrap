@@ -1852,3 +1852,102 @@ function bindEntry() {
     initPhase44Cleanup();
   }
 })();
+
+
+/* ==========================================================================
+   PHASE 49 — LOGO LEFT + ARRIVAL NODE CENTER FIX JS
+   Updated: 21 May 2026, 00:58 IST
+   Purpose: on mobile Arrival Core, pin a few visible nodes into a balanced
+   centered composition around the SV core so the orbit feels intentional.
+   ========================================================================== */
+(function () {
+  const ARRIVAL_NODE_IDS = ['typescript', 'react', 'javascript', 'css3'];
+  const ARRIVAL_FALLBACK_IDS = ['html', 'next', 'node', 'express'];
+
+  function chooseNodes() {
+    const all = Array.from(document.querySelectorAll('.particle-layer .verse-node'));
+    const byId = new Map(all.map(el => [el.dataset.id, el]));
+    const chosen = [];
+    ARRIVAL_NODE_IDS.concat(ARRIVAL_FALLBACK_IDS).forEach((id) => {
+      const el = byId.get(id);
+      if (el && !chosen.includes(el) && chosen.length < 4) chosen.push(el);
+    });
+    all.forEach((el) => {
+      if (!chosen.includes(el) && chosen.length < 4) chosen.push(el);
+    });
+    return chosen.slice(0,4);
+  }
+
+  function applyArrivalCenterLayout() {
+    const mobile = window.innerWidth <= 780;
+    const stage = document.querySelector('.verse-stage');
+    const plane = document.querySelector('.universe-plane');
+    const core = document.querySelector('.sv-core');
+    if (!stage || !plane || !core) return;
+
+    const isArrival = stage.dataset.zone === '0';
+    const entered = document.body.classList.contains('verse-entered');
+    const allNodes = Array.from(document.querySelectorAll('.particle-layer .verse-node'));
+
+    if (!(mobile && isArrival && entered)) {
+      allNodes.forEach((node) => {
+        node.classList.remove('phase49-arrival-center');
+        node.style.removeProperty('left');
+        node.style.removeProperty('top');
+      });
+      return;
+    }
+
+    const stageRect = plane.getBoundingClientRect();
+    const coreRect = core.getBoundingClientRect();
+    const cx = coreRect.left - stageRect.left + coreRect.width / 2;
+    const cy = coreRect.top - stageRect.top + coreRect.height / 2;
+
+    const chosen = chooseNodes();
+    const offsets = [
+      [-58, -18],
+      [ 58, -18],
+      [-52,  42],
+      [ 52,  42],
+    ];
+
+    allNodes.forEach((node) => {
+      if (!chosen.includes(node)) {
+        node.style.opacity = '0';
+        node.style.visibility = 'hidden';
+        node.style.pointerEvents = 'none';
+        node.classList.remove('phase49-arrival-center');
+      }
+    });
+
+    chosen.forEach((node, index) => {
+      const [ox, oy] = offsets[index] || [0, 0];
+      node.classList.add('phase49-arrival-center');
+      node.style.left = `${cx + ox}px`;
+      node.style.top = `${cy + oy}px`;
+      node.style.opacity = '0.82';
+      node.style.visibility = 'visible';
+      node.style.pointerEvents = 'auto';
+    });
+  }
+
+  function initPhase49() {
+    let raf = 0;
+    const tick = () => {
+      applyArrivalCenterLayout();
+      raf = window.requestAnimationFrame(tick);
+    };
+    tick();
+    window.addEventListener('resize', applyArrivalCenterLayout, { passive: true });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && raf) cancelAnimationFrame(raf);
+      if (!document.hidden) tick();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPhase49);
+  } else {
+    initPhase49();
+  }
+})();

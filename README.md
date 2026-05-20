@@ -555,3 +555,29 @@ steps/46-mobile-screen-fix.md
 Phase 47 cleans the pre-start entry screen so only the cinematic welcome layer is visible.
 
 See: `steps/47-entry-screen-purity-fix.md`
+
+## Phase 48 Mobile Arrival Layout Polish
+
+**Updated:** 21 May 2026, 00:38 IST
+
+Phase 48 polishes the mobile Arrival Core screen by reducing heading size, softening zoom, reducing visible technology labels, and keeping the SV core centered with more breathing room.
+
+See:
+
+```txt
+steps/48-mobile-arrival-layout-polish.md
+```
+
+## Phase 49 Logo Left + Arrival Node Center Fix
+
+**Updated:** 21 May 2026, 00:58 IST
+
+Phase 49 restores the ShrimoVerse logo to the top-left and refines the mobile Arrival composition so the visible orbit nodes are centered around the SV core.
+
+See: `steps/49-logo-left-node-center-fix.md`
+
+## Phase 50 Mobile Scene Stability Fix
+
+**Updated:** 21 May 2026, 01:22 IST
+
+Mobile Product, Proof, Review, and Launch screens now use one controlled bottom-sheet layout. See `steps/50-mobile-scene-stability-fix.md`.

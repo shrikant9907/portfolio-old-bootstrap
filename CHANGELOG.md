@@ -1,6 +1,40 @@
 # Changelog
 
 
+## Phase 50 Mobile Scene Stability Fix — 21 May 2026, 01:22 IST
+
+- Converted mobile Product, Proof, Review, and Launch panels into stable bottom sheets.
+- Fixed clipped Proof and Client panels on mobile.
+- Reduced Product Gallery mobile card height and hid long mission grid details.
+- Made Launch Dock compact and safe above the bottom dock.
+- Hid mobile zoom during scene browsing and removed duplicate right-side control rail on mobile.
+- Added `steps/50-mobile-scene-stability-fix.md`.
+
+
+## Phase 49 Logo Left + Arrival Node Center Fix — 21 May 2026, 00:58 IST
+
+- Forced ShrimoVerse wordmark back to the top-left.
+- Kept Exit at the top-right.
+- Added a mobile Arrival layout pass to center a curated set of visible nodes around the SV core.
+- Hid the remaining mobile Arrival nodes to keep the composition clean.
+- Added `steps/49-logo-left-node-center-fix.md`.
+
+
+## Phase 48 Mobile Arrival Layout Polish — 21 May 2026, 00:38 IST
+
+- Reduced mobile Arrival Core heading and copy size.
+- Made mission panel narrower and calmer.
+- Reduced left zoom visibility and pushed it closer to the edge.
+- Kept SV core centered and slightly reduced mobile size.
+- Reduced visible Arrival Core technology nodes on mobile.
+- Refined mobile bottom dock spacing.
+- Added `steps/48-mobile-arrival-layout-polish.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
+
 ## Phase 47 Entry Screen Purity Fix — 21 May 2026, 00:18 IST
 
 - Hid zoom, exit, step navigation, mobile dock, and floating controls before Start.

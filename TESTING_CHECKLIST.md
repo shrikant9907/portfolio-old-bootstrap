@@ -473,3 +473,31 @@ Updated: 20 May 2026, 23:59 IST
 Phase 47 cleans the pre-start entry screen so only the cinematic welcome layer is visible.
 
 See: `steps/47-entry-screen-purity-fix.md`
+
+## Phase 48 Mobile Arrival Layout Polish Test
+
+Updated: 21 May 2026, 00:38 IST
+
+- [ ] Arrival Core heading is compact on mobile.
+- [ ] Mission panel does not feel cramped.
+- [ ] Zoom is subtle and near the left edge.
+- [ ] SV core is centered.
+- [ ] Arrival Core shows fewer nodes.
+- [ ] Bottom dock remains primary.
+
+## Phase 49 Logo Left + Arrival Node Center Fix Test
+
+Updated: 21 May 2026, 00:58 IST
+
+- [ ] Logo shows at top-left.
+- [ ] Exit shows at top-right.
+- [ ] Mobile Arrival shows only a few centered nodes around SV.
+- [ ] Nodes look balanced around the core.
+
+## Phase 50 Mobile Scene Stability Fix Test
+
+- [ ] Product Gallery card fits above the mobile dock.
+- [ ] Proof Ring card is centered and not clipped.
+- [ ] Client Signals card is readable.
+- [ ] Launch Dock is compact and not scroll-heavy.
+- [ ] Right-side desktop controls are hidden on mobile.
