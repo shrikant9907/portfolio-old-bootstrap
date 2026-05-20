@@ -57,10 +57,54 @@
   ];
 
   const PRODUCTS = [
-    { id:'shrimo', title:'Shrimo Innovations', desc:'Software and web development company focused on websites, apps, and digital products.', use:'Main business identity behind Shrimo Verse.', link:'https://shrimo.com/' },
-    { id:'digiting', title:'Digiting Card', desc:'Digital visiting card platform for professionals and businesses.', use:'Built around digital identity, contact sharing, and online presence.', link:'https://digitingcard.com/' },
-    { id:'photocopywala', title:'Photocopywala', desc:'Online tools and document utilities for common print and digital tasks.', use:'Practical platform for people who need quick document services and tools.', link:'https://photocopywala.in/' },
-    { id:'directory', title:'Business Directory Platform', desc:'Business listing and discovery platform concept for organized local search.', use:'A product direction for local discovery and business visibility.', link:'' }
+    {
+      id:'shrimo',
+      code:'SV-01',
+      title:'Shrimo Innovations',
+      desc:'Software and web development company focused on websites, apps, and digital products.',
+      challenge:'Businesses need a trusted technical partner, not only a one-time website vendor.',
+      solution:'A service and product studio direction for websites, apps, digital systems, and conversion-focused web presence.',
+      stack:'HTML, CSS, JavaScript, PHP, WordPress, React, Next.js, APIs, SEO-ready systems',
+      result:'A clear parent brand for product work, client services, and future digital platforms.',
+      use:'Main business identity behind Shrimo Verse.',
+      link:'https://shrimo.com/'
+    },
+    {
+      id:'digiting',
+      code:'SV-02',
+      title:'Digiting Card',
+      desc:'Digital visiting card platform for professionals and businesses.',
+      challenge:'Professionals need a simple way to share identity, links, business details, and contact paths.',
+      solution:'A digital profile/card platform focused on fast sharing, templates, pricing, and business identity.',
+      stack:'Next.js, Tailwind CSS, profile data, templates, CTA flows, SEO content',
+      result:'A reusable digital identity product direction for local businesses and professionals.',
+      use:'Built around digital identity, contact sharing, and online presence.',
+      link:'https://digitingcard.com/'
+    },
+    {
+      id:'photocopywala',
+      code:'SV-03',
+      title:'Photocopywala',
+      desc:'Online tools and document utilities for common print and digital tasks.',
+      challenge:'Users and shops need fast browser-based tools for photos, documents, printing, and utility workflows.',
+      solution:'A practical tools platform with focused utilities like passport photo maker, image tools, and document workflows.',
+      stack:'Web tools, image processing UX, SEO pages, responsive utility interfaces',
+      result:'A useful public platform that can attract search traffic and help real users complete small tasks quickly.',
+      use:'Practical platform for people who need quick document services and tools.',
+      link:'https://photocopywala.in/'
+    },
+    {
+      id:'directory',
+      code:'SV-04',
+      title:'Business Directory Platform',
+      desc:'Business listing and discovery platform concept for organized local search.',
+      challenge:'Local businesses need better discovery and users need cleaner searchable business information.',
+      solution:'A structured listing platform with profiles, categories, local SEO, review flow, and approval workflow.',
+      stack:'Directory architecture, user dashboard, listings, moderation, local SEO, schema',
+      result:'A scalable direction for business visibility and organized local discovery.',
+      use:'A product direction for local discovery and business visibility.',
+      link:''
+    }
   ];
 
   const PROOFS = [
@@ -124,6 +168,7 @@
     guideStep: $('#guideStep'),
     guideProgress: $('#guideProgress'),
     guideBack: $('#guideBack'),
+    guideSkip: $('#guideSkip'),
     guideNext: $('#guideNext'),
     mobileDots: $('#mobileZoneDots'),
     zonePrev: $('#zonePrev'),
@@ -160,17 +205,19 @@
   let pageHidden = false;
   let lockTimer = null;
   let rocketCentering = false;
+  let rocketOrbitDemo = false;
+  let rocketOrbitStart = 0;
+  let pointerMouse = { ...lastMouse };
+  let lastTapTime = 0;
   let hoverTooltipTimer = null;
 
   const GUIDE = isTouch ? [
-    { title:'Travel by touch', text:'Swipe left or right to move between Shrimo Verse zones.', target:'.mobile-control-dock' },
     { title:'Inspect particles', text:'Tap a glowing skill node to open its story.', target:'.verse-node[data-id="html"]' },
     { title:'Project dots', text:'Projects open from clean dots, not crowded orbit labels.', target:'#productGalleryLayer' },
     { title:'Review signals', text:'Client reviews appear as readable signal cards.', target:'#clientSignalLayer' },
     { title:'Zoom in Explore', text:'Use Orbit Zoom or pinch in Free Explore to reveal deeper tools.', target:'.zoom-dock' },
     { title:'Launch Project', text:'Use Launch when you are ready to start a project conversation.', target:'.mobile-control-dock a' }
   ] : [
-    { title:'Pilot the ship', text:'Move your cursor to pilot the explorer ship.', target:'#shipCursor' },
     { title:'Inspect skills', text:'Only skills and technologies orbit the SV core. Hover to scan them.', target:'.verse-node[data-id="html"]' },
     { title:'Open details', text:'Click a glowing node to open its story.', target:'.verse-node[data-id="react"]' },
     { title:'Project gallery', text:'Projects are managed separately as dots and a focused gallery panel.', target:'#productGalleryLayer' },
@@ -279,28 +326,144 @@
         updateProductLayer();
         setZone(2);
       });
-      dot.addEventListener('mouseenter', () => document.body.classList.add('cursor-lock'));
+      dot.addEventListener('mouseenter', () => {
+        document.body.classList.add('cursor-lock');
+        if (currentZone === 2) {
+          activeProduct = Number(dot.dataset.product);
+          updateProductLayer();
+        }
+      });
+      dot.addEventListener('focus', () => {
+        if (currentZone === 2) {
+          activeProduct = Number(dot.dataset.product);
+          updateProductLayer();
+        }
+      });
       dot.addEventListener('mouseleave', () => document.body.classList.remove('cursor-lock'));
     });
     updateProductLayer();
   }
 
-  function updateProductLayer() {
+  
+  function updateProductDetailOverlay() {
+    if (!els.productDetailBody) return;
     const item = PRODUCTS[activeProduct];
-    const card = $('#productCard');
-    if (!card) return;
-    card.innerHTML = `
-      <p>Product signal ${activeProduct + 1}/${PRODUCTS.length}</p>
-      <h3>${item.title}</h3>
-      <span class="gallery-preview">${item.title.split(/\s+/).map(w => w[0]).join('').slice(0,3)}</span>
-      <em>${item.desc}</em>
-      <small>${item.use}</small>
-      <div class="product-actions">
+    if (!item) return;
+    const initials = item.title.split(/\s+/).map(w => w[0]).join('').slice(0,3);
+    els.productDetailBody.innerHTML = `
+      <div class="product-detail-hero">
+        <span class="product-detail-code">${item.code || `SV-0${activeProduct + 1}`}</span>
+        <strong id="productDetailTitle">${item.title}</strong>
+        <i>${initials}</i>
+        <p>${item.desc}</p>
+      </div>
+      <div class="product-detail-sections">
+        <section><small>Challenge</small><p>${item.challenge || item.desc}</p></section>
+        <section><small>Solution</small><p>${item.solution || item.use}</p></section>
+        <section><small>Stack</small><p>${item.stack || 'Web product system, responsive UX, practical frontend/backend work'}</p></section>
+        <section><small>Result</small><p>${item.result || item.use}</p></section>
+      </div>
+      <div class="product-detail-actions">
         ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener" class="product-btn primary-path">Open Project Path</a>` : '<button type="button" class="disabled-path" disabled>Concept Path</button>'}
         <a href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20saw%20your%20product%20${encodeURIComponent(item.title)}%20and%20want%20to%20start%20a%20similar%20mission." target="_blank" rel="noopener" class="product-btn secondary-path">Start Similar Mission</a>
       </div>`;
-    $$('.product-dot', els.productLayer).forEach((dot, index) => dot.classList.toggle('is-active', index === activeProduct));
-    positionDots('.product-dot', activeProduct, 176);
+  }
+
+  function openProductDetail() {
+    stopAutoFlight();
+    updateProductDetailOverlay();
+    document.body.classList.add('product-detail-open');
+    els.productDetailOverlay?.classList.add('is-open');
+    els.productDetailOverlay?.setAttribute('aria-hidden', 'false');
+    els.productDetailPrev?.focus?.({ preventScroll: true });
+  }
+
+  function closeProductDetail() {
+    document.body.classList.remove('product-detail-open');
+    els.productDetailOverlay?.classList.remove('is-open');
+    els.productDetailOverlay?.setAttribute('aria-hidden', 'true');
+  }
+
+  function stepProductDetail(direction) {
+    activeProduct = (activeProduct + direction + PRODUCTS.length) % PRODUCTS.length;
+    updateProductLayer();
+    updateProductDetailOverlay();
+  }
+
+
+  function handleProductDetailOutsideClick(event) {
+    if (!els.productDetailOverlay?.classList.contains('is-open')) return;
+
+    const sheet = event.target.closest('.product-detail-sheet');
+    const openTrigger = event.target.closest('[data-open-product-detail]');
+    const closeTrigger = event.target.closest('[data-close-product-detail]');
+
+    if (closeTrigger || (!sheet && !openTrigger)) {
+      event.preventDefault();
+      closeProductDetail();
+    }
+  }
+
+function updateProductLayer() {
+    const item = PRODUCTS[activeProduct];
+    const card = $('#productCard');
+    if (!card) return;
+
+    const initials = item.title.split(/\s+/).map(w => w[0]).join('').slice(0,3);
+    const prevIndex = (activeProduct - 1 + PRODUCTS.length) % PRODUCTS.length;
+    const nextIndex = (activeProduct + 1) % PRODUCTS.length;
+
+    card.innerHTML = `
+      <div class="product-card-head">
+        <p>Mission ${activeProduct + 1}/${PRODUCTS.length}</p>
+        <span class="product-code">${item.code || `SV-0${activeProduct + 1}`}</span>
+      </div>
+
+      <div class="product-compact-layout">
+        <div class="product-copy">
+          <h3>${item.title}</h3>
+          <em>${item.desc}</em>
+        </div>
+        <span class="gallery-preview" aria-hidden="true">${initials}</span>
+      </div>
+
+      <dl class="product-mission-grid" aria-label="${item.title} mission details">
+        <div><dt>Challenge</dt><dd>${item.challenge || item.desc}</dd></div>
+        <div><dt>Solution</dt><dd>${item.solution || item.use}</dd></div>
+        <div><dt>Stack</dt><dd>${item.stack || 'Web product system, responsive UX, practical frontend/backend work'}</dd></div>
+        <div><dt>Result</dt><dd>${item.result || item.use}</dd></div>
+      </dl>
+
+      <div class="product-scan-nav" aria-label="Product mission navigation">
+        <button type="button" class="product-scan-arrow" data-product-jump="${prevIndex}" aria-label="Previous product mission">‹</button>
+        <span>${item.title}</span>
+        <button type="button" class="product-scan-arrow" data-product-jump="${nextIndex}" aria-label="Next product mission">›</button>
+      </div>
+
+      <button type="button" class="product-details-trigger" data-open-product-detail>View Mission Details</button>
+
+      <div class="product-actions">
+        ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener" class="product-btn primary-path">Open Path</a>` : '<button type="button" class="disabled-path" disabled>Concept</button>'}
+        <a href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20saw%20your%20product%20${encodeURIComponent(item.title)}%20and%20want%20to%20start%20a%20similar%20mission." target="_blank" rel="noopener" class="product-btn secondary-path">Start Similar</a>
+      </div>`;
+
+    $$('.product-dot', els.productLayer).forEach((dot, index) => {
+      dot.classList.toggle('is-active', index === activeProduct);
+      dot.setAttribute('aria-current', index === activeProduct ? 'true' : 'false');
+    });
+
+    $$('.product-scan-arrow', card).forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeProduct = Number(btn.dataset.productJump);
+        updateProductLayer();
+        if (els.productDetailOverlay?.classList.contains('is-open')) updateProductDetailOverlay();
+      });
+    });
+
+    $('[data-open-product-detail]', card)?.addEventListener('click', () => openProductDetail());
+
+    updateProductDetailOverlay();
+    positionDots('.product-dot', activeProduct, window.innerWidth <= 780 ? 148 : 214);
   }
 
   function renderProofLayer() {
@@ -409,12 +572,17 @@
         document.body.classList.add('verse-entered');
       }, prefersReducedMotion ? 140 : 2200);
 
-      // 2400ms: First guide appears bottom-right and app becomes interactive
+      // 2400ms: app becomes interactive, then rocket performs one controlled lap and returns to cursor
       window.setTimeout(() => {
         els.entryGate.classList.add('is-hidden');
         document.body.classList.remove('is-entering-verse', 'verse-revealing');
         isLaunching = false;
         rocketCentering = false;
+        if (!isTouch && !prefersReducedMotion) {
+          rocketOrbitDemo = true;
+          rocketOrbitStart = performance.now();
+          document.body.classList.add('ship-orbit-demo');
+        }
         setZone(0);
         window.setTimeout(() => startInitialGuide(), prefersReducedMotion ? 180 : 260);
       }, prefersReducedMotion ? 180 : 2400);
@@ -436,6 +604,24 @@
     els.stage.addEventListener('click', (event) => {
       if (!event.target.closest('.verse-node') && !event.target.closest('.world-dot') && !event.target.closest('.object-tooltip') && !event.target.closest('.sv-core')) closeObject();
     });
+    els.productDetailPrev?.addEventListener('click', () => stepProductDetail(-1));
+    els.productDetailNext?.addEventListener('click', () => stepProductDetail(1));
+    $$('[data-close-product-detail]').forEach((btn) => btn.addEventListener('click', closeProductDetail));
+    els.productDetailOverlay?.addEventListener('click', handleProductDetailOutsideClick);
+    document.addEventListener('click', (event) => {
+      if (!els.productDetailOverlay?.classList.contains('is-open')) return;
+      if (els.productDetailOverlay.contains(event.target)) return;
+      if (event.target.closest('[data-open-product-detail]')) return;
+      closeProductDetail();
+    });
+
+    els.stage.addEventListener('dblclick', (event) => {
+      if (!entered || event.target.closest('button,a,.object-tooltip,.guide-card')) return;
+      stopAutoFlight();
+      toggleStageZoom();
+    });
+    els.guideSkip?.addEventListener('click', () => { document.body.classList.remove('first-guide-visible'); closeGuide();
+        closeProductDetail(); });
     els.guideBack.addEventListener('click', () => stepGuide(-1));
     els.guideNext.addEventListener('click', () => stepGuide(1));
     $$('[data-action="auto"]').forEach(btn => btn.addEventListener('click', startAutoFlight));
@@ -568,6 +754,7 @@
     els.launchDock.classList.toggle('is-visible', currentZone === 5);
     els.stage.dataset.zone = String(currentZone);
     document.body.dataset.scene = z.name.toLowerCase().replace(/\s+/g, '-');
+    if (currentZone !== 2) closeProductDetail();
     $$('.mobile-zone-dots button').forEach(btn => {
       const isActive = Number(btn.dataset.zone) === currentZone;
       btn.classList.toggle('is-active', isActive);
@@ -577,6 +764,7 @@
     if (els.zoneNext) els.zoneNext.disabled = currentZone === ZONES.length - 1;
     
     if (currentZone === 1) updateTechnologyFocus(ORBIT_PARTICLES[activeTechnologyIndex] || ORBIT_PARTICLES[0], ORBIT_PARTICLES[activeTechnologyIndex]?.el || null, 'zone');
+    if (currentZone === 2) updateProductLayer();
     if (currentZone === 3) {
       setTimeout(() => animateProofNumbers(), 320);
     }
@@ -606,6 +794,13 @@
       obj.el.style.visibility = primaryVisible ? 'visible' : 'hidden';
     });
     applyZoomVisibility();
+  }
+
+  function toggleStageZoom() {
+    const next = zoom < 1.18 ? 1.48 : 1;
+    setZoom(next);
+    document.body.classList.add('zoom-feedback');
+    window.setTimeout(() => document.body.classList.remove('zoom-feedback'), 360);
   }
 
   function setZoom(value, options = {}) {
@@ -717,6 +912,7 @@
   }
 
   function closeGuide() {
+    document.body.classList.remove('first-guide-visible');
     els.guideOverlay.classList.remove('is-visible');
     els.guideOverlay.setAttribute('aria-hidden', 'true');
     $$('.guide-target').forEach(el => el.classList.remove('guide-target'));
@@ -737,7 +933,7 @@
 
   function showGuideStep() {
     const step = GUIDE[guideIndex];
-    els.guideStep.textContent = `Step ${guideIndex + 1} of ${GUIDE.length}`;
+    els.guideStep.textContent = 'MISSION BRIEFING';
     els.guideTitle.textContent = step.title;
     els.guideText.textContent = step.text;
     els.guideProgress.style.width = `${((guideIndex + 1) / GUIDE.length) * 100}%`;
@@ -764,8 +960,18 @@
       els.ship.classList.add('is-hidden');
     });
     window.addEventListener('pointermove', (event) => {
-      shipTarget.x = event.clientX;
-      shipTarget.y = event.clientY;
+      pointerMouse.x = event.clientX;
+      pointerMouse.y = event.clientY;
+      if (!rocketCentering && !rocketOrbitDemo) {
+        shipTarget.x = event.clientX;
+        shipTarget.y = event.clientY;
+      }
+      if (entered && hasFinePointer) {
+        const mx = (event.clientX - window.innerWidth / 2) * 0.018;
+        const my = (event.clientY - window.innerHeight / 2) * 0.018;
+        document.body.style.setProperty('--mx', `${mx.toFixed(2)}px`);
+        document.body.style.setProperty('--my', `${my.toFixed(2)}px`);
+      }
     }, { passive: true });
     window.addEventListener('pointerdown', () => {
       createTrail(shipPos.x, shipPos.y, true);
@@ -792,20 +998,42 @@
   function updateShip(time = performance.now()) {
     if (isTouch || prefersReducedMotion || !els.ship || pageHidden) return;
 
-    const target = rocketCentering
-      ? { x: window.innerWidth / 2, y: window.innerHeight / 2 }
-      : shipTarget;
+    let target = shipTarget;
+    let easing = 0.2;
+    let forceTrail = false;
 
-    const easing = rocketCentering ? 0.085 : 0.2;
+    if (rocketOrbitDemo) {
+      const elapsed = time - rocketOrbitStart;
+      const duration = 1750;
+      const t = Math.min(1, elapsed / duration);
+      const radius = Math.min(window.innerWidth, window.innerHeight) * 0.18;
+      const angle = (-Math.PI / 2) + t * Math.PI * 2.15;
+      target = {
+        x: window.innerWidth / 2 + Math.cos(angle) * radius,
+        y: window.innerHeight / 2 + Math.sin(angle) * radius * 0.58
+      };
+      easing = 0.16;
+      forceTrail = true;
+      if (t >= 1) {
+        rocketOrbitDemo = false;
+        document.body.classList.remove('ship-orbit-demo');
+        shipTarget = { ...pointerMouse };
+      }
+    } else if (rocketCentering) {
+      target = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+      easing = 0.085;
+      forceTrail = true;
+    }
+
     shipPos.x += (target.x - shipPos.x) * easing;
     shipPos.y += (target.y - shipPos.y) * easing;
 
     shipAngle = Math.atan2(shipPos.y - prevMouse.y, shipPos.x - prevMouse.x) * 180 / Math.PI + 90;
     const distance = Math.hypot(shipPos.x - prevMouse.x, shipPos.y - prevMouse.y);
 
-    const trailDelay = rocketCentering ? 12 : 28;
+    const trailDelay = forceTrail ? 12 : 28;
     if (distance > 3 && time - lastTrailTime > trailDelay) {
-      createTrail(shipPos.x, shipPos.y, rocketCentering && distance > 10);
+      createTrail(shipPos.x, shipPos.y, forceTrail && distance > 8);
     }
 
     positionShip(shipPos.x, shipPos.y);
@@ -859,6 +1087,11 @@
         touchStartY = event.touches[0].clientY;
       }
       if (event.touches.length === 2) {
+        const now = performance.now();
+        if (entered && now - lastTapTime < 320) {
+          toggleStageZoom();
+        }
+        lastTapTime = now;
         pinchStartDistance = distance(event.touches[0], event.touches[1]);
         pinchStartZoom = zoom;
       }
@@ -1102,4 +1335,203 @@
   function escapeAttr(value) {
     return String(value).replace(/[&<>"]/g, (ch) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
   }
+})();
+
+
+/* ==========================================================================
+   INTERACTION FIX PATCH — BACKGROUND ZOOM / TOUCH / PRODUCT OUTSIDE CLICK
+   Updated: 20 May 2026, 19:15 IST
+   Purpose:
+   - Make background zoom work on desktop double-click.
+   - Make mobile/tablet two-finger pinch and two-finger double-touch zoom work.
+   - Make product detail overlay close on outside/backdrop click reliably.
+   - Keep global button behavior unaffected.
+   ========================================================================== */
+(function () {
+  const d = document;
+  const w = window;
+
+  function qs(sel, root = d) { return root.querySelector(sel); }
+  function qsa(sel, root = d) { return Array.from(root.querySelectorAll(sel)); }
+
+  let phaseZoom = 1;
+  let pinchStartDistance = 0;
+  let pinchStartZoom = 1;
+  let lastTwoFingerTap = 0;
+  let zoomFeedbackTimer = null;
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  function getTouchDistance(t1, t2) {
+    const dx = t1.clientX - t2.clientX;
+    const dy = t1.clientY - t2.clientY;
+    return Math.hypot(dx, dy);
+  }
+
+  function applyPhaseZoom(value, source = "manual") {
+    phaseZoom = clamp(Number(value) || 1, 0.72, 1.85);
+
+    d.documentElement.style.setProperty("--zoom", String(phaseZoom));
+    d.body.dataset.zoomMode = source;
+
+    const slider = qs("#zoomRange");
+    const valueLabel = qs("#zoomValue");
+
+    if (slider) {
+      slider.value = String(Math.round(phaseZoom * 100));
+    }
+
+    if (valueLabel) {
+      valueLabel.textContent = `${Math.round(phaseZoom * 100)}%`;
+    }
+
+    d.body.classList.add("zoom-feedback");
+    clearTimeout(zoomFeedbackTimer);
+    zoomFeedbackTimer = setTimeout(() => d.body.classList.remove("zoom-feedback"), 420);
+
+    // Force transform on important universe layers so zoom works even if previous logic missed it.
+    const scale = `scale(${phaseZoom})`;
+    const inverse = 1 / Math.max(phaseZoom, 0.01);
+
+    qsa(".particle-layer, .product-gallery-layer, .proof-layer, .reviews-layer").forEach((el) => {
+      el.style.transform = scale;
+      el.style.transformOrigin = "50% 50%";
+    });
+
+    qsa(".orbit-line").forEach((el) => {
+      el.style.setProperty("--phaseZoomScale", phaseZoom);
+    });
+
+    const core = qs(".sv-core");
+    if (core) {
+      core.style.setProperty("--coreZoomCompensate", inverse.toFixed(3));
+    }
+  }
+
+  function togglePhaseZoom() {
+    applyPhaseZoom(phaseZoom < 1.18 ? 1.48 : 1, "toggle");
+  }
+
+  function bindPhaseZoomControls() {
+    const stage = qs("#verseStage") || qs(".verse-stage");
+    const zoomIn = qs("#zoomIn");
+    const zoomOut = qs("#zoomOut");
+    const zoomRange = qs("#zoomRange");
+
+    if (zoomIn && !zoomIn.dataset.phaseZoomBound) {
+      zoomIn.dataset.phaseZoomBound = "true";
+      zoomIn.addEventListener("click", () => applyPhaseZoom(phaseZoom + 0.12, "button"));
+    }
+
+    if (zoomOut && !zoomOut.dataset.phaseZoomBound) {
+      zoomOut.dataset.phaseZoomBound = "true";
+      zoomOut.addEventListener("click", () => applyPhaseZoom(phaseZoom - 0.12, "button"));
+    }
+
+    if (zoomRange && !zoomRange.dataset.phaseZoomBound) {
+      zoomRange.dataset.phaseZoomBound = "true";
+      zoomRange.addEventListener("input", () => applyPhaseZoom(Number(zoomRange.value) / 100, "slider"));
+    }
+
+    if (stage && !stage.dataset.phaseZoomBound) {
+      stage.dataset.phaseZoomBound = "true";
+
+      stage.addEventListener("dblclick", (event) => {
+        if (!d.body.classList.contains("verse-entered")) return;
+        if (event.target.closest("button,a,input,.guide-card,.object-tooltip,.product-detail-sheet,.settings-panel")) return;
+        event.preventDefault();
+        togglePhaseZoom();
+      });
+
+      stage.addEventListener("touchstart", (event) => {
+        if (!d.body.classList.contains("verse-entered")) return;
+        if (event.touches.length === 2) {
+          const now = performance.now();
+          const distance = getTouchDistance(event.touches[0], event.touches[1]);
+
+          if (now - lastTwoFingerTap < 330) {
+            event.preventDefault();
+            togglePhaseZoom();
+          }
+
+          lastTwoFingerTap = now;
+          pinchStartDistance = distance;
+          pinchStartZoom = phaseZoom;
+        }
+      }, { passive: false });
+
+      stage.addEventListener("touchmove", (event) => {
+        if (!d.body.classList.contains("verse-entered")) return;
+        if (event.touches.length === 2 && pinchStartDistance > 0) {
+          event.preventDefault();
+          const nextDistance = getTouchDistance(event.touches[0], event.touches[1]);
+          const ratio = nextDistance / Math.max(pinchStartDistance, 1);
+          applyPhaseZoom(pinchStartZoom * ratio, "pinch");
+        }
+      }, { passive: false });
+
+      stage.addEventListener("touchend", (event) => {
+        if (event.touches.length < 2) {
+          pinchStartDistance = 0;
+        }
+      }, { passive: true });
+    }
+  }
+
+  function closeProductDetailOverlay() {
+    const overlay = qs("#productDetailOverlay");
+    if (!overlay) return;
+    overlay.classList.remove("is-open");
+    overlay.setAttribute("aria-hidden", "true");
+    d.body.classList.remove("product-detail-open");
+  }
+
+  function bindProductOutsideClose() {
+    const overlay = qs("#productDetailOverlay");
+    if (!overlay || overlay.dataset.outsideCloseFixed === "true") return;
+
+    overlay.dataset.outsideCloseFixed = "true";
+
+    overlay.addEventListener("click", (event) => {
+      const sheet = event.target.closest(".product-detail-sheet");
+      const closeTarget = event.target.closest("[data-close-product-detail]");
+      if (closeTarget || !sheet) {
+        event.preventDefault();
+        closeProductDetailOverlay();
+      }
+    });
+
+    d.addEventListener("click", (event) => {
+      if (!overlay.classList.contains("is-open")) return;
+      if (overlay.contains(event.target)) return;
+      if (event.target.closest("[data-open-product-detail]")) return;
+      closeProductDetailOverlay();
+    });
+
+    d.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && overlay.classList.contains("is-open")) {
+        closeProductDetailOverlay();
+      }
+    });
+  }
+
+  function initInteractionFixes() {
+    bindPhaseZoomControls();
+    bindProductOutsideClose();
+    applyPhaseZoom(Number(getComputedStyle(d.documentElement).getPropertyValue("--zoom")) || 1, "init");
+  }
+
+  if (d.readyState === "loading") {
+    d.addEventListener("DOMContentLoaded", initInteractionFixes);
+  } else {
+    initInteractionFixes();
+  }
+
+  w.ShrimoVerseInteractionFix = {
+    applyZoom: applyPhaseZoom,
+    toggleZoom: togglePhaseZoom,
+    closeProductDetail: closeProductDetailOverlay
+  };
 })();

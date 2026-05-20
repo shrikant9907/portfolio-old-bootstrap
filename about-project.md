@@ -216,3 +216,27 @@ This keeps the first screen clean and prevents early clutter.
 **Updated:** 20 May 2026, 18:20 IST
 
 Technology Orbit now has a stronger focused scan behavior. Skills/tools stay separate from Product Gallery, Proof Ring, Client Signals, and Launch Dock.
+
+## Phase 2 Interaction Refinement
+
+**Updated:** 20 May 2026, 18:25 IST
+
+The initial guide no longer teaches obvious cursor movement. The ship itself demonstrates life by taking a small round after entry and returning to the cursor.
+
+## Phase 3 Product Gallery
+
+**Updated:** 20 May 2026, 18:45 IST
+
+Product Gallery now works as a focused product mission layer with Challenge, Solution, Stack, and Result for each product. It stays separate from the Technology Orbit.
+
+## Phase 3 Product Gallery Responsive Focus
+
+**Updated:** 20 May 2026, 18:20 IST
+
+Product Gallery now separates quick browsing from deep reading. On mobile, full details open only when requested through a slide-up overlay with blur and navigation.
+
+## Global Button and Overlay Fix
+
+**Updated:** 20 May 2026, 18:55 IST
+
+Button sizing/placement is now treated as a global interface rule across Shrimo Verse, not a single Product Gallery fix. Product detail overlay now closes through outside click/backdrop click.

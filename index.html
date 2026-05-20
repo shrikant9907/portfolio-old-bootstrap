@@ -191,11 +191,12 @@
 
       <aside class="guide-overlay" id="guideOverlay" aria-hidden="true">
         <div class="guide-card" role="dialog" aria-modal="false" aria-labelledby="guideTitle">
-          <span class="guide-step" id="guideStep">Step 1 of 7</span>
-          <h2 id="guideTitle">Pilot the ship</h2>
-          <p id="guideText">Move your cursor to pilot the explorer ship.</p>
+          <span class="guide-step" id="guideStep">Mission Briefing</span>
+          <h2 id="guideTitle">Inspect skills</h2>
+          <p id="guideText">Hover or tap a glowing skill node to scan it.</p>
           <div class="guide-progress"><span id="guideProgress"></span></div>
           <div class="guide-actions">
+            <button type="button" id="guideSkip" class="guide-skip">Skip</button>
             <button type="button" id="guideBack">Back</button>
             <button type="button" id="guideNext">Next</button>
           </div>
@@ -231,6 +232,22 @@
           <a href="https://digitingcard.com/p/shrikant-yadav" target="_blank" rel="noopener">Digital Profile</a>
         </div>
         <small>© 2026 Shrikant Yadav · Shrimo Innovations · Narmadapuram</small>
+      </section>
+
+
+      <section class="product-detail-overlay" id="productDetailOverlay" aria-hidden="true">
+        <div class="product-detail-backdrop" data-close-product-detail></div>
+        <article class="product-detail-sheet" role="dialog" aria-modal="true" aria-labelledby="productDetailTitle">
+          <div class="product-detail-topbar">
+            <button type="button" class="product-detail-close" data-close-product-detail aria-label="Close product details">×</button>
+            <span class="product-detail-status">Product Mission</span>
+            <div class="product-detail-arrows" aria-label="Product detail navigation">
+              <button type="button" id="productDetailPrev" aria-label="Previous product">‹</button>
+              <button type="button" id="productDetailNext" aria-label="Next product">›</button>
+            </div>
+          </div>
+          <div class="product-detail-body" id="productDetailBody"></div>
+        </article>
       </section>
 
       <div class="mobile-control-dock" aria-label="Mobile Shrimo Verse controls">

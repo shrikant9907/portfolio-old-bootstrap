@@ -182,3 +182,92 @@ Updated: 20 May 2026, 18:20 IST
 - [ ] Zoom reveals deeper tools.
 - [ ] Mobile shows compact technology focus without overlap.
 - [ ] Previous/next arrows still work on desktop.
+
+## Phase 2 Interaction Refinement Test
+
+Updated: 20 May 2026, 18:25 IST
+
+- [ ] Guide does not show `Step 1 of 7`.
+- [ ] Guide does not show `Pilot the ship`.
+- [ ] Guide can be skipped/closed.
+- [ ] Rocket takes one round after entering on desktop.
+- [ ] Rocket returns to cursor after the round.
+- [ ] Desktop mouse movement subtly moves background.
+- [ ] Desktop double-click toggles zoom.
+- [ ] Mobile pinch/two-finger zoom works.
+
+## Phase 3 Product Gallery Test
+
+Updated: 20 May 2026, 18:45 IST
+
+- [ ] Product Gallery appears after Technology Orbit.
+- [ ] Product Gallery shows one product focus at a time.
+- [ ] Product scan has Challenge / Solution / Stack / Result.
+- [ ] Product beacons switch active product.
+- [ ] Product scan previous/next arrows work.
+- [ ] Mobile does not show a product grid.
+- [ ] Technology particles are dimmed in Product Gallery.
+- [ ] Proof/reviews/contact do not appear as competing content.
+
+## Phase 3 Product Gallery Responsive Focus Test
+
+Updated: 20 May 2026, 18:20 IST
+
+- [ ] Product Gallery default mobile view is compact.
+- [ ] Full details are hidden until user clicks View Mission Details.
+- [ ] Detail overlay has blur backdrop.
+- [ ] Detail overlay has close button.
+- [ ] Detail overlay has previous/next product arrows.
+- [ ] Backdrop click closes overlay.
+- [ ] Escape closes overlay.
+- [ ] Start Auto Flight and Learn Controls are hidden in Product Gallery.
+- [ ] Desktop uses left/center/right space cleanly.
+
+## Phase 3 Product Overlay Code Test
+
+Updated: 20 May 2026, 18:42 IST
+
+- [ ] `#productDetailOverlay` exists in `index.html`.
+- [ ] `View Mission Details` opens the overlay.
+- [ ] Overlay close button works.
+- [ ] Overlay backdrop click works.
+- [ ] Overlay previous/next arrows work.
+- [ ] Mobile overlay slides from bottom.
+
+## Global Button and Overlay Fix Test
+
+Updated: 20 May 2026, 18:55 IST
+
+- [ ] Product detail closes when clicking outside the sheet.
+- [ ] Product detail closes when clicking blurred backdrop.
+- [ ] Product detail closes on Escape.
+- [ ] Buttons look smaller on Mission Entry.
+- [ ] Buttons look smaller on mission panels.
+- [ ] HUD buttons remain compact.
+- [ ] Guide buttons remain compact.
+- [ ] Launch Dock buttons remain compact.
+- [ ] Mobile buttons are still tappable.
+
+## Interaction Fix — Zoom Touch Buttons Test
+
+Updated: 20 May 2026, 19:15 IST
+
+- [ ] Desktop double-click stage/background toggles zoom.
+- [ ] Plus zoom button works.
+- [ ] Minus zoom button works.
+- [ ] Zoom slider works.
+- [ ] Mobile pinch zoom works.
+- [ ] Two-finger double touch toggles zoom.
+- [ ] Product detail outside click closes overlay.
+- [ ] Product detail backdrop click closes overlay.
+- [ ] Escape closes product detail.
+- [ ] Buttons are smaller globally but readable.
+
+## SV Core Circle Protection Test
+
+Updated: 20 May 2026, 19:25 IST
+
+- [ ] SV core is circular on desktop.
+- [ ] SV core is circular on mobile.
+- [ ] Entry mini SV marker is circular.
+- [ ] Global button rules do not make the core rounded-square.

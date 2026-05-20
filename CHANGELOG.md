@@ -1,5 +1,98 @@
 # Changelog
 
+## SV Core Circle Protection Fix — 20 May 2026, 19:25 IST
+
+- Fixed SV core becoming rounded-square after global button styling.
+- Added protected circular CSS rules for `.sv-core`, `.entry-sv-mini`, `.core-ring`, and `.core-inner`.
+- Added `steps/26-sv-core-circle-protection-fix.md`.
+- Updated screen contracts and testing checklist.
+
+
+# Changelog
+
+## Interaction Fix — Zoom, Touch, Buttons, Product Details — 20 May 2026, 19:15 IST
+
+- Added robust background zoom patch for desktop double-click.
+- Added robust plus/minus/slider zoom binding.
+- Added touch pinch zoom and two-finger double-touch zoom toggle.
+- Added reliable product detail outside/backdrop click close behavior.
+- Added global button compact styling confirmation across screens.
+- Added `steps/25-interaction-fix-zoom-touch-buttons.md`.
+- Updated README and TESTING_CHECKLIST.
+
+
+# Changelog
+
+## Global Button and Product Detail Outside Click Fix — 20 May 2026, 18:55 IST
+
+- Added robust product detail outside-click closing.
+- Product detail now closes on backdrop/outside click and Escape.
+- Added global button sizing system across all screens/pages.
+- Applied smaller readable buttons to mission actions, HUD, guide, zoom, product actions, overlay actions, and Launch Dock.
+- Added `steps/24-phase-3-global-buttons-overlay-fix.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
+## Phase 3 Code Fix — Product Overlay HTML Shell — 20 May 2026, 18:42 IST
+
+- Added missing `#productDetailOverlay` shell to `index.html`.
+- Confirmed Product Gallery overlay CSS exists in `css/portfolio-style.css`.
+- Confirmed Product Gallery overlay JS exists in `js/portfolio-scripts.js`.
+- Added `steps/23-phase-3-code-fix-product-overlay.md`.
+- Updated README and TESTING_CHECKLIST.
+
+
+# Changelog
+
+## Phase 3 Product Gallery Responsive Focus — 20 May 2026, 18:20 IST
+
+- Refined Product Gallery desktop layout to use available screen space better.
+- Hid repeated scene info/status in Product Gallery.
+- Hid Start Auto Flight / Learn Controls in Product Gallery.
+- Added compact default Product Gallery state.
+- Added `View Mission Details` trigger.
+- Added full product detail overlay with blur backdrop.
+- Added close/cross button for product detail overlay.
+- Added previous/next product arrows inside detail overlay.
+- Improved mobile Product Gallery readability and reduced visible content.
+- Added `steps/22-phase-3-product-gallery-responsive-focus.md`.
+- Updated Product Gallery screen contract and testing checklist.
+
+
+# Changelog
+
+## Phase 3 — Product Gallery Mission Scan — 20 May 2026, 18:45 IST
+
+- Improved Product Gallery as a separate product mission layer.
+- Added Challenge / Solution / Stack / Result structure to products.
+- Added mission codes for products.
+- Added product scan previous/next controls.
+- Product beacons now update the focused product on hover/focus in Product Gallery.
+- Technology orbit is dimmed more clearly during Product Gallery.
+- Mobile Product Gallery stays one focused panel, not a grid.
+- Added `steps/21-phase-3-product-gallery.md`.
+- Updated Product Gallery screen contract and testing checklist.
+
+
+# Changelog
+
+## Phase 2 Interaction Refinement — 20 May 2026, 18:25 IST
+
+- Removed `Pilot the ship` from the first guide flow.
+- Removed `Step 1 of 7` style guide label and replaced it with `MISSION BRIEFING`.
+- Added a skip/close action to the guide card.
+- Added a desktop rocket lap after entry before returning to cursor.
+- Added subtle desktop background motion based on mouse movement.
+- Added desktop double-click zoom toggle.
+- Kept touch pinch zoom and added two-finger double-touch zoom toggle.
+- Added `steps/20-phase-2-interaction-refinement.md`.
+- Updated relevant screen contracts and testing checklist.
+
+
+# Changelog
+
 ## Phase 2 — Technology Orbit Update — 20 May 2026, 18:20 IST
 
 - Improved Technology Orbit as its own focused scene.

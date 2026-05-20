@@ -260,3 +260,93 @@ See:
 ```txt
 steps/19-phase-2-technology-orbit.md
 ```
+
+## Phase 2 Interaction Refinement
+
+**Updated:** 20 May 2026, 18:25 IST
+
+Refined guide, rocket, mouse background motion, and zoom behavior.
+
+See:
+
+```txt
+steps/20-phase-2-interaction-refinement.md
+```
+
+## Phase 3 Product Gallery
+
+**Updated:** 20 May 2026, 18:45 IST
+
+Phase 3 updates only the Product Gallery scene.
+
+See:
+
+```txt
+steps/21-phase-3-product-gallery.md
+```
+
+## Phase 3 Product Gallery Responsive Focus
+
+**Updated:** 20 May 2026, 18:20 IST
+
+Product Gallery now uses compact default content and a focused detail overlay.
+
+See:
+
+```txt
+steps/22-phase-3-product-gallery-responsive-focus.md
+```
+
+## Phase 3 Code Fix Product Overlay
+
+**Updated:** 20 May 2026, 18:42 IST
+
+The Product Gallery detail overlay is now implemented in actual code across:
+
+```txt
+index.html
+css/portfolio-style.css
+js/portfolio-scripts.js
+```
+
+See:
+
+```txt
+steps/23-phase-3-code-fix-product-overlay.md
+```
+
+## Global Button and Overlay Fix
+
+**Updated:** 20 May 2026, 18:55 IST
+
+Global button sizing and product detail outside-click close behavior are now applied in code.
+
+See:
+
+```txt
+steps/24-phase-3-global-buttons-overlay-fix.md
+```
+
+## Interaction Fix — Zoom Touch Buttons
+
+**Updated:** 20 May 2026, 19:15 IST
+
+Background zoom, touch zoom, product detail outside close, and global button sizing were fixed at code level.
+
+See:
+
+```txt
+steps/25-interaction-fix-zoom-touch-buttons.md
+```
+
+## SV Core Circle Protection
+
+**Updated:** 20 May 2026, 19:25 IST
+
+The central SV core is protected from global button styling and must always remain circular.
+
+See:
+
+```txt
+steps/26-sv-core-circle-protection-fix.md
+```
