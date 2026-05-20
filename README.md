@@ -495,3 +495,15 @@ See:
 ```txt
 steps/41-controls-visible-actual-zoom-dock-fix.md
 ```
+
+## Final Visible Controls Rail
+
+**Updated:** 20 May 2026, 22:55 IST
+
+The actual `.hud-controls` node is now moved into the body and styled as `body > .floating-hud-controls`, so header CSS can no longer hide it. CSS/JS are cache-busted in `index.html`.
+
+See:
+
+```txt
+steps/42-final-visible-controls-rail.md
+```

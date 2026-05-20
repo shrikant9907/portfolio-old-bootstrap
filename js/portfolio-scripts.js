@@ -1746,3 +1746,33 @@ function bindEntry() {
 
   syncFinalSceneState();
 })();
+
+
+/* ==========================================================================
+   CONTROLS RAIL VISIBILITY FINAL PATCH
+   Updated: 20 May 2026, 22:55 IST
+   Moves the actual .hud-controls node outside the header into <body>, so
+   header positioning/animation/visibility rules cannot hide it.
+   ========================================================================== */
+(function () {
+  function moveControlsRailToBody() {
+    const rail = document.querySelector('.hud-controls');
+    if (!rail || rail.dataset.detachedRail === 'true') return;
+
+    rail.dataset.detachedRail = 'true';
+    rail.classList.add('floating-hud-controls');
+
+    // Keep existing event listeners because the same DOM node is moved, not cloned.
+    document.body.appendChild(rail);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', moveControlsRailToBody);
+  } else {
+    moveControlsRailToBody();
+  }
+
+  // Run again after launch sequence because some UI states initialize late.
+  window.setTimeout(moveControlsRailToBody, 600);
+  window.setTimeout(moveControlsRailToBody, 2600);
+})();

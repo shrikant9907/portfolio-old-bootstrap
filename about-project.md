@@ -300,3 +300,9 @@ Shrimo Verse now uses a clean left-side zoom control with no background wrapper,
 **Updated:** 20 May 2026, 22:35 IST
 
 Shrimo Verse now uses the correct zoom selector `.zoom-dock` and keeps the main floating HUD controls visible at the bottom-right.
+
+## Final Visible Controls Rail
+
+**Updated:** 20 May 2026, 22:55 IST
+
+Shrimo Verse controls are now detached from the header at runtime and rendered as a reliable bottom-right floating icon rail.

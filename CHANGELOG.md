@@ -1,5 +1,19 @@
 # Changelog
 
+## Final Visible Controls Rail — 20 May 2026, 22:55 IST
+
+- Moved `.hud-controls` into body at runtime as `.floating-hud-controls`.
+- Added final CSS targeting `body > .floating-hud-controls`.
+- Kept controls bottom-right with no background/border.
+- Added hover/focus tooltip behavior.
+- Kept actual `.zoom-dock` left-center.
+- Cache-busted CSS and JS references in `index.html`.
+- Added `steps/42-final-visible-controls-rail.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
 ## Controls Visible and Actual Zoom Dock Fix — 20 May 2026, 22:35 IST
 
 - Fixed the root cause: actual zoom element is `.zoom-dock`, not `.zoom-control`.

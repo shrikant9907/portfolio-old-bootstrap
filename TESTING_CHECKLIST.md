@@ -409,3 +409,15 @@ Updated: 20 May 2026, 22:35 IST
 - [ ] Zoom dock has no background.
 - [ ] Zoom dock has no border.
 - [ ] Zoom dock is no longer right-side.
+
+## Final Visible Controls Rail Test
+
+Updated: 20 May 2026, 22:55 IST
+
+- [ ] After Start, controls appear bottom-right.
+- [ ] Controls are not hidden by the header.
+- [ ] Controls have no background.
+- [ ] Controls have no border.
+- [ ] Hover/focus tooltip appears.
+- [ ] Zoom dock is left-center.
+- [ ] Browser loads cache-busted CSS/JS.

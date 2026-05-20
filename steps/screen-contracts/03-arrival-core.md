@@ -412,3 +412,19 @@ Rules:
 - HUD controls stay visible as bottom-right floating icons,
 - hover/focus tooltip appears,
 - no wrapper card around controls.
+
+
+---
+
+## Final Visible Controls Rail
+
+**Updated:** 20 May 2026, 22:55 IST
+
+Rules:
+
+- move `.hud-controls` out of header into body at runtime,
+- target `body > .floating-hud-controls` for final control styling,
+- controls are visible bottom-right after Start,
+- no icon background/border,
+- hover/focus tooltip required,
+- actual `.zoom-dock` stays left-center.
