@@ -1,5 +1,45 @@
 # Changelog
 
+## Global Button and Product Detail Outside Click Fix — 20 May 2026, 18:55 IST
+
+- Added robust product detail outside-click closing.
+- Product detail now closes on backdrop/outside click and Escape.
+- Added global button sizing system across all screens/pages.
+- Applied smaller readable buttons to mission actions, HUD, guide, zoom, product actions, overlay actions, and Launch Dock.
+- Added `steps/24-phase-3-global-buttons-overlay-fix.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
+## Phase 3 Code Fix — Product Overlay HTML Shell — 20 May 2026, 18:42 IST
+
+- Added missing `#productDetailOverlay` shell to `index.html`.
+- Confirmed Product Gallery overlay CSS exists in `css/portfolio-style.css`.
+- Confirmed Product Gallery overlay JS exists in `js/portfolio-scripts.js`.
+- Added `steps/23-phase-3-code-fix-product-overlay.md`.
+- Updated README and TESTING_CHECKLIST.
+
+
+# Changelog
+
+## Phase 3 Product Gallery Responsive Focus — 20 May 2026, 18:20 IST
+
+- Refined Product Gallery desktop layout to use available screen space better.
+- Hid repeated scene info/status in Product Gallery.
+- Hid Start Auto Flight / Learn Controls in Product Gallery.
+- Added compact default Product Gallery state.
+- Added `View Mission Details` trigger.
+- Added full product detail overlay with blur backdrop.
+- Added close/cross button for product detail overlay.
+- Added previous/next product arrows inside detail overlay.
+- Improved mobile Product Gallery readability and reduced visible content.
+- Added `steps/22-phase-3-product-gallery-responsive-focus.md`.
+- Updated Product Gallery screen contract and testing checklist.
+
+
+# Changelog
+
 ## Phase 3 — Product Gallery Mission Scan — 20 May 2026, 18:45 IST
 
 - Improved Product Gallery as a separate product mission layer.

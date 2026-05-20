@@ -208,3 +208,42 @@ Updated: 20 May 2026, 18:45 IST
 - [ ] Mobile does not show a product grid.
 - [ ] Technology particles are dimmed in Product Gallery.
 - [ ] Proof/reviews/contact do not appear as competing content.
+
+## Phase 3 Product Gallery Responsive Focus Test
+
+Updated: 20 May 2026, 18:20 IST
+
+- [ ] Product Gallery default mobile view is compact.
+- [ ] Full details are hidden until user clicks View Mission Details.
+- [ ] Detail overlay has blur backdrop.
+- [ ] Detail overlay has close button.
+- [ ] Detail overlay has previous/next product arrows.
+- [ ] Backdrop click closes overlay.
+- [ ] Escape closes overlay.
+- [ ] Start Auto Flight and Learn Controls are hidden in Product Gallery.
+- [ ] Desktop uses left/center/right space cleanly.
+
+## Phase 3 Product Overlay Code Test
+
+Updated: 20 May 2026, 18:42 IST
+
+- [ ] `#productDetailOverlay` exists in `index.html`.
+- [ ] `View Mission Details` opens the overlay.
+- [ ] Overlay close button works.
+- [ ] Overlay backdrop click works.
+- [ ] Overlay previous/next arrows work.
+- [ ] Mobile overlay slides from bottom.
+
+## Global Button and Overlay Fix Test
+
+Updated: 20 May 2026, 18:55 IST
+
+- [ ] Product detail closes when clicking outside the sheet.
+- [ ] Product detail closes when clicking blurred backdrop.
+- [ ] Product detail closes on Escape.
+- [ ] Buttons look smaller on Mission Entry.
+- [ ] Buttons look smaller on mission panels.
+- [ ] HUD buttons remain compact.
+- [ ] Guide buttons remain compact.
+- [ ] Launch Dock buttons remain compact.
+- [ ] Mobile buttons are still tappable.

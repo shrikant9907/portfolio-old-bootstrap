@@ -228,3 +228,15 @@ The initial guide no longer teaches obvious cursor movement. The ship itself dem
 **Updated:** 20 May 2026, 18:45 IST
 
 Product Gallery now works as a focused product mission layer with Challenge, Solution, Stack, and Result for each product. It stays separate from the Technology Orbit.
+
+## Phase 3 Product Gallery Responsive Focus
+
+**Updated:** 20 May 2026, 18:20 IST
+
+Product Gallery now separates quick browsing from deep reading. On mobile, full details open only when requested through a slide-up overlay with blur and navigation.
+
+## Global Button and Overlay Fix
+
+**Updated:** 20 May 2026, 18:55 IST
+
+Button sizing/placement is now treated as a global interface rule across Shrimo Verse, not a single Product Gallery fix. Product detail overlay now closes through outside click/backdrop click.

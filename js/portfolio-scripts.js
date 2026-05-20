@@ -344,7 +344,67 @@
     updateProductLayer();
   }
 
-  function updateProductLayer() {
+  
+  function updateProductDetailOverlay() {
+    if (!els.productDetailBody) return;
+    const item = PRODUCTS[activeProduct];
+    if (!item) return;
+    const initials = item.title.split(/\s+/).map(w => w[0]).join('').slice(0,3);
+    els.productDetailBody.innerHTML = `
+      <div class="product-detail-hero">
+        <span class="product-detail-code">${item.code || `SV-0${activeProduct + 1}`}</span>
+        <strong id="productDetailTitle">${item.title}</strong>
+        <i>${initials}</i>
+        <p>${item.desc}</p>
+      </div>
+      <div class="product-detail-sections">
+        <section><small>Challenge</small><p>${item.challenge || item.desc}</p></section>
+        <section><small>Solution</small><p>${item.solution || item.use}</p></section>
+        <section><small>Stack</small><p>${item.stack || 'Web product system, responsive UX, practical frontend/backend work'}</p></section>
+        <section><small>Result</small><p>${item.result || item.use}</p></section>
+      </div>
+      <div class="product-detail-actions">
+        ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener" class="product-btn primary-path">Open Project Path</a>` : '<button type="button" class="disabled-path" disabled>Concept Path</button>'}
+        <a href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20saw%20your%20product%20${encodeURIComponent(item.title)}%20and%20want%20to%20start%20a%20similar%20mission." target="_blank" rel="noopener" class="product-btn secondary-path">Start Similar Mission</a>
+      </div>`;
+  }
+
+  function openProductDetail() {
+    stopAutoFlight();
+    updateProductDetailOverlay();
+    document.body.classList.add('product-detail-open');
+    els.productDetailOverlay?.classList.add('is-open');
+    els.productDetailOverlay?.setAttribute('aria-hidden', 'false');
+    els.productDetailPrev?.focus?.({ preventScroll: true });
+  }
+
+  function closeProductDetail() {
+    document.body.classList.remove('product-detail-open');
+    els.productDetailOverlay?.classList.remove('is-open');
+    els.productDetailOverlay?.setAttribute('aria-hidden', 'true');
+  }
+
+  function stepProductDetail(direction) {
+    activeProduct = (activeProduct + direction + PRODUCTS.length) % PRODUCTS.length;
+    updateProductLayer();
+    updateProductDetailOverlay();
+  }
+
+
+  function handleProductDetailOutsideClick(event) {
+    if (!els.productDetailOverlay?.classList.contains('is-open')) return;
+
+    const sheet = event.target.closest('.product-detail-sheet');
+    const openTrigger = event.target.closest('[data-open-product-detail]');
+    const closeTrigger = event.target.closest('[data-close-product-detail]');
+
+    if (closeTrigger || (!sheet && !openTrigger)) {
+      event.preventDefault();
+      closeProductDetail();
+    }
+  }
+
+function updateProductLayer() {
     const item = PRODUCTS[activeProduct];
     const card = $('#productCard');
     if (!card) return;
@@ -355,14 +415,19 @@
 
     card.innerHTML = `
       <div class="product-card-head">
-        <p>Product mission ${activeProduct + 1}/${PRODUCTS.length}</p>
+        <p>Mission ${activeProduct + 1}/${PRODUCTS.length}</p>
         <span class="product-code">${item.code || `SV-0${activeProduct + 1}`}</span>
       </div>
-      <h3>${item.title}</h3>
-      <span class="gallery-preview" aria-hidden="true">${initials}</span>
-      <em>${item.desc}</em>
 
-      <dl class="product-mission-grid">
+      <div class="product-compact-layout">
+        <div class="product-copy">
+          <h3>${item.title}</h3>
+          <em>${item.desc}</em>
+        </div>
+        <span class="gallery-preview" aria-hidden="true">${initials}</span>
+      </div>
+
+      <dl class="product-mission-grid" aria-label="${item.title} mission details">
         <div><dt>Challenge</dt><dd>${item.challenge || item.desc}</dd></div>
         <div><dt>Solution</dt><dd>${item.solution || item.use}</dd></div>
         <div><dt>Stack</dt><dd>${item.stack || 'Web product system, responsive UX, practical frontend/backend work'}</dd></div>
@@ -375,9 +440,11 @@
         <button type="button" class="product-scan-arrow" data-product-jump="${nextIndex}" aria-label="Next product mission">›</button>
       </div>
 
+      <button type="button" class="product-details-trigger" data-open-product-detail>View Mission Details</button>
+
       <div class="product-actions">
-        ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener" class="product-btn primary-path">Open Project Path</a>` : '<button type="button" class="disabled-path" disabled>Concept Path</button>'}
-        <a href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20saw%20your%20product%20${encodeURIComponent(item.title)}%20and%20want%20to%20start%20a%20similar%20mission." target="_blank" rel="noopener" class="product-btn secondary-path">Start Similar Mission</a>
+        ${item.link ? `<a href="${item.link}" target="_blank" rel="noopener" class="product-btn primary-path">Open Path</a>` : '<button type="button" class="disabled-path" disabled>Concept</button>'}
+        <a href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20saw%20your%20product%20${encodeURIComponent(item.title)}%20and%20want%20to%20start%20a%20similar%20mission." target="_blank" rel="noopener" class="product-btn secondary-path">Start Similar</a>
       </div>`;
 
     $$('.product-dot', els.productLayer).forEach((dot, index) => {
@@ -389,10 +456,14 @@
       btn.addEventListener('click', () => {
         activeProduct = Number(btn.dataset.productJump);
         updateProductLayer();
+        if (els.productDetailOverlay?.classList.contains('is-open')) updateProductDetailOverlay();
       });
     });
 
-    positionDots('.product-dot', activeProduct, 202);
+    $('[data-open-product-detail]', card)?.addEventListener('click', () => openProductDetail());
+
+    updateProductDetailOverlay();
+    positionDots('.product-dot', activeProduct, window.innerWidth <= 780 ? 148 : 214);
   }
 
   function renderProofLayer() {
@@ -533,12 +604,24 @@
     els.stage.addEventListener('click', (event) => {
       if (!event.target.closest('.verse-node') && !event.target.closest('.world-dot') && !event.target.closest('.object-tooltip') && !event.target.closest('.sv-core')) closeObject();
     });
+    els.productDetailPrev?.addEventListener('click', () => stepProductDetail(-1));
+    els.productDetailNext?.addEventListener('click', () => stepProductDetail(1));
+    $$('[data-close-product-detail]').forEach((btn) => btn.addEventListener('click', closeProductDetail));
+    els.productDetailOverlay?.addEventListener('click', handleProductDetailOutsideClick);
+    document.addEventListener('click', (event) => {
+      if (!els.productDetailOverlay?.classList.contains('is-open')) return;
+      if (els.productDetailOverlay.contains(event.target)) return;
+      if (event.target.closest('[data-open-product-detail]')) return;
+      closeProductDetail();
+    });
+
     els.stage.addEventListener('dblclick', (event) => {
       if (!entered || event.target.closest('button,a,.object-tooltip,.guide-card')) return;
       stopAutoFlight();
       toggleStageZoom();
     });
-    els.guideSkip?.addEventListener('click', () => { document.body.classList.remove('first-guide-visible'); closeGuide(); });
+    els.guideSkip?.addEventListener('click', () => { document.body.classList.remove('first-guide-visible'); closeGuide();
+        closeProductDetail(); });
     els.guideBack.addEventListener('click', () => stepGuide(-1));
     els.guideNext.addEventListener('click', () => stepGuide(1));
     $$('[data-action="auto"]').forEach(btn => btn.addEventListener('click', startAutoFlight));
@@ -671,6 +754,7 @@
     els.launchDock.classList.toggle('is-visible', currentZone === 5);
     els.stage.dataset.zone = String(currentZone);
     document.body.dataset.scene = z.name.toLowerCase().replace(/\s+/g, '-');
+    if (currentZone !== 2) closeProductDetail();
     $$('.mobile-zone-dots button').forEach(btn => {
       const isActive = Number(btn.dataset.zone) === currentZone;
       btn.classList.toggle('is-active', isActive);

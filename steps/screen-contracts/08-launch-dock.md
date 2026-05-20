@@ -186,3 +186,20 @@ After changing this scene, verify:
 ```txt
 Planned → Coded → Loaded → Wired → Visible → Usable → Validated → Documented
 ```
+
+
+---
+
+## Global Button and Overlay Fix
+
+**Updated:** 20 May 2026, 18:55 IST
+
+Button sizing/placement is a global UI rule, not only a Product Gallery rule.
+
+All screens must use smaller, readable, medium-radius buttons that do not waste screen space.
+
+Product detail overlay must close on:
+
+- close button,
+- blurred backdrop / outside click,
+- Escape key.

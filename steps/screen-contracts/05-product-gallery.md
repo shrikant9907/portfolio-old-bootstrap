@@ -213,3 +213,49 @@ Interaction rules:
 - no grid,
 - no fake screenshots,
 - technology orbit dimmed in this scene.
+
+
+---
+
+## Phase 3 Responsive Focus Refinement
+
+**Updated:** 20 May 2026, 18:20 IST
+
+Product Gallery now has two states:
+
+### Compact state
+
+- title,
+- short summary,
+- product mission code,
+- compact product nav,
+- View Mission Details,
+- small actions.
+
+### Detail state
+
+- full overlay/sheet,
+- blurred backdrop,
+- close/cross button,
+- previous/next product arrows,
+- Challenge / Solution / Stack / Result.
+
+Mobile must not show full product details by default.
+Desktop must use available space intentionally.
+
+
+---
+
+## Global Button and Overlay Fix
+
+**Updated:** 20 May 2026, 18:55 IST
+
+Button sizing/placement is a global UI rule, not only a Product Gallery rule.
+
+All screens must use smaller, readable, medium-radius buttons that do not waste screen space.
+
+Product detail overlay must close on:
+
+- close button,
+- blurred backdrop / outside click,
+- Escape key.
