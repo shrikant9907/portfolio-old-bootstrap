@@ -124,3 +124,27 @@ The `steps/` folder has been refined so each major step now includes:
 - completion test.
 
 Read `steps/00-flow-transition-map.md` first, then the relevant step file.
+
+## AI Agent Entry Files
+
+**Updated:** 20 May 2026, 16:25 IST
+
+This project now includes standard AI-agent instruction files so Codex, Claude, Gemini, Copilot, Cursor, and similar tools can start without manual explanation.
+
+Root agent files:
+
+```txt
+AI_AGENT_START_HERE.md
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+```
+
+Additional assistant files:
+
+```txt
+.github/copilot-instructions.md
+.cursor/rules/shrimo-verse.mdc
+```
+
+All agents should read `AI_AGENT_START_HERE.md` first.

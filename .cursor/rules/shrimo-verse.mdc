@@ -1,0 +1,12 @@
+---
+description: Shrimo Verse cinematic universe rules
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+Read `AI_AGENT_START_HERE.md`, `AGENTS.md`, `project-rules.md`, `about-project.md`, and `steps/00-master-product-planning-system.md` before editing.
+
+Shrimo Verse is a cinematic product/game/AI universe experience, not a website.
+
+Follow: scene-first, mobile-first, black/cyan, no patch stacking, one focus at a time, visual QA before final.

@@ -147,3 +147,20 @@ The project now has stronger scene planning inside `steps/`.
 Each scene step documents how it connects to the previous/next scene and how animations should behave on mobile, tablet, and desktop.
 
 This is required so future updates do not break flow, overlap controls, or create website-like layouts.
+
+## AI Agent Entry System
+
+**Updated:** 20 May 2026, 16:25 IST
+
+Shrimo Verse now includes dedicated AI-agent instruction files so coding assistants can understand the project automatically.
+
+Required files:
+
+```txt
+AI_AGENT_START_HERE.md
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+```
+
+These files tell AI tools to read project rules, about-project, changelog, and steps before editing.

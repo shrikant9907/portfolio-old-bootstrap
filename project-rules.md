@@ -1012,3 +1012,35 @@ Completion Test
 ```
 
 If this is missing, the step is not ready for coding.
+
+## 39. AI Agent Entry Files
+
+Updated: 20 May 2026, 16:25 IST
+
+Every future ZIP must include:
+
+```txt
+AI_AGENT_START_HERE.md
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+```
+
+Optional assistant-specific files may also exist:
+
+```txt
+.github/copilot-instructions.md
+.cursor/rules/shrimo-verse.mdc
+```
+
+These files must tell all AI coding tools to read:
+
+```txt
+project-rules.md
+about-project.md
+CHANGELOG.md
+steps/00-master-product-planning-system.md
+steps/00-flow-transition-map.md
+```
+
+before making changes.

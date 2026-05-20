@@ -1,5 +1,19 @@
 # Changelog
 
+## AI Agent Entry System Added — 20 May 2026, 16:25 IST
+
+- Added `AI_AGENT_START_HERE.md` for all AI tools.
+- Added `AGENTS.md` for Codex/OpenAI/Cursor-style coding agents.
+- Added `CLAUDE.md` for Claude Code / Claude agents.
+- Added `GEMINI.md` for Gemini CLI / Gemini agents.
+- Added `.github/copilot-instructions.md` for GitHub Copilot-style assistance.
+- Added `.cursor/rules/shrimo-verse.mdc` for Cursor-style project rules.
+- Updated README, about-project, project-rules, and testing checklist with AI-agent validation.
+- These files instruct agents to read project rules, about-project, changelog, and steps before coding.
+
+
+# Changelog
+
 ## Steps Flow Management Refined — 20 May 2026, 16:10 IST
 
 - Added `steps/00-flow-transition-map.md`.

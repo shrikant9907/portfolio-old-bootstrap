@@ -93,3 +93,18 @@ Before approving a scene:
 - [ ] Failure risks are listed.
 - [ ] Scene completion test is present.
 - [ ] Relevant step file is updated.
+
+## AI Agent File Validation
+
+Updated: 20 May 2026, 16:25 IST
+
+Before final ZIP:
+
+- [ ] `AI_AGENT_START_HERE.md` exists.
+- [ ] `AGENTS.md` exists.
+- [ ] `CLAUDE.md` exists.
+- [ ] `GEMINI.md` exists.
+- [ ] Agent files point to `project-rules.md`.
+- [ ] Agent files point to `about-project.md`.
+- [ ] Agent files point to `CHANGELOG.md`.
+- [ ] Agent files point to `steps/`.
