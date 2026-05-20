@@ -77,7 +77,7 @@
   }
 
   function init() {
-    document.body.dataset.build = 'v1.3.1-visual-recovery';
+    document.body.dataset.build = 'v1.3.2-visual-stability';
     document.documentElement.dataset.visualSystem = 'black-cyan-cinematic';
     document.body.classList.add('universe-ui-v13-ready');
     bindPanelExclusivity();

@@ -70,3 +70,15 @@ TESTING_CHECKLIST.md
 ## Important Rule
 
 A feature is complete only when it is planned, coded, loaded, wired, visible, validated, and documented.
+
+---
+
+## v1.3.2 Visual Stability Update — 20 May 2026
+
+This update fixes screenshot-reported visual breakage from v1.3/v1.3.1. The build removes duplicated desktop HUD controls, restores readable scene brightness, simplifies the landing gate, removes warm/yellow leakage from normal UI states, prevents article-like panels from dominating the screen, and keeps the mobile HUD compact and thumb-friendly. The project remains black/cyan, scene-first, and mobile-first.
+
+Important: this is a visual stabilization build. Real mobile-device testing and Lighthouse testing should still be completed before production publishing.
+
+## v1.3.2 Visual Stability Reference
+
+Implementation prompt: `SHRIMO_VERSE_V1_3_2_VISUAL_STABILITY_PROMPT.md`

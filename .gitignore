@@ -1,9 +1,0 @@
-# Static site workspace
-node_modules/
-.DS_Store
-Thumbs.db
-
-# Logs and local databases
-*.log
-*.sql
-*.sqlite
