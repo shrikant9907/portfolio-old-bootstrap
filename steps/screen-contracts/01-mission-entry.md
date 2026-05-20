@@ -266,3 +266,59 @@ Product detail overlay must close on:
 - close button,
 - blurred backdrop / outside click,
 - Escape key.
+
+
+---
+
+## SV Core Circle Protection
+
+**Updated:** 20 May 2026, 19:25 IST
+
+The SV core must always stay circular.
+
+Global button styling must not affect:
+
+- `.sv-core`
+- `.entry-sv-mini`
+- `.core-ring`
+- `.core-inner`
+
+If any UI-wide button rule is added later, it must exclude or override the SV core.
+
+
+---
+
+## Realistic Universe Background System
+
+**Updated:** 20 May 2026, 20:05 IST
+
+The background for this scene must use the shared realistic black universe system.
+
+Rules:
+
+- black base,
+- many stars,
+- some blinking/shining stars,
+- soft galaxy/dust clusters,
+- no decorative background rings,
+- desktop opposite-direction mouse parallax,
+- SV core must not move,
+- UI panels must not move with parallax,
+- mobile uses reduced particle count.
+
+
+---
+
+## Pure Black Starfield Update
+
+**Updated:** 20 May 2026, 20:35 IST
+
+Background rules now require:
+
+- pure black background,
+- stars only,
+- no clouds,
+- no gradients,
+- no decorative rings,
+- stronger mouse-driven star motion on desktop,
+- fixed SV core.

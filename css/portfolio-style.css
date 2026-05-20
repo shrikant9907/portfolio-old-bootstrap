@@ -2340,3 +2340,1819 @@ a.product-btn,
     padding:0 10px !important;
   }
 }
+
+
+/* ==========================================================================
+   INTERACTION FIX PATCH — ZOOM VISUAL SUPPORT + GLOBAL BUTTON CONFIRMATION
+   Updated: 20 May 2026, 19:15 IST
+   ========================================================================== */
+
+:root {
+  --coreZoomCompensate: 1;
+}
+
+.particle-layer,
+.product-gallery-layer,
+.proof-layer,
+.reviews-layer {
+  transition: transform .32s cubic-bezier(.2,.8,.2,1), opacity .24s ease, filter .24s ease;
+}
+
+.sv-core {
+  transition: transform .32s cubic-bezier(.2,.8,.2,1), box-shadow .24s ease, filter .24s ease;
+}
+
+body.zoom-feedback .space-aura {
+  filter: blur(5px) brightness(1.16) saturate(1.12) !important;
+}
+
+body.zoom-feedback .orbit-line {
+  border-color: rgba(103,232,249,.28) !important;
+}
+
+body.zoom-feedback .sv-core {
+  box-shadow:
+    0 0 0 1px rgba(103,232,249,.68),
+    0 0 38px rgba(34,211,238,.38),
+    inset 0 0 28px rgba(34,211,238,.14) !important;
+}
+
+/* Global button confirmation: compact, readable controls across every scene. */
+button,
+a.mission-btn,
+a.product-btn,
+.dock-beacons a,
+.disabled-path,
+.enter-verse {
+  border-radius: 11px !important;
+}
+
+.mission-btn,
+.product-btn,
+.disabled-path,
+.guide-actions button,
+.product-details-trigger,
+.product-scan-arrow,
+.product-detail-close,
+.product-detail-arrows button,
+.dock-beacons a {
+  min-height: 36px !important;
+  font-size: 10.5px !important;
+  letter-spacing: .075em !important;
+}
+
+.hud-btn {
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 12px !important;
+}
+
+.zone-arrow,
+.zoom-control button {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 12px !important;
+}
+
+.enter-verse {
+  min-width: 112px !important;
+  height: 46px !important;
+  padding: 0 28px !important;
+  font-size: 12px !important;
+}
+
+.product-detail-backdrop {
+  cursor: pointer !important;
+}
+
+.product-detail-sheet {
+  cursor: default !important;
+}
+
+@media (max-width:780px) {
+  .mission-btn,
+  .product-btn,
+  .disabled-path,
+  .guide-actions button,
+  .product-details-trigger,
+  .dock-beacons a {
+    min-height: 38px !important;
+    font-size: 10px !important;
+  }
+
+  .product-detail-actions .product-btn,
+  .product-detail-actions .disabled-path {
+    width: 100%;
+    min-height: 40px !important;
+  }
+}
+
+
+/* ==========================================================================
+   SV CORE SHAPE PROTECTION FIX
+   Updated: 20 May 2026, 19:25 IST
+   Reason: The global button refinement must never affect the central SV core.
+   SV core is an interactive universe object, not a UI button.
+   ========================================================================== */
+
+.sv-core,
+.sv-core *,
+.entry-sv-mini,
+.entry-sv-mini *,
+.core-ring,
+.core-ring *,
+.core-inner,
+.core-inner * {
+  border-radius: 50% !important;
+}
+
+.sv-core {
+  aspect-ratio: 1 / 1 !important;
+  overflow: visible !important;
+}
+
+.sv-core::before,
+.sv-core::after,
+.entry-sv-mini::before,
+.entry-sv-mini::after {
+  border-radius: 50% !important;
+}
+
+.sv-core button,
+button.sv-core {
+  border-radius: 50% !important;
+}
+
+/* Product/gallery badges may stay rounded squares, but the central universe core must stay circular. */
+
+
+/* ==========================================================================
+   FINAL PHASES — PROOF RING / CLIENT SIGNALS / LAUNCH DOCK / FINAL POLISH
+   Updated: 20 May 2026, 19:45 IST
+   Scope: Phases 4, 5, 6, 7, 8
+   ========================================================================== */
+
+.verse-stage[data-zone="3"] .mission-panel,
+.verse-stage[data-zone="4"] .mission-panel,
+.verse-stage[data-zone="5"] .mission-panel {
+  width:min(300px,24vw) !important;
+  left:clamp(24px,5vw,72px) !important;
+}
+
+.verse-stage[data-zone="3"] .mission-panel .mission-actions,
+.verse-stage[data-zone="4"] .mission-panel .mission-actions,
+.verse-stage[data-zone="5"] .mission-panel .mission-actions {
+  display:none !important;
+}
+
+.verse-stage[data-zone="3"] .mission-panel h2,
+.verse-stage[data-zone="4"] .mission-panel h2,
+.verse-stage[data-zone="5"] .mission-panel h2 {
+  font-size:clamp(23px,2.2vw,34px) !important;
+  max-width:12ch !important;
+}
+
+.verse-stage[data-zone="3"] .mission-panel p:not(.mission-kicker),
+.verse-stage[data-zone="4"] .mission-panel p:not(.mission-kicker),
+.verse-stage[data-zone="5"] .mission-panel p:not(.mission-kicker) {
+  max-width:29ch !important;
+  font-size:14px !important;
+  line-height:1.45 !important;
+}
+
+.verse-stage[data-zone="3"] .particle-layer {
+  opacity:.06 !important;
+  filter:blur(.35px) saturate(.75) !important;
+}
+
+.proof-ring-layer.is-visible::before {
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:min(58vw,520px);
+  height:min(58vw,520px);
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  border:1px solid rgba(34,211,238,.14);
+  box-shadow:0 0 80px rgba(34,211,238,.08), inset 0 0 80px rgba(34,211,238,.035);
+  animation:proofRingRotate 24s linear infinite;
+  pointer-events:none;
+}
+
+.proof-focus {
+  width:min(430px,34vw) !important;
+  right:clamp(34px,6vw,92px) !important;
+  padding:18px !important;
+  border-radius:18px !important;
+  background:linear-gradient(145deg,rgba(5,7,10,.91),rgba(9,18,24,.76)) !important;
+  border-color:rgba(34,211,238,.25) !important;
+}
+
+.proof-signal-head {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-bottom:8px;
+}
+
+.proof-signal-head span {
+  color:var(--fire);
+  font:900 10px var(--heading);
+  letter-spacing:.15em;
+  text-transform:uppercase;
+}
+
+.proof-focus h3 {
+  font-size:clamp(42px,5.4vw,78px) !important;
+  line-height:.9 !important;
+  color:var(--cyan-bright) !important;
+  text-shadow:0 0 30px rgba(34,211,238,.22);
+}
+
+.proof-focus strong {
+  display:block;
+  margin-bottom:10px;
+  color:var(--text);
+  font:900 clamp(18px,2vw,26px)/1.05 var(--heading);
+  letter-spacing:-.03em;
+}
+
+.proof-next-inline,
+.review-next-inline {
+  min-height:36px;
+  padding:0 12px;
+  border:1px solid rgba(34,211,238,.24);
+  border-radius:11px;
+  background:rgba(34,211,238,.06);
+  color:var(--cyan-bright);
+  font:900 10.5px var(--heading);
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  cursor:pointer;
+}
+
+.proof-next-inline:hover,
+.review-next-inline:hover,
+.proof-next-inline:focus-visible,
+.review-next-inline:focus-visible {
+  color:var(--fire);
+  border-color:rgba(255,176,32,.62);
+  outline:none;
+}
+
+.proof-dot span {
+  position:absolute;
+  left:50%;
+  top:calc(100% + 8px);
+  transform:translateX(-50%);
+  width:max-content;
+  max-width:140px;
+  color:var(--text-2);
+  font:800 10px var(--heading);
+  letter-spacing:.05em;
+  opacity:.72;
+  pointer-events:none;
+}
+
+.proof-dot.is-active span {
+  color:var(--fire);
+  opacity:1;
+}
+
+.proof-dot.is-active {
+  transform:translate(var(--dot-x),var(--dot-y)) scale(1.1) !important;
+  box-shadow:0 0 34px rgba(255,176,32,.26) !important;
+}
+
+.proof-nav,
+.review-nav {
+  position:absolute;
+  left:50%;
+  bottom:clamp(84px,11vh,132px);
+  transform:translateX(-50%);
+  display:flex;
+  gap:10px;
+  z-index:4;
+}
+
+.proof-arrow,
+.review-arrow {
+  width:38px;
+  height:38px;
+  border:1px solid rgba(34,211,238,.26);
+  border-radius:12px;
+  background:rgba(5,7,10,.64);
+  color:var(--cyan-bright);
+  font-size:24px;
+  cursor:pointer;
+}
+
+.proof-arrow:hover,
+.review-arrow:hover,
+.proof-arrow:focus-visible,
+.review-arrow:focus-visible {
+  color:var(--fire);
+  border-color:rgba(255,176,32,.62);
+  outline:none;
+}
+
+.verse-stage[data-zone="4"] .particle-layer {
+  opacity:.045 !important;
+  filter:blur(.4px) saturate(.72) !important;
+}
+
+.client-signal-layer.is-visible::before {
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(34,211,238,.09), transparent 34%),
+    linear-gradient(90deg, transparent 0 16%, rgba(34,211,238,.06) 50%, transparent 84% 100%);
+  opacity:.72;
+  pointer-events:none;
+}
+
+.review-card {
+  width:min(500px,38vw) !important;
+  right:clamp(34px,6vw,90px) !important;
+  padding:20px !important;
+  border-radius:18px !important;
+  background:linear-gradient(145deg,rgba(5,7,10,.92),rgba(8,17,23,.80)) !important;
+  border-color:rgba(34,211,238,.25) !important;
+}
+
+.review-card blockquote {
+  margin:0 0 16px !important;
+  color:var(--text);
+  font-size:clamp(15px,1.4vw,18px);
+  line-height:1.55 !important;
+}
+
+.review-card blockquote::before {
+  content:"“";
+  color:var(--cyan-bright);
+  font-size:34px;
+  line-height:0;
+  vertical-align:-10px;
+  margin-right:4px;
+}
+
+.review-person {
+  display:grid;
+  gap:3px;
+  margin-bottom:14px;
+}
+
+.review-person strong {
+  color:var(--cyan-bright);
+  font:900 15px var(--heading);
+}
+
+.review-person em {
+  color:var(--text-2);
+  font-style:normal;
+  font-size:13px;
+}
+
+.review-dot.is-active {
+  box-shadow:0 0 30px rgba(255,176,32,.28) !important;
+}
+
+.review-dot.is-active span {
+  background:var(--fire) !important;
+  color:#0b0b0b !important;
+}
+
+.verse-stage[data-zone="5"] .particle-layer {
+  opacity:.035 !important;
+}
+
+.verse-stage[data-zone="5"] .state-readout {
+  display:none !important;
+}
+
+.launch-dock {
+  width:min(470px,38vw) !important;
+  right:clamp(28px,6vw,90px) !important;
+  bottom:92px !important;
+  padding:18px !important;
+  border-radius:18px !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(34,211,238,.11), transparent 42%),
+    linear-gradient(145deg,rgba(5,7,10,.92),rgba(9,18,24,.82)) !important;
+  border-color:rgba(34,211,238,.25) !important;
+  box-shadow:0 28px 90px rgba(0,0,0,.48),0 0 55px rgba(34,211,238,.11) !important;
+}
+
+.launch-dock h2 {
+  font-size:clamp(26px,2.7vw,38px) !important;
+  line-height:1.02 !important;
+  margin-bottom:10px !important;
+}
+
+.dock-desc {
+  color:var(--text-2) !important;
+  line-height:1.45 !important;
+  font-size:14px !important;
+  text-transform:none !important;
+  letter-spacing:0 !important;
+  font-family:var(--body) !important;
+  font-weight:600 !important;
+}
+
+.launch-primary-btn {
+  display:grid;
+  grid-template-columns:22px 1fr;
+  align-items:center;
+  gap:10px;
+  min-height:46px;
+  margin:14px 0 12px;
+  padding:0 14px;
+  border-radius:13px;
+  background:linear-gradient(180deg, rgba(103,232,249,.96), rgba(34,211,238,.88));
+  color:#001014;
+  text-decoration:none;
+  font:900 12px var(--heading);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  box-shadow:0 0 28px rgba(34,211,238,.22);
+}
+
+.launch-primary-btn svg {
+  width:20px;
+  height:20px;
+  fill:currentColor;
+}
+
+.launch-primary-btn:hover,
+.launch-primary-btn:focus-visible {
+  outline:none;
+  transform:translateY(-1px);
+  box-shadow:0 0 36px rgba(34,211,238,.34),0 0 24px rgba(255,176,32,.18);
+}
+
+.dock-beacons {
+  grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+}
+
+.dock-beacons a:first-child {
+  border-color:rgba(255,176,32,.48) !important;
+  color:var(--fire) !important;
+  background:rgba(255,176,32,.08) !important;
+}
+
+button,
+a.mission-btn,
+a.product-btn,
+.dock-beacons a,
+.disabled-path,
+.enter-verse {
+  border-radius:11px !important;
+}
+
+.mission-btn,
+.product-btn,
+.disabled-path,
+.guide-actions button,
+.product-details-trigger,
+.product-scan-arrow,
+.product-detail-close,
+.product-detail-arrows button,
+.dock-beacons a,
+.proof-next-inline,
+.review-next-inline {
+  min-height:36px !important;
+  font-size:10.5px !important;
+  letter-spacing:.075em !important;
+}
+
+.hud-btn {
+  width:42px !important;
+  height:42px !important;
+  border-radius:12px !important;
+}
+
+.zone-arrow,
+.zoom-control button {
+  width:38px !important;
+  height:38px !important;
+  border-radius:12px !important;
+}
+
+.sv-core,
+.sv-core *,
+.entry-sv-mini,
+.entry-sv-mini *,
+.core-ring,
+.core-ring *,
+.core-inner,
+.core-inner * {
+  border-radius:50% !important;
+}
+
+.sv-core::before,
+.sv-core::after,
+.entry-sv-mini::before,
+.entry-sv-mini::after {
+  border-radius:50% !important;
+}
+
+@media (max-width:780px) {
+  .verse-stage[data-zone="3"] .mission-panel h2,
+  .verse-stage[data-zone="4"] .mission-panel h2,
+  .verse-stage[data-zone="5"] .mission-panel h2 {
+    display:none !important;
+  }
+
+  .verse-stage[data-zone="3"] .mission-panel,
+  .verse-stage[data-zone="4"] .mission-panel,
+  .verse-stage[data-zone="5"] .mission-panel {
+    top:70px !important;
+    left:14px !important;
+    right:14px !important;
+    width:auto !important;
+    max-width:none !important;
+  }
+
+  .proof-focus,
+  .review-card,
+  .launch-dock {
+    left:14px !important;
+    right:14px !important;
+    bottom:84px !important;
+    top:auto !important;
+    width:auto !important;
+    transform:none !important;
+    padding:15px !important;
+    border-radius:16px !important;
+    max-height:48vh;
+    overflow:auto;
+  }
+
+  .proof-focus h3 {
+    font-size:44px !important;
+  }
+
+  .proof-dot span {
+    display:none;
+  }
+
+  .proof-nav,
+  .review-nav {
+    bottom:calc(84px + min(48vh, 300px) + 10px);
+  }
+
+  .review-card blockquote {
+    font-size:14px !important;
+    line-height:1.45 !important;
+  }
+
+  .dock-beacons {
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+
+  .launch-primary-btn {
+    min-height:44px;
+  }
+
+  .launch-dock small {
+    font-size:11px;
+  }
+}
+
+@keyframes proofRingRotate {
+  to { transform:translate(-50%,-50%) rotate(360deg); }
+}
+
+
+/* ==========================================================================
+   REALISTIC UNIVERSE BACKGROUND SYSTEM
+   Updated: 20 May 2026, 20:05 IST
+   Purpose:
+   - Deep black universe background.
+   - Many blinking/shining stars.
+   - Slow moving galaxy/dust clusters.
+   - Desktop mouse opposite-direction parallax.
+   - No decorative background rings.
+   - SV core remains fixed and circular.
+   ========================================================================== */
+
+:root {
+  --black:#020406;
+  --black-soft:#05070A;
+  --space-parallax-x:0px;
+  --space-parallax-y:0px;
+  --space-parallax-deep-x:0px;
+  --space-parallax-deep-y:0px;
+}
+
+/* One continuous black universe base across all scenes. */
+html,
+body,
+.verse-stage {
+  background:#020406 !important;
+}
+
+.entry-gate {
+  background:transparent !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
+/* Remove artificial background rings from entry/world background. */
+.entry-space,
+.entry-orbit,
+.orbit-field,
+.orbit-line,
+.entry-gate::before,
+.entry-gate::after,
+.verse-stage[data-zone="3"] .proof-ring-layer.is-visible::before,
+.verse-stage[data-zone="2"] .product-gallery-layer::before {
+  display:none !important;
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+
+/* Canvas is the main world background. */
+.star-canvas.real-universe-canvas,
+.star-canvas {
+  position:fixed !important;
+  inset:0 !important;
+  z-index:0 !important;
+  width:100vw !important;
+  height:100vh !important;
+  background:#020406 !important;
+  transform:
+    translate3d(var(--space-parallax-deep-x), var(--space-parallax-deep-y), 0)
+    scale(1.035);
+  transform-origin:center;
+  transition:transform .22s ease-out;
+}
+
+/* Soft deep space glow only, no ring shape. */
+.space-aura {
+  width:100vw !important;
+  height:100vh !important;
+  left:50% !important;
+  top:50% !important;
+  border-radius:0 !important;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(34,211,238,.055), transparent 26%),
+    radial-gradient(circle at 78% 68%, rgba(103,232,249,.04), transparent 28%),
+    radial-gradient(circle at 52% 50%, rgba(34,211,238,.028), transparent 34%),
+    linear-gradient(180deg, rgba(2,4,6,.08), rgba(2,4,6,.72)) !important;
+  filter:none !important;
+  opacity:.82 !important;
+  transform:
+    translate3d(calc(-50% + var(--space-parallax-x)), calc(-50% + var(--space-parallax-y)), 0)
+    scale(1.02) !important;
+  transition:transform .22s ease-out;
+  z-index:1 !important;
+}
+
+/* Preserve content layering above background. */
+.universe-plane {
+  z-index:4 !important;
+}
+
+.sv-core {
+  z-index:45 !important;
+  border-radius:50% !important;
+  transform:translate(-50%,-50%) !important;
+}
+
+.sv-core,
+.sv-core *,
+.entry-sv-mini,
+.entry-sv-mini *,
+.core-ring,
+.core-ring *,
+.core-inner,
+.core-inner * {
+  border-radius:50% !important;
+}
+
+/* Technology particles still move around the core; only decorative background rings are removed. */
+.particle-layer {
+  z-index:5 !important;
+}
+
+/* Entry mini SV should not appear as a second core when rings are removed. */
+.entry-sv-mini {
+  display:none !important;
+}
+
+/* Slightly darken panels so star field remains background, not noise. */
+.mission-panel,
+.gallery-card,
+.proof-focus,
+.review-card,
+.launch-dock,
+.guide-card,
+.object-tooltip,
+.product-detail-sheet {
+  background-color:rgba(5,7,10,.88) !important;
+}
+
+/* Mouse movement should move background only. Core and UI must stay fixed. */
+body.verse-entered:not(.touch-device) .mission-panel,
+body.verse-entered:not(.touch-device) .sv-core,
+body.verse-entered:not(.touch-device) .hud,
+body.verse-entered:not(.touch-device) .zone-nav,
+body.verse-entered:not(.touch-device) .mobile-control-dock {
+  transform-style:flat;
+}
+
+/* Reduced motion keeps stars visible but static. */
+@media (prefers-reduced-motion:reduce) {
+  .star-canvas,
+  .space-aura {
+    transform:none !important;
+    transition:none !important;
+  }
+}
+
+/* Mobile: keep performance clean and no heavy visual effects. */
+@media (max-width:780px) {
+  .space-aura {
+    opacity:.68 !important;
+    background:
+      radial-gradient(circle at 20% 18%, rgba(34,211,238,.045), transparent 28%),
+      radial-gradient(circle at 74% 72%, rgba(103,232,249,.03), transparent 24%),
+      linear-gradient(180deg, rgba(2,4,6,.08), rgba(2,4,6,.76)) !important;
+  }
+}
+
+
+/* ==========================================================================
+   BACKGROUND PARALLAX VISIBILITY FIX
+   Updated: 20 May 2026, 20:20 IST
+   Reason: previous parallax was too subtle and partially cancelled by older
+   interaction rules. This makes only the background visibly react.
+   ========================================================================== */
+
+.star-canvas.real-universe-canvas,
+.star-canvas {
+  transform:
+    translate3d(var(--space-parallax-deep-x), var(--space-parallax-deep-y), 0)
+    scale(1.06) !important;
+  will-change: transform;
+}
+
+.space-aura {
+  transform:
+    translate3d(calc(-50% + var(--space-parallax-x)), calc(-50% + var(--space-parallax-y)), 0)
+    scale(1.04) !important;
+  will-change: transform;
+}
+
+/* Core and UI must never be part of mouse parallax. */
+.sv-core {
+  transform:translate(-50%,-50%) !important;
+}
+
+.mission-panel,
+.hud,
+.zone-nav,
+.mobile-control-dock,
+.gallery-card,
+.proof-focus,
+.review-card,
+.launch-dock,
+.guide-card,
+.object-tooltip,
+.product-detail-overlay {
+  will-change:auto !important;
+}
+
+/* Remove old background ring transform/parallax influence completely. */
+.orbit-large,
+.orbit-mid,
+.orbit-small,
+.orbit-line {
+  display:none !important;
+  transform:none !important;
+}
+
+@media (max-width:780px) {
+  .star-canvas.real-universe-canvas,
+  .star-canvas {
+    transform:none !important;
+  }
+
+  .space-aura {
+    transform:translate(-50%,-50%) !important;
+  }
+}
+
+
+/* ==========================================================================
+   PURE BLACK STARFIELD BACKGROUND
+   Updated: 20 May 2026, 20:35 IST
+   Purpose:
+   - Pure black universe background.
+   - No rings.
+   - No clouds.
+   - No gradients.
+   - More stars.
+   - Stronger mouse-driven starfield motion.
+   ========================================================================== */
+
+html,
+body,
+.verse-stage,
+.star-canvas,
+.star-canvas.real-universe-canvas {
+  background:#000000 !important;
+}
+
+.space-aura,
+.entry-space,
+.entry-orbit,
+.orbit-field,
+.orbit-line,
+.orbit-large,
+.orbit-mid,
+.orbit-small {
+  display:none !important;
+  opacity:0 !important;
+  visibility:hidden !important;
+  pointer-events:none !important;
+  background:none !important;
+  box-shadow:none !important;
+  filter:none !important;
+}
+
+.star-canvas.real-universe-canvas,
+.star-canvas {
+  position:fixed !important;
+  inset:0 !important;
+  width:100vw !important;
+  height:100vh !important;
+  background:#000000 !important;
+  transform:none !important;
+  filter:none !important;
+  box-shadow:none !important;
+}
+
+.entry-gate,
+.verse-stage::before,
+.verse-stage::after,
+.universe-plane::before,
+.universe-plane::after {
+  background:none !important;
+  filter:none !important;
+  box-shadow:none !important;
+}
+
+.sv-core {
+  z-index:45 !important;
+  border-radius:50% !important;
+  transform:translate(-50%,-50%) !important;
+}
+
+.sv-core,
+.sv-core *,
+.entry-sv-mini,
+.entry-sv-mini *,
+.core-ring,
+.core-ring *,
+.core-inner,
+.core-inner * {
+  border-radius:50% !important;
+}
+
+.mission-panel,
+.gallery-card,
+.proof-focus,
+.review-card,
+.launch-dock,
+.guide-card,
+.object-tooltip,
+.product-detail-sheet {
+  background-color:rgba(5,7,10,.90) !important;
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .star-canvas,
+  .star-canvas.real-universe-canvas {
+    transform:none !important;
+  }
+}
+
+
+/* ==========================================================================
+   PHASE 2 REFINEMENT — GUIDE / ROCKET ORBIT / BACKGROUND MOTION / ZOOM
+   Updated: 20 May 2026, 18:25 IST
+   Contract source:
+   steps/screen-contracts/03-arrival-core.md
+   steps/screen-contracts/04-technology-orbit.md
+   ========================================================================== */
+
+/* Guide should be skippable and must not show "Step 1 of 7 / Pilot the ship". */
+.guide-step{
+  display:inline-flex!important;
+  width:max-content!important;
+  max-width:100%!important;
+  padding:0!important;
+  background:transparent!important;
+  border:0!important;
+  color:var(--cyan-bright)!important;
+  letter-spacing:.18em!important;
+  font-size:10px!important;
+}
+.guide-skip{
+  color:var(--text-2)!important;
+  border-color:rgba(34,211,238,.18)!important;
+  background:rgba(5,7,10,.42)!important;
+}
+.guide-skip:hover,
+.guide-skip:focus-visible{
+  color:var(--cyan-bright)!important;
+  border-color:rgba(34,211,238,.42)!important;
+}
+
+/* Desktop background responds subtly to mouse movement after entry. */
+body.verse-entered:not(.touch-device){
+  --mx:0px;
+  --my:0px;
+}
+body.verse-entered:not(.touch-device) .space-aura{
+  transform:translate(calc(-50% + var(--mx, 0px)), calc(-50% + var(--my, 0px))) scale(calc(.98 + (var(--zoom) - 1) * .05))!important;
+  transition:transform .18s ease-out;
+}
+body.verse-entered:not(.touch-device) .orbit-large{
+  transform:translate(calc(-50% + var(--mx, 0px) * .35), calc(-50% + var(--my, 0px) * .35)) rotate(var(--orbit-rotate, 0deg));
+}
+body.verse-entered:not(.touch-device) .orbit-mid{
+  transform:translate(calc(-50% + var(--mx, 0px) * -.22), calc(-50% + var(--my, 0px) * -.22)) rotate(var(--orbit-rotate, 0deg));
+}
+body.verse-entered:not(.touch-device) .orbit-small{
+  transform:translate(calc(-50% + var(--mx, 0px) * .18), calc(-50% + var(--my, 0px) * .18)) rotate(var(--orbit-rotate, 0deg));
+}
+
+/* Rocket takes a controlled circular lap after Start, then returns to cursor. */
+body.ship-orbit-demo .ship-cursor{
+  filter:
+    drop-shadow(0 0 20px rgba(34,211,238,1))
+    drop-shadow(0 0 34px rgba(255,176,32,.52))!important;
+}
+body.ship-orbit-demo .ship-flame{
+  opacity:1!important;
+  transform:scaleY(1.7)!important;
+}
+
+/* Zoom feedback on double click / pinch. */
+body.zoom-feedback .space-aura{
+  filter:blur(5px) brightness(1.18)!important;
+}
+body.zoom-feedback .sv-core{
+  box-shadow:
+    0 0 0 1px rgba(103,232,249,.72),
+    0 0 36px rgba(34,211,238,.42),
+    inset 0 0 28px rgba(34,211,238,.16)!important;
+}
+
+@media (max-width:780px){
+  .guide-actions{
+    grid-template-columns:1fr 1fr 1fr!important;
+  }
+  .guide-step{
+    font-size:9px!important;
+  }
+}
+
+
+/* ==========================================================================
+   PHASE 3 — PRODUCT GALLERY MISSION SCAN
+   Updated: 20 May 2026, 18:45 IST
+   Scope: Product Gallery only
+   Purpose: Product Gallery must feel like a separate product mission layer,
+   not a card grid, not a website section, and not part of the skill orbit.
+   ========================================================================== */
+
+.verse-stage[data-zone="2"] .particle-layer{
+  opacity:.07!important;
+  filter:blur(.35px) saturate(.82)!important;
+}
+.verse-stage[data-zone="2"] .mission-panel{
+  max-width:330px!important;
+}
+.verse-stage[data-zone="2"] .mission-panel h2{
+  font-size:clamp(24px,2.55vw,38px)!important;
+  max-width:13ch!important;
+}
+.verse-stage[data-zone="2"] .product-gallery-layer{
+  z-index:58!important;
+}
+.verse-stage[data-zone="2"] .product-gallery-layer::before{
+  width:min(58vw,520px)!important;
+  height:min(58vw,520px)!important;
+  border-color:rgba(34,211,238,.14)!important;
+  box-shadow:
+    0 0 80px rgba(34,211,238,.07),
+    inset 0 0 60px rgba(34,211,238,.035)!important;
+  animation:productScanRing 18s linear infinite;
+}
+.gallery-card{
+  width:min(430px,31vw)!important;
+  min-height:0!important;
+  padding:18px!important;
+  border-radius:18px!important;
+  border-color:rgba(34,211,238,.24)!important;
+  background:
+    linear-gradient(145deg,rgba(5,7,10,.89),rgba(8,18,24,.74))!important;
+  box-shadow:
+    0 24px 70px rgba(0,0,0,.42),
+    0 0 44px rgba(34,211,238,.10)!important;
+}
+.product-card-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-bottom:8px;
+}
+.product-code{
+  color:var(--cyan-bright);
+  font:900 10px var(--heading);
+  letter-spacing:.18em;
+  border:1px solid rgba(34,211,238,.22);
+  border-radius:999px;
+  padding:5px 8px;
+  background:rgba(34,211,238,.06);
+}
+.gallery-card h3{
+  font-size:clamp(23px,2.35vw,34px)!important;
+  line-height:1.02!important;
+  max-width:11ch;
+}
+.gallery-preview{
+  width:64px!important;
+  height:64px!important;
+  border-radius:18px!important;
+  font-size:20px!important;
+  float:right;
+  margin:-54px 0 8px 14px!important;
+}
+.product-mission-grid{
+  display:grid;
+  gap:10px;
+  clear:both;
+  margin:14px 0 14px;
+}
+.product-mission-grid div{
+  padding:10px 0 0;
+  border-top:1px solid rgba(34,211,238,.13);
+}
+.product-mission-grid dt{
+  margin-bottom:3px;
+  color:var(--cyan-bright);
+  font:900 10px var(--heading);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.product-mission-grid dd{
+  margin:0;
+  color:var(--text-2);
+  font-size:13px;
+  line-height:1.45;
+}
+.product-scan-nav{
+  display:grid;
+  grid-template-columns:38px 1fr 38px;
+  align-items:center;
+  gap:10px;
+  margin:12px 0 14px;
+  color:var(--cyan-soft);
+  font:800 11px var(--heading);
+  letter-spacing:.06em;
+}
+.product-scan-nav span{
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  text-align:center;
+}
+.product-scan-arrow{
+  width:38px;
+  height:38px;
+  border:1px solid rgba(34,211,238,.28);
+  border-radius:12px;
+  background:rgba(5,7,10,.62);
+  color:var(--cyan-bright);
+  font-size:24px;
+  line-height:1;
+  cursor:pointer;
+}
+.product-scan-arrow:hover,
+.product-scan-arrow:focus-visible{
+  color:var(--fire);
+  border-color:rgba(255,176,32,.72);
+  box-shadow:0 0 18px rgba(255,176,32,.18);
+  outline:none;
+}
+.product-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.gallery-card a,
+.disabled-path{
+  min-height:38px!important;
+  border-radius:12px!important;
+  padding:0 13px!important;
+  font-size:12px!important;
+}
+.secondary-path{
+  background:rgba(34,211,238,.05)!important;
+  color:var(--cyan-bright)!important;
+}
+.gallery-dots{
+  z-index:3;
+}
+.product-dot{
+  width:26px!important;
+  height:26px!important;
+  transition:
+    transform .24s ease,
+    border-color .2s ease,
+    background .2s ease,
+    box-shadow .2s ease;
+}
+.product-dot::before{
+  content:"";
+  position:absolute;
+  inset:-12px;
+  border-radius:50%;
+  border:1px dashed rgba(34,211,238,.11);
+  opacity:.55;
+}
+.product-dot.is-active::before{
+  border-color:rgba(255,176,32,.42);
+  animation:productBeaconPulse 1.5s ease-in-out infinite;
+}
+.product-dot.is-active span{
+  transform:scale(.58)!important;
+  background:var(--fire)!important;
+  box-shadow:0 0 22px rgba(255,176,32,.56);
+}
+
+@media (max-width:1100px){
+  .gallery-card{
+    width:min(380px,34vw)!important;
+    right:clamp(72px,7vw,100px)!important;
+  }
+  .product-mission-grid dd{
+    font-size:12.5px;
+  }
+}
+
+@media (max-width:780px){
+  .verse-stage[data-zone="2"] .particle-layer{
+    opacity:.04!important;
+  }
+  .verse-stage[data-zone="2"] .product-gallery-layer::before{
+    width:88vw!important;
+    height:88vw!important;
+  }
+  .gallery-card{
+    left:14px!important;
+    right:14px!important;
+    bottom:146px!important;
+    top:auto!important;
+    transform:none!important;
+    width:auto!important;
+    max-height:42vh!important;
+    padding:15px!important;
+    border-radius:16px!important;
+    overflow:auto;
+  }
+  .gallery-card h3{
+    font-size:24px!important;
+    max-width:12ch;
+  }
+  .gallery-preview{
+    width:52px!important;
+    height:52px!important;
+    border-radius:14px!important;
+    font-size:16px!important;
+    margin:-46px 0 8px 12px!important;
+  }
+  .product-mission-grid{
+    gap:8px;
+    margin:10px 0;
+  }
+  .product-mission-grid div{
+    padding-top:8px;
+  }
+  .product-mission-grid dd{
+    font-size:12px;
+    line-height:1.38;
+  }
+  .product-actions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+  .gallery-card a,
+  .disabled-path{
+    width:100%;
+  }
+  .product-dot{
+    width:22px!important;
+    height:22px!important;
+  }
+}
+
+@keyframes productScanRing{
+  to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+@keyframes productBeaconPulse{
+  0%,100%{opacity:.45;transform:scale(.95)}
+  50%{opacity:1;transform:scale(1.12)}
+}
+
+
+/* ==========================================================================
+   PHASE 3 REFINEMENT — PRODUCT GALLERY RESPONSIVE FOCUS
+   Updated: 20 May 2026, 18:20 IST
+   Scope: Product Gallery desktop/mobile usability
+   ========================================================================== */
+
+/* Desktop: use available width better without repeating left-side content. */
+.verse-stage[data-zone="2"] .mission-panel{
+  width:min(300px,24vw)!important;
+  left:clamp(28px,5vw,74px)!important;
+}
+.verse-stage[data-zone="2"] .mission-panel .mission-actions{
+  display:none!important;
+}
+.verse-stage[data-zone="2"] .mission-panel h2{
+  font-size:clamp(23px,2.25vw,34px)!important;
+  max-width:12ch!important;
+}
+.verse-stage[data-zone="2"] .mission-panel p:not(.mission-kicker){
+  max-width:27ch!important;
+  font-size:14px!important;
+}
+.verse-stage[data-zone="2"] .scene-info{
+  display:none!important;
+}
+.verse-stage[data-zone="2"] .gallery-card{
+  width:min(470px,36vw)!important;
+  right:clamp(34px,6vw,92px)!important;
+  padding:16px!important;
+}
+.product-compact-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:14px;
+  align-items:start;
+}
+.product-copy h3{
+  margin:0 0 8px!important;
+}
+.product-copy em{
+  display:block;
+}
+.product-details-trigger{
+  display:none;
+  width:100%;
+  min-height:40px;
+  border:1px solid rgba(34,211,238,.28);
+  border-radius:12px;
+  background:rgba(34,211,238,.07);
+  color:var(--cyan-bright);
+  font:900 11px var(--heading);
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  cursor:pointer;
+}
+.product-details-trigger:hover,
+.product-details-trigger:focus-visible{
+  outline:none;
+  border-color:rgba(103,232,249,.58);
+  box-shadow:0 0 18px rgba(34,211,238,.16);
+}
+.product-actions{
+  justify-content:flex-start;
+}
+.product-actions .product-btn,
+.product-actions .disabled-path{
+  min-height:36px!important;
+  font-size:11px!important;
+}
+
+/* Full detail overlay for focused deep reading. */
+.product-detail-overlay{
+  position:fixed;
+  inset:0;
+  z-index:1180;
+  display:none;
+  align-items:stretch;
+  justify-content:center;
+  pointer-events:none;
+}
+.product-detail-overlay.is-open{
+  display:flex;
+  pointer-events:auto;
+}
+.product-detail-backdrop{
+  position:absolute;
+  inset:0;
+  background:rgba(2,4,6,.62);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  opacity:0;
+  transition:opacity .24s ease;
+}
+.product-detail-overlay.is-open .product-detail-backdrop{
+  opacity:1;
+}
+.product-detail-sheet{
+  position:relative;
+  width:min(760px,calc(100vw - 36px));
+  max-height:min(760px,calc(100vh - 36px));
+  margin:auto;
+  border:1px solid rgba(34,211,238,.28);
+  border-radius:18px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(34,211,238,.13), transparent 34%),
+    linear-gradient(145deg, rgba(5,7,10,.96), rgba(9,17,23,.94));
+  box-shadow:0 34px 110px rgba(0,0,0,.62), 0 0 60px rgba(34,211,238,.13);
+  overflow:hidden;
+  transform:translateY(22px) scale(.97);
+  opacity:0;
+  transition:transform .28s ease, opacity .28s ease;
+}
+.product-detail-overlay.is-open .product-detail-sheet{
+  transform:translateY(0) scale(1);
+  opacity:1;
+}
+.product-detail-topbar{
+  display:grid;
+  grid-template-columns:42px 1fr auto;
+  align-items:center;
+  gap:12px;
+  min-height:58px;
+  padding:10px 14px;
+  border-bottom:1px solid rgba(34,211,238,.14);
+}
+.product-detail-close,
+.product-detail-arrows button{
+  width:38px;
+  height:38px;
+  border:1px solid rgba(34,211,238,.28);
+  border-radius:12px;
+  background:rgba(5,7,10,.66);
+  color:var(--cyan-bright);
+  cursor:pointer;
+  font-size:22px;
+  line-height:1;
+}
+.product-detail-close:hover,
+.product-detail-arrows button:hover,
+.product-detail-close:focus-visible,
+.product-detail-arrows button:focus-visible{
+  outline:none;
+  color:var(--fire);
+  border-color:rgba(255,176,32,.66);
+  box-shadow:0 0 18px rgba(255,176,32,.18);
+}
+.product-detail-status{
+  color:var(--cyan-bright);
+  font:900 10px var(--heading);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+}
+.product-detail-arrows{
+  display:flex;
+  gap:8px;
+}
+.product-detail-body{
+  padding:22px;
+  overflow:auto;
+  max-height:calc(min(760px,100vh - 36px) - 58px);
+}
+.product-detail-hero{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:12px 18px;
+  align-items:center;
+  margin-bottom:18px;
+}
+.product-detail-code{
+  width:max-content;
+  color:var(--fire);
+  font:900 10px var(--heading);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.product-detail-hero strong{
+  display:block;
+  color:var(--text);
+  font:900 clamp(28px,4vw,46px)/1.02 var(--heading);
+  letter-spacing:-.04em;
+}
+.product-detail-hero i{
+  grid-row:1 / span 3;
+  grid-column:2;
+  width:78px;
+  height:78px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(34,211,238,.28);
+  border-radius:18px;
+  background:rgba(34,211,238,.08);
+  color:var(--cyan-bright);
+  font:900 22px var(--heading);
+  font-style:normal;
+  box-shadow:0 0 28px rgba(34,211,238,.12);
+}
+.product-detail-hero p{
+  margin:0;
+  color:var(--text-2);
+  max-width:58ch;
+  line-height:1.55;
+}
+.product-detail-sections{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+.product-detail-sections section{
+  border:1px solid rgba(34,211,238,.12);
+  border-radius:14px;
+  padding:14px;
+  background:rgba(2,8,12,.42);
+}
+.product-detail-sections small{
+  display:block;
+  margin-bottom:7px;
+  color:var(--cyan-bright);
+  font:900 10px var(--heading);
+  letter-spacing:.17em;
+  text-transform:uppercase;
+}
+.product-detail-sections p{
+  margin:0;
+  color:var(--text-2);
+  font-size:14px;
+  line-height:1.48;
+}
+.product-detail-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:18px;
+}
+
+/* Mobile: compact first, full detail only on request. */
+@media (max-width:780px){
+  .verse-stage[data-zone="2"] .mission-panel{
+    top:68px!important;
+    left:14px!important;
+    right:14px!important;
+    width:auto!important;
+    max-width:none!important;
+  }
+  .verse-stage[data-zone="2"] .mission-panel h2{
+    display:none!important;
+  }
+  .verse-stage[data-zone="2"] .mission-panel p:not(.mission-kicker){
+    font-size:12px!important;
+    max-width:32ch!important;
+    line-height:1.35!important;
+  }
+  .verse-stage[data-zone="2"] .gallery-card{
+    left:14px!important;
+    right:14px!important;
+    bottom:86px!important;
+    top:auto!important;
+    width:auto!important;
+    max-height:none!important;
+    padding:14px!important;
+    overflow:visible!important;
+  }
+  .product-card-head{
+    margin-bottom:6px;
+  }
+  .product-compact-layout{
+    grid-template-columns:1fr 52px;
+    gap:12px;
+  }
+  .product-copy h3{
+    font-size:23px!important;
+    max-width:13ch!important;
+  }
+  .product-copy em{
+    font-size:13px!important;
+    line-height:1.42!important;
+  }
+  .gallery-preview{
+    float:none!important;
+    margin:0!important;
+    width:52px!important;
+    height:52px!important;
+  }
+  .gallery-card .product-mission-grid{
+    display:none!important;
+  }
+  .gallery-card .product-scan-nav{
+    margin:10px 0!important;
+  }
+  .product-details-trigger{
+    display:block;
+    margin:10px 0;
+  }
+  .product-actions{
+    grid-template-columns:1fr 1fr!important;
+    display:grid!important;
+    gap:8px!important;
+  }
+  .product-actions .product-btn,
+  .product-actions .disabled-path{
+    min-height:38px!important;
+    font-size:10px!important;
+    padding:0 8px!important;
+  }
+  .product-detail-overlay{
+    align-items:flex-end;
+  }
+  .product-detail-sheet{
+    width:100%;
+    max-height:92vh;
+    margin:0;
+    border-radius:18px 18px 0 0;
+    border-left:0;
+    border-right:0;
+    border-bottom:0;
+    transform:translateY(100%);
+  }
+  .product-detail-overlay.is-open .product-detail-sheet{
+    transform:translateY(0);
+  }
+  .product-detail-topbar{
+    min-height:54px;
+    grid-template-columns:40px 1fr auto;
+  }
+  .product-detail-body{
+    padding:16px;
+    max-height:calc(92vh - 54px);
+  }
+  .product-detail-hero{
+    grid-template-columns:1fr 58px;
+    gap:9px 12px;
+    margin-bottom:13px;
+  }
+  .product-detail-hero strong{
+    font-size:30px;
+  }
+  .product-detail-hero i{
+    width:58px;
+    height:58px;
+    border-radius:14px;
+    font-size:17px;
+  }
+  .product-detail-hero p{
+    font-size:13px;
+    line-height:1.45;
+  }
+  .product-detail-sections{
+    grid-template-columns:1fr;
+    gap:9px;
+  }
+  .product-detail-sections section{
+    padding:12px;
+  }
+  .product-detail-sections p{
+    font-size:13px;
+    line-height:1.43;
+  }
+  .product-detail-actions{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* ==========================================================================
+   PHASE 3 CODE FIX — OVERLAY HTML SHELL
+   Updated: 20 May 2026, 18:42 IST
+   Confirms the Product Gallery detail overlay now has matching HTML, CSS, and JS.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   GLOBAL BUTTON SYSTEM REFINEMENT
+   Updated: 20 May 2026, 18:55 IST
+   Applies to all screens/pages, not only Product Gallery.
+   Goal: buttons should be smaller, readable, well-placed, and not consume
+   unnecessary screen space.
+   ========================================================================== */
+
+:root {
+  --ui-btn-h: 38px;
+  --ui-btn-h-small: 34px;
+  --ui-btn-radius: 11px;
+  --ui-btn-pad-x: 14px;
+  --ui-btn-font: 11px;
+  --ui-btn-letter: .08em;
+}
+
+button,
+a.mission-btn,
+a.product-btn,
+.dock-beacons a,
+.disabled-path,
+.enter-verse {
+  border-radius: var(--ui-btn-radius) !important;
+  font-size: var(--ui-btn-font) !important;
+  letter-spacing: var(--ui-btn-letter) !important;
+}
+
+.mission-btn,
+.product-btn,
+.disabled-path,
+.guide-actions button,
+.product-details-trigger,
+.product-scan-arrow,
+.product-detail-close,
+.product-detail-arrows button {
+  min-height: var(--ui-btn-h) !important;
+}
+
+.mission-actions {
+  display:flex !important;
+  flex-wrap:wrap !important;
+  gap:9px !important;
+  align-items:center !important;
+}
+
+.mission-btn {
+  height: var(--ui-btn-h) !important;
+  padding:0 var(--ui-btn-pad-x) !important;
+  font-size:11px !important;
+  line-height:1 !important;
+}
+
+.primary-action,
+.secondary-action {
+  min-width:auto !important;
+  padding-inline:13px !important;
+}
+
+.hud-controls {
+  gap:8px !important;
+}
+
+.hud-btn {
+  width:42px !important;
+  height:42px !important;
+  border-radius:12px !important;
+}
+
+.hud-btn svg {
+  width:18px !important;
+  height:18px !important;
+}
+
+.zone-arrow {
+  width:38px !important;
+  height:38px !important;
+  border-radius:12px !important;
+}
+
+.zone-dots {
+  gap:8px !important;
+}
+
+.zone-dot {
+  width:10px !important;
+  height:10px !important;
+}
+
+.guide-actions {
+  gap:8px !important;
+}
+
+.guide-actions button {
+  height:36px !important;
+  padding:0 12px !important;
+  border-radius:11px !important;
+  font-size:11px !important;
+}
+
+.zoom-control button {
+  width:36px !important;
+  height:36px !important;
+  border-radius:11px !important;
+}
+
+.zoom-value {
+  font-size:11px !important;
+}
+
+.product-actions {
+  gap:8px !important;
+}
+
+.product-actions .product-btn,
+.product-actions .disabled-path,
+.product-detail-actions .product-btn,
+.product-detail-actions .disabled-path {
+  min-height:36px !important;
+  padding:0 12px !important;
+  border-radius:11px !important;
+  font-size:10.5px !important;
+  line-height:1.08 !important;
+}
+
+.product-details-trigger {
+  min-height:38px !important;
+  border-radius:11px !important;
+  font-size:10.5px !important;
+}
+
+.product-scan-arrow,
+.product-detail-close,
+.product-detail-arrows button {
+  width:36px !important;
+  height:36px !important;
+  border-radius:11px !important;
+}
+
+.dock-beacons {
+  gap:8px !important;
+}
+
+.dock-beacons a {
+  min-height:36px !important;
+  padding:0 12px !important;
+  font-size:10.5px !important;
+  border-radius:11px !important;
+}
+
+.enter-verse {
+  height:46px !important;
+  min-width:112px !important;
+  padding:0 28px !important;
+  border-radius:12px !important;
+  font-size:12px !important;
+}
+
+.product-detail-backdrop {
+  cursor:pointer;
+}
+
+.product-detail-sheet {
+  cursor:default;
+}
+
+@media (max-width:780px) {
+  :root {
+    --ui-btn-h: 40px;
+    --ui-btn-h-small: 36px;
+    --ui-btn-font: 10.5px;
+    --ui-btn-pad-x: 12px;
+  }
+
+  .mission-actions {
+    gap:8px !important;
+  }
+
+  .mission-btn {
+    height:38px !important;
+    padding:0 12px !important;
+    font-size:10.5px !important;
+  }
+
+  .hud-btn,
+  .zone-arrow,
+  .zoom-control button {
+    width:38px !important;
+    height:38px !important;
+  }
+
+  .product-actions .product-btn,
+  .product-actions .disabled-path,
+  .dock-beacons a {
+    min-height:38px !important;
+    font-size:10px !important;
+  }
+
+  .product-detail-actions .product-btn,
+  .product-detail-actions .disabled-path {
+    min-height:40px !important;
+    width:100%;
+  }
+
+  .guide-actions button {
+    height:38px !important;
+    font-size:10px !important;
+    padding:0 10px !important;
+  }
+}

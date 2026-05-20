@@ -1,5 +1,86 @@
 # Changelog
 
+## Pure Black Starfield Background — 20 May 2026, 20:35 IST
+
+- Simplified the universe background to pure black starfield only.
+- Removed cloud/fog clusters and gradient-based space aura.
+- Kept star-only rendering with increased quantity.
+- Increased desktop mouse-driven star parallax strength.
+- Kept SV core fixed.
+- Added `steps/34-pure-black-starfield-background.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
+## Background Parallax Visibility Fix — 20 May 2026, 20:20 IST
+
+- Strengthened desktop background parallax so it is visible.
+- Applied parallax directly inside the canvas star/galaxy draw logic.
+- Stars and galaxy dust now move opposite to mouse direction.
+- Kept SV core fixed and unaffected.
+- Removed old ring transform influence from background parallax.
+- Added `steps/33-background-parallax-visibility-fix.md`.
+- Updated README and TESTING_CHECKLIST.
+
+
+# Changelog
+
+## Realistic Universe Background System — 20 May 2026, 20:05 IST
+
+- Replaced ring-style background direction with a black realistic universe background.
+- Hid decorative background rings from entry/world layers.
+- Added many layered stars with random blinking/shining behavior.
+- Added low-opacity drifting galaxy/dust clusters.
+- Added desktop opposite-direction mouse parallax for background only.
+- Kept SV core fixed and circular.
+- Kept mobile/tablet particle counts lower for performance.
+- Added `steps/32-realistic-universe-background-system.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
+## Final All Phases Complete — 20 May 2026, 19:45 IST
+
+- Completed Phase 4 Proof Ring with focused proof signals and previous/next controls.
+- Completed Phase 5 Client Signals with readable review transmissions and previous/next controls.
+- Completed Phase 6 Launch Dock with WhatsApp as primary final CTA.
+- Completed Phase 7 guide/control/settings polish with compact global button behavior and SV core protection.
+- Completed Phase 8 final package validation and documentation updates.
+- Added `steps/27-phase-4-proof-ring.md`.
+- Added `steps/28-phase-5-client-signals.md`.
+- Added `steps/29-phase-6-launch-dock.md`.
+- Added `steps/30-phase-7-guide-settings-polish.md`.
+- Added `steps/31-phase-8-final-qa-and-handoff.md`.
+- Updated README, about-project, screen contracts, TESTING_CHECKLIST, and CHANGELOG.
+
+
+# Changelog
+
+## SV Core Circle Protection Fix — 20 May 2026, 19:25 IST
+
+- Fixed SV core becoming rounded-square after global button styling.
+- Added protected circular CSS rules for `.sv-core`, `.entry-sv-mini`, `.core-ring`, and `.core-inner`.
+- Added `steps/26-sv-core-circle-protection-fix.md`.
+- Updated screen contracts and testing checklist.
+
+
+# Changelog
+
+## Interaction Fix — Zoom, Touch, Buttons, Product Details — 20 May 2026, 19:15 IST
+
+- Added robust background zoom patch for desktop double-click.
+- Added robust plus/minus/slider zoom binding.
+- Added touch pinch zoom and two-finger double-touch zoom toggle.
+- Added reliable product detail outside/backdrop click close behavior.
+- Added global button compact styling confirmation across screens.
+- Added `steps/25-interaction-fix-zoom-touch-buttons.md`.
+- Updated README and TESTING_CHECKLIST.
+
+
+# Changelog
+
 ## Global Button and Product Detail Outside Click Fix — 20 May 2026, 18:55 IST
 
 - Added robust product detail outside-click closing.

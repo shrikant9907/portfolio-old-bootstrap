@@ -240,3 +240,41 @@ Before Start:
 - Do not show inner scene text, HUD, guide, products, proof, reviews, or Launch Dock.
 - A subtle SV core/atmosphere may remain as part of the background.
 - Skills/tools should begin appearing only after the user starts the journey and reaches Arrival Core / Technology Orbit.
+
+
+---
+
+## Realistic Universe Background System
+
+**Updated:** 20 May 2026, 20:05 IST
+
+The background for this scene must use the shared realistic black universe system.
+
+Rules:
+
+- black base,
+- many stars,
+- some blinking/shining stars,
+- soft galaxy/dust clusters,
+- no decorative background rings,
+- desktop opposite-direction mouse parallax,
+- SV core must not move,
+- UI panels must not move with parallax,
+- mobile uses reduced particle count.
+
+
+---
+
+## Pure Black Starfield Update
+
+**Updated:** 20 May 2026, 20:35 IST
+
+Background rules now require:
+
+- pure black background,
+- stars only,
+- no clouds,
+- no gradients,
+- no decorative rings,
+- stronger mouse-driven star motion on desktop,
+- fixed SV core.

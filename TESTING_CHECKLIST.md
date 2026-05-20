@@ -247,3 +247,81 @@ Updated: 20 May 2026, 18:55 IST
 - [ ] Guide buttons remain compact.
 - [ ] Launch Dock buttons remain compact.
 - [ ] Mobile buttons are still tappable.
+
+## Interaction Fix — Zoom Touch Buttons Test
+
+Updated: 20 May 2026, 19:15 IST
+
+- [ ] Desktop double-click stage/background toggles zoom.
+- [ ] Plus zoom button works.
+- [ ] Minus zoom button works.
+- [ ] Zoom slider works.
+- [ ] Mobile pinch zoom works.
+- [ ] Two-finger double touch toggles zoom.
+- [ ] Product detail outside click closes overlay.
+- [ ] Product detail backdrop click closes overlay.
+- [ ] Escape closes product detail.
+- [ ] Buttons are smaller globally but readable.
+
+## SV Core Circle Protection Test
+
+Updated: 20 May 2026, 19:25 IST
+
+- [ ] SV core is circular on desktop.
+- [ ] SV core is circular on mobile.
+- [ ] Entry mini SV marker is circular.
+- [ ] Global button rules do not make the core rounded-square.
+
+## Final All Phases Test
+
+Updated: 20 May 2026, 19:45 IST
+
+- [ ] Mission Entry shows clean background and Start.
+- [ ] Launch transition works.
+- [ ] Arrival Core shows circular SV core.
+- [ ] Technology Orbit has moving skills/tools.
+- [ ] Product Gallery has compact scan and detail overlay.
+- [ ] Proof Ring shows one proof focus and controls.
+- [ ] Client Signals shows one readable review and controls.
+- [ ] Launch Dock shows WhatsApp as primary.
+- [ ] Buttons are compact globally.
+- [ ] SV core remains circular.
+- [ ] Desktop, tablet, and mobile layouts are visually checked.
+
+## Realistic Universe Background Test
+
+Updated: 20 May 2026, 20:05 IST
+
+- [ ] Background is black.
+- [ ] Many small stars are visible.
+- [ ] Some larger stars shine/blink.
+- [ ] Soft galaxy/dust clusters move slowly.
+- [ ] Large decorative background rings are not visible.
+- [ ] Entry and inner scenes use one continuous background.
+- [ ] Desktop mouse movement shifts background opposite direction.
+- [ ] SV core does not move with mouse.
+- [ ] UI panels do not move with mouse.
+- [ ] Mobile remains smooth.
+
+## Background Parallax Visibility Test
+
+Updated: 20 May 2026, 20:20 IST
+
+- [ ] Move mouse right: background shifts subtly left.
+- [ ] Move mouse left: background shifts subtly right.
+- [ ] Move mouse down: background shifts subtly up.
+- [ ] SV core stays fixed.
+- [ ] UI panels stay fixed.
+- [ ] Mobile background does not use mouse parallax.
+
+## Pure Black Starfield Test
+
+Updated: 20 May 2026, 20:35 IST
+
+- [ ] Background is pure black.
+- [ ] No cloud/fog clusters are visible.
+- [ ] No background gradients are visible.
+- [ ] No decorative rings are visible.
+- [ ] Star count looks noticeably higher.
+- [ ] Mouse movement affects stars more strongly on desktop.
+- [ ] SV core stays fixed.

@@ -469,18 +469,45 @@ function updateProductLayer() {
   function renderProofLayer() {
     els.proofLayer.innerHTML = `
       <div class="proof-focus" id="proofFocus" aria-live="polite"></div>
+      <div class="proof-nav" aria-label="Proof navigation">
+        <button type="button" class="proof-arrow" id="proofPrev" aria-label="Previous proof signal">‹</button>
+        <button type="button" class="proof-arrow" id="proofNext" aria-label="Next proof signal">›</button>
+      </div>
       <div class="proof-dots" aria-label="Proof signals">
-        ${PROOFS.map((item, index) => `<button type="button" class="world-dot proof-dot" data-proof="${index}" aria-label="Inspect ${escapeAttr(item.label)}"><strong>${item.title}</strong></button>`).join('')}
+        ${PROOFS.map((item, index) => `<button type="button" class="world-dot proof-dot" data-proof="${index}" aria-label="Inspect ${escapeAttr(item.label)}"><strong>${item.title}</strong><span>${escapeAttr(item.label)}</span></button>`).join('')}
       </div>`;
+
     $$('.proof-dot', els.proofLayer).forEach((dot) => {
       dot.addEventListener('click', () => {
         activeProof = Number(dot.dataset.proof);
         updateProofLayer();
         setZone(3);
       });
-      dot.addEventListener('mouseenter', () => document.body.classList.add('cursor-lock'));
+      dot.addEventListener('mouseenter', () => {
+        document.body.classList.add('cursor-lock');
+        if (currentZone === 3) {
+          activeProof = Number(dot.dataset.proof);
+          updateProofLayer();
+        }
+      });
+      dot.addEventListener('focus', () => {
+        if (currentZone === 3) {
+          activeProof = Number(dot.dataset.proof);
+          updateProofLayer();
+        }
+      });
       dot.addEventListener('mouseleave', () => document.body.classList.remove('cursor-lock'));
     });
+
+    $('#proofPrev')?.addEventListener('click', () => {
+      activeProof = (activeProof - 1 + PROOFS.length) % PROOFS.length;
+      updateProofLayer();
+    });
+    $('#proofNext')?.addEventListener('click', () => {
+      activeProof = (activeProof + 1) % PROOFS.length;
+      updateProofLayer();
+    });
+
     updateProofLayer();
   }
 
@@ -488,26 +515,73 @@ function updateProductLayer() {
     const item = PROOFS[activeProof];
     const focus = $('#proofFocus');
     if (!focus) return;
-    focus.innerHTML = `<p>Proof signal</p><h3>${item.title}</h3><strong>${item.label}</strong><em>${item.desc}</em>`;
-    $$('.proof-dot', els.proofLayer).forEach((dot, index) => dot.classList.toggle('is-active', index === activeProof));
-    positionDots('.proof-dot', activeProof, 162);
+
+    focus.innerHTML = `
+      <div class="proof-signal-head">
+        <p>Proof signal ${activeProof + 1}/${PROOFS.length}</p>
+        <span>Verified Capability</span>
+      </div>
+      <h3>${item.title}</h3>
+      <strong>${item.label}</strong>
+      <em>${item.desc}</em>
+      <button type="button" class="proof-next-inline" data-proof-next>Next Proof</button>`;
+
+    $('[data-proof-next]', focus)?.addEventListener('click', () => {
+      activeProof = (activeProof + 1) % PROOFS.length;
+      updateProofLayer();
+    });
+
+    $$('.proof-dot', els.proofLayer).forEach((dot, index) => {
+      const isActive = index === activeProof;
+      dot.classList.toggle('is-active', isActive);
+      dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+    });
+
+    positionDots('.proof-dot', activeProof, window.innerWidth <= 780 ? 126 : 198);
   }
 
   function renderReviewLayer() {
     els.reviewLayer.innerHTML = `
       <div class="review-card" id="reviewCard" aria-live="polite"></div>
+      <div class="review-nav" aria-label="Client signal navigation">
+        <button type="button" class="review-arrow" id="reviewPrev" aria-label="Previous client signal">‹</button>
+        <button type="button" class="review-arrow" id="reviewNext" aria-label="Next client signal">›</button>
+      </div>
       <div class="review-dots" aria-label="Client review signal dots">
         ${REVIEWS.map((item, index) => `<button type="button" class="world-dot review-dot" data-review="${index}" aria-label="Read review by ${escapeAttr(item.name)}"><span>${initials(item.name)}</span></button>`).join('')}
       </div>`;
+
     $$('.review-dot', els.reviewLayer).forEach((dot) => {
       dot.addEventListener('click', () => {
         activeReview = Number(dot.dataset.review);
         updateReviewLayer();
         setZone(4);
       });
-      dot.addEventListener('mouseenter', () => document.body.classList.add('cursor-lock'));
+      dot.addEventListener('mouseenter', () => {
+        document.body.classList.add('cursor-lock');
+        if (currentZone === 4) {
+          activeReview = Number(dot.dataset.review);
+          updateReviewLayer();
+        }
+      });
+      dot.addEventListener('focus', () => {
+        if (currentZone === 4) {
+          activeReview = Number(dot.dataset.review);
+          updateReviewLayer();
+        }
+      });
       dot.addEventListener('mouseleave', () => document.body.classList.remove('cursor-lock'));
     });
+
+    $('#reviewPrev')?.addEventListener('click', () => {
+      activeReview = (activeReview - 1 + REVIEWS.length) % REVIEWS.length;
+      updateReviewLayer();
+    });
+    $('#reviewNext')?.addEventListener('click', () => {
+      activeReview = (activeReview + 1) % REVIEWS.length;
+      updateReviewLayer();
+    });
+
     updateReviewLayer();
   }
 
@@ -515,9 +589,28 @@ function updateProductLayer() {
     const item = REVIEWS[activeReview];
     const card = $('#reviewCard');
     if (!card) return;
-    card.innerHTML = `<p>Client signal ${activeReview + 1}/${REVIEWS.length}</p><blockquote>${item.text}</blockquote><strong>${item.name}</strong><em>${item.company}</em>`;
-    $$('.review-dot', els.reviewLayer).forEach((dot, index) => dot.classList.toggle('is-active', index === activeReview));
-    positionDots('.review-dot', activeReview, 152);
+
+    card.innerHTML = `
+      <p>Client signal ${activeReview + 1}/${REVIEWS.length}</p>
+      <blockquote>${item.text}</blockquote>
+      <div class="review-person">
+        <strong>${item.name}</strong>
+        <em>${item.company}</em>
+      </div>
+      <button type="button" class="review-next-inline" data-review-next>Next Signal</button>`;
+
+    $('[data-review-next]', card)?.addEventListener('click', () => {
+      activeReview = (activeReview + 1) % REVIEWS.length;
+      updateReviewLayer();
+    });
+
+    $$('.review-dot', els.reviewLayer).forEach((dot, index) => {
+      const isActive = index === activeReview;
+      dot.classList.toggle('is-active', isActive);
+      dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+    });
+
+    positionDots('.review-dot', activeReview, window.innerWidth <= 780 ? 118 : 180);
   }
 
   function positionDots(selector, activeIndex, radius) {
@@ -767,7 +860,9 @@ function updateProductLayer() {
     if (currentZone === 2) updateProductLayer();
     if (currentZone === 3) {
       setTimeout(() => animateProofNumbers(), 320);
+      updateProofLayer();
     }
+    if (currentZone === 4) updateReviewLayer();
 
     updateLayerStates();
     if (!options.immediate && !prefersReducedMotion) pulseZone();
@@ -1204,125 +1299,158 @@ function updateProductLayer() {
   function initStars() {
     const canvas = $('#starCanvas');
     if (!canvas) return;
+    canvas.classList.add('real-universe-canvas');
+
     const ctx = canvas.getContext('2d');
     let stars = [];
+    let targetX = 0;
+    let targetY = 0;
+    let smoothX = 0;
+    let smoothY = 0;
 
-    function resetStar(star, randomize = true) {
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight / 2;
-      const angle = Math.random() * Math.PI * 2;
-      const dist = randomize ? Math.random() * Math.max(window.innerWidth, window.innerHeight) * 0.7 : 8;
-      star.x = centerX + Math.cos(angle) * dist;
-      star.y = centerY + Math.sin(angle) * dist;
-      star.vx = Math.cos(angle);
-      star.vy = Math.sin(angle);
-      star.r = Math.random() * 1.15 + .18;
-      star.a = Math.random() * .34 + .06;
-      star.s = Math.random() * .22 + .035;
+    const rand = (min, max) => min + Math.random() * (max - min);
+
+    function deviceProfile() {
+      const w = window.innerWidth;
+      if (w < 780 || isTouch) {
+        return { starMin: 140, starMax: 220, dprMax: 1.5, parallaxStrength: 0 };
+      }
+      if (w < 1100) {
+        return { starMin: 260, starMax: 380, dprMax: 1.75, parallaxStrength: 1 };
+      }
+      return { starMin: 540, starMax: 760, dprMax: 2, parallaxStrength: 1 };
+    }
+
+    function createStar(layer = 1) {
+      const rareBig = Math.random() > 0.955;
+      const medium = Math.random() > 0.70;
+      return {
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        r: rareBig ? rand(1.55, 2.7) : medium ? rand(0.8, 1.45) : rand(0.22, 0.8),
+        baseAlpha: rareBig ? rand(0.45, 0.95) : medium ? rand(0.24, 0.7) : rand(0.08, 0.42),
+        blinkAmp: rareBig ? rand(0.24, 0.60) : rand(0.04, 0.20),
+        blinkSpeed: rand(0.00035, 0.0015),
+        blinkOffset: rand(0, Math.PI * 2),
+        vx: rand(-0.012, 0.012) * layer,
+        vy: rand(0.006, 0.030) * layer,
+        depth: layer,
+        parallax: rareBig ? rand(24, 58) * layer : medium ? rand(16, 44) * layer : rand(10, 30) * layer,
+        hue: Math.random() > 0.88 ? 'rgba(103,232,249,' : 'rgba(255,255,255,',
+        big: rareBig
+      };
+    }
+
+    function resetStar(star, fromCenter = false) {
+      if (fromCenter) {
+        const angle = Math.random() * Math.PI * 2;
+        const dist = rand(8, 36);
+        star.x = window.innerWidth / 2 + Math.cos(angle) * dist;
+        star.y = window.innerHeight / 2 + Math.sin(angle) * dist;
+      } else {
+        star.x = Math.random() * window.innerWidth;
+        star.y = Math.random() * window.innerHeight;
+      }
     }
 
     function resize() {
-      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const profile = deviceProfile();
+      const dpr = Math.min(profile.dprMax, window.devicePixelRatio || 1);
       canvas.width = Math.floor(window.innerWidth * dpr);
       canvas.height = Math.floor(window.innerHeight * dpr);
       canvas.style.width = `${window.innerWidth}px`;
       canvas.style.height = `${window.innerHeight}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const count = Math.max(isTouch ? 170 : 240, Math.min(isTouch ? 260 : 520, Math.floor(window.innerWidth * window.innerHeight / (isTouch ? 7600 : 4300))));
-      stars = Array.from({ length: count }, () => {
-        const star = {};
-        resetStar(star, true);
-        return star;
-      });
-    }
 
-
-    function drawGalaxy(time, w, h, cx, cy, launchT) {
-      const compact = w < 780;
-      const arms = compact ? 3 : 4;
-      const pointsPerArm = compact ? 28 : 54;
-      const maxRadius = Math.min(w, h) * (compact ? 0.46 : 0.54);
-      const rotation = time * 0.000055;
-      ctx.save();
-      ctx.globalCompositeOperation = 'lighter';
-      const coreGlow = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxRadius * 0.78);
-      coreGlow.addColorStop(0, `rgba(34,211,238,${0.085 + launchT * 0.05})`);
-      coreGlow.addColorStop(0.36, `rgba(34,211,238,${0.038 + launchT * 0.035})`);
-      coreGlow.addColorStop(1, 'rgba(34,211,238,0)');
-      ctx.fillStyle = coreGlow;
-      ctx.beginPath();
-      ctx.arc(cx, cy, maxRadius * 0.92, 0, Math.PI * 2);
-      ctx.fill();
-
-      for (let arm = 0; arm < arms; arm++) {
-        const armOffset = (arm / arms) * Math.PI * 2;
-        for (let i = 0; i < pointsPerArm; i++) {
-          const t = i / pointsPerArm;
-          const radius = 34 + t * maxRadius;
-          const angle = armOffset + rotation + t * 4.9 + Math.sin(time * 0.00045 + i) * 0.035;
-          const x = cx + Math.cos(angle) * radius;
-          const y = cy + Math.sin(angle) * radius * 0.62;
-          const opacity = (1 - t) * 0.16 + 0.016 + launchT * 0.08;
-          const size = compact ? 0.7 + t * 1.1 : 0.75 + t * 1.45;
-          ctx.beginPath();
-          ctx.arc(x, y, size, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(103,232,249,${opacity})`;
-          ctx.fill();
-        }
-      }
-      ctx.restore();
+      const area = window.innerWidth * window.innerHeight;
+      const count = Math.max(profile.starMin, Math.min(profile.starMax, Math.floor(area / (isTouch ? 4600 : 2150))));
+      stars = Array.from({ length: count }, () => createStar(rand(0.45, 1.6)));
     }
 
     function draw(time = 0) {
-      if (pageHidden) { requestAnimationFrame(draw); return; }
+      if (pageHidden) {
+        requestAnimationFrame(draw);
+        return;
+      }
+
       const w = window.innerWidth;
       const h = window.innerHeight;
       const cx = w / 2;
       const cy = h / 2;
       const launchElapsed = time - launchStart;
       const launchT = (isLaunching && launchElapsed > 350) ? Math.min(1, (launchElapsed - 350) / 1550) : 0;
+
+      smoothX += (targetX - smoothX) * 0.085;
+      smoothY += (targetY - smoothY) * 0.085;
+
       ctx.clearRect(0, 0, w, h);
-      ctx.fillStyle = '#030508';
+      ctx.fillStyle = '#000000';
       ctx.fillRect(0, 0, w, h);
-      drawGalaxy(time, w, h, cx, cy, launchT);
 
       stars.forEach(star => {
+        const px = hasFinePointer && !isTouch ? smoothX * -star.parallax : 0;
+        const py = hasFinePointer && !isTouch ? smoothY * -star.parallax * 0.78 : 0;
+
         if (!paused && !prefersReducedMotion) {
           if (isLaunching) {
             const dx = star.x - cx;
             const dy = star.y - cy;
             const len = Math.hypot(dx, dy) || 1;
-            const boost = 1.9 + launchT * 26;
+            const boost = 2.4 + launchT * 34;
             star.x += (dx / len) * boost;
             star.y += (dy / len) * boost;
-            if (star.x < -80 || star.x > w + 80 || star.y < -80 || star.y > h + 80) resetStar(star, false);
+            if (star.x < -130 || star.x > w + 130 || star.y < -130 || star.y > h + 130) resetStar(star, true);
           } else {
-            star.y += star.s;
-            if (star.y > h + 4) star.y = -4;
+            star.x += star.vx;
+            star.y += star.vy;
+            if (star.y > h + 8) star.y = -8;
+            if (star.y < -8) star.y = h + 8;
+            if (star.x > w + 8) star.x = -8;
+            if (star.x < -8) star.x = w + 8;
           }
         }
 
-        const alpha = Math.min(.92, star.a + launchT * .56);
-        if (launchT > .08) {
-          const dx = star.x - cx;
-          const dy = star.y - cy;
+        const blink = prefersReducedMotion ? 0 : Math.sin(time * star.blinkSpeed + star.blinkOffset) * star.blinkAmp;
+        const alpha = Math.max(0.04, Math.min(1, star.baseAlpha + blink + launchT * 0.45));
+        const x = star.x + px;
+        const y = star.y + py;
+
+        if (launchT > 0.08) {
+          const dx = x - cx;
+          const dy = y - cy;
           const len = Math.hypot(dx, dy) || 1;
-          const tail = 14 + launchT * 62;
+          const tail = 20 + launchT * 86;
           ctx.beginPath();
-          ctx.moveTo(star.x, star.y);
-          ctx.lineTo(star.x - (dx / len) * tail, star.y - (dy / len) * tail);
-          ctx.strokeStyle = `rgba(165,243,252,${alpha * .46})`;
-          ctx.lineWidth = Math.max(.4, star.r);
+          ctx.moveTo(x, y);
+          ctx.lineTo(x - (dx / len) * tail, y - (dy / len) * tail);
+          ctx.strokeStyle = `rgba(255,255,255,${alpha * 0.56})`;
+          ctx.lineWidth = Math.max(0.4, star.r);
           ctx.stroke();
         } else {
           ctx.beginPath();
-          ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(165,243,252,${alpha})`;
+          ctx.arc(x, y, star.r, 0, Math.PI * 2);
+          ctx.fillStyle = `${star.hue}${alpha})`;
           ctx.fill();
+
+          if (star.big) {
+            ctx.beginPath();
+            ctx.arc(x, y, star.r * 2.8, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255,255,255,${alpha * 0.06})`;
+            ctx.fill();
+          }
         }
       });
+
       requestAnimationFrame(draw);
     }
+
+    if (hasFinePointer && !isTouch) {
+      window.addEventListener('pointermove', (event) => {
+        targetX = ((event.clientX / Math.max(window.innerWidth, 1)) - 0.5);
+        targetY = ((event.clientY / Math.max(window.innerHeight, 1)) - 0.5);
+      }, { passive: true });
+    }
+
     resize();
     window.addEventListener('resize', resize);
     draw();
@@ -1335,4 +1463,243 @@ function updateProductLayer() {
   function escapeAttr(value) {
     return String(value).replace(/[&<>"]/g, (ch) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]));
   }
+})();
+
+
+/* ==========================================================================
+   INTERACTION FIX PATCH — BACKGROUND ZOOM / TOUCH / PRODUCT OUTSIDE CLICK
+   Updated: 20 May 2026, 19:15 IST
+   Purpose:
+   - Make background zoom work on desktop double-click.
+   - Make mobile/tablet two-finger pinch and two-finger double-touch zoom work.
+   - Make product detail overlay close on outside/backdrop click reliably.
+   - Keep global button behavior unaffected.
+   ========================================================================== */
+(function () {
+  const d = document;
+  const w = window;
+
+  function qs(sel, root = d) { return root.querySelector(sel); }
+  function qsa(sel, root = d) { return Array.from(root.querySelectorAll(sel)); }
+
+  let phaseZoom = 1;
+  let pinchStartDistance = 0;
+  let pinchStartZoom = 1;
+  let lastTwoFingerTap = 0;
+  let zoomFeedbackTimer = null;
+
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
+
+  function getTouchDistance(t1, t2) {
+    const dx = t1.clientX - t2.clientX;
+    const dy = t1.clientY - t2.clientY;
+    return Math.hypot(dx, dy);
+  }
+
+  function applyPhaseZoom(value, source = "manual") {
+    phaseZoom = clamp(Number(value) || 1, 0.72, 1.85);
+
+    d.documentElement.style.setProperty("--zoom", String(phaseZoom));
+    d.body.dataset.zoomMode = source;
+
+    const slider = qs("#zoomRange");
+    const valueLabel = qs("#zoomValue");
+
+    if (slider) {
+      slider.value = String(Math.round(phaseZoom * 100));
+    }
+
+    if (valueLabel) {
+      valueLabel.textContent = `${Math.round(phaseZoom * 100)}%`;
+    }
+
+    d.body.classList.add("zoom-feedback");
+    clearTimeout(zoomFeedbackTimer);
+    zoomFeedbackTimer = setTimeout(() => d.body.classList.remove("zoom-feedback"), 420);
+
+    // Force transform on important universe layers so zoom works even if previous logic missed it.
+    const scale = `scale(${phaseZoom})`;
+    const inverse = 1 / Math.max(phaseZoom, 0.01);
+
+    qsa(".particle-layer, .product-gallery-layer, .proof-layer, .reviews-layer").forEach((el) => {
+      el.style.transform = scale;
+      el.style.transformOrigin = "50% 50%";
+    });
+
+    qsa(".orbit-line").forEach((el) => {
+      el.style.setProperty("--phaseZoomScale", phaseZoom);
+    });
+
+    const core = qs(".sv-core");
+    if (core) {
+      core.style.setProperty("--coreZoomCompensate", inverse.toFixed(3));
+    }
+  }
+
+  function togglePhaseZoom() {
+    applyPhaseZoom(phaseZoom < 1.18 ? 1.48 : 1, "toggle");
+  }
+
+  function bindPhaseZoomControls() {
+    const stage = qs("#verseStage") || qs(".verse-stage");
+    const zoomIn = qs("#zoomIn");
+    const zoomOut = qs("#zoomOut");
+    const zoomRange = qs("#zoomRange");
+
+    if (zoomIn && !zoomIn.dataset.phaseZoomBound) {
+      zoomIn.dataset.phaseZoomBound = "true";
+      zoomIn.addEventListener("click", () => applyPhaseZoom(phaseZoom + 0.12, "button"));
+    }
+
+    if (zoomOut && !zoomOut.dataset.phaseZoomBound) {
+      zoomOut.dataset.phaseZoomBound = "true";
+      zoomOut.addEventListener("click", () => applyPhaseZoom(phaseZoom - 0.12, "button"));
+    }
+
+    if (zoomRange && !zoomRange.dataset.phaseZoomBound) {
+      zoomRange.dataset.phaseZoomBound = "true";
+      zoomRange.addEventListener("input", () => applyPhaseZoom(Number(zoomRange.value) / 100, "slider"));
+    }
+
+    if (stage && !stage.dataset.phaseZoomBound) {
+      stage.dataset.phaseZoomBound = "true";
+
+      stage.addEventListener("dblclick", (event) => {
+        if (!d.body.classList.contains("verse-entered")) return;
+        if (event.target.closest("button,a,input,.guide-card,.object-tooltip,.product-detail-sheet,.settings-panel")) return;
+        event.preventDefault();
+        togglePhaseZoom();
+      });
+
+      stage.addEventListener("touchstart", (event) => {
+        if (!d.body.classList.contains("verse-entered")) return;
+        if (event.touches.length === 2) {
+          const now = performance.now();
+          const distance = getTouchDistance(event.touches[0], event.touches[1]);
+
+          if (now - lastTwoFingerTap < 330) {
+            event.preventDefault();
+            togglePhaseZoom();
+          }
+
+          lastTwoFingerTap = now;
+          pinchStartDistance = distance;
+          pinchStartZoom = phaseZoom;
+        }
+      }, { passive: false });
+
+      stage.addEventListener("touchmove", (event) => {
+        if (!d.body.classList.contains("verse-entered")) return;
+        if (event.touches.length === 2 && pinchStartDistance > 0) {
+          event.preventDefault();
+          const nextDistance = getTouchDistance(event.touches[0], event.touches[1]);
+          const ratio = nextDistance / Math.max(pinchStartDistance, 1);
+          applyPhaseZoom(pinchStartZoom * ratio, "pinch");
+        }
+      }, { passive: false });
+
+      stage.addEventListener("touchend", (event) => {
+        if (event.touches.length < 2) {
+          pinchStartDistance = 0;
+        }
+      }, { passive: true });
+    }
+  }
+
+  function closeProductDetailOverlay() {
+    const overlay = qs("#productDetailOverlay");
+    if (!overlay) return;
+    overlay.classList.remove("is-open");
+    overlay.setAttribute("aria-hidden", "true");
+    d.body.classList.remove("product-detail-open");
+  }
+
+  function bindProductOutsideClose() {
+    const overlay = qs("#productDetailOverlay");
+    if (!overlay || overlay.dataset.outsideCloseFixed === "true") return;
+
+    overlay.dataset.outsideCloseFixed = "true";
+
+    overlay.addEventListener("click", (event) => {
+      const sheet = event.target.closest(".product-detail-sheet");
+      const closeTarget = event.target.closest("[data-close-product-detail]");
+      if (closeTarget || !sheet) {
+        event.preventDefault();
+        closeProductDetailOverlay();
+      }
+    });
+
+    d.addEventListener("click", (event) => {
+      if (!overlay.classList.contains("is-open")) return;
+      if (overlay.contains(event.target)) return;
+      if (event.target.closest("[data-open-product-detail]")) return;
+      closeProductDetailOverlay();
+    });
+
+    d.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && overlay.classList.contains("is-open")) {
+        closeProductDetailOverlay();
+      }
+    });
+  }
+
+  function initInteractionFixes() {
+    bindPhaseZoomControls();
+    bindProductOutsideClose();
+    applyPhaseZoom(Number(getComputedStyle(d.documentElement).getPropertyValue("--zoom")) || 1, "init");
+  }
+
+  if (d.readyState === "loading") {
+    d.addEventListener("DOMContentLoaded", initInteractionFixes);
+  } else {
+    initInteractionFixes();
+  }
+
+  w.ShrimoVerseInteractionFix = {
+    applyZoom: applyPhaseZoom,
+    toggleZoom: togglePhaseZoom,
+    closeProductDetail: closeProductDetailOverlay
+  };
+})();
+
+
+/* ==========================================================================
+   FINAL PHASES COMPLETION PATCH
+   Updated: 20 May 2026, 19:45 IST
+   Purpose: Proof Ring, Client Signals, Launch Dock, and final interaction
+   completion without changing earlier scene contracts.
+   ========================================================================== */
+(function () {
+  const d = document;
+
+  function qs(sel, root = d) { return root.querySelector(sel); }
+
+  function syncFinalSceneState() {
+    const scene = d.body.dataset.scene || "";
+    d.body.classList.toggle("is-proof-scene", scene === "proof-ring");
+    d.body.classList.toggle("is-review-scene", scene === "client-signals");
+    d.body.classList.toggle("is-launch-scene", scene === "launch-dock");
+  }
+
+  const stage = qs("#verseStage");
+  if (stage) {
+    const observer = new MutationObserver(syncFinalSceneState);
+    observer.observe(stage, { attributes: true, attributeFilter: ["data-zone"] });
+  }
+
+  const bodyObserver = new MutationObserver(syncFinalSceneState);
+  bodyObserver.observe(d.body, { attributes: true, attributeFilter: ["data-scene"] });
+
+  d.addEventListener("click", (event) => {
+    const proofNext = event.target.closest("[data-proof-next]");
+    const reviewNext = event.target.closest("[data-review-next]");
+    if (proofNext || reviewNext) {
+      d.body.classList.add("scene-action-feedback");
+      setTimeout(() => d.body.classList.remove("scene-action-feedback"), 280);
+    }
+  });
+
+  syncFinalSceneState();
 })();

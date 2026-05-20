@@ -326,3 +326,88 @@ See:
 ```txt
 steps/24-phase-3-global-buttons-overlay-fix.md
 ```
+
+## Interaction Fix — Zoom Touch Buttons
+
+**Updated:** 20 May 2026, 19:15 IST
+
+Background zoom, touch zoom, product detail outside close, and global button sizing were fixed at code level.
+
+See:
+
+```txt
+steps/25-interaction-fix-zoom-touch-buttons.md
+```
+
+## SV Core Circle Protection
+
+**Updated:** 20 May 2026, 19:25 IST
+
+The central SV core is protected from global button styling and must always remain circular.
+
+See:
+
+```txt
+steps/26-sv-core-circle-protection-fix.md
+```
+
+## Final All Phases Complete
+
+**Updated:** 20 May 2026, 19:45 IST
+
+All planned phases are implemented in one final package:
+
+```txt
+Phase 1: Mission Entry / Launch / Arrival
+Phase 2: Technology Orbit
+Phase 3: Product Gallery
+Phase 4: Proof Ring
+Phase 5: Client Signals
+Phase 6: Launch Dock
+Phase 7: Guide / Controls / Settings polish
+Phase 8: Final QA / Handoff
+```
+
+Final package:
+
+```txt
+shrimo-verse-final-all-phases-complete.zip
+```
+
+## Realistic Universe Background System
+
+**Updated:** 20 May 2026, 20:05 IST
+
+The background system now uses one shared black universe canvas with blinking stars, large shining stars, slow galaxy/dust clusters, and desktop opposite-direction mouse parallax.
+
+Large decorative background rings are hidden.
+
+See:
+
+```txt
+steps/32-realistic-universe-background-system.md
+```
+
+## Background Parallax Visibility Fix
+
+**Updated:** 20 May 2026, 20:20 IST
+
+Mouse parallax is now applied directly to drawn stars and galaxy dust, not only to the canvas wrapper. This makes the background motion visible while keeping the SV core fixed.
+
+See:
+
+```txt
+steps/33-background-parallax-visibility-fix.md
+```
+
+## Pure Black Starfield Background
+
+**Updated:** 20 May 2026, 20:35 IST
+
+The background is now simplified to a pure black star-only universe. Clouds, gradients, and decorative rings are removed. Star density and desktop mouse-driven parallax are increased.
+
+See:
+
+```txt
+steps/34-pure-black-starfield-background.md
+```
