@@ -1,63 +1,71 @@
 # Project Structure — Shrimo Verse
 
-**Current Build:** `shrimo-verse-v1.3.1-visual-recovery`  
-**Updated:** 20 May 2026
+Updated: 20 May 2026, 15:35 IST
 
-## Root Files
+## Root
 
 ```txt
 index.html
 README.md
 about-project.md
+project-rules.md
 CHANGELOG.md
 ProjectStructure.md
 DEVELOPMENT_GUIDE.md
 TESTING_CHECKLIST.md
+ROOT_CLEANUP_AUDIT.md
+manifest.json
+robots.txt
+sitemap.xml
 ```
 
-## Main CSS Flow
+## CSS
+
+The CSS is responsibility-based. Do not add versioned patch files.
 
 ```txt
-css/portfolio-style.css
-  imports css/modules/01-foundation.css
-  imports css/modules/02-separated-layers.css
-  imports css/modules/03-polish-overrides.css
-  imports css/modules/04-cinematic-upgrade.css
-  imports css/modules/05-third-party-cinematic.css
-  imports css/modules/06-command-deck-and-polish.css
-  imports css/modules/07-mission-briefing-performance.css
-  imports css/modules/08-v1-experience-flow.css
-  imports css/modules/09-v1-1-cinematic-polish.css
-  imports css/modules/10-v1-2-mobile-first-polish.css
-  imports css/modules/11-v1-3-cinematic-universe-ui.css
-  imports css/modules/12-v1-3-1-visual-recovery.css
+css/
+  portfolio-style.css
+  cursor-rocket.css
+  modules/
+    01-tokens.css
+    02-reset-base.css
+    03-universe-background.css
+    04-layout-shell.css
+    05-hud-controls.css
+    06-scenes.css
+    07-orbit-system.css
+    08-panels-drawers.css
+    09-mobile-first.css
+    10-motion-accessibility.css
 ```
 
-`12-v1-3-1-visual-recovery.css` is the final visual recovery layer. It owns the current black/cyan cleanup and overrides old website-like visual patterns.
-
-## Main JavaScript Areas
+## JavaScript
 
 ```txt
-js/portfolio/        core content, rendering, controls
-js/experience/       launch and chapter experience
-js/ui/               command deck, settings, polish, gestures
-js/three/            universe/canvas visual layer
-js/animation/        motion and haptic helpers
-js/vendors/          safe vendor bridge
+js/
+  core/
+    state.js
+    dom.js
+    events.js
+  data/
+    scenes.js
+    skills.js
+    products.js
+    proof.js
+    reviews.js
+  controllers/
+    app-controller.js
+    scene-controller.js
+    hud-controller.js
+    guide-controller.js
+    settings-controller.js
+    orbit-controller.js
+    launch-controller.js
+  effects/
+    motion.js
+    performance.js
+    gestures.js
+    starfield.js
+  cursor-rocket.js
 ```
-
-## Rule
-
-Do not add more visual layers without reviewing the rendered screen first. If a new layer creates overlap, article-like cards, unreadable content, or visual clutter, fix it before packaging.
-
----
-
-## v1.3.2 Visual Stability Update — 20 May 2026
-
-This update fixes screenshot-reported visual breakage from v1.3/v1.3.1. The build removes duplicated desktop HUD controls, restores readable scene brightness, simplifies the landing gate, removes warm/yellow leakage from normal UI states, prevents article-like panels from dominating the screen, and keeps the mobile HUD compact and thumb-friendly. The project remains black/cyan, scene-first, and mobile-first.
-
-Important: this is a visual stabilization build. Real mobile-device testing and Lighthouse testing should still be completed before production publishing.
-
-## v1.3.2 Visual Stability Reference
-
-Implementation prompt: `SHRIMO_VERSE_V1_3_2_VISUAL_STABILITY_PROMPT.md`

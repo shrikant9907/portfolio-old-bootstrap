@@ -1,0 +1,20 @@
+window.SHRIMO_SKILLS = [
+  { label: 'HTML5', orbit: 'inner', desc: 'Semantic structure for fast, accessible interfaces.', use: 'Landing pages, app shells, SEO-ready content.' },
+  { label: 'CSS3', orbit: 'inner', desc: 'Responsive layouts, cinematic motion, and polished visual systems.', use: 'Mobile-first design systems and product interfaces.' },
+  { label: 'JavaScript', orbit: 'inner', desc: 'Interactive behavior, state logic, and UI control systems.', use: 'Dynamic experiences, tools, and dashboards.' },
+  { label: 'TypeScript', orbit: 'inner', desc: 'Safer frontend and backend code for scalable products.', use: 'Large codebases and maintainable product systems.' },
+  { label: 'React', orbit: 'middle', desc: 'Component-driven interfaces for modern applications.', use: 'Dashboards, SaaS tools, and interactive web apps.' },
+  { label: 'Next.js', orbit: 'middle', desc: 'SEO-friendly, production-grade React applications.', use: 'Marketing sites, platforms, and scalable products.' },
+  { label: 'Node.js', orbit: 'middle', desc: 'Server-side JavaScript for APIs and platform logic.', use: 'Backends, integrations, and product workflows.' },
+  { label: 'Express.js', orbit: 'middle', desc: 'Lightweight API routing and backend services.', use: 'REST APIs, auth, and app services.' },
+  { label: 'PHP', orbit: 'middle', desc: 'Practical server-side development for business websites.', use: 'Custom systems and WordPress extensions.' },
+  { label: 'WordPress', orbit: 'middle', desc: 'Business-friendly CMS development and custom websites.', use: 'Local business sites, SEO content, and admin-managed pages.' },
+  { label: 'MongoDB', orbit: 'outer', desc: 'Flexible NoSQL storage for product data.', use: 'Profiles, tools, content, and app data.' },
+  { label: 'MySQL', orbit: 'outer', desc: 'Reliable relational data storage.', use: 'Business systems, directories, and CMS data.' },
+  { label: 'Tailwind', orbit: 'outer', desc: 'Fast utility-first UI styling.', use: 'Design systems and responsive interfaces.' },
+  { label: 'Bootstrap', orbit: 'outer', desc: 'Practical responsive UI foundation when speed matters.', use: 'Admin tools and quick product builds.' },
+  { label: 'GSAP', orbit: 'deep', desc: 'Controlled animation timelines for premium motion.', use: 'Cinematic transitions and interaction polish.' },
+  { label: 'Three.js', orbit: 'deep', desc: '3D/WebGL layer for depth and immersive scenes.', use: 'Interactive backgrounds and product storytelling.' },
+  { label: 'Figma', orbit: 'deep', desc: 'Visual planning and UI system design.', use: 'Layouts, prototypes, and design handoff.' },
+  { label: 'APIs', orbit: 'deep', desc: 'Integration layer for real product workflows.', use: 'Payments, data, automation, and third-party services.' }
+];

@@ -1,120 +1,101 @@
 # About Project — Shrimo Verse
 
-**Current Build:** `shrimo-verse-v1.3.1-visual-recovery`  
-**Updated:** 20 May 2026  
+**Project:** Shrimo Verse  
+**Current Build:** `shrimo-verse-clean-scene-system`  
+**Updated:** 20 May 2026, 15:35 IST  
 **Owner:** Shrikant Yadav / Shrimo Innovations
 
-## Main Project Understanding
+## Project vision
 
-Shrimo Verse is a cinematic, futuristic, black/cyan interactive universe experience. It must not be treated as a normal website, article layout, dashboard, or generic portfolio.
+Shrimo Verse is a cinematic black/cyan interactive universe. It is a futuristic product/game/AI-style portfolio experience where a visitor enters, explores, inspects, and finally reaches a project launch path.
 
-The product experience should feel like:
+It must not be treated as a normal website, dashboard, Bootstrap portfolio, or article-like page.
 
-```txt
-cinematic universe + AI command tool + game-like exploration + portfolio proof system
-```
-
-## Core Experience Flow
+## Core experience
 
 ```txt
-Landing Signal
-→ Launch Sequence
-→ Arrival Core
-→ Technology Orbit
-→ Product Missions
-→ Proof Signals
-→ Client Transmissions
-→ Launch Dock
+Mission Entry
+Launch Sequence
+Arrival Core
+Technology Orbit
+Product Gallery
+Proof Ring
+Client Signals
+Launch Dock
 ```
 
-Each scene should show one main focus, one short message, and one clear next action.
+Each scene has one main focus, one short message, one clear next action, and only the controls required for that state.
 
-## Visual Direction
+## Current cleanup result
 
-Use black and cyan as the core visual system.
+This build removed the earlier patch-stack problem. The previous project had many versioned CSS files and UI guard scripts layered over each other, which caused visual conflicts, duplicate controls, dashboard panels, excessive borders, and overlapping information.
 
-- Background: deep black / near black.
+The clean build now uses responsibility-based CSS and JavaScript.
+
+## Design rules
+
+- Main background: black / deep black.
 - Main UI: cyan.
-- Selected states: cyan only.
-- Controls: black/cyan only.
-- Text: white, soft cyan, muted blue-grey.
-- Orange/yellow: only for rare alerts or one-time special highlights.
+- Text: white, soft cyan, muted grey.
+- Orange/yellow: only for rocket fire, active step bullet, lock-on, click burst, or launch emphasis.
+- No normal website sections.
+- No heavy bordered article cards.
+- No dashboard panels in the main scene.
+- One focus at a time.
+- Mobile first, then tablet, then desktop.
 
-Do not use orange/yellow as normal selected, hover, or active state colors.
+## Current architecture
 
-## v1.3.1 Visual Recovery Fixes
-
-This build fixes the visual direction after v1.3 became too layered and website-like.
-
-### Fixed
-
-1. Hidden dashboard-style `Live Build Deck` by default.
-2. Hidden zoom dock by default.
-3. Converted main mission panel into a lightweight scene caption.
-4. Removed internal scrollbar from the main scene caption.
-5. Reduced the huge center cyan blob into subtle background atmosphere.
-6. Simplified the mobile command dock.
-7. Changed Launch Dock from article-card layout into a clean conversion signal.
-8. Reduced border-heavy confidence cards.
-9. Kept WhatsApp as primary CTA using black/cyan style.
-10. Kept call and email as secondary actions on mobile.
-11. Hid excess social/contact links on mobile to reduce clutter.
-12. Made guide/settings/briefing sheets less visually dominant.
-
-## Mobile-First Rules
-
-Design from 375px first:
-
-- one focus at a time,
-- no horizontal scroll,
-- no overlapping cards,
-- no article-like padding blocks,
-- readable text without zoom,
-- compact bottom HUD,
-- WhatsApp primary at Launch Dock,
-- swipe navigation supported.
-
-Tablet and desktop should enhance the same scene model without exposing too much content at once.
-
-## Performance Modes
-
-The experience supports:
-
-- Essential,
-- Balanced,
-- Cinematic.
-
-Lower quality modes should reduce visual heaviness. Do not only store the mode; visual layers must respond to it.
-
-## Developer Rule
-
-Before packaging any future ZIP, verify:
-
-1. Files exist.
-2. Files are loaded.
-3. Functions are called.
-4. UI states are visible.
-5. Features are validated.
-6. Documentation is updated.
-
-Feature completion chain:
+CSS:
 
 ```txt
-Planned → Coded → Loaded → Wired → Visible → Validated → Documented
+css/portfolio-style.css
+css/modules/01-tokens.css
+css/modules/02-reset-base.css
+css/modules/03-universe-background.css
+css/modules/04-layout-shell.css
+css/modules/05-hud-controls.css
+css/modules/06-scenes.css
+css/modules/07-orbit-system.css
+css/modules/08-panels-drawers.css
+css/modules/09-mobile-first.css
+css/modules/10-motion-accessibility.css
 ```
 
-## Known Limitation
+JavaScript:
 
-This sandbox could validate code/package structure, but final real-device QA still needs to be done on actual Android/iOS phones and tablets.
+```txt
+js/core/state.js
+js/core/dom.js
+js/core/events.js
+js/data/scenes.js
+js/data/skills.js
+js/data/products.js
+js/data/proof.js
+js/data/reviews.js
+js/controllers/app-controller.js
+js/controllers/scene-controller.js
+js/controllers/hud-controller.js
+js/controllers/guide-controller.js
+js/controllers/settings-controller.js
+js/controllers/orbit-controller.js
+js/controllers/launch-controller.js
+js/effects/motion.js
+js/effects/performance.js
+js/effects/gestures.js
+js/effects/starfield.js
+js/cursor-rocket.js
+```
+
+## Future work
+
+Future work should improve one scene at a time, with visual verification after every scene. Do not stack new override files. Do not call a feature complete unless it is planned, coded, loaded, wired, visible, usable, validated, and documented.
+
 
 ---
 
-## v1.3.2 Visual Stability Update — 20 May 2026
+## Rocket Cursor Fix Note
 
-This update fixes screenshot-reported visual breakage from v1.3/v1.3.1. The build removes duplicated desktop HUD controls, restores readable scene brightness, simplifies the landing gate, removes warm/yellow leakage from normal UI states, prevents article-like panels from dominating the screen, and keeps the mobile HUD compact and thumb-friendly. The project remains black/cyan, scene-first, and mobile-first.
+Updated on: 20 May 2026
 
-Important: this is a visual stabilization build. Real mobile-device testing and Lighthouse testing should still be completed before production publishing.
-
-## v1.3.2 Visual Stability Reference
-
-Implementation prompt: `SHRIMO_VERSE_V1_3_2_VISUAL_STABILITY_PROMPT.md`
+The desktop rocket cursor is part of the stable Shrimo Verse identity. It must work from the Mission Entry screen on desktop/fine-pointer devices, must stay above the entry gate/HUD layers, and must remain disabled on mobile/touch devices. Future UI cleanup must not remove or hide this cursor accidentally.

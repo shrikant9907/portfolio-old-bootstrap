@@ -44,9 +44,12 @@
   let hasPointerStarted = false;
 
   function isFinePointerDevice() {
-    const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
-    return !hasTouch && hasFinePointer;
+    // Use any-pointer/any-hover so hybrid laptops with touchscreens still get the desktop rocket
+    // when a real mouse/trackpad is available. The old maxTouchPoints check disabled the cursor
+    // on many desktop machines that report touch capability.
+    const hasAnyFinePointer = window.matchMedia('(any-pointer: fine)').matches || window.matchMedia('(pointer: fine)').matches;
+    const hasAnyHover = window.matchMedia('(any-hover: hover)').matches || window.matchMedia('(hover: hover)').matches;
+    return hasAnyFinePointer && hasAnyHover;
   }
 
   function prefersReducedMotion() {
@@ -54,7 +57,8 @@
   }
 
   function shouldEnableCursor() {
-    return isFinePointerDevice() && !prefersReducedMotion();
+    // Reduced motion should remove trail/noisy animation, not make the desktop cursor disappear.
+    return isFinePointerDevice();
   }
 
   function createCursorMarkup() {
@@ -105,6 +109,7 @@
   }
 
   function createTrail(x, y, isBurst) {
+    if (prefersReducedMotion()) return;
     if (!elements || !elements.trailLayer) return;
 
     const dot = document.createElement('span');
@@ -131,7 +136,10 @@
   }
 
   function handleHoverState(event) {
-    const target = event.target.closest(options.hoverSelector);
+    const eventTarget = event.target;
+    const target = eventTarget && typeof eventTarget.closest === 'function'
+      ? eventTarget.closest(options.hoverSelector)
+      : null;
     document.body.classList.toggle('rocket-cursor-hover', Boolean(target));
   }
 
@@ -187,6 +195,7 @@
 
     elements = createCursorMarkup();
     document.body.classList.add('rocket-cursor-enabled');
+    document.body.classList.toggle('rocket-cursor-reduced-motion', prefersReducedMotion());
 
     bindEvents();
     animationFrameId = window.requestAnimationFrame(animateCursor);
@@ -203,7 +212,8 @@
     document.body.classList.remove(
       'rocket-cursor-enabled',
       'rocket-cursor-hover',
-      'rocket-cursor-pressed'
+      'rocket-cursor-pressed',
+      'rocket-cursor-reduced-motion'
     );
 
     if (elements) {

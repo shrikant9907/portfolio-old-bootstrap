@@ -26,22 +26,16 @@
 }
 
 /* Hide the native cursor only after JS confirms the device supports this effect. */
-body.rocket-cursor-enabled {
-  cursor: none;
-}
-
-body.rocket-cursor-enabled a,
-body.rocket-cursor-enabled button,
-body.rocket-cursor-enabled [role="button"],
-body.rocket-cursor-enabled [data-cursor-lock] {
-  cursor: none;
+body.rocket-cursor-enabled,
+body.rocket-cursor-enabled * {
+  cursor: none !important;
 }
 
 /* Full-screen particle layer. It never blocks clicks because pointer-events is none. */
 .cursor-trail-layer {
   position: fixed;
   inset: 0;
-  z-index: 1199;
+  z-index: 9998;
   pointer-events: none;
   overflow: hidden;
 }
@@ -51,7 +45,7 @@ body.rocket-cursor-enabled [data-cursor-lock] {
   position: fixed;
   left: 0;
   top: 0;
-  z-index: 1200;
+  z-index: 9999;
   width: 28px;
   height: 36px;
   pointer-events: none;
@@ -183,10 +177,12 @@ body.rocket-cursor-pressed .rocket-cursor {
   }
 }
 
-/* Safety: do not show custom cursor on touch devices. */
-@media (hover: none), (pointer: coarse) {
-  body.rocket-cursor-enabled {
-    cursor: auto;
+/* Safety: do not show custom cursor on touch-only devices.
+   Hybrid laptops/tablets with a real mouse should still get the rocket cursor. */
+@media (any-hover: none) and (any-pointer: coarse) {
+  body.rocket-cursor-enabled,
+  body.rocket-cursor-enabled * {
+    cursor: auto !important;
   }
 
   .rocket-cursor,
@@ -195,16 +191,15 @@ body.rocket-cursor-pressed .rocket-cursor {
   }
 }
 
-/* Accessibility: respect reduced motion preference. */
-@media (prefers-reduced-motion: reduce) {
-  body.rocket-cursor-enabled {
-    cursor: auto;
-  }
+/* Accessibility: reduced motion keeps the rocket visible on desktop, but removes trail/noisy flame motion. */
+body.rocket-cursor-reduced-motion .cursor-trail-layer {
+  display: none !important;
+}
 
-  .rocket-cursor,
-  .cursor-trail-layer {
-    display: none !important;
-  }
+body.rocket-cursor-reduced-motion .rocket-flame {
+  height: 8px;
+  opacity: 0.45;
+  animation: none;
 }
 
 /* Shrimo Verse integration: allow existing guide/visibility states to hide the standalone cursor cleanly. */
@@ -215,4 +210,3 @@ body.rocket-cursor-pressed .rocket-cursor {
 body.verse-entered .rocket-cursor {
   filter: drop-shadow(0 0 16px rgba(34, 211, 238, 0.95));
 }
-

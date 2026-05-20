@@ -1,71 +1,37 @@
 # Development Guide — Shrimo Verse
 
-**Current Build:** `shrimo-verse-v1.3.1-visual-recovery`  
-**Updated:** 20 May 2026
+Updated: 20 May 2026, 15:35 IST
 
-## Main Rule
+## First rule
 
-This is not a normal website. Build it like a cinematic black/cyan universe product.
+Read `project-rules.md` before changing code.
 
-## Before Editing
+## Development process
 
-Read:
+1. Audit before coding.
+2. Fix root cause, not symptoms.
+3. Work one scene at a time.
+4. Mobile 375px first.
+5. Tablet second.
+6. Desktop third.
+7. Validate visually before packaging.
 
-1. `about-project.md`
-2. `README.md`
-3. `ProjectStructure.md`
-
-## Local Test
+## Running locally
 
 ```bash
 python3 -m http.server 5500
 ```
 
-Open:
+## Do not do
+
+- Do not add another `v1-x-fix.css` file.
+- Do not add another UI guard script for broken state.
+- Do not show dashboard panels in the main scene.
+- Do not wrap everything in bordered cards.
+- Do not make mobile a squeezed desktop.
+
+## Correct work pattern
 
 ```txt
-http://localhost:5500
+Scene plan → HTML state → CSS layout → JS behavior → visual check → documentation
 ```
-
-## Design Rules
-
-- Mobile first from 375px.
-- One scene focus at a time.
-- No article-style cards in the main view.
-- No heavy borders everywhere.
-- No orange/yellow selected states.
-- Use black/cyan for UI, controls, active states, and selection.
-- Keep Launch Dock simple and conversion-focused.
-- Keep debug/status panels hidden from default cinematic view.
-
-## Completion Rule
-
-A feature is only complete if it is:
-
-```txt
-Planned → Coded → Loaded → Wired → Visible → Validated → Documented
-```
-
-## Visual QA Rule
-
-Before packaging, inspect at least:
-
-- 375px mobile arrival scene,
-- 375px mobile Launch Dock,
-- desktop arrival scene,
-- guide open,
-- settings open.
-
-Do not ship if content overlaps, panels scroll internally in the main scene, or the screen feels like a website/dashboard.
-
----
-
-## v1.3.2 Visual Stability Update — 20 May 2026
-
-This update fixes screenshot-reported visual breakage from v1.3/v1.3.1. The build removes duplicated desktop HUD controls, restores readable scene brightness, simplifies the landing gate, removes warm/yellow leakage from normal UI states, prevents article-like panels from dominating the screen, and keeps the mobile HUD compact and thumb-friendly. The project remains black/cyan, scene-first, and mobile-first.
-
-Important: this is a visual stabilization build. Real mobile-device testing and Lighthouse testing should still be completed before production publishing.
-
-## v1.3.2 Visual Stability Reference
-
-Implementation prompt: `SHRIMO_VERSE_V1_3_2_VISUAL_STABILITY_PROMPT.md`

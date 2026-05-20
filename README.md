@@ -1,18 +1,31 @@
-# Shrimo Verse
+# Shrimo Verse — Clean Scene System
 
-> New developer note: read [`about-project.md`](./about-project.md) first. It explains the complete project vision, scene flow, mobile-first rules, visual system, and future direction.
+> Start here: read `project-rules.md` first, then `about-project.md`.
 
-## Current Build
+**Current Build:** `shrimo-verse-clean-scene-system`  
+**Updated:** 20 May 2026, 15:35 IST  
+**Owner:** Shrikant Yadav / Shrimo Innovations
 
-**Version:** `shrimo-verse-v1.3.1-visual-recovery`  
-**Updated:** 20 May 2026  
-**Purpose:** Visual recovery and cleanup after v1.3 became too panel-heavy and website-like.
+## What changed in this build
 
-## What This Project Is
+This build fixes the root cause of the broken UI by removing stacked version/recovery layers and rebuilding the visible experience as a clean scene-first system.
 
-Shrimo Verse is a cinematic black/cyan universe experience for Shrikant Yadav / Shrimo Innovations. It is not a normal portfolio website. It should feel like a futuristic product/game/AI command universe where visitors explore identity, skills, products, proof, reviews, and finally the Launch Dock.
+The project is still static HTML/CSS/JavaScript. It was not converted to React or any framework.
 
-## Main Testing Command
+## Required root docs
+
+```txt
+README.md
+about-project.md
+project-rules.md
+CHANGELOG.md
+ProjectStructure.md
+DEVELOPMENT_GUIDE.md
+TESTING_CHECKLIST.md
+ROOT_CLEANUP_AUDIT.md
+```
+
+## Local testing
 
 ```bash
 python3 -m http.server 5500
@@ -24,61 +37,33 @@ Open:
 http://localhost:5500
 ```
 
-## v1.3.1 Visual Recovery Notes
+## Scene flow
 
-This version focuses on clean experience design:
-
-- hides dashboard-style `Live Build Deck` by default,
-- removes heavy article-card styling from the main scene,
-- simplifies Launch Dock into a clean conversion signal,
-- reduces excessive borders and padding,
-- keeps black/cyan as the main UI system,
-- reduces the large center background blob,
-- keeps mobile controls compact and thumb-friendly,
-- avoids overlapping information layers.
+```txt
+Mission Entry → Launch Sequence → Arrival Core → Technology Orbit → Product Gallery → Proof Ring → Client Signals → Launch Dock
+```
 
 ## Controls
 
-```txt
-1-6  -> jump scenes
-[    -> previous scene
-]    -> next scene
-M    -> mission briefing
-Q    -> quality mode
-Esc  -> close active panel
-Swipe left/right on mobile -> next/previous scene
-```
-
-## Required Root Docs
-
-These must always stay in the root of every ZIP:
+Desktop:
 
 ```txt
-README.md
-about-project.md
+[ / ] = previous / next scene
+1–6 = jump to scenes
+Esc = close open panel
 ```
 
-Also keep:
+Mobile:
 
 ```txt
-CHANGELOG.md
-ProjectStructure.md
-DEVELOPMENT_GUIDE.md
-TESTING_CHECKLIST.md
+Bottom dock + swipe left/right
 ```
 
-## Important Rule
+## Developer note
 
-A feature is complete only when it is planned, coded, loaded, wired, visible, validated, and documented.
+Do not add another visual recovery CSS file. If something breaks visually, audit the root cause and update the responsibility-based CSS/JS module that owns it.
 
----
 
-## v1.3.2 Visual Stability Update — 20 May 2026
+## Rocket Cursor Fix Note
 
-This update fixes screenshot-reported visual breakage from v1.3/v1.3.1. The build removes duplicated desktop HUD controls, restores readable scene brightness, simplifies the landing gate, removes warm/yellow leakage from normal UI states, prevents article-like panels from dominating the screen, and keeps the mobile HUD compact and thumb-friendly. The project remains black/cyan, scene-first, and mobile-first.
-
-Important: this is a visual stabilization build. Real mobile-device testing and Lighthouse testing should still be completed before production publishing.
-
-## v1.3.2 Visual Stability Reference
-
-Implementation prompt: `SHRIMO_VERSE_V1_3_2_VISUAL_STABILITY_PROMPT.md`
+This build restores the desktop rocket cursor. It is enabled only on devices with a fine pointer/hover support and remains disabled on touch/mobile devices. Reduced-motion mode keeps the cursor visible but removes the trail/noisy flame motion.

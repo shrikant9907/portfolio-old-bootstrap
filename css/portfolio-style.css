@@ -1,22 +1,14 @@
 /*
- * Shrimo Verse style manifest
- * ---------------------------
- * The design is split into ordered partials for easier maintenance.
- * Keep this file as the single stylesheet entry in index.html.
+ * Shrimo Verse clean scene system
+ * Responsibility-based CSS only. Do not add version override files.
  */
-@import url("./modules/01-foundation.css");
-@import url("./modules/02-separated-layers.css");
-@import url("./modules/03-polish-overrides.css");
-@import url("./modules/04-cinematic-upgrade.css");
-@import url("./modules/05-third-party-cinematic.css");
-
-@import url("./modules/06-command-deck-and-polish.css");
-@import url("./modules/07-mission-briefing-performance.css");
-
-@import url("./modules/08-v1-experience-flow.css");
-@import url("./modules/09-v1-1-cinematic-polish.css");
-@import url("./modules/10-v1-2-mobile-first-polish.css");
-@import url("./modules/11-v1-3-cinematic-universe-ui.css");
-@import url("./modules/12-v1-3-1-visual-recovery.css");
-
-@import url("./modules/13-v1-3-2-visual-stability.css");
+@import url("./modules/01-tokens.css");
+@import url("./modules/02-reset-base.css");
+@import url("./modules/03-universe-background.css");
+@import url("./modules/04-layout-shell.css");
+@import url("./modules/05-hud-controls.css");
+@import url("./modules/06-scenes.css");
+@import url("./modules/07-orbit-system.css");
+@import url("./modules/08-panels-drawers.css");
+@import url("./modules/09-mobile-first.css");
+@import url("./modules/10-motion-accessibility.css");

@@ -1,69 +1,67 @@
 # Testing Checklist — Shrimo Verse
 
-**Current Build:** `shrimo-verse-v1.3.1-visual-recovery`  
-**Updated:** 20 May 2026
+Updated: 20 May 2026, 15:35 IST
 
-## Package Validation
+## Package validation
 
 - [ ] JavaScript syntax passes.
 - [ ] CSS imports exist.
-- [ ] CSS brace count is valid.
 - [ ] HTML local file references exist.
 - [ ] No duplicate IDs.
 - [ ] No duplicate scripts.
-- [ ] README.md exists in root.
-- [ ] about-project.md exists in root.
 - [ ] ZIP integrity passes.
+- [ ] `.git`, `.github`, `.agents`, `.codex`, `node_modules`, and backup folders are excluded.
+- [ ] `README.md`, `about-project.md`, and `project-rules.md` exist at root.
 
-## Mobile Visual QA — 375px
+## Mobile 375px visual QA
 
-- [ ] Landing Signal is clean and not website-like.
-- [ ] Arrival Core has one clear focus.
-- [ ] Mission caption does not have internal scrollbar.
-- [ ] Bottom HUD does not cover important content.
-- [ ] Launch Dock is not an article card.
-- [ ] WhatsApp CTA is primary.
-- [ ] Call and Email are secondary.
+- [ ] Mission Entry fits without overlap.
+- [ ] CTA does not overlap text.
+- [ ] Arrival Core has one focus.
+- [ ] Technology Orbit nodes are tappable.
+- [ ] Product Gallery shows focused beacons.
+- [ ] Launch Dock WhatsApp CTA is clear.
+- [ ] Bottom dock does not hide important content.
 - [ ] No horizontal scroll.
-- [ ] No orange/yellow selected states.
+- [ ] Guide appears above bottom controls.
+- [ ] Settings is a readable bottom sheet.
 
-## Tablet QA — 768px
+## Tablet 768px visual QA
 
-- [ ] Same scene model works with more space.
-- [ ] Controls remain touch-friendly.
-- [ ] Panels do not overlap.
+- [ ] Scene still feels focused.
+- [ ] Touch controls remain usable.
+- [ ] Panels do not compete with core.
 
-## Desktop QA — 1366px+
+## Desktop 1366px visual QA
 
-- [ ] Scene feels cinematic, not like a dashboard.
-- [ ] Debug deck is not visible by default.
-- [ ] Guide/settings panels do not compete with the main scene.
-- [ ] Background supports content and does not cover it.
+- [ ] Mission Entry feels cinematic.
+- [ ] SV core is protected.
+- [ ] HUD is minimal, not navbar-like.
+- [ ] No dashboard/live-deck appears by default.
+- [ ] Guide does not block core.
+- [ ] Settings does not cover main focus.
+- [ ] Launch Dock feels like final destination, not footer.
 
-## Real Device QA Still Needed
+## Browser/device testing to do locally
 
-Test on:
-
+- [ ] Chrome desktop.
+- [ ] Firefox desktop.
 - [ ] Android Chrome.
 - [ ] iPhone Safari.
-- [ ] Tablet browser.
-- [ ] Desktop Chrome/Firefox/Edge.
+- [ ] Reduced motion mode.
+- [ ] Slow mobile device if available.
 
-## Performance QA Still Needed
+## Honesty rule
 
-- [ ] Lighthouse mobile target checked after hosting.
-- [ ] Low-end Android performance checked.
-- [ ] Reduced motion checked.
-- [ ] Essential/Balanced/Cinematic modes checked visually.
+Do not claim Lighthouse scores or real device testing unless actually measured.
 
----
 
-## v1.3.2 Visual Stability Update — 20 May 2026
+## Rocket Cursor Desktop Test
 
-This update fixes screenshot-reported visual breakage from v1.3/v1.3.1. The build removes duplicated desktop HUD controls, restores readable scene brightness, simplifies the landing gate, removes warm/yellow leakage from normal UI states, prevents article-like panels from dominating the screen, and keeps the mobile HUD compact and thumb-friendly. The project remains black/cyan, scene-first, and mobile-first.
-
-Important: this is a visual stabilization build. Real mobile-device testing and Lighthouse testing should still be completed before production publishing.
-
-## v1.3.2 Visual Stability Reference
-
-Implementation prompt: `SHRIMO_VERSE_V1_3_2_VISUAL_STABILITY_PROMPT.md`
+- [ ] On desktop/mouse device, the native cursor is hidden and the cyan rocket cursor is visible on the Mission Entry screen.
+- [ ] Rocket cursor stays visible above the entry gate, HUD, guide, and settings layers.
+- [ ] Rocket flame/trail appears when moving on normal motion mode.
+- [ ] Hovering buttons/particles changes rocket hover state.
+- [ ] Clicking creates a small burst.
+- [ ] On mobile/touch devices, rocket cursor is disabled and normal touch controls work.
+- [ ] In reduced-motion mode, cursor remains visible on desktop but trail/noisy flame motion is reduced.

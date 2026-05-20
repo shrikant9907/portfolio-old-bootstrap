@@ -1,0 +1,78 @@
+.shrimo-verse-shell::before,
+.shrimo-verse-shell::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+.shrimo-verse-shell::before {
+  z-index: 0;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(34, 211, 238, 0.12), transparent 26%),
+    radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.06), transparent 28%),
+    radial-gradient(circle at 80% 72%, rgba(34, 211, 238, 0.04), transparent 26%),
+    linear-gradient(180deg, #020305 0%, #05070a 58%, #020305 100%);
+}
+.shrimo-verse-shell::after {
+  z-index: 1;
+  opacity: 0.38;
+  background-image:
+    radial-gradient(circle, rgba(165, 243, 252, 0.54) 0 1px, transparent 1.6px),
+    radial-gradient(circle, rgba(34, 211, 238, 0.3) 0 1px, transparent 1.4px);
+  background-size: 170px 170px, 270px 270px;
+  background-position: 12px 18px, 90px 70px;
+  animation: starDrift 34s linear infinite;
+}
+@keyframes starDrift { to { transform: translate3d(-80px, 60px, 0); } }
+
+.star-canvas,
+.three-universe-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.55;
+}
+.three-universe-canvas { display: none; }
+
+.space-aura {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  width: min(78vw, 780px);
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0.75;
+  background:
+    radial-gradient(circle, rgba(34, 211, 238, 0.11), rgba(34, 211, 238, 0.045) 38%, transparent 68%);
+  filter: blur(2px);
+}
+.orbit-field {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+}
+.orbit-line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border: 1px solid rgba(34, 211, 238, 0.16);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(-11deg);
+  box-shadow: 0 0 50px rgba(34, 211, 238, 0.045);
+}
+.orbit-large { width: min(82vw, 740px); aspect-ratio: 1 / .62; }
+.orbit-mid { width: min(62vw, 540px); aspect-ratio: 1 / .64; opacity: .74; transform: translate(-50%, -50%) rotate(18deg); }
+.orbit-small { width: min(40vw, 340px); aspect-ratio: 1 / .68; opacity: .62; transform: translate(-50%, -50%) rotate(42deg); }
+
+.shrimo-verse-shell[data-quality-mode="essential"] .space-aura,
+.shrimo-verse-shell[data-device-capability="low"] .space-aura { opacity: .42; filter: none; }
+.shrimo-verse-shell[data-quality-mode="essential"] .orbit-large,
+.shrimo-verse-shell[data-quality-mode="essential"] .orbit-mid,
+.shrimo-verse-shell[data-quality-mode="essential"] .orbit-small { opacity: .38; }
