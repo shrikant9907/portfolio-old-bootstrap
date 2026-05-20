@@ -7,6 +7,8 @@
   const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const isTouch = !hasFinePointer && (navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches);
 
+  const GUIDE_SESSION_KEY = 'shrimoVerseGuideSeenThisSession';
+
   const ZONES = [
     { name: 'Arrival Core', hint: 'Start from the center.', title: 'Shrimo Verse Core', kicker: 'ARRIVAL CORE', copy: 'The SV core stays fixed while every layer opens around it.' },
     { name: 'Technology Orbit', hint: 'Skills and tools around the core.', title: 'Technology Orbit', kicker: 'TECHNOLOGY ORBIT', copy: 'Inspect skills, tools, and deeper capabilities around the core.' },
@@ -361,7 +363,7 @@
       isLaunching = true;
       launchStart = performance.now();
       els.enterVerse.disabled = true;
-      els.enterVerse.textContent = 'Entering...';
+      els.enterVerse.textContent = 'STARTING';
       els.entryGate.classList.add('is-launching');
       document.body.classList.add('is-entering-verse');
       const statusSteps = [
@@ -401,18 +403,18 @@
         isLaunching = false;
         rocketCentering = false;
         setZone(0);
-        window.setTimeout(() => { document.body.classList.add('first-guide-visible'); startGuide(); }, prefersReducedMotion ? 120 : 200);
+        window.setTimeout(() => startInitialGuide(), prefersReducedMotion ? 180 : 260);
       }, prefersReducedMotion ? 180 : 2400);
     });
   }
 
   function bindControls() {
-    els.guidedMode.addEventListener('click', () => { stopAutoFlight(); startGuide(); setControlActive(els.guidedMode); });
+    els.guidedMode.addEventListener('click', () => { stopAutoFlight(); startGuide({ manual: true }); setControlActive(els.guidedMode); });
     els.exploreMode.addEventListener('click', () => { stopAutoFlight(); setControlActive(els.exploreMode); setZone(1); });
     els.autoFlight.addEventListener('click', () => toggleAutoFlight());
     els.pauseOrbit.addEventListener('click', () => togglePause());
     els.returnCore.addEventListener('click', () => returnToCore());
-    els.replayGuide.addEventListener('click', () => startGuide());
+    els.replayGuide.addEventListener('click', () => startGuide({ manual: true }));
     els.brandReset.addEventListener('click', () => returnToCore());
     els.zoomIn.addEventListener('click', () => { stopAutoFlight(); setZoom(zoom + .15); });
     els.zoomOut.addEventListener('click', () => { stopAutoFlight(); setZoom(zoom - .15); });
@@ -424,11 +426,11 @@
     els.guideBack.addEventListener('click', () => stepGuide(-1));
     els.guideNext.addEventListener('click', () => stepGuide(1));
     $$('[data-action="auto"]').forEach(btn => btn.addEventListener('click', startAutoFlight));
-    $$('[data-action="guide"]').forEach(btn => btn.addEventListener('click', startGuide));
+    $$('[data-action="guide"]').forEach(btn => btn.addEventListener('click', () => startGuide({ manual: true })));
     $$('[data-mobile]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const action = btn.dataset.mobile;
-        if (action === 'guide') startGuide();
+        if (action === 'guide') startGuide({ manual: true });
         if (action === 'explore') { stopAutoFlight(); setControlActive(els.exploreMode); setZone(1); }
         if (action === 'auto') startAutoFlight();
         if (action === 'core') returnToCore();
@@ -552,6 +554,7 @@
     els.stateHint.textContent = z.hint;
     els.launchDock.classList.toggle('is-visible', currentZone === 5);
     els.stage.dataset.zone = String(currentZone);
+    document.body.dataset.scene = z.name.toLowerCase().replace(/\s+/g, '-');
     $$('.mobile-zone-dots button').forEach(btn => {
       const isActive = Number(btn.dataset.zone) === currentZone;
       btn.classList.toggle('is-active', isActive);
@@ -651,7 +654,19 @@
     document.body.classList.remove('cursor-lock');
   }
 
-  function startGuide() {
+  function startInitialGuide() {
+    let seen = false;
+    try {
+      seen = window.sessionStorage.getItem(GUIDE_SESSION_KEY) === 'true';
+    } catch (error) {
+      seen = false;
+    }
+    if (seen) return;
+    document.body.classList.add('first-guide-visible');
+    startGuide({ initial: true });
+  }
+
+  function startGuide(options = {}) {
     stopAutoFlight();
     guideIndex = 0;
     els.guideOverlay.classList.add('is-visible');
@@ -667,6 +682,10 @@
 
   function stepGuide(direction) {
     if (direction > 0 && guideIndex === GUIDE.length - 1) {
+      try {
+        window.sessionStorage.setItem(GUIDE_SESSION_KEY, 'true');
+      } catch (error) {}
+      document.body.classList.remove('first-guide-visible');
       closeGuide();
       return;
     }
@@ -730,11 +749,23 @@
 
   function updateShip(time = performance.now()) {
     if (isTouch || prefersReducedMotion || !els.ship || pageHidden) return;
-    shipPos.x += (shipTarget.x - shipPos.x) * 0.2;
-    shipPos.y += (shipTarget.y - shipPos.y) * 0.2;
+
+    const target = rocketCentering
+      ? { x: window.innerWidth / 2, y: window.innerHeight / 2 }
+      : shipTarget;
+
+    const easing = rocketCentering ? 0.085 : 0.2;
+    shipPos.x += (target.x - shipPos.x) * easing;
+    shipPos.y += (target.y - shipPos.y) * easing;
+
     shipAngle = Math.atan2(shipPos.y - prevMouse.y, shipPos.x - prevMouse.x) * 180 / Math.PI + 90;
     const distance = Math.hypot(shipPos.x - prevMouse.x, shipPos.y - prevMouse.y);
-    if (distance > 3 && time - lastTrailTime > 28) createTrail(shipPos.x, shipPos.y, false);
+
+    const trailDelay = rocketCentering ? 12 : 28;
+    if (distance > 3 && time - lastTrailTime > trailDelay) {
+      createTrail(shipPos.x, shipPos.y, rocketCentering && distance > 10);
+    }
+
     positionShip(shipPos.x, shipPos.y);
     prevMouse = { ...shipPos };
     if (distance > 3) lastTrailTime = time;
@@ -920,7 +951,7 @@
       canvas.style.width = `${window.innerWidth}px`;
       canvas.style.height = `${window.innerHeight}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const count = Math.max(140, Math.min(isTouch ? 210 : 380, Math.floor(window.innerWidth * window.innerHeight / (isTouch ? 9000 : 6200))));
+      const count = Math.max(isTouch ? 170 : 240, Math.min(isTouch ? 260 : 520, Math.floor(window.innerWidth * window.innerHeight / (isTouch ? 7600 : 4300))));
       stars = Array.from({ length: count }, () => {
         const star = {};
         resetStar(star, true);
@@ -972,7 +1003,7 @@
       const cx = w / 2;
       const cy = h / 2;
       const launchElapsed = time - launchStart;
-      const launchT = (isLaunching && launchElapsed > 800) ? Math.min(1, (launchElapsed - 800) / 1600) : 0;
+      const launchT = (isLaunching && launchElapsed > 350) ? Math.min(1, (launchElapsed - 350) / 1550) : 0;
       ctx.clearRect(0, 0, w, h);
       ctx.fillStyle = '#030508';
       ctx.fillRect(0, 0, w, h);
@@ -984,7 +1015,7 @@
             const dx = star.x - cx;
             const dy = star.y - cy;
             const len = Math.hypot(dx, dy) || 1;
-            const boost = 1.2 + launchT * 15;
+            const boost = 1.9 + launchT * 26;
             star.x += (dx / len) * boost;
             star.y += (dy / len) * boost;
             if (star.x < -80 || star.x > w + 80 || star.y < -80 || star.y > h + 80) resetStar(star, false);
@@ -994,12 +1025,12 @@
           }
         }
 
-        const alpha = Math.min(.76, star.a + launchT * .42);
+        const alpha = Math.min(.92, star.a + launchT * .56);
         if (launchT > .08) {
           const dx = star.x - cx;
           const dy = star.y - cy;
           const len = Math.hypot(dx, dy) || 1;
-          const tail = 8 + launchT * 34;
+          const tail = 14 + launchT * 62;
           ctx.beginPath();
           ctx.moveTo(star.x, star.y);
           ctx.lineTo(star.x - (dx / len) * tail, star.y - (dy / len) * tail);

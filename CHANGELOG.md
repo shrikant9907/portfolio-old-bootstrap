@@ -1,5 +1,46 @@
 # Changelog
 
+## Phase 1 Entry Background Only — 20 May 2026, 18:05 IST
+
+- Hid skill labels and inner scene content before the user clicks Start.
+- Kept the animated universe background visible on the first screen.
+- Kept subtle SV core/background atmosphere allowed before Start.
+- Skills/tools now appear only after the user starts the journey.
+- Added `steps/18-phase-1-entry-background-only.md`.
+- Updated Mission Entry, Launch Sequence, and Arrival Core screen contracts.
+- Updated README, about-project, and testing checklist.
+
+
+# Changelog
+
+## Phase 1 Start Flow Refinement — 20 May 2026, 17:55 IST
+
+- Changed entry heading to `Welcome to Shrimo Verse.`
+- Changed entry CTA to `Start`.
+- Reduced excessive line spacing on the entry screen.
+- Made entry screen use the same universe/stage background instead of feeling separate.
+- Improved desktop launch so the rocket moves toward the center after Start.
+- Increased launch star/particle travel speed for a stronger movement feeling.
+- Added `steps/17-phase-1-start-flow-refinement.md`.
+- Updated Phase 1 screen contracts and testing checklist.
+
+
+# Changelog
+
+## Phase 1 — Entry / Launch / Arrival Update — 20 May 2026, 17:35 IST
+
+- Improved Mission Entry first impression with stronger circular black/cyan atmosphere.
+- Added stronger launch-state animation behavior without adding a new CSS file.
+- Preserved background continuity from entry into Arrival Core.
+- Improved desktop previous/next arrow visibility after entry.
+- Improved first tutorial behavior after user enters the journey.
+- Reduced oversized heading/radius behavior in Phase 1 areas.
+- Added `steps/16-phase-1-entry-launch-arrival.md`.
+- Updated Phase 1 screen contracts.
+
+
+# Changelog
+
 ## Screen Contracts and Meaningful Change Protocol Added — 20 May 2026, 17:05 IST
 
 - Added `steps/screen-contracts/` as the source of truth for every original screen/scene.

@@ -195,3 +195,47 @@ After changing this scene, verify:
 ```txt
 Planned → Coded → Loaded → Wired → Visible → Usable → Validated → Documented
 ```
+
+
+---
+
+## Phase 1 Implementation Status
+
+**Updated:** 20 May 2026, 17:35 IST
+
+This screen was included in Phase 1.
+
+The implementation must now be checked against this file before further changes.  
+Future changes should update this contract first, then code.
+
+
+---
+
+## Phase 1 Start Flow Refinement
+
+**Updated:** 20 May 2026, 17:55 IST
+
+This contract now includes the Start-flow refinement:
+
+- Entry heading must be `Welcome to Shrimo Verse.`
+- Entry CTA must be `Start`.
+- Entry screen must use the same universe background as the inner journey.
+- Text spacing must be tight and cinematic, not loose like a website hero.
+- Desktop Start click must make the rocket feel like it is moving toward the center.
+- Launch particles/stars must travel outward with speed.
+- Mobile, tablet, and desktop behavior must stay separately planned.
+
+
+---
+
+## Phase 1 Entry Background Only Decision
+
+**Updated:** 20 May 2026, 18:05 IST
+
+Before Start:
+
+- Show the animated universe background only.
+- Do not show skill labels or technology particles.
+- Do not show inner scene text, HUD, guide, products, proof, reviews, or Launch Dock.
+- A subtle SV core/atmosphere may remain as part of the background.
+- Skills/tools should begin appearing only after the user starts the journey and reaches Arrival Core / Technology Orbit.

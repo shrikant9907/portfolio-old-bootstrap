@@ -196,3 +196,17 @@ steps/screen-contracts/
 These files are the source of truth for how each screen works.
 
 Future changes must be meaningful and must connect to a screen contract, not chat-only planning.
+
+## Phase 1 Start Flow Refinement
+
+**Updated:** 20 May 2026, 17:55 IST
+
+Phase 1 now defines the entry screen as part of the same universe background, not a separate hero screen. The Start action should feel like the user is beginning travel into the center of Shrimo Verse.
+
+## Phase 1 Entry Background Only
+
+**Updated:** 20 May 2026, 18:05 IST
+
+The Mission Entry screen now keeps the same universe background but hides skill particles and inner journey content until the user clicks Start.
+
+This keeps the first screen clean and prevents early clutter.

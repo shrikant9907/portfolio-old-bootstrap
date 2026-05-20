@@ -195,3 +195,52 @@ Every screen contract defines:
 - safe zones,
 - failure risks,
 - acceptance criteria.
+
+## Phase 1 Entry Launch Arrival Update
+
+**Updated:** 20 May 2026, 17:35 IST
+
+Phase 1 improves only:
+
+```txt
+Mission Entry → Launch Sequence → Arrival Core
+```
+
+See:
+
+```txt
+steps/16-phase-1-entry-launch-arrival.md
+```
+
+## Phase 1 Start Flow Refinement
+
+**Updated:** 20 May 2026, 17:55 IST
+
+The entry screen now follows the refined Phase 1 contract:
+
+```txt
+Heading: Welcome to Shrimo Verse.
+CTA: Start
+Background: same universe background as inner journey
+Launch: rocket moves toward center on desktop, particles travel outward faster
+```
+
+See:
+
+```txt
+steps/17-phase-1-start-flow-refinement.md
+```
+
+## Phase 1 Entry Background Only
+
+**Updated:** 20 May 2026, 18:05 IST
+
+Before the user clicks **Start**, the first screen must show only the animated universe background and entry content.
+
+Skills/tools/inner scene content are hidden until the journey starts.
+
+See:
+
+```txt
+steps/18-phase-1-entry-background-only.md
+```
