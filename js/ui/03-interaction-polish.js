@@ -17,7 +17,7 @@
     const { els, state, config } = context;
     const { $$ } = SV.dom;
 
-    const MAGNETIC_SELECTOR = '.hud-btn, .mission-btn, .launch-primary-btn, .product-btn, .verse-node, .world-dot, .sv-core';
+    const MAGNETIC_SELECTOR = '.hud-btn, .mission-btn, .launch-primary-btn, .product-btn, .briefing-actions button, .quality-switch button, .briefing-close, .verse-node, .world-dot, .sv-core';
     const magneticCleanups = [];
 
     function init() {

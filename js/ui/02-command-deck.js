@@ -44,7 +44,7 @@
       const realTyped = SV.vendor?.hasRealTyped;
       const baseMetrics = config.systemMetrics || [];
 
-      return baseMetrics.map((metric) => {
+      const resolved = baseMetrics.map((metric) => {
         if (metric.id === 'webgl') {
           return {
             ...metric,
@@ -68,6 +68,19 @@
         }
         return metric;
       });
+
+      resolved.push({
+        id: 'quality',
+        label: 'Quality',
+        value: formatMode(state.performanceMode || 'Auto'),
+        desc: 'Adaptive visual mode keeps the universe smooth.'
+      });
+
+      return resolved;
+    }
+
+    function formatMode(mode) {
+      return String(mode || 'auto').charAt(0).toUpperCase() + String(mode || 'auto').slice(1);
     }
 
     function updateZone(zoneIndex, options = {}) {
@@ -120,6 +133,8 @@
       if (!metric) return;
       const input = state.lastInteractionType === 'touch' ? 'Touch' : 'Keyboard + Mouse';
       metric.textContent = `${input} · ${Math.min(state.runtimeFps || 0, 60)}fps`;
+      const quality = $('[data-metric="quality"] strong', els.deckMetrics);
+      if (quality) quality.textContent = formatMode(state.performanceMode || 'Auto');
     }
 
     function bindVisibilityObserver() {

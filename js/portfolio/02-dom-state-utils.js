@@ -58,7 +58,15 @@
       deckProgressBar: $('#deckProgressBar'),
       deckMetrics: $('#deckMetrics'),
       deckAdvisor: $('#deckAdvisor'),
+      performanceDirector: $('#performanceDirector'),
+      qualitySwitch: $('#qualitySwitch'),
       missionIntelligence: $('#missionIntelligence'),
+      briefingOpen: $('#briefingOpen'),
+      missionBriefing: $('#missionBriefing'),
+      briefingClose: $('#briefingClose'),
+      briefingZone: $('#briefingZone'),
+      briefingTitle: $('#briefingTitle'),
+      briefingBody: $('#briefingBody'),
       intelFocus: $('#intelFocus'),
       intelProof: $('#intelProof'),
       launchDock: $('#launchDock'),
@@ -100,7 +108,10 @@
       hoverTooltipTimer: null,
       lastInteractionType: 'mouse',
       runtimeFps: 0,
-      activeEngine: 'fallback'
+      activeEngine: 'fallback',
+      performanceMode: '',
+      lowFpsSamples: 0,
+      briefingOpen: false
     };
   }
 

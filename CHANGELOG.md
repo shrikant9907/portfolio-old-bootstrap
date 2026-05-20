@@ -92,3 +92,16 @@
 - Added `css/modules/06-command-deck-and-polish.css` to keep the new cockpit and interaction layer isolated from the base visual system.
 - Switched CDN library tags from `async` to `defer` so vendor bridge detection is more reliable while still preserving fallback behavior.
 - Kept the project static, SEO-readable, and deployable without a build step.
+
+
+## v0.0.5 - Mission Briefing and Performance Director upgrade
+
+- Added Mission Briefing drawer for deeper case-study storytelling and developer explanation per zone.
+- Added `js/ui/04-mission-briefing.js` to keep briefing behavior isolated from the main controller.
+- Added Performance Director with Essential, Balanced, and Cinematic modes.
+- Added `js/ui/05-performance-director.js` for quality switching, local preference persistence, keyboard shortcut support, and FPS-based downgrade protection.
+- Added `css/modules/07-mission-briefing-performance.css` for the new drawer, quality selector, and mode-specific visual tuning.
+- Added `M` shortcut to open Mission Briefing and `Q` shortcut to cycle visual quality.
+- Updated the cinematic universe renderer so canvas particle counts can respond to selected performance mode.
+- Fixed duplicated guide action markup in `index.html`.
+- Kept the project static, modular, SEO-readable, and deployable without a build step.

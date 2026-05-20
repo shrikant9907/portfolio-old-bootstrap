@@ -144,6 +144,14 @@
         </div>
         <div class="deck-progress" aria-hidden="true"><span id="deckProgressBar"></span></div>
         <div class="deck-grid" id="deckMetrics" aria-label="Runtime and product metrics"></div>
+        <div class="performance-director" id="performanceDirector" aria-label="Performance quality selector">
+          <span>Performance Mode</span>
+          <div class="quality-switch" id="qualitySwitch" role="group" aria-label="Choose visual quality">
+            <button type="button" data-quality="essential">Essential</button>
+            <button type="button" data-quality="balanced">Balanced</button>
+            <button type="button" data-quality="cinematic">Cinematic</button>
+          </div>
+        </div>
         <p class="deck-advisor" id="deckAdvisor">System ready. Enter the verse to inspect skills, products, proof, and contact paths.</p>
       </aside>
 
@@ -202,6 +210,7 @@
         <div class="mission-actions" id="missionActions">
           <button type="button" class="mission-btn primary" data-action="auto">Start Auto Flight</button>
           <button type="button" class="mission-btn secondary" data-action="guide">Learn Controls</button>
+          <button type="button" class="mission-btn tertiary" id="briefingOpen">Mission Briefing</button>
         </div>
       </section>
 
@@ -225,6 +234,15 @@
         <p id="tooltipDesc">Used to build dynamic interfaces.</p>
         <p class="tooltip-use" id="tooltipUse"></p>
         <a id="tooltipLink" class="tooltip-link" href="#" target="_blank" rel="noopener">Open path</a>
+      </aside>
+
+      <aside class="mission-briefing" id="missionBriefing" aria-hidden="true" role="dialog" aria-modal="false" aria-labelledby="briefingTitle">
+        <div class="mission-briefing__shell">
+          <button class="briefing-close" id="briefingClose" type="button" aria-label="Close mission briefing">×</button>
+          <p class="briefing-kicker" id="briefingZone">Mission Briefing</p>
+          <h2 id="briefingTitle">How this zone proves the build</h2>
+          <div class="briefing-body" id="briefingBody"></div>
+        </div>
       </aside>
 
       <section class="launch-dock" id="launchDock" aria-label="Launch Dock contact paths">
@@ -275,6 +293,8 @@
   <script src="js/ui/01-typed-terminal.js" defer></script>
   <script src="js/ui/02-command-deck.js" defer></script>
   <script src="js/ui/03-interaction-polish.js" defer></script>
+  <script src="js/ui/04-mission-briefing.js" defer></script>
+  <script src="js/ui/05-performance-director.js" defer></script>
   <script src="js/portfolio/06-main-controller.js" defer></script>
 </body>
 </html>

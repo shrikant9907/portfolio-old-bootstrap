@@ -1,4 +1,4 @@
-# Project Structure - Shrimo Verse v0.0.3
+# Project Structure - Shrimo Verse v0.0.5
 
 ## Core idea
 
@@ -47,3 +47,22 @@ css/modules/06-command-deck-and-polish.css
 ```
 
 Keep future advanced UI layers isolated in `js/ui/` and `css/modules/` instead of adding more logic to `06-main-controller.js`.
+
+
+## v0.0.5 structure additions
+
+```txt
+js/ui/04-mission-briefing.js
+  Drawer-style product/developer briefing for the active zone, selected product, proof signal, review signal, and launch path.
+
+js/ui/05-performance-director.js
+  Visual quality controller with Essential, Balanced, and Cinematic modes plus light FPS-based downgrade protection.
+
+css/modules/07-mission-briefing-performance.css
+  Styling for the briefing drawer, performance mode switcher, and quality-level visual states.
+```
+
+Keyboard shortcuts added in v0.0.5:
+
+- `M` opens Mission Briefing.
+- `Q` cycles Essential, Balanced, and Cinematic quality modes.

@@ -20,6 +20,13 @@
     let rendererApi = null;
     let started = false;
 
+    function qualityMultiplier() {
+      const mode = state.performanceMode || 'balanced';
+      if (mode === 'essential') return 0.42;
+      if (mode === 'balanced') return 0.72;
+      return 1;
+    }
+
     function init() {
       if (!canvas || !stage) return;
 
@@ -68,6 +75,11 @@
       if (canvas) canvas.classList.toggle('is-paused', paused);
     }
 
+    function setQuality(mode) {
+      if (canvas) canvas.dataset.quality = mode;
+      rendererApi?.setQuality?.(mode);
+    }
+
     function tryCreateThreeRenderer() {
       const THREE = window.THREE;
       if (!THREE || !canvas) return null;
@@ -78,7 +90,7 @@
         const camera = new THREE.PerspectiveCamera(58, 1, 0.1, 1200);
         camera.position.z = 260;
 
-        const starCount = window.innerWidth < 760 ? 360 : 760;
+        const starCount = Math.max(140, Math.round((window.innerWidth < 760 ? 360 : 760) * qualityMultiplier()));
         const starPositions = new Float32Array(starCount * 3);
         for (let i = 0; i < starCount; i += 1) {
           const i3 = i * 3;
@@ -148,8 +160,12 @@
           renderer.render(scene, camera);
         }
 
+        function setQuality() {
+          resize();
+        }
+
         document.documentElement.classList.add('using-three-webgl');
-        return { resize, render };
+        return { resize, render, setQuality };
       } catch (error) {
         console.warn('Three.js renderer failed. Falling back to cinematic canvas.', error);
         document.documentElement.classList.add('three-fallback-active');
@@ -175,7 +191,7 @@
         canvas.style.height = `${height}px`;
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        const target = window.innerWidth < 760 ? 120 : 260;
+        const target = Math.max(70, Math.round((window.innerWidth < 760 ? 120 : 260) * qualityMultiplier()));
         particles.length = 0;
         for (let i = 0; i < target; i += 1) {
           particles.push({
@@ -246,11 +262,15 @@
         ctx.stroke();
       }
 
+      function setQuality() {
+        resize();
+      }
+
       document.documentElement.classList.add('using-canvas-3d-fallback');
-      return { resize, render };
+      return { resize, render, setQuality };
     }
 
-    return { init, start, setZone, setZoom, launch, pulseAt, setPaused };
+    return { init, start, setZone, setZoom, launch, pulseAt, setPaused, setQuality };
   }
 
   SV.cinematic = { createUniverse };

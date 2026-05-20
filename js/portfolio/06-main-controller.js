@@ -29,7 +29,9 @@
       terminal: null,
       universe: null,
       commandDeck: null,
-      polish: null
+      polish: null,
+      missionBriefing: null,
+      performanceDirector: null
     };
 
     const actions = {
@@ -51,6 +53,8 @@
     context.universe = SV.cinematic?.createUniverse?.(context) || null;
     context.commandDeck = SV.commandDeck?.createCommandDeck?.(context) || null;
     context.polish = SV.polish?.createInteractionPolish?.(context) || null;
+    context.missionBriefing = SV.missionBriefing?.createMissionBriefing?.(context) || null;
+    context.performanceDirector = SV.performanceDirector?.createPerformanceDirector?.(context) || null;
 
     function init() {
       document.body.classList.toggle('touch-device', context.config.isTouch);
@@ -64,9 +68,11 @@
       context.effects.bindCursor();
       context.effects.bindPageVisibility();
       context.effects.initStars();
+      context.performanceDirector?.init?.();
       context.universe?.init?.();
       context.commandDeck?.init?.();
       context.polish?.init?.();
+      context.missionBriefing?.init?.();
       context.terminal?.startEntry?.();
       context.terminal?.startCore?.();
       context.terminal?.startLaunchDock?.();
@@ -317,6 +323,8 @@
       context.terminal?.setZone?.(state.currentZone);
       context.commandDeck?.updateZone?.(state.currentZone, options);
       context.polish?.updateLaunchReadiness?.(state.currentZone);
+      context.missionBriefing?.updateZone?.(state.currentZone);
+      context.performanceDirector?.updateZone?.(state.currentZone);
       if (!options.immediate) context.motion?.playZoneChange?.(state.currentZone);
       if (!options.immediate && !config.prefersReducedMotion) pulseZone();
     }
@@ -431,6 +439,7 @@
         if (event.key === '+' || event.key === '=') { stopAutoFlight(); setZoom(context.state.zoom + 0.15); }
         if (event.key === '-' || event.key === '_') { stopAutoFlight(); setZoom(context.state.zoom - 0.15); }
         if (event.key === '?' || key === 'h') context.guide.startGuide();
+        if (key === 'm') context.missionBriefing?.open?.();
         if (event.key === 'ArrowRight') { stopAutoFlight(); setZone(context.state.currentZone + 1); }
         if (event.key === 'ArrowLeft') { stopAutoFlight(); setZone(context.state.currentZone - 1); }
       });
