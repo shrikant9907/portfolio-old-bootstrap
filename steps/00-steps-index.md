@@ -130,3 +130,6 @@ That section defines:
 
 Future developers must keep these sections updated whenever scene behavior changes.
 
+
+
+- `14-product-bug-recovery-plan.md` — tracks recovered product bugs and expected behavior after restoration.

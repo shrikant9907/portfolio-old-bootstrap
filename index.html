@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Shrimo Verse | Cinematic Futuristic Universe Experience by Shrikant Yadav</title>
-  <meta name="description" content="Enter Shrimo Verse, a black-and-cyan cinematic product universe by Shrikant Yadav where skills, products, proof, client signals, and project launch paths are explored scene by scene." />
+  <title>Shrimo Verse | Interactive Portfolio Universe by Shrikant Yadav</title>
+  <meta name="description" content="Enter Shrimo Verse, an interactive portfolio universe by Shrikant Yadav where real products, technologies, client signals, and contact paths orbit around one meaningful digital core." />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <meta name="theme-color" content="#05070A" />
   <link rel="canonical" href="https://shrikant.shrimo.com/" />
@@ -34,7 +34,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/portfolio-style.css" />
-  <link rel="stylesheet" href="css/cursor-rocket.css" />
 
   <script type="application/ld+json">
   {
@@ -67,8 +66,16 @@
   }
   </script>
 </head>
-<body class="shrimo-verse-shell" data-build="clean-scene-system" data-scene="arrival" data-quality-mode="balanced" data-device-capability="medium" data-motion="balanced">
+<body class="shrimo-verse-shell">
   <a class="skip-link" href="#verseMain">Skip to Shrimo Verse content</a>
+
+  <div class="ship-cursor" id="shipCursor" aria-hidden="true">
+    <span class="ship-body"></span>
+    <span class="ship-wing left"></span>
+    <span class="ship-wing right"></span>
+    <span class="ship-flame"></span>
+  </div>
+  <div class="cursor-trail-layer" id="cursorTrailLayer" aria-hidden="true"></div>
 
   <div class="entry-gate" id="entryGate" aria-labelledby="entryTitle" role="dialog" aria-modal="true">
     <div class="entry-space" aria-hidden="true">
@@ -79,47 +86,86 @@
     </div>
     <p class="entry-kicker" id="entryStatus">SHRIMO VERSE MISSION CONTROL</p>
     <h1 id="entryTitle">You are about to enter Shrimo Verse</h1>
-    <p class="entry-copy">Pilot the rocket, scan meaningful particles, inspect technologies, product signals, proof, client trust, and reach the Launch Dock when you are ready.</p>
+    <p class="entry-copy">Pilot the rocket, zoom into meaningful particles, inspect technologies, products, proof signals, and reach the Launch Dock when you are ready.</p>
     <div class="entry-hints" aria-label="Shrimo Verse controls preview">
       <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18M6.5 6.5l-3.5 3.5 3.5 3.5M17.5 6.5l3.5 3.5-3.5 3.5"/></svg>Move</span>
       <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M15 15l6 6M10 7v6M7 10h6"/></svg>Zoom</span>
-      <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>Inspect</span>
+      <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M19.1 4.9l-2.8 2.8M7.7 16.3l-2.8 2.8"/></svg>Inspect</span>
       <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l5 8-3 1 2 8-4-3-4 3 2-8-3-1 5-8z"/></svg>Launch</span>
     </div>
     <button class="enter-verse" id="enterVerse" type="button">Enter Shrimo Verse</button>
     <div class="entry-progress" aria-hidden="true"><span></span></div>
   </div>
 
-  <header class="verse-control" id="verseControl" aria-label="Shrimo Verse command HUD">
+  <header class="verse-control" id="verseControl" aria-label="Shrimo Verse control bar">
     <button class="verse-brand" id="brandReset" type="button" aria-label="Return to Shrimo Verse core">
       <span class="verse-mark">SV</span>
-      <span><strong>Shrimo Verse</strong><em>Mission Interface</em></span>
+      <span><strong>ShrimoVerse</strong><em>by Shrikant Yadav</em></span>
     </button>
+
     <nav class="hud-controls" aria-label="Universe controls">
-      <button class="hud-btn is-active" id="guidedMode" type="button" aria-label="Guided Flight" data-tip="Guided Flight"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c5 0 5 12 10 12 3.5 0 4.5-3 6-6"/><circle cx="4" cy="6" r="2"/><circle cx="20" cy="12" r="2"/></svg></button>
-      <button class="hud-btn" id="autoFlight" type="button" aria-label="Auto Flight" data-tip="Auto Flight"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg></button>
-      <button class="hud-btn" id="pauseOrbit" type="button" aria-label="Pause Orbit" data-tip="Pause Orbit"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 8v8M15 8v8"/></svg></button>
-      <button class="hud-btn" id="returnCore" type="button" aria-label="Return to Core" data-tip="Return to Core"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l8 7v9h-5v-5H9v5H4v-9l8-7z"/></svg></button>
-      <button class="hud-btn" id="replayGuide" type="button" aria-label="Replay Guide" data-tip="Replay Guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9a3 3 0 1 1 5.2 2c-1.2.9-2.2 1.5-2.2 3"/><path d="M12 18h.01"/><circle cx="12" cy="12" r="9"/></svg></button>
-      <button class="hud-btn" id="settingsToggle" type="button" aria-label="Open Settings" data-tip="Settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6z"/><path d="M19.4 13.5a7.8 7.8 0 0 0 0-3l2-1.5-2-3.4-2.5 1a8.2 8.2 0 0 0-2.6-1.5L14 2h-4l-.4 3.1A8.2 8.2 0 0 0 7 6.6l-2.5-1-2 3.4 2 1.5a7.8 7.8 0 0 0 0 3l-2 1.5 2 3.4 2.5-1a8.2 8.2 0 0 0 2.6 1.5L10 22h4l.4-3.1a8.2 8.2 0 0 0 2.6-1.5l2.5 1 2-3.4-2.1-1.5z"/></svg></button>
-      <a class="hud-btn launch" id="launchProject" href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20launch%20a%20project%20after%20exploring%20Shrimo%20Verse." target="_blank" rel="noopener" aria-label="Launch Project" data-tip="Launch Project"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l5 8-3.2 1.2L16 21l-4-3-4 3 2.2-8.8L7 11l5-8z"/></svg></a>
+      <button class="hud-btn is-active" id="guidedMode" type="button" aria-label="Guided Flight" data-tip="Guided Flight">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6c5 0 5 12 10 12 3.5 0 4.5-3 6-6"/><circle cx="4" cy="6" r="2"/><circle cx="20" cy="12" r="2"/><path d="M14 18l-2.5-2.5M14 18l-2.5 2.5"/></svg>
+      </button>
+      <button class="hud-btn" id="exploreMode" type="button" aria-label="Free Explore" data-tip="Free Explore">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="9" ry="4.6"/><ellipse cx="12" cy="12" rx="4.6" ry="9"/></svg>
+      </button>
+      <button class="hud-btn" id="autoFlight" type="button" aria-label="Auto Flight" data-tip="Auto Flight">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg>
+      </button>
+      <button class="hud-btn" id="pauseOrbit" type="button" aria-label="Pause Orbit" data-tip="Pause Orbit">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 8v8M15 8v8"/></svg>
+      </button>
+      <button class="hud-btn" id="returnCore" type="button" aria-label="Return to Core" data-tip="Return to Core">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l8 7v9h-5v-5H9v5H4v-9l8-7z"/></svg>
+      </button>
+      <button class="hud-btn" id="replayGuide" type="button" aria-label="Replay Guide" data-tip="Replay Guide">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9a3 3 0 1 1 5.2 2c-1.2.9-2.2 1.5-2.2 3"/><path d="M12 18h.01"/><circle cx="12" cy="12" r="9"/></svg>
+      </button>
+      <a class="hud-btn launch" id="launchProject" href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20launch%20a%20project%20after%20exploring%20Shrimo%20Verse." target="_blank" rel="noopener" aria-label="Launch Project" data-tip="Launch Project">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l5 8-3.2 1.2L16 21l-4-3-4 3 2.2-8.8L7 11l5-8z"/><path d="M9.5 20.5l-1.2 2M14.5 20.5l1.2 2"/></svg>
+      </a>
     </nav>
   </header>
 
   <main id="verseMain" class="verse-main">
-    <section class="verse-stage" id="verseStage" aria-label="Interactive Shrimo Verse cinematic universe">
+    <section class="verse-stage" id="verseStage" aria-label="Interactive Shrimo Verse portfolio universe">
       <canvas id="starCanvas" class="star-canvas" aria-hidden="true"></canvas>
       <div class="space-aura" aria-hidden="true"></div>
-      <div class="orbit-field" aria-hidden="true"><span class="orbit-line orbit-large"></span><span class="orbit-line orbit-mid"></span><span class="orbit-line orbit-small"></span></div>
-      <div class="scene-flash" id="sceneFlash" aria-hidden="true"></div>
+      <div class="orbit-field" id="orbitField" aria-hidden="true">
+        <span class="orbit-line orbit-large"></span>
+        <span class="orbit-line orbit-mid"></span>
+        <span class="orbit-line orbit-small"></span>
+      </div>
 
-      <section class="scene-caption" id="sceneCaption" aria-live="polite">
-        <p class="scene-kicker" id="sceneKicker">ARRIVAL CORE</p>
-        <h2 id="sceneTitle">Welcome to Shrimo Verse.</h2>
-        <p id="sceneCopy">A living digital universe where skills, products, proof, and client signals orbit one meaningful center.</p>
-        <span class="scene-terminal" id="sceneTerminal">Core stable. Choose your next orbit.</span>
-        <div class="scene-actions" id="sceneActions"></div>
-      </section>
+      <div class="state-readout" id="stateReadout" aria-live="polite">
+        <span id="stateName">Arrival Core</span>
+        <em id="stateHint">Enter the center, then explore every orbit.</em>
+      </div>
+
+      <div class="zoom-dock" aria-label="Orbit Zoom">
+        <button type="button" id="zoomIn" aria-label="Zoom in"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></button>
+        <input id="zoomRange" class="zoom-range" type="range" min="70" max="220" step="1" value="100" aria-label="Orbit Zoom level" />
+        <button type="button" id="zoomOut" aria-label="Zoom out"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+        <span id="zoomValue" class="zoom-value">100%</span>
+      </div>
+
+      <div class="zone-nav" id="zoneNav" aria-label="Universe zones and steps">
+        <button type="button" class="zone-arrow zone-prev" id="zonePrev" aria-label="Previous step" data-tip="Previous step">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5l-7 7 7 7"/></svg>
+        </button>
+        <div class="mobile-zone-dots" id="mobileZoneDots" aria-label="Universe zones">
+          <button type="button" data-zone="0" data-tip="Arrival Core" class="is-active" aria-label="Arrival Core"></button>
+          <button type="button" data-zone="1" data-tip="Technology Orbit" aria-label="Technology Orbit"></button>
+          <button type="button" data-zone="2" data-tip="Product Gallery" aria-label="Product Gallery"></button>
+          <button type="button" data-zone="3" data-tip="Proof Ring" aria-label="Proof Ring"></button>
+          <button type="button" data-zone="4" data-tip="Client Signals" aria-label="Client Signals"></button>
+          <button type="button" data-zone="5" data-tip="Launch Dock" aria-label="Launch Dock"></button>
+        </div>
+        <button type="button" class="zone-arrow zone-next" id="zoneNext" aria-label="Next step" data-tip="Next step">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5l7 7-7 7"/></svg>
+        </button>
+      </div>
 
       <div class="universe-plane" id="universePlane">
         <button class="sv-core" id="svCore" type="button" aria-label="Shrimo Verse Core. Click to inspect.">
@@ -128,86 +174,75 @@
           <em>Shrimo Verse Core</em>
         </button>
         <div class="particle-layer" id="particleLayer" aria-label="Skill and technology orbit particles"></div>
-        <div class="content-layer product-gallery-layer" id="productGalleryLayer" aria-label="Product gallery beacons"></div>
-        <div class="content-layer proof-ring-layer" id="proofRingLayer" aria-label="Proof signal nodes"></div>
-        <div class="content-layer client-signal-layer" id="clientSignalLayer" aria-label="Client signal nodes"></div>
+        <div class="content-layer product-gallery-layer" id="productGalleryLayer" aria-label="Product gallery dots and showcase"></div>
+        <div class="content-layer proof-ring-layer" id="proofRingLayer" aria-label="Proof signal dots"></div>
+        <div class="content-layer client-signal-layer" id="clientSignalLayer" aria-label="Client review signal dots"></div>
       </div>
 
-      <nav class="chapter-rail" id="chapterRail" aria-label="Shrimo Verse chapter progress">
-        <div class="chapter-rail__meta"><span><b id="chapterCurrent">01</b>/<b id="chapterCount">06</b></span><strong id="chapterTitle">Arrival Core</strong></div>
-        <div class="chapter-rail__items" id="chapterRailItems"></div>
-      </nav>
-      <nav class="zone-nav" id="zoneNav" aria-label="Universe zones and steps">
-        <button type="button" class="zone-arrow zone-prev" id="zonePrev" aria-label="Previous step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5l-7 7 7 7"/></svg></button>
-        <div class="mobile-zone-dots" id="mobileZoneDots" aria-label="Universe zones"></div>
-        <button type="button" class="zone-arrow zone-next" id="zoneNext" aria-label="Next step"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 5l7 7-7 7"/></svg></button>
-      </nav>
-
-      <aside class="object-tooltip" id="objectTooltip" aria-hidden="true" role="dialog" aria-modal="false" aria-labelledby="tooltipTitle">
-        <button class="tooltip-close" id="tooltipClose" type="button" aria-label="Close details">×</button>
-        <span class="tooltip-type" id="tooltipType">Signal</span>
-        <h2 id="tooltipTitle">Shrimo Verse</h2>
-        <p id="tooltipDesc">Select a signal to inspect.</p>
-        <p class="tooltip-use" id="tooltipUse"></p>
-        <a id="tooltipLink" class="tooltip-link" href="#" target="_blank" rel="noopener">Open path</a>
-      </aside>
+      <section class="mission-panel" id="missionPanel" aria-live="polite">
+        <p class="mission-kicker" id="missionKicker">ARRIVAL CORE</p>
+        <h2 id="missionTitle">Welcome to Shrimo Verse.</h2>
+        <p id="missionCopy">A living portfolio universe where products, tools, technologies, proof, and client signals orbit one meaningful center.</p>
+        <div class="mission-actions" id="missionActions">
+          <button type="button" class="mission-btn primary" data-action="auto">Start Auto Flight</button>
+          <button type="button" class="mission-btn secondary" data-action="guide">Learn Controls</button>
+        </div>
+      </section>
 
       <aside class="guide-overlay" id="guideOverlay" aria-hidden="true">
         <div class="guide-card" role="dialog" aria-modal="false" aria-labelledby="guideTitle">
-          <span class="guide-step" id="guideStep">Step 1 of 6</span>
+          <span class="guide-step" id="guideStep">Step 1 of 7</span>
           <h2 id="guideTitle">Pilot the ship</h2>
-          <p id="guideText">Use the bottom dock or arrow controls to move through the universe. Tap a signal to inspect it.</p>
+          <p id="guideText">Move your cursor to pilot the explorer ship.</p>
           <div class="guide-progress"><span id="guideProgress"></span></div>
-          <div class="guide-actions"><button type="button" id="guideSkip">Skip</button><button type="button" id="guideBack">Back</button><button type="button" id="guideNext">Next</button></div>
+          <div class="guide-actions">
+            <button type="button" id="guideBack">Back</button>
+            <button type="button" id="guideNext">Next</button>
+          </div>
         </div>
+      </aside>
+
+      <aside class="object-tooltip" id="objectTooltip" aria-hidden="true" role="dialog" aria-modal="false" aria-labelledby="tooltipTitle">
+        <button class="tooltip-close" id="tooltipClose" type="button" aria-label="Close details">×</button>
+        <span class="tooltip-type" id="tooltipType">Technology</span>
+        <h2 id="tooltipTitle">React</h2>
+        <p id="tooltipDesc">Used to build dynamic interfaces.</p>
+        <p class="tooltip-use" id="tooltipUse"></p>
+        <a id="tooltipLink" class="tooltip-link" href="#" target="_blank" rel="noopener">Open path</a>
       </aside>
 
       <section class="launch-dock" id="launchDock" aria-label="Launch Dock contact paths">
         <p class="dock-kicker">Launch Dock</p>
         <h2>Ready to launch your project?</h2>
-        <p class="dock-desc">Open a direct project signal. WhatsApp is the fastest path; call and email stay ready for detailed discussion.</p>
-        <a class="launch-primary-btn" href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20launch%20a%20project%20after%20exploring%20Shrimo%20Verse." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l5 8-3.2 1.2L16 21l-4-3-4 3 2.2-8.8L7 11l5-8z"/></svg>Start Project on WhatsApp</a>
-        <div class="dock-confidence"><span>Fast response</span><span>Free first consultation</span><span>Clear next step</span></div>
-        <div class="dock-beacons"><a href="tel:+919907472038">Call</a><a href="mailto:shrikant9907@gmail.com">Email</a><a href="https://www.linkedin.com/in/shrikant9907/" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/shrikant9907" target="_blank" rel="noopener">GitHub</a><a href="https://shrimo.com/" target="_blank" rel="noopener">Shrimo</a><a href="https://digitingcard.com/p/shrikant-yadav" target="_blank" rel="noopener">Digital Profile</a></div>
-      </section>
+        <p class="dock-desc">Reach the dock and start a conversation.</p>
+        
+        <a class="launch-primary-btn" href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20launch%20a%20project%20after%20exploring%20Shrimo%20Verse." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l5 8-3.2 1.2L16 21l-4-3-4 3 2.2-8.8L7 11l5-8z"/></svg>
+          Launch Project
+        </a>
 
-      <aside class="settings-panel" id="settingsPanel" aria-hidden="true" role="dialog" aria-modal="false" aria-labelledby="settingsTitle">
-        <div class="settings-panel__head"><div><p>Universe Settings</p><h2 id="settingsTitle">Tune the universe</h2></div><button class="settings-close" id="settingsClose" type="button" aria-label="Close settings">×</button></div>
-        <div class="settings-group"><strong>Motion intensity</strong><div class="settings-segment"><button type="button" data-setting="motion" data-value="reduced">Reduced</button><button type="button" data-setting="motion" data-value="balanced">Balanced</button><button type="button" data-setting="motion" data-value="cinematic">Cinematic</button></div><p>Controls how much movement is allowed.</p></div>
-        <div class="settings-group"><strong>Quality mode</strong><div class="settings-segment"><button type="button" data-setting="quality" data-value="essential">Essential</button><button type="button" data-setting="quality" data-value="balanced">Balanced</button><button type="button" data-setting="quality" data-value="cinematic">Cinematic</button></div><p>Essential protects low-end phones. Cinematic adds more atmosphere.</p></div>
-        <div class="settings-group"><strong>Guide</strong><button class="settings-action" type="button" id="resetGuideSession">Replay guide</button><button class="settings-action" type="button" id="restartExperience">Return to Arrival Core</button><p>Guide appears once per browser tab session unless replayed.</p></div>
-      </aside>
+        <div class="dock-beacons">
+          <a href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20start%20a%20project." target="_blank" rel="noopener">WhatsApp</a>
+          <a href="tel:+919907472038">Call</a>
+          <a href="mailto:shrikant9907@gmail.com">Email</a>
+          <a href="https://www.linkedin.com/in/shrikant9907/" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://github.com/shrikant9907" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://shrimo.com/" target="_blank" rel="noopener">Shrimo</a>
+          <a href="https://digitingcard.com/p/shrikant-yadav" target="_blank" rel="noopener">Digital Profile</a>
+        </div>
+        <small>© 2026 Shrikant Yadav · Shrimo Innovations · Narmadapuram</small>
+      </section>
 
       <div class="mobile-control-dock" aria-label="Mobile Shrimo Verse controls">
         <button type="button" data-mobile="guide"><svg viewBox="0 0 24 24"><path d="M9 9a3 3 0 1 1 5.2 2c-1.2.9-2.2 1.5-2.2 3"/><path d="M12 18h.01"/><circle cx="12" cy="12" r="9"/></svg><span>Guide</span></button>
-        <button type="button" data-mobile="prev"><svg viewBox="0 0 24 24"><path d="M14.5 5l-7 7 7 7"/></svg><span>Prev</span></button>
-        <button type="button" data-mobile="next"><svg viewBox="0 0 24 24"><path d="M9.5 5l7 7-7 7"/></svg><span>Next</span></button>
+        <button type="button" data-mobile="explore"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="12" rx="9" ry="4.6"/></svg><span>Explore</span></button>
+        <button type="button" data-mobile="auto"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8l6 4-6 4V8z"/></svg><span>Auto</span></button>
         <button type="button" data-mobile="core"><svg viewBox="0 0 24 24"><path d="M12 4l8 7v9h-5v-5H9v5H4v-9l8-7z"/></svg><span>Core</span></button>
-        <button type="button" data-mobile="settings"><svg viewBox="0 0 24 24"><path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6z"/><path d="M19.4 13.5a7.8 7.8 0 0 0 0-3l2-1.5-2-3.4-2.5 1a8.2 8.2 0 0 0-2.6-1.5L14 2h-4l-.4 3.1A8.2 8.2 0 0 0 7 6.6l-2.5-1-2 3.4 2 1.5a7.8 7.8 0 0 0 0 3l-2 1.5 2 3.4 2.5-1a8.2 8.2 0 0 0 2.6 1.5L10 22h4l.4-3.1a8.2 8.2 0 0 0 2.6-1.5l2.5 1 2-3.4-2.1-1.5z"/></svg><span>Settings</span></button>
         <a href="https://wa.me/919907472038?text=Hi%20Shrikant%2C%20I%20want%20to%20launch%20a%20project." target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 3l5 8-3.2 1.2L16 21l-4-3-4 3 2.2-8.8L7 11l5-8z"/></svg><span>Launch</span></a>
       </div>
     </section>
   </main>
 
-  <script src="js/cursor-rocket.js" defer></script>
-  <script src="js/data/scenes.js" defer></script>
-  <script src="js/data/skills.js" defer></script>
-  <script src="js/data/products.js" defer></script>
-  <script src="js/data/proof.js" defer></script>
-  <script src="js/data/reviews.js" defer></script>
-  <script src="js/core/state.js" defer></script>
-  <script src="js/core/dom.js" defer></script>
-  <script src="js/core/events.js" defer></script>
-  <script src="js/effects/performance.js" defer></script>
-  <script src="js/effects/motion.js" defer></script>
-  <script src="js/effects/gestures.js" defer></script>
-  <script src="js/effects/starfield.js" defer></script>
-  <script src="js/controllers/scene-controller.js" defer></script>
-  <script src="js/controllers/hud-controller.js" defer></script>
-  <script src="js/controllers/guide-controller.js" defer></script>
-  <script src="js/controllers/settings-controller.js" defer></script>
-  <script src="js/controllers/orbit-controller.js" defer></script>
-  <script src="js/controllers/launch-controller.js" defer></script>
-  <script src="js/controllers/app-controller.js" defer></script>
+  <script src="js/portfolio-scripts.js" defer></script>
 </body>
 </html>

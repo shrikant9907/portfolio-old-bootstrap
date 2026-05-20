@@ -1,66 +1,5 @@
 # Changelog
 
-## Final Working Project Package — 20 May 2026, 16:45 IST
-
-- Packaged the working Shrimo Verse app with all current planning systems.
-- Confirmed required root docs are present.
-- Confirmed AI-agent files are present.
-- Confirmed the complete `steps/` scene planning folder is present.
-- Added `FINAL_PROJECT_CHECK.md` with package validation record.
-- Preserved the old stable production build notes and Cluster Fix Update.
-- This package is intended as the final working handoff ZIP for current project state.
-
-
-# Changelog
-
-## AI Agent Entry System Added — 20 May 2026, 16:25 IST
-
-- Added `AI_AGENT_START_HERE.md` for all AI tools.
-- Added `AGENTS.md` for Codex/OpenAI/Cursor-style coding agents.
-- Added `CLAUDE.md` for Claude Code / Claude agents.
-- Added `GEMINI.md` for Gemini CLI / Gemini agents.
-- Added `.github/copilot-instructions.md` for GitHub Copilot-style assistance.
-- Added `.cursor/rules/shrimo-verse.mdc` for Cursor-style project rules.
-- Updated README, about-project, project-rules, and testing checklist with AI-agent validation.
-- These files instruct agents to read project rules, about-project, changelog, and steps before coding.
-
-
-# Changelog
-
-## Steps Flow Management Refined — 20 May 2026, 16:10 IST
-
-- Added `steps/00-flow-transition-map.md`.
-- Updated major step files with previous/next scene mapping.
-- Added connected layers/cards/objects for each step.
-- Added mobile/tablet/desktop animation behavior to each step.
-- Added transition rules and failure risks for each step.
-- Updated master planning system with mandatory previous/next/device animation planning.
-- Updated README, about-project, project-rules, and testing checklist references.
-
-
-# Changelog
-
-## Master Product Planning System Added — 20 May 2026, 15:55 IST
-
-- Added `steps/00-master-product-planning-system.md`.
-- Stored the refined expert-level product strategy, scene flow, UI impression rules, motion trigger plan, conversion strategy, architecture rules, and QA standard.
-- Updated `README.md`, `about-project.md`, `project-rules.md`, and `steps/00-steps-index.md` to reference the master plan.
-- Future builds must read the master plan before coding.
-
-
-# Changelog
-
-## Steps Planning Folder Added — 20 May 2026, 15:40 IST
-
-- Added permanent root `steps/` folder.
-- Added pre-planned markdown files for every Shrimo Verse scene from Mission Entry to QA/Packaging.
-- Documented how scenes connect, what triggers animation, and how each scene behaves on mobile, tablet, and desktop.
-- Updated `README.md`, `about-project.md`, and `project-rules.md` to mark `steps/` as mandatory.
-- Future builds must keep this folder and update the relevant step file when behavior changes.
-
-
-# Changelog
-
 ## Final stable production build
 
 ### Visual system
@@ -110,10 +49,18 @@
 - Added zoom visibility rules so deeper tools only appear when the user zooms in.
 - Added `SHRIMO_VERSE_CLUSTER_FIX_PLAN.md` to document the final cleanup decision.
 
-## Rocket Cursor Fix — 20 May 2026
+## Recovered Cinematic Product Bug Fix — 20 May 2026, 17:20 IST
 
-- Fixed desktop rocket cursor visibility after clean-scene-system rebuild.
-- Raised rocket cursor/trail layer above entry gate and HUD layers so it remains visible from the first Mission Entry screen.
-- Reworked desktop pointer detection so hybrid laptops with touch support still get the rocket cursor when a fine pointer/mouse is available.
-- Reduced-motion mode now removes trail/noisy flame motion instead of fully disabling the desktop rocket cursor.
-- Preserved touch/mobile rule: rocket cursor remains disabled on mobile and coarse-pointer devices.
+- Recovered the visually fuller working Shrimo Verse app as the base instead of the incomplete clean skeleton.
+- Preserved the original stable decisions: fixed SV core, black cinematic background, desktop rocket cursor, mobile dock, no heavy WebGL dependency, technology-only orbit, Product Gallery, Proof Ring, Client Signals, and Launch Dock as separate layers.
+- Fixed the product bugs reported after the incomplete build:
+  - restored moving orbit particles around the SV core,
+  - strengthened circular/cosmic background after entry,
+  - restored desktop previous/next arrows,
+  - forced first-launch guide to appear after entry,
+  - reduced oversized heading/border radius styling,
+  - improved safe-zone spacing to reduce content overlap,
+  - improved canvas galaxy/starfield movement,
+  - made the entry CTA more impressive with full “Enter Shrimo Verse” copy.
+- Kept all mandatory docs, AI-agent files, and `steps/` planning system.
+

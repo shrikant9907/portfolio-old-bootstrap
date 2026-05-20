@@ -177,3 +177,8 @@ The current final project package keeps the working static Shrimo Verse app toge
 - AI-agent entry files,
 - complete scene planning in `steps/`,
 - final validation record in `FINAL_PROJECT_CHECK.md`.
+
+
+## Recovered Cinematic Product Build
+
+This build uses the older visually working universe interface as the product base and fixes the reported product bugs without replacing the app with a clean skeleton.

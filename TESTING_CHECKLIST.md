@@ -108,3 +108,8 @@ Before final ZIP:
 - [ ] Agent files point to `about-project.md`.
 - [ ] Agent files point to `CHANGELOG.md`.
 - [ ] Agent files point to `steps/`.
+
+
+## Recovered Product Bug QA
+
+Verify entry impact, circular background after entry, moving orbit particles, desktop arrows, first guide, no content overlap, medium font/radius, galaxy movement, and launch dock clarity.

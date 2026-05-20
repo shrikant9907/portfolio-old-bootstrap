@@ -1044,3 +1044,8 @@ steps/00-flow-transition-map.md
 ```
 
 before making changes.
+
+
+## 40. Recovered Working Product Base Rule
+
+Future builds must preserve the visually working app as base. Do not replace a complete visual product with a clean skeleton.
