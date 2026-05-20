@@ -351,3 +351,61 @@ Updated: 20 May 2026, 21:10 IST
 - [ ] Proof detail panel text does not overlap.
 - [ ] Technology tooltip hides duplicate scan panel.
 - [ ] Bottom-left repeated state readout is hidden.
+
+## Bottom-Right Vertical HUD Controls Test
+
+Updated: 20 May 2026, 21:25 IST
+
+- [ ] Main HUD controls are not shown as a top-right row.
+- [ ] Main HUD controls appear bottom-right on desktop.
+- [ ] Main HUD controls are vertical.
+- [ ] Controls remain circular.
+- [ ] Zoom control does not overlap the control rail.
+- [ ] Bottom step navigation remains centered.
+- [ ] Mobile bottom dock remains primary.
+
+## Top-Right Controls Visibility Test
+
+Updated: 20 May 2026, 21:40 IST
+
+- [ ] HUD controls are visible top-right on desktop.
+- [ ] HUD controls are visible top-right on tablet.
+- [ ] HUD controls are visible top-right on mobile.
+- [ ] Controls are circular.
+- [ ] Controls are not hidden on mobile.
+- [ ] Controls are not stuck at bottom-right.
+
+## Bottom-Right Floating Icon Controls Test
+
+Updated: 20 May 2026, 22:00 IST
+
+- [ ] HUD controls appear bottom-right.
+- [ ] Controls have no background.
+- [ ] Controls have no border wrapper.
+- [ ] Controls stack vertically.
+- [ ] Hover/focus shows tooltip.
+- [ ] Mobile/tablet/desktop controls remain visible.
+
+## Left-Center Clean Zoom Control Test
+
+Updated: 20 May 2026, 22:18 IST
+
+- [ ] Zoom control is positioned at left-center on desktop.
+- [ ] Zoom control is positioned at left-center on tablet.
+- [ ] Zoom control is positioned at left-center on mobile.
+- [ ] Zoom control has no background.
+- [ ] Zoom control has no border.
+- [ ] Zoom control has no wrapper card.
+
+## Controls Visible and Actual Zoom Dock Fix Test
+
+Updated: 20 May 2026, 22:35 IST
+
+- [ ] HUD controls are visible at bottom-right.
+- [ ] HUD controls have no background.
+- [ ] HUD controls have no border.
+- [ ] Hover/focus tooltip appears on HUD controls.
+- [ ] Zoom dock is left-center.
+- [ ] Zoom dock has no background.
+- [ ] Zoom dock has no border.
+- [ ] Zoom dock is no longer right-side.

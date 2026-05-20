@@ -435,3 +435,63 @@ See:
 ```txt
 steps/36-screenshot-qa-no-dotted-rings-proof-circles.md
 ```
+
+## Bottom-Right Vertical HUD Controls
+
+**Updated:** 20 May 2026, 21:25 IST
+
+Main HUD icon controls now appear as a circular vertical rail at the bottom-right on desktop/tablet.
+
+See:
+
+```txt
+steps/37-bottom-right-vertical-controls.md
+```
+
+## Top-Right Controls Visibility Fix
+
+**Updated:** 20 May 2026, 21:40 IST
+
+Main HUD controls are restored to the top-right and remain visible from mobile to desktop.
+
+See:
+
+```txt
+steps/38-top-right-controls-visible.md
+```
+
+## Bottom-Right Floating Icon Controls
+
+**Updated:** 20 May 2026, 22:00 IST
+
+Main HUD controls now appear as bottom-right floating icons with no background and hover tooltips.
+
+See:
+
+```txt
+steps/39-bottom-right-instagram-floating-icons.md
+```
+
+## Left-Center Clean Zoom Control
+
+**Updated:** 20 May 2026, 22:18 IST
+
+The zoom control is now fixed to the left-center with no background or border.
+
+See:
+
+```txt
+steps/40-left-center-clean-zoom-control.md
+```
+
+## Controls Visible and Actual Zoom Dock Fix
+
+**Updated:** 20 May 2026, 22:35 IST
+
+The actual zoom class `.zoom-dock` is now positioned left-center, and the bottom-right floating controls are made clearly visible without backgrounds.
+
+See:
+
+```txt
+steps/41-controls-visible-actual-zoom-dock-fix.md
+```

@@ -299,3 +299,68 @@ Scene rule:
 - proof signal nodes must be circular,
 - detail panels must not overlap,
 - repeated scene/state readout should stay hidden.
+
+
+---
+
+## Bottom-Right Vertical HUD Controls
+
+**Updated:** 20 May 2026, 21:25 IST
+
+The main HUD icon controls must sit as a bottom-right vertical rail on desktop/tablet.
+
+Rules:
+
+- no top-right control row,
+- circular icon controls,
+- vertical stack,
+- zoom control must not overlap,
+- bottom step navigation remains centered,
+- mobile keeps bottom dock as primary controls.
+
+
+---
+
+## Top-Right Controls Visibility Fix
+
+**Updated:** 20 May 2026, 21:40 IST
+
+Controls must be visible at the top-right on desktop, tablet, and mobile.
+
+Rules:
+
+- do not hide HUD controls on mobile,
+- no bottom-right vertical rail,
+- circular buttons,
+- compact top-right row,
+- mobile can horizontally scroll the row if needed.
+
+
+---
+
+## Left-Center Clean Zoom Control
+
+**Updated:** 20 May 2026, 22:18 IST
+
+Zoom control rules:
+
+- zoom stays left-center,
+- no background,
+- no border,
+- no wrapper,
+- same placement behavior from mobile to desktop.
+
+
+---
+
+## Actual Zoom Dock and Visible Floating Controls
+
+**Updated:** 20 May 2026, 22:35 IST
+
+Rules:
+
+- use `.zoom-dock` for zoom positioning,
+- zoom dock stays left-center with no background/border,
+- HUD controls stay visible as bottom-right floating icons,
+- hover/focus tooltip appears,
+- no wrapper card around controls.

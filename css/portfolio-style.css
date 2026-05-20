@@ -3781,3 +3781,1155 @@ body.object-detail-open .technology-focus {
     max-width: none !important;
   }
 }
+
+
+/* ==========================================================================
+   HUD CONTROLS POSITION FIX — BOTTOM RIGHT VERTICAL
+   Updated: 20 May 2026, 21:25 IST
+
+   Request:
+   Move the main HUD icon controls from top-right to bottom-right vertical.
+
+   Rules:
+   - Brand/identity stays top-left.
+   - Main icon controls become a fixed vertical rail at bottom-right.
+   - Controls remain circular.
+   - Step bullets remain bottom-center.
+   - Zoom control is shifted left enough to avoid overlap.
+   - Mobile keeps the existing mobile bottom dock as the primary control system.
+   ========================================================================== */
+
+/* Keep the header/brand clean; detach only the right-side control group. */
+.hud {
+  pointer-events: none !important;
+}
+
+.hud-brand,
+.hud-logo,
+.brand-copy {
+  pointer-events: auto !important;
+}
+
+.hud-controls {
+  position: fixed !important;
+  right: 18px !important;
+  bottom: 96px !important;
+  top: auto !important;
+  left: auto !important;
+  z-index: 975 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 9px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  pointer-events: auto !important;
+}
+
+.hud-controls::before,
+.hud-controls::after {
+  content: none !important;
+  display: none !important;
+}
+
+.hud-btn {
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  border-radius: 50% !important;
+  background: rgba(5, 7, 10, .50) !important;
+  border: 1px solid rgba(34, 211, 238, .28) !important;
+  box-shadow: 0 0 18px rgba(34, 211, 238, .06) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+.hud-btn svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.hud-btn.is-active,
+.hud-btn:hover,
+.hud-btn:focus-visible {
+  border-color: rgba(255, 176, 32, .72) !important;
+  color: var(--fire) !important;
+  box-shadow: 0 0 20px rgba(255, 176, 32, .18) !important;
+}
+
+/* Keep Exit as part of the same lower-right control language, above the HUD rail. */
+.exit-verse-control {
+  right: 18px !important;
+  top: auto !important;
+  bottom: calc(96px + (42px * 8) + 82px) !important;
+  z-index: 976 !important;
+}
+
+/* Move zoom slightly inward so it does not collide with the new vertical HUD rail. */
+.zoom-control {
+  right: 72px !important;
+  z-index: 970 !important;
+}
+
+/* Keep bottom scene navigation centered and unobstructed. */
+.zone-nav {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  bottom: 10px !important;
+  z-index: 960 !important;
+}
+
+/* Tablet: keep bottom-right rail compact. */
+@media (max-width: 1100px) and (min-width: 781px) {
+  .hud-controls {
+    right: 14px !important;
+    bottom: 86px !important;
+    gap: 8px !important;
+  }
+
+  .hud-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .zoom-control {
+    right: 66px !important;
+  }
+
+  .exit-verse-control {
+    right: 14px !important;
+    bottom: calc(86px + (40px * 8) + 72px) !important;
+  }
+}
+
+/* Mobile: top-right HUD controls should not compete with the mobile bottom dock. */
+@media (max-width: 780px) {
+  .hud-controls {
+    display: none !important;
+  }
+
+  .exit-verse-control {
+    right: 14px !important;
+    top: 72px !important;
+    bottom: auto !important;
+  }
+
+  .zoom-control {
+    right: 12px !important;
+  }
+}
+
+
+/* ==========================================================================
+   TOP-RIGHT CONTROLS VISIBILITY FIX
+   Updated: 20 May 2026, 21:40 IST
+
+   Request correction:
+   Controls should be visible at the top-right from mobile to desktop.
+
+   Fix:
+   - Overrides previous bottom-right vertical rail.
+   - Main HUD controls are restored to top-right.
+   - Controls remain circular.
+   - Controls are visible on desktop, tablet, and mobile.
+   - Mobile controls wrap/scroll horizontally if needed instead of disappearing.
+   ========================================================================== */
+
+.hud {
+  pointer-events: none !important;
+}
+
+.hud-brand,
+.hud-logo,
+.brand-copy {
+  pointer-events: auto !important;
+}
+
+/* Restore controls to top-right, visible. */
+.hud-controls {
+  position: fixed !important;
+  top: 18px !important;
+  right: 18px !important;
+  bottom: auto !important;
+  left: auto !important;
+  z-index: 1100 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 9px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.hud-controls::before,
+.hud-controls::after {
+  content: none !important;
+  display: none !important;
+}
+
+.hud-btn {
+  width: 42px !important;
+  height: 42px !important;
+  min-width: 42px !important;
+  min-height: 42px !important;
+  border-radius: 50% !important;
+  background: rgba(5, 7, 10, .50) !important;
+  border: 1px solid rgba(34, 211, 238, .30) !important;
+  box-shadow: 0 0 18px rgba(34, 211, 238, .06) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+.hud-btn svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+.hud-btn.is-active,
+.hud-btn:hover,
+.hud-btn:focus-visible {
+  border-color: rgba(255, 176, 32, .72) !important;
+  color: var(--fire) !important;
+  box-shadow: 0 0 20px rgba(255, 176, 32, .18) !important;
+  outline: none !important;
+}
+
+/* Exit stays visible but does not collide with the top-right controls. */
+.exit-verse-control {
+  top: 72px !important;
+  right: 18px !important;
+  bottom: auto !important;
+  z-index: 1098 !important;
+}
+
+/* Zoom stays on right side lower than top controls. */
+.zoom-control {
+  right: 18px !important;
+  top: auto !important;
+  bottom: 132px !important;
+  z-index: 970 !important;
+}
+
+/* Keep bottom step navigation centered. */
+.zone-nav {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  bottom: 10px !important;
+  z-index: 960 !important;
+}
+
+/* Tablet: still top-right and visible. */
+@media (max-width: 1100px) and (min-width: 781px) {
+  .hud-controls {
+    top: 16px !important;
+    right: 14px !important;
+    gap: 8px !important;
+  }
+
+  .hud-btn {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .exit-verse-control {
+    top: 68px !important;
+    right: 14px !important;
+  }
+
+  .zoom-control {
+    right: 14px !important;
+  }
+}
+
+/* Mobile: controls remain top-right and visible, compact horizontal rail. */
+@media (max-width: 780px) {
+  .hud-controls {
+    display: flex !important;
+    position: fixed !important;
+    top: 12px !important;
+    right: 10px !important;
+    left: auto !important;
+    bottom: auto !important;
+    max-width: calc(100vw - 82px) !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    flex-direction: row !important;
+    justify-content: flex-end !important;
+    gap: 6px !important;
+    padding: 0 !important;
+    scrollbar-width: none !important;
+  }
+
+  .hud-controls::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .hud-btn {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+  }
+
+  .hud-btn svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  .exit-verse-control {
+    top: 54px !important;
+    right: 10px !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+  }
+
+  .zoom-control {
+    right: 10px !important;
+    bottom: 92px !important;
+  }
+
+  .mobile-control-dock {
+    z-index: 950 !important;
+  }
+}
+
+
+/* ==========================================================================
+   BOTTOM-RIGHT FLOATING ICON CONTROLS
+   Updated: 20 May 2026, 22:00 IST
+
+   Request:
+   - Move controls to bottom-right.
+   - Make them feel like Instagram floating icons.
+   - No background on icons.
+   - Tooltip appears on hover.
+
+   Final behavior:
+   - Brand stays top-left.
+   - Main HUD controls become a bottom-right vertical floating icon rail.
+   - No icon background, no border, no pill wrappers.
+   - Hover/focus shows tooltip to the left.
+   - Mobile keeps controls visible as a compact vertical rail.
+   ========================================================================== */
+
+.hud {
+  pointer-events: none !important;
+}
+
+.hud-brand,
+.hud-logo,
+.brand-copy {
+  pointer-events: auto !important;
+}
+
+/* Main HUD control rail: floating at bottom-right. */
+.hud-controls {
+  position: fixed !important;
+  right: 16px !important;
+  bottom: 110px !important;
+  top: auto !important;
+  left: auto !important;
+  z-index: 1100 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 14px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.hud-controls::before,
+.hud-controls::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* Floating icon buttons: no background, no border. */
+.hud-btn {
+  position: relative !important;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  padding: 0 !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  color: rgba(103, 232, 249, .92) !important;
+  opacity: .90 !important;
+  overflow: visible !important;
+}
+
+.hud-btn svg,
+.hud-btn i,
+.hud-btn span {
+  width: 22px !important;
+  height: 22px !important;
+  display: block !important;
+}
+
+.hud-btn:hover,
+.hud-btn:focus-visible,
+.hud-btn.is-active {
+  color: var(--fire) !important;
+  opacity: 1 !important;
+  transform: translateY(-1px) !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  border: 0 !important;
+}
+
+/* Tooltip on hover/focus */
+.hud-btn::after {
+  content: attr(data-tip) !important;
+  position: absolute !important;
+  right: calc(100% + 12px) !important;
+  top: 50% !important;
+  transform: translateY(-50%) translateX(8px) !important;
+  white-space: nowrap !important;
+  padding: 7px 10px !important;
+  border-radius: 999px !important;
+  background: rgba(5, 7, 10, .72) !important;
+  color: var(--text) !important;
+  border: 1px solid rgba(34, 211, 238, .18) !important;
+  font: 700 11px/1 var(--heading) !important;
+  letter-spacing: .05em !important;
+  text-transform: uppercase !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity .16s ease, transform .16s ease, visibility .16s ease !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.28) !important;
+}
+
+.hud-btn:hover::after,
+.hud-btn:focus-visible::after {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-50%) translateX(0) !important;
+}
+
+/* Exit button follows the same floating-icon language. */
+.exit-verse-control {
+  right: 16px !important;
+  top: auto !important;
+  bottom: calc(110px + (24px * 8) + 118px) !important;
+  width: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  min-height: 24px !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  color: rgba(103, 232, 249, .92) !important;
+  overflow: visible !important;
+}
+
+.exit-verse-control svg {
+  width: 22px !important;
+  height: 22px !important;
+  fill: currentColor !important;
+}
+
+.exit-verse-control:hover,
+.exit-verse-control:focus-visible {
+  color: var(--fire) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  transform: translateY(-1px) !important;
+  outline: none !important;
+}
+
+.exit-verse-control::after {
+  content: "Exit" !important;
+  position: absolute !important;
+  right: calc(100% + 12px) !important;
+  top: 50% !important;
+  transform: translateY(-50%) translateX(8px) !important;
+  white-space: nowrap !important;
+  padding: 7px 10px !important;
+  border-radius: 999px !important;
+  background: rgba(5, 7, 10, .72) !important;
+  color: var(--text) !important;
+  border: 1px solid rgba(34, 211, 238, .18) !important;
+  font: 700 11px/1 var(--heading) !important;
+  letter-spacing: .05em !important;
+  text-transform: uppercase !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity .16s ease, transform .16s ease, visibility .16s ease !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.28) !important;
+}
+
+.exit-verse-control:hover::after,
+.exit-verse-control:focus-visible::after {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-50%) translateX(0) !important;
+}
+
+/* Keep zoom on right edge but separate from HUD icons. */
+.zoom-control {
+  right: 14px !important;
+  top: auto !important;
+  bottom: 150px !important;
+  z-index: 970 !important;
+}
+
+/* Keep bottom navigation centered. */
+.zone-nav {
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  bottom: 10px !important;
+  z-index: 960 !important;
+}
+
+/* Tablet */
+@media (max-width: 1100px) and (min-width: 781px) {
+  .hud-controls {
+    right: 14px !important;
+    bottom: 100px !important;
+    gap: 12px !important;
+  }
+
+  .hud-btn {
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+  }
+
+  .hud-btn svg,
+  .hud-btn i,
+  .hud-btn span {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .exit-verse-control {
+    right: 14px !important;
+    bottom: calc(100px + (22px * 8) + 108px) !important;
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px !important;
+    min-height: 22px !important;
+  }
+
+  .zoom-control {
+    right: 12px !important;
+    bottom: 138px !important;
+  }
+}
+
+/* Mobile: still visible bottom-right but compact and above mobile dock. */
+@media (max-width: 780px) {
+  .hud-controls {
+    right: 12px !important;
+    bottom: 132px !important;
+    gap: 12px !important;
+  }
+
+  .hud-btn {
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+  }
+
+  .hud-btn svg,
+  .hud-btn i,
+  .hud-btn span {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .exit-verse-control {
+    right: 12px !important;
+    bottom: calc(132px + (20px * 8) + 84px) !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+  }
+
+  .zoom-control {
+    right: 10px !important;
+    bottom: 96px !important;
+  }
+
+  .hud-btn::after,
+  .exit-verse-control::after {
+    font-size: 10px !important;
+    padding: 6px 9px !important;
+  }
+}
+
+
+/* ==========================================================================
+   LEFT-CENTER CLEAN ZOOM CONTROL
+   Updated: 20 May 2026, 22:18 IST
+
+   Request:
+   - Move zoom bar to left center.
+   - Remove background and border.
+   - Apply from mobile to desktop.
+
+   Final behavior:
+   - Zoom control stays vertically centered on the left.
+   - No panel background.
+   - No border wrapper.
+   - No extra box shadow.
+   - Works on desktop, tablet, and mobile.
+   ========================================================================== */
+
+.zoom-control {
+  position: fixed !important;
+  left: 14px !important;
+  right: auto !important;
+  top: 50% !important;
+  bottom: auto !important;
+  transform: translateY(-50%) !important;
+  z-index: 970 !important;
+
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 0 !important;
+}
+
+.zoom-control::before,
+.zoom-control::after {
+  content: none !important;
+  display: none !important;
+}
+
+.zoom-control button {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.zoom-control input[type="range"] {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.zoom-value {
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+@media (max-width: 1100px) and (min-width: 781px) {
+  .zoom-control {
+    left: 12px !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+  }
+}
+
+@media (max-width: 780px) {
+  .zoom-control {
+    left: 10px !important;
+    right: auto !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+  }
+}
+
+
+/* ==========================================================================
+   ACTUAL CONTROLS VISIBILITY + LEFT ZOOM DOCK FIX
+   Updated: 20 May 2026, 22:35 IST
+
+   Root cause:
+   The zoom UI is `.zoom-dock`, not `.zoom-control`.
+   Previous left-center update targeted the wrong selector, so the zoom stayed
+   on the right and visually competed with the floating control icons.
+
+   Final behavior:
+   - HUD controls are visible as bottom-right floating icons.
+   - Icons have no background and no border.
+   - Hover/focus tooltip appears.
+   - Actual zoom dock moves to left-center.
+   - Zoom dock has no background and no border.
+   - Works from mobile to desktop.
+   ========================================================================== */
+
+/* HUD should not hide the controls. */
+.hud {
+  pointer-events: none !important;
+}
+
+.hud-brand,
+.hud-logo,
+.brand-copy,
+.hud-controls,
+.hud-controls * {
+  pointer-events: auto !important;
+}
+
+/* Visible bottom-right Instagram-style control rail. */
+.hud-controls {
+  position: fixed !important;
+  right: 18px !important;
+  bottom: 112px !important;
+  top: auto !important;
+  left: auto !important;
+  z-index: 1600 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 16px !important;
+  width: auto !important;
+  max-width: none !important;
+  height: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  overflow: visible !important;
+}
+
+.hud-controls::before,
+.hud-controls::after {
+  content: none !important;
+  display: none !important;
+}
+
+.hud-btn {
+  position: relative !important;
+  display: inline-grid !important;
+  place-items: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  color: rgba(103, 232, 249, .98) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+
+.hud-btn svg {
+  width: 25px !important;
+  height: 25px !important;
+  stroke: currentColor !important;
+  fill: none !important;
+  stroke-width: 2.15 !important;
+  filter: drop-shadow(0 0 5px rgba(34, 211, 238, .55)) !important;
+}
+
+.hud-btn.launch svg {
+  fill: none !important;
+}
+
+.hud-btn:hover,
+.hud-btn:focus-visible,
+.hud-btn.is-active {
+  color: var(--fire) !important;
+  opacity: 1 !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transform: translateY(-1px) scale(1.04) !important;
+}
+
+.hud-btn:hover svg,
+.hud-btn:focus-visible svg,
+.hud-btn.is-active svg {
+  filter: drop-shadow(0 0 8px rgba(255, 176, 32, .65)) !important;
+}
+
+/* Tooltip for bottom-right floating icons. */
+.hud-btn::after {
+  content: attr(data-tip) !important;
+  position: absolute !important;
+  right: calc(100% + 12px) !important;
+  top: 50% !important;
+  transform: translateY(-50%) translateX(8px) !important;
+  padding: 7px 10px !important;
+  white-space: nowrap !important;
+  border-radius: 999px !important;
+  background: rgba(5, 7, 10, .72) !important;
+  color: var(--text) !important;
+  border: 1px solid rgba(34, 211, 238, .18) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.28) !important;
+  font: 800 10.5px/1 var(--heading) !important;
+  letter-spacing: .06em !important;
+  text-transform: uppercase !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity .16s ease, transform .16s ease, visibility .16s ease !important;
+}
+
+.hud-btn:hover::after,
+.hud-btn:focus-visible::after {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-50%) translateX(0) !important;
+}
+
+/* Exit uses same visual language and sits above the control rail. */
+.exit-verse-control {
+  position: fixed !important;
+  right: 18px !important;
+  bottom: calc(112px + 8 * 48px) !important;
+  top: auto !important;
+  left: auto !important;
+  z-index: 1601 !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  min-height: 32px !important;
+  padding: 0 !important;
+  color: rgba(103, 232, 249, .98) !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  overflow: visible !important;
+}
+
+.exit-verse-control svg {
+  width: 25px !important;
+  height: 25px !important;
+  fill: currentColor !important;
+  filter: drop-shadow(0 0 5px rgba(34, 211, 238, .55)) !important;
+}
+
+.exit-verse-control:hover,
+.exit-verse-control:focus-visible {
+  color: var(--fire) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transform: translateY(-1px) scale(1.04) !important;
+}
+
+.exit-verse-control::after {
+  content: "Exit" !important;
+  position: absolute !important;
+  right: calc(100% + 12px) !important;
+  top: 50% !important;
+  transform: translateY(-50%) translateX(8px) !important;
+  padding: 7px 10px !important;
+  white-space: nowrap !important;
+  border-radius: 999px !important;
+  background: rgba(5, 7, 10, .72) !important;
+  color: var(--text) !important;
+  border: 1px solid rgba(34, 211, 238, .18) !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,.28) !important;
+  font: 800 10.5px/1 var(--heading) !important;
+  letter-spacing: .06em !important;
+  text-transform: uppercase !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity .16s ease, transform .16s ease, visibility .16s ease !important;
+}
+
+.exit-verse-control:hover::after,
+.exit-verse-control:focus-visible::after {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(-50%) translateX(0) !important;
+}
+
+/* ACTUAL zoom element: move `.zoom-dock` to left-center. */
+.zoom-dock,
+.zoom-control {
+  position: fixed !important;
+  left: 14px !important;
+  right: auto !important;
+  top: 50% !important;
+  bottom: auto !important;
+  transform: translateY(-50%) !important;
+  z-index: 1500 !important;
+  width: 34px !important;
+  min-width: 34px !important;
+  max-width: 34px !important;
+  height: auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.zoom-dock::before,
+.zoom-dock::after,
+.zoom-control::before,
+.zoom-control::after {
+  content: none !important;
+  display: none !important;
+}
+
+.zoom-dock button,
+.zoom-control button {
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  min-height: 30px !important;
+  display: grid !important;
+  place-items: center !important;
+  padding: 0 !important;
+  color: rgba(103, 232, 249, .98) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.zoom-dock button svg,
+.zoom-control button svg {
+  width: 18px !important;
+  height: 18px !important;
+  stroke: currentColor !important;
+  filter: drop-shadow(0 0 4px rgba(34, 211, 238, .55)) !important;
+}
+
+.zoom-dock button:hover,
+.zoom-dock button:focus-visible,
+.zoom-control button:hover,
+.zoom-control button:focus-visible {
+  color: var(--fire) !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.zoom-range,
+.zoom-dock input[type="range"],
+.zoom-control input[type="range"] {
+  writing-mode: vertical-rl !important;
+  direction: rtl !important;
+  width: 24px !important;
+  height: 138px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  accent-color: var(--cyan) !important;
+}
+
+.zoom-value {
+  color: rgba(165, 243, 252, .98) !important;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  font: 900 10px/1 var(--heading) !important;
+  text-shadow: 0 0 5px rgba(34, 211, 238, .42) !important;
+}
+
+/* Keep bottom step navigation centered and clean. */
+.zone-nav {
+  left: 50% !important;
+  right: auto !important;
+  bottom: 10px !important;
+  transform: translateX(-50%) !important;
+  z-index: 960 !important;
+}
+
+/* Tablet */
+@media (max-width: 1100px) and (min-width: 781px) {
+  .hud-controls {
+    right: 14px !important;
+    bottom: 104px !important;
+    gap: 14px !important;
+  }
+
+  .hud-btn,
+  .exit-verse-control {
+    width: 30px !important;
+    height: 30px !important;
+    min-width: 30px !important;
+    min-height: 30px !important;
+  }
+
+  .hud-btn svg,
+  .exit-verse-control svg {
+    width: 23px !important;
+    height: 23px !important;
+  }
+
+  .exit-verse-control {
+    right: 14px !important;
+    bottom: calc(104px + 8 * 46px) !important;
+  }
+
+  .zoom-dock,
+  .zoom-control {
+    left: 12px !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 780px) {
+  .hud-controls {
+    right: 10px !important;
+    bottom: 128px !important;
+    gap: 12px !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .hud-btn {
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
+  }
+
+  .hud-btn svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .exit-verse-control {
+    right: 10px !important;
+    bottom: calc(128px + 8 * 38px) !important;
+    top: auto !important;
+    width: 26px !important;
+    height: 26px !important;
+    min-width: 26px !important;
+    min-height: 26px !important;
+  }
+
+  .exit-verse-control svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .zoom-dock,
+  .zoom-control {
+    left: 10px !important;
+    right: auto !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+    width: 30px !important;
+    max-width: 30px !important;
+    flex-direction: column !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .zoom-range,
+  .zoom-dock input[type="range"],
+  .zoom-control input[type="range"] {
+    writing-mode: vertical-rl !important;
+    direction: rtl !important;
+    width: 22px !important;
+    height: 112px !important;
+  }
+
+  .hud-btn::after,
+  .exit-verse-control::after {
+    font-size: 10px !important;
+    padding: 6px 9px !important;
+  }
+}

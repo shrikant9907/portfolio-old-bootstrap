@@ -1,5 +1,68 @@
 # Changelog
 
+## Controls Visible and Actual Zoom Dock Fix — 20 May 2026, 22:35 IST
+
+- Fixed the root cause: actual zoom element is `.zoom-dock`, not `.zoom-control`.
+- Moved `.zoom-dock` to left-center.
+- Removed zoom dock background and border.
+- Made bottom-right HUD controls clearly visible as floating icons.
+- Added hover/focus tooltips to HUD icons.
+- Added `steps/41-controls-visible-actual-zoom-dock-fix.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
+## Left-Center Clean Zoom Control — 20 May 2026, 22:18 IST
+
+- Moved zoom control to the left-center of the screen.
+- Removed zoom control background.
+- Removed zoom control border.
+- Removed zoom control wrapper feeling.
+- Applied the same behavior from mobile to desktop.
+- Added `steps/40-left-center-clean-zoom-control.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
+## Bottom-Right Instagram-Style Floating Icons — 20 May 2026, 22:00 IST
+
+- Moved main HUD controls to the bottom-right.
+- Removed icon backgrounds and border wrappers.
+- Kept the controls as a clean vertical floating rail.
+- Added hover/focus tooltips for each control.
+- Added `steps/39-bottom-right-instagram-floating-icons.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
+## Top-Right Controls Visibility Fix — 20 May 2026, 21:40 IST
+
+- Restored main HUD controls to top-right.
+- Made HUD controls visible across desktop, tablet, and mobile.
+- Removed the bottom-right vertical rail behavior through final CSS override.
+- Kept controls circular and compact.
+- Added `steps/38-top-right-controls-visible.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
+## Bottom-Right Vertical HUD Controls — 20 May 2026, 21:25 IST
+
+- Moved main HUD icon controls from top-right row to bottom-right vertical rail.
+- Kept controls circular.
+- Shifted zoom control left to avoid overlap with the vertical rail.
+- Kept bottom step navigation centered.
+- Kept mobile bottom dock as primary controls.
+- Added `steps/37-bottom-right-vertical-controls.md`.
+- Updated screen contracts, README, about-project, and testing checklist.
+
+
+# Changelog
+
 ## Screenshot QA No Dotted Rings and Proof Circle Fix — 20 May 2026, 21:10 IST
 
 - Removed remaining dotted orbit/guide rings from Technology, Product, Proof, and Client scenes.

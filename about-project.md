@@ -270,3 +270,33 @@ Shrimo Verse now uses transparent cinematic overlays instead of solid cards. Con
 **Updated:** 20 May 2026, 21:10 IST
 
 The universe UI now avoids decorative dotted rings completely. Proof signals are circular and detail panels are cleaner.
+
+## Bottom-Right Vertical HUD Controls
+
+**Updated:** 20 May 2026, 21:25 IST
+
+Shrimo Verse now places the main icon controls as a bottom-right vertical rail, making the top-right area cleaner and the control system more game-like.
+
+## Top-Right Controls Visibility Fix
+
+**Updated:** 20 May 2026, 21:40 IST
+
+Shrimo Verse controls now stay visible at the top-right across desktop, tablet, and mobile.
+
+## Bottom-Right Floating Icon Controls
+
+**Updated:** 20 May 2026, 22:00 IST
+
+Shrimo Verse now uses a bottom-right floating control rail inspired by lightweight social-app icon treatment: clean, background-free, and tooltip-driven.
+
+## Left-Center Clean Zoom Control
+
+**Updated:** 20 May 2026, 22:18 IST
+
+Shrimo Verse now uses a clean left-side zoom control with no background wrapper, keeping the universe view lighter and less UI-heavy.
+
+## Controls Visible and Actual Zoom Dock Fix
+
+**Updated:** 20 May 2026, 22:35 IST
+
+Shrimo Verse now uses the correct zoom selector `.zoom-dock` and keeps the main floating HUD controls visible at the bottom-right.
