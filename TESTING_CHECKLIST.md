@@ -623,3 +623,14 @@ Updated: 21 May 2026, 11:58 IST
 - [ ] No node labels overlap.
 - [ ] No nodes enter brand safe zone.
 - [ ] Cards still avoid right-side controls.
+
+## Phase 63 Production QA Checkpoint Test
+
+Updated: 21 May 2026, 12:20 IST
+
+- [ ] Desktop: all scenes visually checked.
+- [ ] Tablet: all scenes visually checked.
+- [ ] Mobile: all scenes visually checked.
+- [ ] Refresh restore checked.
+- [ ] Tutorial visual spotlight checked.
+- [ ] Social/contact icons checked.

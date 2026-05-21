@@ -588,3 +588,13 @@
 - Made Phase 61 the only visible desktop orbit source of truth.
 - Added final CSS guard hiding non-Phase61 nodes in Arrival/Technology desktop zones.
 - Added `steps/62-desktop-orbit-controller-cleanup.md`.
+
+## Phase 63 Production QA Checkpoint — 21 May 2026, 12:20 IST
+
+- Added production QA checkpoint CSS layer.
+- Added brand safe shield DOM layer.
+- Added refresh state restore support.
+- Added social/contact action icons.
+- Added guide visual spotlight helpers.
+- Added scene/card overlap suppression guards.
+- This is an interim checkpoint before full mobile/tablet/desktop final QA.

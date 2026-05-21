@@ -2805,3 +2805,218 @@ function bindEntry() {
    Previous desktop orbit controllers are neutralized so Phase 61 is the only
    active desktop orbit source of truth. */
 (function(){ document.body.classList.add('phase62-orbit-controller-cleaned'); })();
+
+
+/* ==========================================================================
+   PHASE 63 — PRODUCTION QA CHECKPOINT RUNTIME
+   Updated: 21 May 2026, 12:20 IST
+   ========================================================================== */
+(function () {
+  const zoneSceneMap = {
+    '0': 'arrival-core',
+    '1': 'technology-orbit',
+    '2': 'product-gallery',
+    '3': 'proof-ring',
+    '4': 'client-signals',
+    '5': 'launch-dock'
+  };
+
+  const brandTargets = [
+    '.verse-node',
+    '.product-dot',
+    '.proof-dot',
+    '.review-dot',
+    '.world-dot',
+    '.rocket-cursor',
+    '.cursor-rocket',
+    '.rocket-trail',
+    '.rocket-flame',
+    '.trail-dot'
+  ].join(',');
+
+  function getStage() {
+    return document.querySelector('.verse-stage');
+  }
+
+  function getCurrentZone() {
+    const stage = getStage();
+    return String(stage?.dataset?.zone || '0');
+  }
+
+  function setSceneState() {
+    const zone = getCurrentZone();
+    document.body.dataset.scene = zoneSceneMap[zone] || 'arrival-core';
+
+    try {
+      localStorage.setItem('shrimoVerseEntered', document.body.classList.contains('verse-entered') ? '1' : '0');
+      localStorage.setItem('shrimoVerseZone', zone);
+    } catch (error) {}
+  }
+
+  function restoreSceneState() {
+    try {
+      const entered = localStorage.getItem('shrimoVerseEntered') === '1';
+      const zone = localStorage.getItem('shrimoVerseZone');
+      const stage = getStage();
+
+      if (entered) {
+        document.body.classList.add('verse-entered');
+        document.body.classList.remove('is-entering-verse');
+      }
+
+      if (stage && zone && /^[0-5]$/.test(zone)) {
+        stage.dataset.zone = zone;
+        document.body.dataset.scene = zoneSceneMap[zone] || 'arrival-core';
+      }
+    } catch (error) {}
+  }
+
+  function syncBrandSafeZone() {
+    const desktop = window.innerWidth >= 1101;
+    const tablet = window.innerWidth >= 781 && window.innerWidth <= 1100;
+    const safe = desktop
+      ? { left: 0, top: 0, right: 390, bottom: 168 }
+      : tablet
+        ? { left: 0, top: 0, right: 320, bottom: 134 }
+        : null;
+
+    const targets = Array.from(document.querySelectorAll(brandTargets));
+
+    if (!safe) {
+      targets.forEach((node) => node.classList.remove('is-brand-zone-hidden'));
+      return;
+    }
+
+    targets.forEach((node) => {
+      const rect = node.getBoundingClientRect();
+      const hit = !(rect.right < safe.left || rect.left > safe.right || rect.bottom < safe.top || rect.top > safe.bottom);
+      node.classList.toggle('is-brand-zone-hidden', hit);
+    });
+  }
+
+  function addActionIcons() {
+    const icons = {
+      whatsapp: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.6 18.2 4 20l.8-3A8 8 0 1 1 12 20a8.8 8.8 0 0 1-5.4-1.8Z" stroke="currentColor" stroke-width="1.8"/><path d="M9.2 8.6c.2-.5.4-.5.7-.5h.5c.2 0 .4 0 .5.4l.7 1.7c.1.3.1.5-.1.7l-.4.5c.7 1.1 1.6 1.9 2.8 2.5l.5-.6c.2-.2.4-.3.7-.2l1.6.8c.3.1.4.3.4.6 0 1-.8 1.6-1.8 1.6-2.8 0-7-3.4-7-6.1 0-.5.1-.9.4-1.4Z" fill="currentColor"/></svg>',
+      call: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 4h3l1.2 4-2 1.3c.9 1.9 2.5 3.5 4.5 4.5l1.3-2L19 13v3c0 1.7-1.3 3-3 3A11 11 0 0 1 5 8c0-1.7 1.3-4 2-4Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>',
+      email: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.8"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8"/></svg>',
+      linkedin: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 9h3v10H5V9Zm1.5-4.2a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4ZM11 9h3v1.5c.5-.9 1.4-1.7 3-1.7 2.2 0 3.5 1.5 3.5 4.2v6H17v-5.3c0-1.3-.5-2-1.5-2s-1.6.7-1.6 2V19H11V9Z" fill="currentColor"/></svg>',
+      github: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3a9 9 0 0 0-3 17c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.5-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 0 1.6 1 1.6 1 .9 1.6 2.4 1.1 2.9.8.1-.7.4-1.1.7-1.3-2.2-.2-4.5-1.1-4.5-4.8 0-1.1.4-1.9 1-2.6-.1-.3-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.3 9.3 0 0 1 4.8 0c1.8-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.6.7.7 1 1.5 1 2.6 0 3.7-2.3 4.6-4.5 4.8.4.3.8 1 .8 2v3.3c0 .3.2.6.8.5A9 9 0 0 0 12 3Z" fill="currentColor"/></svg>',
+      default: '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v18m0-18 5 5m-5-5-5 5m0 8 5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    };
+
+    document.querySelectorAll('.dock-beacons a, .product-actions a, .launch-primary-btn').forEach((link) => {
+      if (link.querySelector('.action-mini-icon')) return;
+      const text = (link.textContent || '').toLowerCase();
+      let key = 'default';
+      if (text.includes('whatsapp')) key = 'whatsapp';
+      else if (text.includes('call')) key = 'call';
+      else if (text.includes('email')) key = 'email';
+      else if (text.includes('linkedin')) key = 'linkedin';
+      else if (text.includes('github')) key = 'github';
+
+      const span = document.createElement('span');
+      span.className = 'action-mini-icon';
+      span.innerHTML = icons[key] || icons.default;
+      link.prepend(span);
+    });
+  }
+
+  function ensureGuideVisuals() {
+    if (!document.querySelector('.guide-spotlight-ring')) {
+      const ring = document.createElement('div');
+      ring.className = 'guide-spotlight-ring';
+      document.body.appendChild(ring);
+    }
+    if (!document.querySelector('.guide-focus-label')) {
+      const label = document.createElement('div');
+      label.className = 'guide-focus-label';
+      label.textContent = 'Focus target';
+      document.body.appendChild(label);
+    }
+    if (!document.querySelector('.guide-focus-line')) {
+      const line = document.createElement('div');
+      line.className = 'guide-focus-line';
+      document.body.appendChild(line);
+    }
+  }
+
+  function updateGuideVisuals() {
+    ensureGuideVisuals();
+    const ring = document.querySelector('.guide-spotlight-ring');
+    const label = document.querySelector('.guide-focus-label');
+    const line = document.querySelector('.guide-focus-line');
+    const guide = document.querySelector('.guide-overlay, .guide-card');
+
+    if (!guide || getComputedStyle(guide).display === 'none' || guide.getAttribute('aria-hidden') === 'true') {
+      ring?.classList.remove('is-visible');
+      label?.classList.remove('is-visible');
+      line?.classList.remove('is-visible');
+      return;
+    }
+
+    const scene = document.body.dataset.scene || 'arrival-core';
+    const target = scene === 'technology-orbit'
+      ? document.querySelector('.verse-node:not(.is-brand-zone-hidden), .sv-core')
+      : scene === 'arrival-core'
+        ? document.querySelector('.sv-core')
+        : document.querySelector('.gallery-card, .proof-focus, .review-card, .launch-dock, .sv-core');
+
+    if (!target) return;
+
+    const rect = target.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+
+    ring.style.left = `${cx}px`;
+    ring.style.top = `${cy}px`;
+    ring.classList.add('is-visible');
+
+    label.style.left = `${Math.min(window.innerWidth - 180, cx + 48)}px`;
+    label.style.top = `${Math.max(90, cy - 46)}px`;
+    label.textContent = scene.replace('-', ' ');
+    label.classList.add('is-visible');
+
+    const g = guide.getBoundingClientRect();
+    const gx = g.left + 24;
+    const gy = g.top + 24;
+    const dx = cx - gx;
+    const dy = cy - gy;
+    const length = Math.sqrt(dx * dx + dy * dy);
+    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+    line.style.left = `${gx}px`;
+    line.style.top = `${gy}px`;
+    line.style.width = `${Math.max(80, length)}px`;
+    line.style.transform = `rotate(${angle}deg)`;
+    line.classList.add('is-visible');
+  }
+
+  function suppressGuideWhenMainCardOpen() {
+    const scene = document.body.dataset.scene;
+    const guide = document.querySelector('.guide-overlay');
+    if (!guide) return;
+    guide.classList.toggle('is-suppressed-by-scene-card', ['product-gallery', 'proof-ring', 'client-signals', 'launch-dock'].includes(scene));
+  }
+
+  function tickPhase63() {
+    setSceneState();
+    syncBrandSafeZone();
+    addActionIcons();
+    suppressGuideWhenMainCardOpen();
+    updateGuideVisuals();
+    requestAnimationFrame(tickPhase63);
+  }
+
+  function initPhase63() {
+    restoreSceneState();
+    ensureGuideVisuals();
+    tickPhase63();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPhase63);
+  } else {
+    initPhase63();
+  }
+})();
+
