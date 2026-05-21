@@ -513,3 +513,16 @@ Updated: 21 May 2026, 02:10 IST
 - [ ] Client Signals mobile card is readable.
 - [ ] Launch Dock mobile shows all visible buttons fully without clipping.
 - [ ] Launch Dock mobile does not duplicate WhatsApp as both primary and secondary CTA.
+
+## Phase 52 Mobile Safe Zone and Card Containment Test
+
+Updated: 21 May 2026, 02:40 IST
+
+- [ ] Product Gallery buttons are fully visible above the mobile dock.
+- [ ] Launch Dock primary CTA is fully visible above the mobile dock.
+- [ ] Launch Dock secondary actions are not cropped.
+- [ ] Client Signal card is readable and not under the dock.
+- [ ] Proof Ring card is not clipped.
+- [ ] Arrival Core nodes do not overlap the SV core.
+- [ ] Tablet card layout is contained.
+- [ ] Desktop panels do not touch bottom controls.

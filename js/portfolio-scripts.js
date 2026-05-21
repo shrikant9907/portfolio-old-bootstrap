@@ -2034,3 +2034,107 @@ function bindEntry() {
     initPhase51Mobile();
   }
 })();
+
+
+/* ==========================================================================
+   PHASE 52 — MOBILE SAFE ZONE + NODE ORBIT PRECISION JS
+   Updated: 21 May 2026, 02:40 IST
+
+   Purpose:
+   - enforce a precise mobile Arrival orbit outside the SV core safe radius
+   - reset cleanly outside Arrival/mobile
+   ========================================================================== */
+(function () {
+  const ARRIVAL_IDS = ['css', 'react', 'javascript', 'html'];
+  const OFFSETS = [
+    [0, -96],
+    [100, 4],
+    [-86, 72],
+    [86, 72]
+  ];
+
+  function resetPhase52ArrivalNodes() {
+    document.querySelectorAll('.particle-layer .verse-node').forEach((node) => {
+      node.classList.remove('phase52-arrival-node');
+      node.style.removeProperty('display');
+      node.style.removeProperty('visibility');
+      node.style.removeProperty('opacity');
+      node.style.removeProperty('left');
+      node.style.removeProperty('top');
+      node.style.removeProperty('pointer-events');
+    });
+  }
+
+  function applyPhase52ArrivalNodes() {
+    const mobile = window.innerWidth <= 780;
+    const stage = document.querySelector('.verse-stage');
+    const plane = document.querySelector('.universe-plane');
+    const core = document.querySelector('.sv-core');
+
+    if (!mobile || !stage || !plane || !core) {
+      resetPhase52ArrivalNodes();
+      return;
+    }
+
+    const isArrival = document.body.classList.contains('verse-entered') && stage.dataset.zone === '0';
+    const nodes = Array.from(document.querySelectorAll('.particle-layer .verse-node'));
+
+    if (!isArrival) {
+      resetPhase52ArrivalNodes();
+      return;
+    }
+
+    const nodeMap = new Map(nodes.map((node) => [node.dataset.id, node]));
+    const chosen = ARRIVAL_IDS.map((id) => nodeMap.get(id)).filter(Boolean);
+
+    const planeRect = plane.getBoundingClientRect();
+    const coreRect = core.getBoundingClientRect();
+    const cx = coreRect.left - planeRect.left + coreRect.width / 2;
+    const cy = coreRect.top - planeRect.top + coreRect.height / 2;
+
+    nodes.forEach((node) => {
+      if (!chosen.includes(node)) {
+        node.classList.remove('phase52-arrival-node');
+        node.style.display = 'none';
+        node.style.visibility = 'hidden';
+        node.style.opacity = '0';
+        node.style.pointerEvents = 'none';
+      }
+    });
+
+    chosen.forEach((node, index) => {
+      const [ox, oy] = OFFSETS[index] || [0, 0];
+      node.classList.add('phase52-arrival-node');
+      node.style.display = '';
+      node.style.visibility = 'visible';
+      node.style.opacity = '0.92';
+      node.style.left = `${cx + ox}px`;
+      node.style.top = `${cy + oy}px`;
+      node.style.pointerEvents = 'auto';
+    });
+  }
+
+  function initPhase52() {
+    let ticking = false;
+    const schedule = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        applyPhase52ArrivalNodes();
+      });
+    };
+
+    schedule();
+    window.addEventListener('resize', schedule, { passive: true });
+    window.addEventListener('orientationchange', schedule, { passive: true });
+    document.addEventListener('visibilitychange', schedule);
+    setInterval(applyPhase52ArrivalNodes, 450);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPhase52);
+  } else {
+    initPhase52();
+  }
+})();

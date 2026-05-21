@@ -589,3 +589,15 @@ Mobile Product, Proof, Review, and Launch screens now use one controlled bottom-
 This phase completes the remaining mobile scene polish. Arrival Core now uses a protected centered node layout around the SV core, and Product / Proof / Client / Launch screens follow a safer bottom-sheet layout on mobile.
 
 See: `steps/51-final-mobile-issue-fixes.md`
+
+## Phase 52 Mobile Safe Zone and Card Containment Fix
+
+**Updated:** 21 May 2026, 02:40 IST
+
+Phase 52 adds a global mobile bottom safe zone so scene cards and buttons never hide under the mobile navigation. It also tightens Product, Proof, Client, Launch, Arrival node orbit, tablet containment, and desktop panel height guards.
+
+See:
+
+```txt
+steps/52-mobile-safe-zone-card-containment.md
+```

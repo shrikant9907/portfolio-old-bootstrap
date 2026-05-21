@@ -1,5 +1,19 @@
 # Changelog
 
+## Phase 52 Mobile Safe Zone and Card Containment Fix — 21 May 2026, 02:40 IST
+
+- Added global mobile bottom safe-area variables for the control dock.
+- Prevented Product Gallery, Proof Ring, Client Signals, and Launch Dock cards from entering the mobile dock zone.
+- Made Product Gallery mobile sheet more compact and kept action buttons visible.
+- Made Client Signals and Proof Ring mobile sheets shorter and readable.
+- Refined Launch Dock mobile conversion layout so CTA buttons are not hidden/cropped.
+- Added precise mobile Arrival node orbit offsets outside the SV core protected radius.
+- Added tablet containment and desktop panel-height guards.
+- Added `steps/52-mobile-safe-zone-card-containment.md`.
+
+
+# Changelog
+
 ## Phase 51 Final Mobile Issue Fixes — 21 May 2026, 02:10 IST
 
 - Fixed Arrival Core mobile node positioning with a protected radius around the SV core.

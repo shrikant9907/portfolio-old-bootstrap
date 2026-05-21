@@ -360,3 +360,9 @@ Mobile scene details now behave like a focused control sheet instead of desktop 
 **Updated:** 21 May 2026, 02:10 IST
 
 Mobile scene polish is now focused on protected SV-core spacing, stable bottom-sheet scene cards, and unclipped CTA actions. The Launch Dock mobile state now prioritizes one primary WhatsApp CTA with a reduced secondary action grid to avoid clipping.
+
+## Phase 52 Mobile Safe Zone and Card Containment Fix
+
+**Updated:** 21 May 2026, 02:40 IST
+
+Mobile scene sheets now obey a strict bottom-dock safe zone. The final conversion and product controls remain visible and tappable above the mobile dock.

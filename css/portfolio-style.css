@@ -7395,3 +7395,407 @@ body.is-entering-verse:not(.verse-entered) > .floating-hud-controls {
     display: none !important;
   }
 }
+
+
+/* ==========================================================================
+   PHASE 52 — MOBILE SAFE ZONE + CARD CONTAINMENT FIX
+   Updated: 21 May 2026, 02:40 IST
+
+   QA issue:
+   Mobile scene controls and CTA buttons were still going under the bottom dock
+   on Product Gallery, Client Signals, and Launch Dock.
+
+   Final mobile contract:
+   - bottom dock owns the bottom safe area
+   - scene cards never enter the dock zone
+   - primary buttons remain visible and tappable
+   - cards become compact bottom sheets, not full website panels
+   - Arrival Core nodes stay outside the SV core protected radius
+   ========================================================================== */
+
+:root {
+  --sv-mobile-dock-h: 74px;
+  --sv-mobile-dock-gap: 18px;
+  --sv-mobile-sheet-bottom: calc(var(--sv-mobile-dock-h) + var(--sv-mobile-dock-gap) + env(safe-area-inset-bottom, 0px));
+  --sv-mobile-top-safe: 168px;
+  --sv-mobile-sheet-max: calc(100dvh - var(--sv-mobile-top-safe) - var(--sv-mobile-sheet-bottom));
+}
+
+@media (max-width: 780px) {
+  html,
+  body,
+  .verse-stage {
+    min-height: 100dvh !important;
+    height: 100dvh !important;
+    overflow: hidden !important;
+  }
+
+  /* The mobile dock is the only bottom control system and reserves space. */
+  .mobile-control-dock {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    height: var(--sv-mobile-dock-h) !important;
+    min-height: var(--sv-mobile-dock-h) !important;
+    max-height: var(--sv-mobile-dock-h) !important;
+    padding: 6px 8px calc(5px + env(safe-area-inset-bottom, 0px)) !important;
+    z-index: 5000 !important;
+  }
+
+  .mobile-control-dock button {
+    min-height: 58px !important;
+    height: 58px !important;
+    padding: 4px 2px 2px !important;
+    display: grid !important;
+    align-content: center !important;
+    justify-items: center !important;
+    gap: 5px !important;
+  }
+
+  .mobile-control-dock svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+
+  /* Hide desktop-style step arrows/dots on mobile scene states to prevent crowding. */
+  body.verse-entered .zone-nav {
+    display: none !important;
+  }
+
+  /* Scene sheets: never cross into bottom dock safe zone. */
+  .gallery-card,
+  .proof-focus,
+  .review-card,
+  .launch-dock {
+    position: fixed !important;
+    left: 18px !important;
+    right: 18px !important;
+    bottom: var(--sv-mobile-sheet-bottom) !important;
+    top: auto !important;
+    width: auto !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    max-height: min(330px, var(--sv-mobile-sheet-max)) !important;
+    overflow: hidden !important;
+    padding: 14px !important;
+    border-radius: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    z-index: 2400 !important;
+  }
+
+  /* Product Gallery: compact mission sheet with visible actions. */
+  .gallery-card {
+    max-height: min(322px, var(--sv-mobile-sheet-max)) !important;
+    gap: 9px !important;
+  }
+
+  .product-head,
+  .gallery-card header {
+    display: grid !important;
+    grid-template-columns: 1fr auto !important;
+    align-items: start !important;
+    gap: 10px !important;
+  }
+
+  .gallery-card h3 {
+    font-size: clamp(23px, 7.1vw, 31px) !important;
+    line-height: .95 !important;
+    max-width: 10ch !important;
+    margin: 0 !important;
+  }
+
+  .product-copy,
+  .gallery-card .product-copy {
+    display: block !important;
+  }
+
+  .product-copy em,
+  .gallery-card p,
+  .gallery-card .product-summary {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    max-width: 22ch !important;
+    font-size: 12px !important;
+    line-height: 1.34 !important;
+    margin: 0 !important;
+  }
+
+  .gallery-preview {
+    width: 52px !important;
+    height: 52px !important;
+    min-width: 52px !important;
+    border-radius: 15px !important;
+  }
+
+  .product-mission-grid {
+    display: none !important;
+  }
+
+  .gallery-nav,
+  .product-nav {
+    display: grid !important;
+    grid-template-columns: 36px 1fr 36px !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 2px 0 0 !important;
+  }
+
+  .gallery-nav button,
+  .product-nav button {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+  }
+
+  .product-details-trigger {
+    min-height: 38px !important;
+    height: 38px !important;
+    margin: 4px 0 0 !important;
+    font-size: 10px !important;
+    letter-spacing: .10em !important;
+  }
+
+  .product-actions {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 9px !important;
+    margin-top: 4px !important;
+  }
+
+  .product-btn,
+  .disabled-path {
+    min-height: 42px !important;
+    height: 42px !important;
+    padding: 0 10px !important;
+    font-size: 10px !important;
+    border-radius: 13px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Proof Ring: readable, short, never clipped. */
+  .proof-focus {
+    max-height: min(250px, var(--sv-mobile-sheet-max)) !important;
+    gap: 6px !important;
+  }
+
+  .proof-focus h3 {
+    font-size: clamp(34px, 11vw, 48px) !important;
+    line-height: .9 !important;
+    margin: 0 !important;
+  }
+
+  .proof-focus strong {
+    font-size: clamp(18px, 5.6vw, 24px) !important;
+    line-height: 1.02 !important;
+    max-width: 12ch !important;
+  }
+
+  .proof-focus em {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    font-size: 12px !important;
+    line-height: 1.34 !important;
+    max-height: none !important;
+  }
+
+  .proof-nav {
+    display: none !important;
+  }
+
+  /* Client Signals: readable bottom sheet with button/controls above dock. */
+  .review-card {
+    max-height: min(292px, var(--sv-mobile-sheet-max)) !important;
+    gap: 9px !important;
+  }
+
+  .review-card blockquote {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 5 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+    margin: 0 !important;
+  }
+
+  .review-person,
+  .review-card footer {
+    margin-top: 0 !important;
+  }
+
+  .review-person strong,
+  .review-card cite {
+    font-size: 14px !important;
+  }
+
+  .review-person span,
+  .review-card small {
+    font-size: 11px !important;
+    opacity: .72 !important;
+  }
+
+  .review-next-inline {
+    min-height: 36px !important;
+    height: 36px !important;
+    align-self: start !important;
+    margin-top: 2px !important;
+  }
+
+  .review-nav {
+    display: none !important;
+  }
+
+  /* Launch Dock: conversion sheet, no hidden/cropped buttons. */
+  .launch-dock {
+    max-height: min(300px, var(--sv-mobile-sheet-max)) !important;
+    gap: 8px !important;
+  }
+
+  .launch-dock h2 {
+    font-size: clamp(22px, 6.7vw, 30px) !important;
+    line-height: .98 !important;
+    max-width: 13ch !important;
+    margin: 0 !important;
+  }
+
+  .launch-dock .dock-desc,
+  .launch-dock p:not(:first-child) {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    font-size: 12px !important;
+    line-height: 1.34 !important;
+    max-width: 25ch !important;
+    margin: 0 !important;
+  }
+
+  .launch-primary-btn {
+    width: 100% !important;
+    min-height: 46px !important;
+    height: 46px !important;
+    margin: 4px 0 2px !important;
+    border-radius: 14px !important;
+    font-size: 11px !important;
+    letter-spacing: .09em !important;
+  }
+
+  .dock-beacons {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    margin-top: 0 !important;
+  }
+
+  .dock-beacons a {
+    min-height: 34px !important;
+    height: 34px !important;
+    border-radius: 999px !important;
+    font-size: 9px !important;
+    padding: 0 8px !important;
+  }
+
+  /* Remove duplicate/low-priority conversion actions from mobile only. */
+  .dock-beacons a:first-child,
+  .dock-beacons a:nth-child(n+4) {
+    display: none !important;
+  }
+
+  /* Scene intro should not push/detail cards into the dock. */
+  body.is-product-scene .mission-panel,
+  body.is-proof-scene .mission-panel,
+  body.is-review-scene .mission-panel,
+  body.is-launch-scene .mission-panel {
+    top: 92px !important;
+    left: 24px !important;
+    width: min(265px, 76vw) !important;
+    max-width: min(265px, 76vw) !important;
+  }
+
+  body.is-product-scene .mission-panel h2,
+  body.is-proof-scene .mission-panel h2,
+  body.is-review-scene .mission-panel h2,
+  body.is-launch-scene .mission-panel h2 {
+    display: none !important;
+  }
+
+  body.is-product-scene .mission-panel p:not(.mission-kicker),
+  body.is-proof-scene .mission-panel p:not(.mission-kicker),
+  body.is-review-scene .mission-panel p:not(.mission-kicker),
+  body.is-launch-scene .mission-panel p:not(.mission-kicker) {
+    max-width: 30ch !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Keep active scene markers above the card, not behind it. */
+  .product-dots,
+  .proof-dots,
+  .review-dots {
+    transform: translateY(-38px) scale(.88) !important;
+  }
+
+  /* Arrival: exact mobile node orbit; protected no-node radius around core. */
+  .verse-stage[data-zone="0"] .verse-node.phase52-arrival-node {
+    min-width: 62px !important;
+    max-width: 86px !important;
+    height: 34px !important;
+    padding: 0 12px !important;
+    border-radius: 999px !important;
+    z-index: 34 !important;
+    transform: translate(-50%, -50%) !important;
+    opacity: .92 !important;
+  }
+
+  .verse-stage[data-zone="0"] .verse-node.phase52-arrival-node strong,
+  .verse-stage[data-zone="0"] .verse-node.phase52-arrival-node span,
+  .verse-stage[data-zone="0"] .verse-node.phase52-arrival-node .node-label {
+    font-size: 10px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Mobile zoom stays hidden after entering. It was competing with content. */
+  body.verse-entered .zoom-dock,
+  body.verse-entered .zoom-control {
+    display: none !important;
+  }
+}
+
+/* Tablet containment: avoid mobile/desktop mixed panels between 781px and 1100px. */
+@media (min-width: 781px) and (max-width: 1100px) {
+  .gallery-card,
+  .proof-focus,
+  .review-card,
+  .launch-dock {
+    max-width: 360px !important;
+    right: 32px !important;
+    bottom: 86px !important;
+  }
+
+  .mission-panel {
+    max-width: 300px !important;
+  }
+
+  body > .floating-hud-controls,
+  body > .hud-controls.floating-hud-controls {
+    right: 18px !important;
+    bottom: 118px !important;
+  }
+}
+
+/* Desktop QA guard: keep right panels from touching the navigation/control zones. */
+@media (min-width: 1101px) {
+  .gallery-card,
+  .proof-focus,
+  .review-card,
+  .launch-dock {
+    max-height: calc(100vh - 170px) !important;
+  }
+}
