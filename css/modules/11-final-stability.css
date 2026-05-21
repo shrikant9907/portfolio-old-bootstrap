@@ -1,0 +1,415 @@
+/* ==========================================================================
+   PHASE 58 — DESKTOP FINAL LANE STABILITY FIX
+   Updated: 21 May 2026, 11:42 IST
+
+   This file is intentionally loaded last. It fixes the remaining desktop/tablet
+   lane issues without touching mobile behavior:
+   - real DOM brand shield blocks nodes/rocket from logo zone
+   - guide card cannot sit over the left mission lane
+   - guide card is suppressed during scene panels and technology tooltip
+   - scene cards reserve space for the far-right control rail
+   ========================================================================== */
+
+@media (min-width: 781px) {
+  /* Real shield, not pseudo-only. This sits above all moving universe objects
+     and below the brand text, so particles/rocket cannot appear behind logo. */
+  .brand-safe-shield {
+    position: fixed !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 400px !important;
+    height: 176px !important;
+    pointer-events: none !important;
+    z-index: 8985 !important;
+    background:
+      radial-gradient(ellipse at 25px 24px,
+        rgba(0,0,0,.98) 0%,
+        rgba(0,0,0,.88) 26%,
+        rgba(0,0,0,.55) 58%,
+        rgba(0,0,0,0) 100%) !important;
+  }
+
+  .verse-control,
+  .verse-brand {
+    position: fixed !important;
+    z-index: 9200 !important;
+  }
+
+  .exit-verse-control {
+    z-index: 9300 !important;
+  }
+
+  .is-brand-zone-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
+
+@media (min-width: 1101px) {
+  :root {
+    --final-left-lane-x: 52px;
+    --final-left-lane-w: 330px;
+    --final-right-rail-w: 118px;
+    --final-right-gap: 42px;
+    --final-card-w: 410px;
+    --final-card-right: calc(var(--final-right-rail-w) + var(--final-right-gap));
+  }
+
+  /* Top-left logo must be clean and readable. */
+  .verse-control {
+    left: 16px !important;
+    top: 15px !important;
+  }
+
+  .verse-stage::after {
+    width: 400px !important;
+    height: 176px !important;
+    z-index: 8975 !important;
+  }
+
+  /* Left lane: mission text and zoom only. */
+  .mission-panel {
+    left: var(--final-left-lane-x) !important;
+    width: var(--final-left-lane-w) !important;
+    max-width: var(--final-left-lane-w) !important;
+    z-index: 2200 !important;
+  }
+
+  .zoom-dock,
+  .zoom-control {
+    left: 8px !important;
+    right: auto !important;
+    z-index: 6500 !important;
+  }
+
+  /* Right rail: icons only. */
+  body > .floating-hud-controls,
+  body > .hud-controls.floating-hud-controls {
+    right: 22px !important;
+    bottom: 108px !important;
+    z-index: 8300 !important;
+  }
+
+  /* Right scene lane: cards must stop before icon rail. */
+  .gallery-card,
+  .proof-focus,
+  .review-card,
+  .launch-dock,
+  .object-tooltip {
+    position: fixed !important;
+    left: auto !important;
+    right: var(--final-card-right) !important;
+    width: var(--final-card-w) !important;
+    max-width: var(--final-card-w) !important;
+    min-width: 0 !important;
+    max-height: calc(100vh - 190px) !important;
+    overflow: hidden !important;
+    z-index: 3000 !important;
+  }
+
+  .gallery-card,
+  .proof-focus,
+  .review-card,
+  .launch-dock {
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+  }
+
+  .object-tooltip {
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+  }
+
+  /* Guide card: never allowed in left lane. */
+  #guideOverlay.guide-overlay,
+  .guide-overlay,
+  .guide-card {
+    left: auto !important;
+    right: var(--final-card-right) !important;
+    top: auto !important;
+    bottom: 96px !important;
+    width: 300px !important;
+    max-width: 300px !important;
+    min-width: 0 !important;
+    transform: none !important;
+    z-index: 2600 !important;
+  }
+
+  #guideOverlay .guide-card,
+  .guide-card {
+    padding: 18px !important;
+    border-radius: 22px !important;
+  }
+
+  #guideOverlay h3,
+  .guide-card h3 {
+    font-size: 24px !important;
+    line-height: 1.05 !important;
+  }
+
+  #guideOverlay p,
+  .guide-card p {
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+  }
+
+  /* Suppress guide when a main scene panel or technology tooltip is active. */
+  body[data-scene="product-gallery"] #guideOverlay,
+  body[data-scene="proof-ring"] #guideOverlay,
+  body[data-scene="client-signals"] #guideOverlay,
+  body[data-scene="launch-dock"] #guideOverlay,
+  body.is-scene-panel-active #guideOverlay,
+  body.is-technology-tooltip-active #guideOverlay,
+  #guideOverlay.is-suppressed-by-scene-card {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  /* Keep step nav independent at bottom center. */
+  .zone-nav {
+    bottom: 14px !important;
+    z-index: 6500 !important;
+  }
+}
+
+@media (min-width: 781px) and (max-width: 1100px) {
+  :root {
+    --final-tablet-right-rail-w: 104px;
+    --final-tablet-card-w: 330px;
+    --final-tablet-card-right: 126px;
+  }
+
+  .brand-safe-shield {
+    width: 330px !important;
+    height: 142px !important;
+  }
+
+  .gallery-card,
+  .proof-focus,
+  .review-card,
+  .launch-dock,
+  .object-tooltip,
+  #guideOverlay.guide-overlay,
+  .guide-overlay {
+    left: auto !important;
+    right: var(--final-tablet-card-right) !important;
+    width: min(var(--final-tablet-card-w), calc(100vw - 460px)) !important;
+    max-width: var(--final-tablet-card-w) !important;
+    min-width: 280px !important;
+    z-index: 3000 !important;
+  }
+
+  body[data-scene="product-gallery"] #guideOverlay,
+  body[data-scene="proof-ring"] #guideOverlay,
+  body[data-scene="client-signals"] #guideOverlay,
+  body[data-scene="launch-dock"] #guideOverlay,
+  body.is-scene-panel-active #guideOverlay,
+  body.is-technology-tooltip-active #guideOverlay {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
+
+/* ==========================================================================
+   PHASE 59 — DESKTOP ORBIT PARTICLES RESTORED
+   Updated: 21 May 2026, 11:58 IST
+
+   Root fix:
+   Previous brand-safe patches protected the logo but also made the desktop
+   orbit feel empty. Desktop needs visible moving technology particles around
+   the SV core, while still respecting the logo safe-zone.
+   ========================================================================== */
+
+@media (min-width: 1101px) {
+  .particle-layer {
+    opacity: 1 !important;
+    visibility: visible !important;
+    z-index: 90 !important;
+    pointer-events: none !important;
+  }
+
+  .verse-stage[data-zone="0"] .particle-layer,
+  .verse-stage[data-zone="1"] .particle-layer {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .verse-stage[data-zone="0"] .verse-node.phase59-desktop-orbit,
+  .verse-stage[data-zone="1"] .verse-node.phase59-desktop-orbit {
+    display: grid !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    z-index: 92 !important;
+    min-width: 82px !important;
+    min-height: 36px !important;
+    max-width: 128px !important;
+    padding: 8px 13px !important;
+    border-radius: 999px !important;
+    background: rgba(5, 12, 18, .62) !important;
+    border: 1px solid rgba(34, 211, 238, .26) !important;
+    box-shadow: 0 0 20px rgba(34, 211, 238, .12), 0 12px 28px rgba(0, 0, 0, .28) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+  }
+
+  .verse-stage[data-zone="0"] .verse-node.phase59-desktop-orbit strong,
+  .verse-stage[data-zone="1"] .verse-node.phase59-desktop-orbit strong {
+    display: block !important;
+    font-size: 12px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .verse-stage[data-zone="0"] .verse-node.phase59-desktop-orbit.is-brand-zone-hidden,
+  .verse-stage[data-zone="1"] .verse-node.phase59-desktop-orbit.is-brand-zone-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  /* Keep non-selected nodes calm outside technology/arrival orbit. */
+  .verse-stage:not([data-zone="0"]):not([data-zone="1"]) .verse-node.phase59-desktop-orbit {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
+
+
+/* ==========================================================================
+   PHASE 60 — DESKTOP ORBIT VISUAL VERIFICATION FIX
+   Updated: 21 May 2026, 12:22 IST
+
+   Verified issue after Phase 59:
+   Technology labels were visible but bunched together because the runtime orbit
+   clamp was too narrow. This final layer creates a cleaner desktop orbit and
+   hides the guide card when the technology tooltip is visible.
+   ========================================================================== */
+
+@media (min-width: 1101px) {
+  .verse-stage[data-zone="0"] .verse-node.phase60-desktop-orbit,
+  .verse-stage[data-zone="1"] .verse-node.phase60-desktop-orbit {
+    display: grid !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+    min-width: 78px !important;
+    min-height: 34px !important;
+    max-width: 118px !important;
+    padding: 7px 12px !important;
+    border-radius: 999px !important;
+    background: rgba(5, 12, 18, .64) !important;
+    border: 1px solid rgba(34, 211, 238, .25) !important;
+    box-shadow: 0 0 18px rgba(34, 211, 238, .12), 0 10px 24px rgba(0, 0, 0, .28) !important;
+    backdrop-filter: blur(9px) !important;
+    -webkit-backdrop-filter: blur(9px) !important;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  .verse-stage[data-zone="0"] .verse-node.phase60-desktop-orbit strong,
+  .verse-stage[data-zone="1"] .verse-node.phase60-desktop-orbit strong {
+    display: block !important;
+    font-size: 11.5px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .verse-node.phase60-desktop-orbit.is-brand-zone-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  body.is-technology-tooltip-active .guide-overlay,
+  body.is-technology-tooltip-active .guide-card {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
+
+
+/* ==========================================================================
+   PHASE 61 — DESKTOP ORBIT NO-OVERLAP VERIFIED FIX
+   Updated: 21 May 2026, 12:45 IST
+
+   Phase 60 was visually verified but Technology labels still crowded. This
+   layer reduces visible labels and uses a fixed elliptical orbit lane.
+   ========================================================================== */
+
+@media (min-width: 1101px) {
+  .verse-stage[data-zone="0"] .verse-node.phase61-clean-orbit,
+  .verse-stage[data-zone="1"] .verse-node.phase61-clean-orbit {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: .9 !important;
+    pointer-events: auto !important;
+    min-width: 74px !important;
+    min-height: 33px !important;
+    max-width: 112px !important;
+    padding: 7px 11px !important;
+    border-radius: 999px !important;
+    background: rgba(5, 12, 18, .66) !important;
+    border: 1px solid rgba(34, 211, 238, .25) !important;
+    box-shadow: 0 0 18px rgba(34, 211, 238, .12), 0 10px 24px rgba(0,0,0,.28) !important;
+    backdrop-filter: blur(9px) !important;
+    -webkit-backdrop-filter: blur(9px) !important;
+    transform: translate(-50%, -50%) !important;
+  }
+
+  .verse-stage[data-zone="0"] .verse-node.phase61-clean-orbit strong,
+  .verse-stage[data-zone="1"] .verse-node.phase61-clean-orbit strong {
+    display: block !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .verse-node.phase61-clean-orbit.is-brand-zone-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  /* On desktop, Technology mode should show the scan tooltip, not the guide card on top of it. */
+  body[data-scene="technology-orbit"] .guide-overlay,
+  body[data-scene="technology-orbit"] .guide-card,
+  .verse-stage[data-zone="1"] ~ .guide-overlay {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+}
+
+
+/* ==========================================================================
+   PHASE 62 — DESKTOP ORBIT CONTROLLER CLEANUP
+   Updated: 21 May 2026, 13:05 IST
+
+   Phase 59 and Phase 60 orbit controllers were still fighting Phase 61 and
+   bringing back extra labels. Phase 62 makes Phase 61 the only visible desktop
+   orbit source of truth.
+   ========================================================================== */
+
+@media (min-width: 1101px) {
+  .verse-stage[data-zone="0"] .verse-node:not(.phase61-clean-orbit),
+  .verse-stage[data-zone="1"] .verse-node:not(.phase61-clean-orbit) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}

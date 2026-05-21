@@ -526,3 +526,100 @@ Updated: 21 May 2026, 02:40 IST
 - [ ] Arrival Core nodes do not overlap the SV core.
 - [ ] Tablet card layout is contained.
 - [ ] Desktop panels do not touch bottom controls.
+
+## Phase 54 Planned Structure Conversion Test
+
+Updated: 21 May 2026, 03:55 IST
+
+- [ ] `css/portfolio-style.css` is import-only.
+- [ ] CSS modules load in the planned order.
+- [ ] `js/portfolio-scripts.js` is an ES module entrypoint.
+- [ ] `index.html` uses `type="module"`.
+- [ ] Current UI still loads after runtime bridge.
+- [ ] Old root docs are archived.
+- [ ] Old phase-fix step files are archived.
+- [ ] Active docs exist under `docs/`.
+
+## Phase 55 Brand Safe Zone Fix Test
+
+Updated: 21 May 2026, 10:45 IST
+
+- [ ] Desktop: no technology particle passes behind the ShrimoVerse logo.
+- [ ] Tablet: no technology particle passes behind the ShrimoVerse logo.
+- [ ] Mobile: logo remains readable.
+- [ ] Exit remains visible top-right.
+- [ ] SV core remains centered.
+
+## Phase 56 Desktop Card / Control Rail Safe Fix Test
+
+Updated: 21 May 2026, 11:08 IST
+
+- [ ] Desktop Arrival: no moving label appears behind logo.
+- [ ] Desktop Technology: tooltip/card does not overlap side controls.
+- [ ] Desktop Product: card does not overlap side controls and guide is hidden.
+- [ ] Desktop Proof: card does not overlap side controls and guide is hidden.
+- [ ] Desktop Client: card does not overlap side controls and guide is hidden.
+- [ ] Desktop Launch: card/actions do not overlap side controls and guide is hidden.
+- [ ] Tablet: card stays left of controls.
+- [ ] Mobile: unchanged from previous safe-zone behavior.
+
+## Phase 57 Desktop Logo / Card Overlap Real Fix Test
+
+Updated: 21 May 2026, 11:24 IST
+
+- [ ] Desktop: rocket/particles do not appear behind logo.
+- [ ] Desktop Arrival: guide is on right, not over left mission.
+- [ ] Desktop Product: guide hidden, product card not over controls.
+- [ ] Desktop Proof: guide hidden, proof card not over controls.
+- [ ] Desktop Client: guide hidden, review card not over controls.
+- [ ] Desktop Launch: guide hidden, launch card not over controls.
+- [ ] Tablet follows same safe-zone behavior.
+- [ ] Mobile unchanged.
+
+## Phase 58 Desktop Final Lane Stability Fix Test
+
+Updated: 21 May 2026, 11:42 IST
+
+- [ ] Desktop logo area has no particles/rocket/trail behind it.
+- [ ] Desktop guide does not appear over left mission text.
+- [ ] Product card does not overlap right icon rail.
+- [ ] Proof card does not overlap right icon rail.
+- [ ] Client card does not overlap right icon rail.
+- [ ] Launch card does not overlap right icon rail.
+- [ ] Technology tooltip suppresses guide overlay.
+- [ ] Mobile view remains unchanged.
+
+## Phase 59 Desktop Orbit Particles Restored Test
+
+Updated: 21 May 2026, 11:58 IST
+
+- [ ] Desktop Arrival shows visible particles around SV core.
+- [ ] Desktop Technology shows fuller moving technology orbit.
+- [ ] No particle passes behind ShrimoVerse logo.
+- [ ] Product/Proof/Client/Launch cards still avoid the right control rail.
+- [ ] Mobile remains unchanged.
+
+## Phase 60 Desktop Orbit Visual Verification Test
+
+- [ ] Desktop Arrival has visible nodes around SV.
+- [ ] Desktop Technology has readable nodes in two rings.
+- [ ] Technology tooltip does not overlap guide.
+- [ ] Nodes do not pass behind the logo.
+- [ ] Product/Proof/Client/Launch cards avoid the right rail.
+- [ ] Mobile remains unchanged.
+
+## Phase 61 Desktop Orbit No-Overlap Test
+
+- [ ] Desktop Arrival has 6 calm nodes around SV.
+- [ ] Desktop Technology has readable non-overlapping nodes.
+- [ ] Technology guide card is hidden.
+- [ ] Nodes stay outside the logo safe zone.
+- [ ] Mobile unchanged.
+
+## Phase 62 Desktop Orbit Controller Cleanup Test
+
+- [ ] Desktop Arrival only shows Phase61 clean orbit nodes.
+- [ ] Desktop Technology only shows Phase61 clean orbit nodes.
+- [ ] No node labels overlap.
+- [ ] No nodes enter brand safe zone.
+- [ ] Cards still avoid right-side controls.

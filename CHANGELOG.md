@@ -1,5 +1,20 @@
 # Changelog
 
+## Phase 54 Planned Structure Conversion — 21 May 2026, 03:55 IST
+
+- Converted `css/portfolio-style.css` into an import-only module entrypoint.
+- Moved current verified CSS runtime into `css/modules/10-motion-accessibility.css` for safe visual preservation.
+- Converted `js/portfolio-scripts.js` into an ES module entrypoint.
+- Moved current verified JS runtime into `js/controllers/legacy-runtime-controller.js`.
+- Updated `index.html` to load the app with `type="module"`.
+- Archived old root prompt/plan/check docs under `docs/archive/`.
+- Archived old numbered phase-fix step files under `docs/archive/phase-history/`.
+- Added active docs: `docs/requirements.md`, `docs/responsive-qa-plan.md`, and `docs/architecture-conversion-report.md`.
+- Preserved pre-conversion CSS/JS in `docs/archive/pre-phase54-runtime/`.
+
+
+# Changelog
+
 ## Phase 52 Mobile Safe Zone and Card Containment Fix — 21 May 2026, 02:40 IST
 
 - Added global mobile bottom safe-area variables for the control dock.
@@ -509,3 +524,67 @@
 - Added bottom-left desktop copyright.
 - Removed border/background from prev/next arrows.
 - Added `steps/43-wordmark-exit-copyright-arrow-cleanup.md`.
+
+## Phase 55 Brand Safe Zone Fix — 21 May 2026, 10:45 IST
+
+- Fixed technology particles visually moving behind the top-left ShrimoVerse logo.
+- Added a protected top-left brand safe-zone mask.
+- Raised brand/exit HUD layers above universe particles.
+- Kept moving universe particles below HUD layers.
+- Added `steps/55-brand-safe-zone-fix.md`.
+
+## Phase 56 Desktop Card / Control Rail Safe Fix — 21 May 2026, 11:08 IST
+
+- Added runtime brand safe-zone guard for DOM particles/dots.
+- Reserved a right-side control rail safe area for desktop/tablet cards.
+- Prevented Product, Proof, Client, and Launch cards from overlapping right-side control icons.
+- Hid guide overlay during full scene-card states to prevent overlap.
+- Added `steps/56-desktop-card-rail-safe-fix.md`.
+
+## Phase 57 Desktop Logo / Card Overlap Real Fix — 21 May 2026, 11:24 IST
+
+- Expanded desktop/tablet logo safe-zone.
+- Added runtime hiding for nodes, dots, and rocket elements entering the brand zone.
+- Added `body[data-scene]` syncing for reliable scene-specific CSS.
+- Fixed guide overlay positioning and suppression during main scene-card states.
+- Strengthened desktop/tablet scene card right-rail containment.
+- Added `steps/57-desktop-logo-card-overlap-real-fix.md`.
+
+## Phase 58 Desktop Final Lane Stability Fix — 21 May 2026, 11:42 IST
+
+- Added real DOM brand-safe shield to stop particles/rocket from appearing behind logo.
+- Added final loaded CSS module `css/modules/11-final-stability.css`.
+- Added runtime guard for nodes, dots, ship cursor, and cursor trail dots.
+- Suppressed guide overlay when main scene cards or technology tooltip are active.
+- Re-locked desktop/tablet scene cards into a right scene lane outside the control rail.
+
+## Phase 59 Desktop Orbit Particles Restored — 21 May 2026, 11:58 IST
+
+- Restored visible moving technology particles around the SV core on desktop.
+- Added desktop-only orbit restore controller for Arrival and Technology scenes.
+- Kept nodes outside the top-left brand/logo safe-zone.
+- Left mobile behavior untouched.
+- Added `steps/59-desktop-orbit-particles-restored.md`.
+
+## Phase 60 Desktop Orbit Visual Verification Fix — 21 May 2026, 12:22 IST
+
+- Visually verified Phase 59 desktop output.
+- Fixed crowded Technology Orbit label positioning.
+- Added cleaner two-ring desktop technology orbit.
+- Hid guide when the technology tooltip is active to avoid overlap.
+- Added `steps/60-desktop-orbit-visual-verification-fix.md`.
+
+## Phase 61 Desktop Orbit No-Overlap Verified Fix — 21 May 2026, 12:45 IST
+
+- Reduced Technology Orbit desktop visible labels to 12.
+- Reduced Arrival desktop visible labels to 6.
+- Added fixed elliptical orbit lane to avoid label bunching.
+- Hid guide card in Technology Orbit to prevent overlap with technology scan tooltip.
+- Added `steps/61-desktop-orbit-no-overlap-verified.md`.
+
+## Phase 62 Desktop Orbit Controller Cleanup — 21 May 2026, 13:05 IST
+
+- Neutralized Phase 59/60 desktop orbit controllers.
+- Made Phase 61 the only visible desktop orbit source of truth.
+- Added final CSS guard hiding non-Phase61 nodes in Arrival/Technology desktop zones.
+- Added `steps/62-desktop-orbit-controller-cleanup.md`.

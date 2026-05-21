@@ -1,156 +1,464 @@
-.object-tooltip,
-.settings-panel,
-.guide-overlay,
-.mission-briefing,
-.command-deck,
-.zoom-dock,
-.mission-panel,
-.state-readout { display: none !important; }
-.object-tooltip,
-.settings-panel,
-.guide-card {
-  border: 1px solid rgba(34,211,238,.22);
-  background: rgba(5,7,10,.88);
-  color: var(--text);
-  box-shadow: 0 28px 80px rgba(0,0,0,.42), 0 0 42px rgba(34,211,238,.06);
-  backdrop-filter: blur(18px);
+/*
+  Shrimo Verse CSS Module: 08-panels-drawers.css
+  Updated: 21 May 2026, 03:55 IST
+
+  Responsibility:
+  Product, proof, review, launch dock panels and sheets. Active runtime is preserved in 10-motion-accessibility.css until Phase 54B semantic extraction.
+
+  Phase 54 note:
+  The project is now loaded through the planned module graph. To avoid visual regression,
+  the current verified CSS runtime is preserved in 10-motion-accessibility.css.
+  Phase 54B should move rules from that runtime into this module section by section,
+  with screenshot QA after every move.
+*/
+
+
+
+/* ==========================================================================
+   PHASE 56 — DESKTOP CARD / CONTROL RAIL SAFE FIX
+   Updated: 21 May 2026, 11:08 IST
+
+   Screenshot QA fixes:
+   1. DOM particles/labels still crossed the top-left brand area.
+   2. Product/Proof/Client/Launch cards overlapped the right control rail.
+   3. Guide card overlapped scene cards on desktop.
+   4. Desktop space was not reserved as a game/control-system layout.
+   5. Mobile rules are intentionally untouched.
+   ========================================================================== */
+
+@media (min-width: 781px) {
+  /* JS applies this class when a moving label enters the logo safe-zone. */
+  .is-brand-zone-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
 }
-.object-tooltip {
-  position: fixed;
-  z-index: 700;
-  right: 24px;
-  top: 50%;
-  transform: translateY(-50%) translateX(12px);
-  width: min(360px, calc(100vw - 48px));
-  padding: 20px;
-  border-radius: 22px;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  display: block !important;
-  transition: opacity var(--duration-mid) var(--ease-out), transform var(--duration-mid) var(--ease-out), visibility var(--duration-mid);
+
+@media (min-width: 1101px) {
+  :root {
+    --desktop-brand-safe-w: 338px;
+    --desktop-brand-safe-h: 142px;
+    --desktop-control-rail-safe: 128px;
+    --desktop-scene-card-w: 430px;
+    --desktop-guide-card-w: 315px;
+    --desktop-bottom-safe: 92px;
+  }
+
+  /* Stronger brand safe zone. The mask is above particles but below brand text. */
+  .verse-stage::after {
+    width: var(--desktop-brand-safe-w) !important;
+    height: var(--desktop-brand-safe-h) !important;
+    z-index: 8950 !important;
+    background:
+      radial-gradient(ellipse at 26px 25px,
+        rgba(34, 211, 238, 0.10) 0%,
+        rgba(0, 0, 0, 0.78) 8%,
+        rgba(0, 0, 0, 0.68) 34%,
+        rgba(0, 0, 0, 0.36) 64%,
+        rgba(0, 0, 0, 0.00) 100%) !important;
+  }
+
+  .verse-control {
+    left: 16px !important;
+    top: 15px !important;
+    z-index: 9000 !important;
+  }
+
+  .exit-verse-control {
+    right: 18px !important;
+    top: 16px !important;
+    z-index: 9100 !important;
+  }
+
+  /* Right icon rail owns the extreme right edge. Cards must never enter it. */
+  body > .floating-hud-controls,
+  body > .hud-controls.floating-hud-controls {
+    right: 24px !important;
+    bottom: 112px !important;
+    z-index: 7800 !important;
+  }
+
+  /* Desktop scene panels use a reserved right-safe area before the icon rail. */
+  .gallery-card,
+  .proof-focus,
+  .review-card,
+  .launch-dock {
+    position: fixed !important;
+    right: var(--desktop-control-rail-safe) !important;
+    left: auto !important;
+    width: min(var(--desktop-scene-card-w), calc(100vw - 900px)) !important;
+    max-width: var(--desktop-scene-card-w) !important;
+    min-width: 360px !important;
+    max-height: calc(100vh - 190px) !important;
+    overflow: hidden !important;
+    z-index: 2600 !important;
+  }
+
+  /* Product / Proof / Review / Launch cards sit as focused scene panels. */
+  .gallery-card,
+  .proof-focus,
+  .review-card {
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+  }
+
+  .launch-dock {
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+  }
+
+  /* Technology tooltip must also respect the icon rail. */
+  .object-tooltip {
+    right: var(--desktop-control-rail-safe) !important;
+    max-width: min(360px, calc(100vw - 940px)) !important;
+    z-index: 3000 !important;
+  }
+
+  /* Guide card is compact. It appears only when it will not fight scene cards. */
+  .guide-overlay {
+    right: var(--desktop-control-rail-safe) !important;
+    bottom: var(--desktop-bottom-safe) !important;
+    width: var(--desktop-guide-card-w) !important;
+    max-width: var(--desktop-guide-card-w) !important;
+    min-height: 0 !important;
+    padding: 18px !important;
+    border-radius: 22px !important;
+    z-index: 2400 !important;
+  }
+
+  .guide-overlay h3,
+  .guide-card h3 {
+    font-size: 25px !important;
+    line-height: 1.05 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .guide-overlay p,
+  .guide-card p {
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+  }
+
+  .guide-overlay .guide-actions,
+  .guide-card .guide-actions {
+    margin-top: 12px !important;
+  }
+
+  /* When a full scene panel is open, guide must not overlap it. */
+  body.is-product-scene .guide-overlay,
+  body.is-proof-scene .guide-overlay,
+  body.is-review-scene .guide-overlay,
+  body.is-launch-scene .guide-overlay {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  /* Keep the left mission panel in a protected game HUD lane. */
+  .mission-panel {
+    left: 52px !important;
+    max-width: 330px !important;
+    z-index: 2200 !important;
+  }
+
+  /* Zoom belongs at the far-left rail and should not touch mission text. */
+  .zoom-dock,
+  .zoom-control {
+    left: 8px !important;
+    z-index: 5200 !important;
+  }
+
+  /* Bottom nav gets its own safe area and must not collide with scene panels. */
+  .zone-nav {
+    bottom: 16px !important;
+    z-index: 5200 !important;
+  }
 }
-.object-tooltip.is-visible {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transform: translateY(-50%) translateX(0);
+
+@media (min-width: 781px) and (max-width: 1100px) {
+  :root {
+    --tablet-control-rail-safe: 104px;
+    --tablet-scene-card-w: 340px;
+  }
+
+  .verse-stage::after {
+    width: 285px !important;
+    height: 118px !important;
+    z-index: 8950 !important;
+  }
+
+  body > .floating-hud-controls,
+  body > .hud-controls.floating-hud-controls {
+    right: 18px !important;
+    bottom: 108px !important;
+    z-index: 7800 !important;
+  }
+
+  .gallery-card,
+  .proof-focus,
+  .review-card,
+  .launch-dock,
+  .object-tooltip {
+    right: var(--tablet-control-rail-safe) !important;
+    left: auto !important;
+    width: min(var(--tablet-scene-card-w), calc(100vw - 430px)) !important;
+    max-width: var(--tablet-scene-card-w) !important;
+    min-width: 300px !important;
+    max-height: calc(100vh - 170px) !important;
+    overflow: hidden !important;
+    z-index: 2600 !important;
+  }
+
+  .guide-overlay {
+    right: var(--tablet-control-rail-safe) !important;
+    bottom: 84px !important;
+    max-width: 300px !important;
+    padding: 16px !important;
+    z-index: 2400 !important;
+  }
+
+  body.is-product-scene .guide-overlay,
+  body.is-proof-scene .guide-overlay,
+  body.is-review-scene .guide-overlay,
+  body.is-launch-scene .guide-overlay {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
 }
-.tooltip-close,
-.settings-close,
-.briefing-close {
-  width: 34px; height: 34px;
-  border: 1px solid rgba(34,211,238,.18);
-  border-radius: 50%;
-  background: rgba(34,211,238,.06);
-  color: var(--cyan-soft);
+
+
+
+/* ==========================================================================
+   PHASE 57 — DESKTOP LOGO / CARD OVERLAP REAL FIX
+   Updated: 21 May 2026, 11:24 IST
+
+   Fixes based on screenshot QA:
+   1. A moving particle/rocket still appeared in the top-left logo zone.
+   2. Guide overlay still overlapped the left mission content.
+   3. Product/Proof/Client/Launch cards still competed with the right control rail.
+   4. Desktop needed hard interaction-safe lanes, not soft suggestions.
+
+   Mobile is intentionally not changed.
+   ========================================================================== */
+
+@media (min-width: 781px) {
+  /* Hide any node/rocket/dot that enters protected brand zone via JS. */
+  .is-brand-zone-hidden,
+  .rocket-cursor.is-brand-zone-hidden,
+  .cursor-rocket.is-brand-zone-hidden,
+  .rocket-trail.is-brand-zone-hidden,
+  .rocket-flame.is-brand-zone-hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
 }
-.tooltip-close { position: absolute; top: 12px; right: 12px; }
-.tooltip-type {
-  display: block;
-  color: var(--cyan-bright);
-  font: 900 10px/1 var(--heading);
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  margin-bottom: 10px;
+
+@media (min-width: 1101px) {
+  :root {
+    --sv-desktop-left-safe: 392px;
+    --sv-desktop-right-rail: 118px;
+    --sv-desktop-right-panel-gap: 34px;
+    --sv-desktop-scene-panel-w: 432px;
+    --sv-desktop-card-right: calc(var(--sv-desktop-right-rail) + var(--sv-desktop-right-panel-gap));
+    --sv-desktop-brand-safe-w: 390px;
+    --sv-desktop-brand-safe-h: 168px;
+  }
+
+  /* Stronger top-left protected HUD zone. */
+  .verse-stage::after {
+    width: var(--sv-desktop-brand-safe-w) !important;
+    height: var(--sv-desktop-brand-safe-h) !important;
+    z-index: 8995 !important;
+    background:
+      radial-gradient(ellipse at 24px 25px,
+        rgba(34, 211, 238, 0.10) 0%,
+        rgba(0, 0, 0, 0.88) 8%,
+        rgba(0, 0, 0, 0.78) 36%,
+        rgba(0, 0, 0, 0.42) 66%,
+        rgba(0, 0, 0, 0.00) 100%) !important;
+  }
+
+  .verse-control {
+    left: 16px !important;
+    top: 15px !important;
+    z-index: 9200 !important;
+  }
+
+  .exit-verse-control {
+    right: 18px !important;
+    top: 16px !important;
+    z-index: 9300 !important;
+  }
+
+  /* Give the left mission text its own lane. */
+  .mission-panel {
+    left: 52px !important;
+    width: 300px !important;
+    max-width: 300px !important;
+    z-index: 2200 !important;
+  }
+
+  /* Right control rail is a no-card zone. */
+  body > .floating-hud-controls,
+  body > .hud-controls.floating-hud-controls {
+    right: 22px !important;
+    bottom: 112px !important;
+    z-index: 8200 !important;
+  }
+
+  /* Scene cards are pulled away from the icon rail and cannot cover it. */
+  .gallery-card,
+  .proof-focus,
+  .review-card,
+  .launch-dock,
+  .object-tooltip {
+    right: var(--sv-desktop-card-right) !important;
+    left: auto !important;
+    width: var(--sv-desktop-scene-panel-w) !important;
+    max-width: var(--sv-desktop-scene-panel-w) !important;
+    min-width: 0 !important;
+    max-height: calc(100vh - 190px) !important;
+    overflow: hidden !important;
+    z-index: 2800 !important;
+  }
+
+  .gallery-card,
+  .proof-focus,
+  .review-card,
+  .launch-dock {
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%) !important;
+  }
+
+  /* The guide overlay should never appear over the left mission lane.
+     Default desktop guide location is right-side, above nav, inside card lane. */
+  .guide-overlay,
+  .guide-card {
+    position: fixed !important;
+    left: auto !important;
+    right: var(--sv-desktop-card-right) !important;
+    bottom: 96px !important;
+    top: auto !important;
+    width: 318px !important;
+    max-width: 318px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    transform: none !important;
+    z-index: 2500 !important;
+  }
+
+  /* When any main scene panel is active, guide must not compete.
+     This fixes the screenshot where Mission Briefing overlapped Product/Proof/Client/Launch. */
+  body[data-scene="product-gallery"] .guide-overlay,
+  body[data-scene="proof-ring"] .guide-overlay,
+  body[data-scene="client-signals"] .guide-overlay,
+  body[data-scene="launch-dock"] .guide-overlay,
+  .verse-stage[data-zone="2"] ~ .guide-overlay,
+  .verse-stage[data-zone="3"] ~ .guide-overlay,
+  .verse-stage[data-zone="4"] ~ .guide-overlay,
+  .verse-stage[data-zone="5"] ~ .guide-overlay {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  /* Arrival and technology guide can show, but never at left. */
+  body[data-scene="arrival-core"] .guide-overlay,
+  body[data-scene="technology-orbit"] .guide-overlay,
+  .verse-stage[data-zone="0"] ~ .guide-overlay,
+  .verse-stage[data-zone="1"] ~ .guide-overlay {
+    left: auto !important;
+    right: var(--sv-desktop-card-right) !important;
+  }
+
+  /* Cards become more compact so the right lane feels intentional. */
+  .gallery-card h3,
+  .launch-dock h2 {
+    font-size: clamp(30px, 2.6vw, 42px) !important;
+    line-height: 1.02 !important;
+  }
+
+  .proof-focus h3 {
+    font-size: clamp(48px, 4vw, 68px) !important;
+    line-height: .9 !important;
+  }
+
+  .review-card blockquote {
+    font-size: 18px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Keep controls and step nav above visual objects. */
+  .zone-nav {
+    bottom: 16px !important;
+    z-index: 6500 !important;
+  }
+
+  .zoom-dock,
+  .zoom-control {
+    left: 8px !important;
+    z-index: 6500 !important;
+  }
 }
-.object-tooltip h2 { margin: 0 36px 10px 0; font: 900 24px/1.18 var(--heading); }
-.object-tooltip p { margin: 0 0 12px; color: var(--text-secondary); line-height: 1.58; }
-.tooltip-use { color: var(--cyan-soft) !important; }
-.tooltip-link {
-  display: none;
-  min-height: 38px;
-  align-items: center;
-  justify-content: center;
-  padding: 0 14px;
-  border: 1px solid rgba(34,211,238,.22);
-  border-radius: 999px;
-  color: var(--cyan-soft);
-  text-decoration: none;
-  font: 900 11px/1 var(--heading);
-  letter-spacing: .08em;
-  text-transform: uppercase;
+
+@media (min-width: 781px) and (max-width: 1100px) {
+  :root {
+    --sv-tablet-card-right: 116px;
+    --sv-tablet-scene-panel-w: 330px;
+    --sv-tablet-brand-safe-w: 320px;
+    --sv-tablet-brand-safe-h: 134px;
+  }
+
+  .verse-stage::after {
+    width: var(--sv-tablet-brand-safe-w) !important;
+    height: var(--sv-tablet-brand-safe-h) !important;
+    z-index: 8995 !important;
+  }
+
+  .gallery-card,
+  .proof-focus,
+  .review-card,
+  .launch-dock,
+  .object-tooltip,
+  .guide-overlay,
+  .guide-card {
+    right: var(--sv-tablet-card-right) !important;
+    left: auto !important;
+    max-width: var(--sv-tablet-scene-panel-w) !important;
+    width: min(var(--sv-tablet-scene-panel-w), calc(100vw - 450px)) !important;
+    min-width: 280px !important;
+    z-index: 2600 !important;
+  }
+
+  body[data-scene="product-gallery"] .guide-overlay,
+  body[data-scene="proof-ring"] .guide-overlay,
+  body[data-scene="client-signals"] .guide-overlay,
+  body[data-scene="launch-dock"] .guide-overlay,
+  .verse-stage[data-zone="2"] ~ .guide-overlay,
+  .verse-stage[data-zone="3"] ~ .guide-overlay,
+  .verse-stage[data-zone="4"] ~ .guide-overlay,
+  .verse-stage[data-zone="5"] ~ .guide-overlay {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
 }
-.tooltip-link[href]:not([href="#"]) { display: inline-flex; }
-.guide-overlay {
-  position: fixed;
-  z-index: 720;
-  inset: 0;
-  display: block !important;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity var(--duration-mid) var(--ease-out), visibility var(--duration-mid);
+
+
+@media (min-width: 781px) {
+  .guide-overlay.is-suppressed-by-scene-card {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
 }
-.guide-overlay.is-visible { opacity: 1; visibility: visible; pointer-events: none; }
-.guide-card {
-  position: absolute;
-  right: 24px;
-  bottom: 74px;
-  width: min(340px, calc(100vw - 32px));
-  padding: 18px;
-  border-radius: 22px;
-  pointer-events: auto;
-}
-.guide-step { color: var(--cyan-bright); font: 900 10px/1 var(--heading); letter-spacing: .14em; text-transform: uppercase; }
-.guide-card h2 { margin: 10px 0 8px; font: 900 22px/1.18 var(--heading); }
-.guide-card p { margin: 0; color: var(--text-secondary); line-height: 1.55; }
-.guide-progress { height: 2px; margin: 14px 0; background: rgba(34,211,238,.14); overflow: hidden; }
-.guide-progress span { display: block; height: 100%; width: 20%; background: var(--cyan); transition: width var(--duration-mid) var(--ease-out); }
-.guide-actions { display: flex; gap: 8px; justify-content: flex-end; }
-.guide-actions button,
-.settings-action {
-  min-height: 38px;
-  border: 1px solid rgba(34,211,238,.18);
-  border-radius: 999px;
-  background: rgba(34,211,238,.06);
-  color: var(--cyan-soft);
-  padding: 0 12px;
-  font: 900 10px/1 var(--heading);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.settings-panel {
-  position: fixed;
-  z-index: 740;
-  right: 24px;
-  top: 86px;
-  width: min(380px, calc(100vw - 48px));
-  max-height: calc(100vh - 116px);
-  overflow: auto;
-  padding: 20px;
-  border-radius: 24px;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(16px);
-  pointer-events: none;
-  display: block !important;
-  transition: opacity var(--duration-mid) var(--ease-out), transform var(--duration-mid) var(--ease-out), visibility var(--duration-mid);
-  scrollbar-width: thin;
-  scrollbar-color: rgba(34,211,238,.4) transparent;
-}
-.settings-panel.is-visible { opacity: 1; visibility: visible; transform: translateX(0); pointer-events: auto; }
-.settings-panel__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
-.settings-panel__head p { margin: 0 0 4px; color: var(--cyan-bright); font: 900 10px/1 var(--heading); letter-spacing: .14em; text-transform: uppercase; }
-.settings-panel h2 { margin: 0; font: 900 24px/1.14 var(--heading); }
-.settings-group { padding: 14px 0; border-top: 1px solid rgba(34,211,238,.1); }
-.settings-group strong { display: block; margin-bottom: 10px; font: 900 12px/1 var(--heading); letter-spacing: .1em; text-transform: uppercase; color: var(--cyan-soft); }
-.settings-group p { margin: 10px 0 0; color: var(--text-muted); font-size: 13px; line-height: 1.45; }
-.settings-segment { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
-.settings-segment.two { grid-template-columns: repeat(2, 1fr); }
-.settings-segment button {
-  min-height: 38px;
-  border: 1px solid rgba(34,211,238,.16);
-  border-radius: 999px;
-  background: rgba(34,211,238,.05);
-  color: var(--text-secondary);
-  font: 900 10px/1 var(--heading);
-  letter-spacing: .06em;
-}
-.settings-segment button.is-active,
-.settings-segment button[aria-pressed="true"] {
-  color: var(--cyan-bright);
-  border-color: rgba(103,232,249,.55);
-  background: rgba(34,211,238,.13);
-  box-shadow: 0 0 16px rgba(34,211,238,.12);
-}
+

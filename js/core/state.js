@@ -1,18 +1,5 @@
-(function () {
-  'use strict';
-  window.SV = window.SV || {};
-  const scenes = window.SHRIMO_SCENES || [];
-  window.SV.state = {
-    entered: false,
-    sceneIndex: 0,
-    scenes,
-    selectedNode: null,
-    autoTimer: null,
-    guideIndex: 0,
-    settings: {
-      motion: localStorage.getItem('sv-motion') || 'balanced',
-      quality: localStorage.getItem('sv-quality') || 'balanced'
-    },
-    guideSeenKey: 'shrimo-verse-guide-seen-clean-scene'
-  };
-}());
+/* Shrimo Verse planned module: core/state.js
+   Updated: 21 May 2026, 03:55 IST
+   Phase 54 creates the stable module boundary. Phase 55 will move runtime logic here.
+*/
+export const appStateContract = Object.freeze({ currentScene: 'managed-by-legacy-runtime-until-phase55' });

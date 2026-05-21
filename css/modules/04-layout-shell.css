@@ -1,131 +1,139 @@
-.verse-main,
-.verse-stage {
-  position: relative;
-  z-index: 2;
-  min-height: 100vh;
-  overflow: hidden;
+/*
+  Shrimo Verse CSS Module: 04-layout-shell.css
+  Updated: 21 May 2026, 03:55 IST
+
+  Responsibility:
+  Main shell, scene layout, safe zones, core layout. Active runtime is preserved in 10-motion-accessibility.css until Phase 54B semantic extraction.
+
+  Phase 54 note:
+  The project is now loaded through the planned module graph. To avoid visual regression,
+  the current verified CSS runtime is preserved in 10-motion-accessibility.css.
+  Phase 54B should move rules from that runtime into this module section by section,
+  with screenshot QA after every move.
+*/
+
+
+/* ==========================================================================
+   PHASE 55 — BRAND SAFE ZONE FIX
+   Updated: 21 May 2026, 10:45 IST
+
+   Fixes technology particles/nodes visually moving behind the top-left
+   ShrimoVerse logo. The brand is a fixed HUD identity element and must always
+   remain readable above moving universe content.
+   ========================================================================== */
+
+:root {
+  --brand-safe-x: 320px;
+  --brand-safe-y: 132px;
+  --brand-safe-tablet-x: 270px;
+  --brand-safe-tablet-y: 112px;
+  --brand-safe-mobile-x: 185px;
+  --brand-safe-mobile-y: 86px;
 }
-.verse-stage {
-  isolation: isolate;
+
+.verse-control,
+.verse-brand {
+  position: fixed !important;
+  z-index: 9000 !important;
+  pointer-events: auto !important;
 }
-.entry-gate {
-  position: fixed;
-  inset: 0;
-  z-index: 1500;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: var(--safe-top) var(--space-4) calc(var(--safe-bottom) + 20px);
+
+.exit-verse-control {
+  z-index: 9100 !important;
+}
+
+.universe-plane,
+.particle-layer,
+.orbit-field,
+.verse-node,
+.product-dots,
+.proof-dots,
+.review-dots {
+  z-index: 40 !important;
+}
+
+.sv-core {
+  z-index: 60 !important;
+}
+
+.mobile-control-dock,
+.floating-hud-controls,
+.hud-controls,
+.zoom-dock,
+.zoom-control,
+.zone-nav,
+.guide-overlay,
+.object-tooltip {
+  z-index: 5000 !important;
+}
+
+.verse-stage::after {
+  content: "" !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: var(--brand-safe-x) !important;
+  height: var(--brand-safe-y) !important;
+  pointer-events: none !important;
+  z-index: 8990 !important;
   background:
-    radial-gradient(circle at 50% 46%, rgba(34, 211, 238, 0.16), transparent 30%),
-    linear-gradient(180deg, #020305, var(--black));
-  transition: opacity 680ms var(--ease-out), visibility 680ms var(--ease-out);
+    radial-gradient(ellipse at 20px 24px,
+      rgba(34, 211, 238, 0.10),
+      rgba(0, 0, 0, 0.66) 0%,
+      rgba(0, 0, 0, 0.56) 30%,
+      rgba(0, 0, 0, 0.24) 62%,
+      rgba(0, 0, 0, 0.00) 100%) !important;
 }
-.entry-gate.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-.entry-gate.is-launching .entry-kicker,
-.entry-gate.is-launching h1,
-.entry-gate.is-launching .entry-copy,
-.entry-gate.is-launching .entry-hints,
-.entry-gate.is-launching .enter-verse,
-.entry-gate.is-launching .entry-progress { animation: entryFadeOut 520ms var(--ease-out) forwards; }
-.entry-space {
-  position: absolute;
-  left: 50%;
-  top: 48%;
-  width: min(82vw, 620px);
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
+
+.verse-brand strong {
+  text-shadow:
+    0 1px 0 rgba(0,0,0,.9),
+    0 0 10px rgba(0,0,0,.9),
+    0 0 16px rgba(34,211,238,.18) !important;
 }
-.entry-orbit {
-  position: absolute;
-  inset: 0;
-  border: 1px solid rgba(34, 211, 238, .2);
-  border-radius: 50%;
-  animation: orbitPulse 4s ease-in-out infinite;
+
+.verse-brand em {
+  text-shadow:
+    0 1px 0 rgba(0,0,0,.9),
+    0 0 8px rgba(0,0,0,.9) !important;
 }
-.entry-orbit.orbit-two { inset: 15%; animation-delay: -.8s; }
-.entry-orbit.orbit-three { inset: 31%; animation-delay: -1.6s; }
-.entry-sv-mini {
-  position: absolute;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
-  width: 70px; height: 70px;
-  display: grid; place-items: center;
-  border-radius: 50%;
-  border: 1px solid rgba(103, 232, 249, .52);
-  background: rgba(5, 7, 10, .76);
-  box-shadow: 0 0 44px rgba(34, 211, 238, .28);
-  color: var(--cyan-bright);
-  font: 900 22px/1 var(--heading);
-  letter-spacing: .1em;
+
+@media (min-width: 1101px) {
+  .verse-stage::after {
+    width: var(--brand-safe-x) !important;
+    height: var(--brand-safe-y) !important;
+  }
+  .verse-control {
+    left: 16px !important;
+    top: 15px !important;
+  }
 }
-.entry-gate > :not(.entry-space) { position: relative; z-index: 2; }
-.entry-kicker,
-.scene-kicker,
-.dock-kicker {
-  margin: 0;
-  color: var(--cyan-bright);
-  font: 800 11px/1.2 var(--heading);
-  letter-spacing: .16em;
-  text-transform: uppercase;
+
+@media (min-width: 781px) and (max-width: 1100px) {
+  .verse-stage::after {
+    width: var(--brand-safe-tablet-x) !important;
+    height: var(--brand-safe-tablet-y) !important;
+  }
+  .verse-control {
+    left: 15px !important;
+    top: 14px !important;
+  }
 }
-.entry-kicker { margin-bottom: 18px; }
-.entry-gate h1 {
-  max-width: 820px;
-  margin: 0 auto 16px;
-  font: 900 clamp(30px, 3.8vw, 50px)/1.15 var(--heading);
-  letter-spacing: -0.03em;
-  color: var(--text);
-  text-wrap: balance;
+
+@media (max-width: 780px) {
+  .verse-stage::after {
+    width: var(--brand-safe-mobile-x) !important;
+    height: var(--brand-safe-mobile-y) !important;
+    background:
+      radial-gradient(ellipse at 18px 20px,
+        rgba(34, 211, 238, 0.08),
+        rgba(0, 0, 0, 0.66) 0%,
+        rgba(0, 0, 0, 0.46) 45%,
+        rgba(0, 0, 0, 0.00) 100%) !important;
+  }
+  .verse-control {
+    left: 12px !important;
+    top: 12px !important;
+  }
 }
-.entry-copy {
-  max-width: 640px;
-  margin: 0 auto;
-  color: var(--text-secondary);
-  font-size: clamp(14px, 1.15vw, 17px);
-  line-height: 1.65;
-  text-wrap: balance;
-}
-.entry-hints {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin: 26px auto 30px;
-}
-.entry-hints span {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  min-height: 34px;
-  padding: 0 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(34, 211, 238, .2);
-  color: var(--cyan-soft);
-  background: rgba(5, 7, 10, .54);
-  font: 800 11px/1 var(--heading);
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.entry-hints svg { width: 15px; height: 15px; }
-.enter-verse {
-  min-height: 50px;
-  min-width: 210px;
-  border: 1px solid rgba(103, 232, 249, .8);
-  border-radius: 999px;
-  background: linear-gradient(180deg, rgba(34,211,238,.2), rgba(34,211,238,.08));
-  color: var(--cyan-soft);
-  font: 900 14px/1 var(--heading);
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  box-shadow: 0 0 34px rgba(34,211,238,.22), inset 0 1px 0 rgba(255,255,255,.09);
-  transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out);
-}
-.enter-verse:hover,
-.enter-verse:focus-visible { transform: translateY(-2px); box-shadow: 0 0 52px rgba(34,211,238,.34); }
-.entry-progress { width: min(420px, 72vw); height: 2px; margin: 30px auto 0; overflow: hidden; background: rgba(34,211,238,.12); }
-.entry-progress span { display: block; width: 34%; height: 100%; background: linear-gradient(90deg, transparent, var(--cyan), transparent); animation: entryScan 2.4s ease-in-out infinite; }
-@keyframes entryScan { from { transform: translateX(-120%); } to { transform: translateX(330%); } }
-@keyframes entryFadeOut { to { opacity: 0; transform: translateY(-8px); } }
-@keyframes orbitPulse { 50% { transform: scale(1.035); opacity: .62; } }
+

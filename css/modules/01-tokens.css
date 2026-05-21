@@ -1,58 +1,13 @@
-:root {
-  color-scheme: dark;
-  --black: #05070a;
-  --black-soft: #0b1016;
-  --black-deep: #020305;
-  --surface: rgba(17, 24, 39, 0.58);
-  --surface-solid: #111827;
-  --cyan: #22d3ee;
-  --cyan-bright: #67e8f9;
-  --cyan-soft: #a5f3fc;
-  --cyan-dim: rgba(34, 211, 238, 0.22);
-  --text: #f8fafc;
-  --text-secondary: #b6c2cf;
-  --text-muted: #7c8a99;
-  --border-cyan: rgba(34, 211, 238, 0.22);
-  --fire: #ffb020;
-  --fire-edge: #ff6b00;
-  --fire-glow: rgba(255, 176, 32, 0.35);
+/*
+  Shrimo Verse CSS Module: 01-tokens.css
+  Updated: 21 May 2026, 03:55 IST
 
-  --heading: "Montserrat", system-ui, sans-serif;
-  --body: "Open Sans", system-ui, sans-serif;
+  Responsibility:
+  Design tokens, color system, typography variables, spacing constants. Active runtime is preserved in 10-motion-accessibility.css until Phase 54B semantic extraction.
 
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-7: 32px;
-  --safe-top: max(16px, env(safe-area-inset-top));
-  --safe-bottom: max(14px, env(safe-area-inset-bottom));
-  --hud-height: 58px;
-  --mobile-dock-height: 78px;
-  --core-size: clamp(64px, 18vw, 92px);
-  --core-safe: clamp(150px, 35vw, 300px);
-  --duration-fast: 180ms;
-  --duration-mid: 360ms;
-  --duration-slow: 900ms;
-  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-@media (min-width: 768px) {
-  :root {
-    --space-4: 20px;
-    --space-5: 24px;
-    --space-6: 28px;
-    --core-size: clamp(78px, 10vw, 104px);
-  }
-}
-
-@media (min-width: 1366px) {
-  :root {
-    --space-4: 24px;
-    --space-5: 28px;
-    --space-6: 36px;
-    --core-size: 96px;
-  }
-}
+  Phase 54 note:
+  The project is now loaded through the planned module graph. To avoid visual regression,
+  the current verified CSS runtime is preserved in 10-motion-accessibility.css.
+  Phase 54B should move rules from that runtime into this module section by section,
+  with screenshot QA after every move.
+*/
